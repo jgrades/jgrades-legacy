@@ -11,6 +11,9 @@ before_install:
 install: 
   - mvn clean install -Pprod
 
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
+
 notifications:
   email:
     recipients:
