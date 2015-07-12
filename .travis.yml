@@ -1,0 +1,14 @@
+language: java
+
+jdk:
+  - oraclejdk8
+  
+before_script:
+  - ./install-bom.sh
+  
+script: mvn clean install -Pprod
+
+notifications:
+  email:
+    recipients:
+      - jgrades.project@gmail.com

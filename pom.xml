@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.jgrades</groupId>
+    <artifactId>jgrades-all</artifactId>
+    <version>${release.version}</version>
+
+    <packaging>pom</packaging>
+    <name>jGrades Application</name>
+
+    <properties>
+        <release.version>0.4-DEV-SNAPSHOT</release.version>
+    </properties>
+
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <tomcat.installation.dir>C:/jgrades/tomcat8</tomcat.installation.dir>
+                <tomcat.logs.dir>C:/jgrades/tomcat8/logs</tomcat.logs.dir>
+                <jg.logs.dir>C:/jgrades/logs</jg.logs.dir>
+                <jg.lic.data.dir>C:/jgrades/licdata</jg.lic.data.dir>
+                <shadow.backup.dir>C:/jgrades/backup</shadow.backup.dir>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>prod</id>
+            <properties>
+                <tomcat.installation.dir>/etc/tomcat8</tomcat.installation.dir>
+                <tomcat.logs.dir>/var/log/tomcat8</tomcat.logs.dir>
+                <jg.logs.dir>/var/log/jgrades</jg.logs.dir>
+                <jg.lic.data.dir>/etc/opt/jgrades</jg.lic.data.dir>
+                <shadow.backup.dir>/var/backups/jgrades</shadow.backup.dir>
+            </properties>
+        </profile>
+    </profiles>
+
+    <modules>
+        <!-- BOM NEEDS TO BE BUILD AS FIRST SEPARATELY -->
+        <module>jg-logging</module>
+        <module>jg-backend</module>
+        <module>jg-web-app</module>
+        <module>jg-extensions</module>
+        <module>jg-lic-standalone-app</module>
+    </modules>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.3</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.jgrades</groupId>
+                <artifactId>jg-bom</artifactId>
+                <version>${release.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.powermock</groupId>
+            <artifactId>powermock-api-mockito</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.openpojo</groupId>
+            <artifactId>openpojo</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>nl.jqno.equalsverifier</groupId>
+            <artifactId>equalsverifier</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+</project>
