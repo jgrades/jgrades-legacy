@@ -64,7 +64,10 @@ public class LicenceMarshallingFactoryTest {
         Licence licence = (Licence) jaxbUnmarshaller.unmarshal(new File(licenceFilePath));
 
         // then
-        assertThat(licence).isEqualTo(getCorrectLicence());
+        assertThat(licence.getUid()).isEqualTo(getCorrectLicence().getUid());
+        assertThat(licence.getCustomer()).isEqualTo(getCorrectLicence().getCustomer());
+        assertThat(licence.getProduct()).isEqualTo(getCorrectLicence().getProduct());
+        assertThat(licence.getProperties()).isEqualTo(getCorrectLicence().getProperties());
     }
 
     @Test(expected = UnmarshalException.class)
