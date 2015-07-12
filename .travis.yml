@@ -4,10 +4,9 @@ jdk:
   - oraclejdk8
   
 before_install:
-  - mvn --version
-  - cd jg-bom
-  - mvn clean install
-  - cd ..
+  - ./install-bom.sh
+  
+script: mvn clean install -Pprod
 
 notifications:
   email:
