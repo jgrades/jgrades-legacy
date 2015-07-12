@@ -66,7 +66,8 @@ public class LicenceMarshallingFactoryTest {
         // then
         assertThat(licence.getUid()).isEqualTo(getCorrectLicence().getUid());
         assertThat(licence.getCustomer()).isEqualTo(getCorrectLicence().getCustomer());
-        assertThat(licence.getProduct()).isEqualTo(getCorrectLicence().getProduct());
+        assertThat(licence.getProduct().getValidFrom()).isEqualTo(getCorrectLicence().getProduct().getValidFrom());
+        assertThat(licence.getProduct().getValidTo()).isEqualTo(getCorrectLicence().getProduct().getValidTo());
         assertThat(licence.getProperties()).isEqualTo(getCorrectLicence().getProperties());
     }
 
