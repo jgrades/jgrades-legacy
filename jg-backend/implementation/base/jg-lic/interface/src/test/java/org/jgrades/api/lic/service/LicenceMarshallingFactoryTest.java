@@ -15,6 +15,7 @@ import javax.xml.bind.UnmarshalException;
 import javax.xml.bind.Unmarshaller;
 import java.io.File;
 import java.io.StringWriter;
+import java.nio.charset.Charset;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -35,7 +36,7 @@ public class LicenceMarshallingFactoryTest {
         assertThat(jaxbUnmarshaller).isNotNull();
     }
 
-    //@Test
+    @Test
     public void shouldMarshall_whenCorrectLicence() throws Exception {
         // given
         Licence licence = getCorrectLicence();
@@ -47,9 +48,9 @@ public class LicenceMarshallingFactoryTest {
 
         // then
         String xmlContent = stringWriter.toString();
-        String exptectedXmlContent = FileUtils.readFileToString(new File(getResourcePath(CORRECT_LICENCE_FILENAME)));
+        String exptectedXmlContent = FileUtils.readFileToString(new File(getResourcePath(CORRECT_LICENCE_FILENAME)), Charset.forName("UTF-8"));
 
-        assertThat(xmlContent).isEqualTo(exptectedXmlContent);
+        assertThat(xmlContent).isXmlEqualTo(exptectedXmlContent);
     }
 
     @Test
