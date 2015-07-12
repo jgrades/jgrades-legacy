@@ -47,11 +47,11 @@ public class LicenceModelTest {
         List<Class> classes = Lists.newArrayList(
                 Licence.class,
                 Customer.class,
-                Product.class,
                 LicenceProperty.class
         );
 
         // when then
+        getConfiguredEqualsVerifierForProduct().verify();
         for (Class clazz : classes) {
             getConfiguredEqualsVerifier(clazz).verify();
         }
@@ -60,6 +60,13 @@ public class LicenceModelTest {
     private EqualsVerifier getConfiguredEqualsVerifier(Class clazz) {
         return EqualsVerifier.forClass(clazz)
                 .allFieldsShouldBeUsed()
+                .usingGetClass()
+                .suppress(Warning.NONFINAL_FIELDS);
+    }
+
+    private EqualsVerifier getConfiguredEqualsVerifierForProduct() {
+        return EqualsVerifier.forClass(Product.class)
+                .allFieldsShouldBeUsedExcept("validFrom", "validTo")
                 .usingGetClass()
                 .suppress(Warning.NONFINAL_FIELDS);
     }

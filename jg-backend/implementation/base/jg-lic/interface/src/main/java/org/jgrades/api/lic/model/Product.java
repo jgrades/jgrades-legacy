@@ -4,9 +4,11 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
 
 import javax.xml.bind.annotation.*;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import java.time.format.DateTimeFormatter;
 
 @XmlRootElement(name = "product")
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -76,8 +78,6 @@ public class Product {
         return new EqualsBuilder()
                 .append(this.name, rhs.name)
                 .append(this.version, rhs.version)
-                .append(this.validFrom.getMillis(), rhs.validFrom.getMillis())
-                .append(this.validTo.getMillis(), rhs.validTo.getMillis())
                 .isEquals();
     }
 
@@ -86,8 +86,6 @@ public class Product {
         return new HashCodeBuilder()
                 .append(name)
                 .append(version)
-                .append(validFrom)
-                .append(validTo)
                 .toHashCode();
     }
 
