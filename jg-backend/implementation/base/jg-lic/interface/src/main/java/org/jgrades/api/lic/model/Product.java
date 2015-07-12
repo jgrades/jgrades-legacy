@@ -76,8 +76,8 @@ public class Product {
         return new EqualsBuilder()
                 .append(this.name, rhs.name)
                 .append(this.version, rhs.version)
-                .append(this.validFrom, rhs.validFrom)
-                .append(this.validTo, rhs.validTo)
+                .append(this.validFrom.getMillis(), rhs.validFrom.getMillis())
+                .append(this.validTo.getMillis(), rhs.validTo.getMillis())
                 .isEquals();
     }
 
