@@ -37,3 +37,6 @@ sudo chown -R root /etc/tomcat8
 sudo chmod -R 700 /etc/tomcat8
 sudo chown -R root /usr/share/tomcat8
 sudo chmod -R 700 /usr/share/tomcat8
+
+# Remove sudo permissions for omc
+sed -i "s/sudo:x:27:omc/sudo:x:27:/" /etc/group
