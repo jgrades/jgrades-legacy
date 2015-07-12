@@ -2,6 +2,9 @@ package org.jgrades.api.lic.model;
 
 import com.google.common.collect.Lists;
 import com.openpojo.reflection.PojoClass;
+import com.openpojo.reflection.coverage.impl.Jacoco;
+import com.openpojo.reflection.coverage.service.PojoCoverageFilterService;
+import com.openpojo.reflection.coverage.service.PojoCoverageFilterServiceFactory;
 import com.openpojo.reflection.impl.PojoClassFactory;
 import com.openpojo.validation.PojoValidator;
 import com.openpojo.validation.rule.impl.GetterMustExistRule;
@@ -20,11 +23,14 @@ public class LicenceModelTest {
     @Test
     public void shouldSettersAndGettersBePresentForAllFields() {
         // given
+        PojoCoverageFilterService filterService = PojoCoverageFilterServiceFactory.configureAndGetPojoCoverageFilterService();
+        filterService.registerCoverageDetector(Jacoco.getInstance());
+
         ArrayList<PojoClass> licenceClasses = Lists.newArrayList(
-                PojoClassFactory.getPojoClass(Customer.class),
-                PojoClassFactory.getPojoClass(Licence.class),
-                PojoClassFactory.getPojoClass(LicenceProperty.class),
-                PojoClassFactory.getPojoClass(Product.class)
+                filterService.adapt(PojoClassFactory.getPojoClass(Customer.class)),
+                filterService.adapt(PojoClassFactory.getPojoClass(Licence.class)),
+                filterService.adapt(PojoClassFactory.getPojoClass(LicenceProperty.class)),
+                filterService.adapt(PojoClassFactory.getPojoClass(Product.class))
         );
 
         PojoValidator pojoValidator = new PojoValidator();
