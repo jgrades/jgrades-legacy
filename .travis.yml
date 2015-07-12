@@ -12,7 +12,7 @@ install:
   - mvn clean install -Pprod
 
 after_success:
-  - mvn test jacoco:report coveralls:report
+  - mvn test jacoco:report org.eluder.coveralls:coveralls-maven-plugin:report
 
 notifications:
   email:
