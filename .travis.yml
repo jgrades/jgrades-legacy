@@ -12,7 +12,7 @@ install:
   - mvn clean install -Pprod
 
 after_success:
-  - bash <(curl -s https://codecov.io/bash)
+  - mvn test jacoco:report coveralls:report
 
 notifications:
   email:
