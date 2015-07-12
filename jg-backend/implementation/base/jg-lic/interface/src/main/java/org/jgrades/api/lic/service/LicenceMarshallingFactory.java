@@ -26,6 +26,7 @@ public final class LicenceMarshallingFactory {
         Marshaller jaxbMarshaller = null;
         try {
             jaxbMarshaller = jaxbContext.createMarshaller();
+            jaxbMarshaller.setProperty(Marshaller.JAXB_ENCODING, "UTF-8");
             jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
         } catch (JAXBException e) {
             e.printStackTrace();//TODO: use logger in future

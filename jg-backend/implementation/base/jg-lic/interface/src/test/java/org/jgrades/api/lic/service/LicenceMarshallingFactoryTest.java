@@ -8,7 +8,9 @@ import org.jgrades.api.lic.model.LicenceProperty;
 import org.jgrades.api.lic.model.Product;
 import org.joda.time.DateTime;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.UnmarshalException;
@@ -27,6 +29,9 @@ public class LicenceMarshallingFactoryTest {
     private Marshaller jaxbMarshaller;
     private Unmarshaller jaxbUnmarshaller;
 
+    @Rule
+    public TemporaryFolder folder = new TemporaryFolder();
+
     @Before
     public void setUp() throws Exception {
         jaxbMarshaller = LicenceMarshallingFactory.getMarshaller();
@@ -40,17 +45,14 @@ public class LicenceMarshallingFactoryTest {
     public void shouldMarshall_whenCorrectLicence() throws Exception {
         // given
         Licence licence = getCorrectLicence();
-        StringWriter stringWriter = new StringWriter();
+        File expectedXmlFile = new File(getResourcePath(CORRECT_LICENCE_FILENAME));
+        File workingFile = folder.newFile();
 
         // when
-        jaxbMarshaller.marshal(licence, stringWriter);
-        jaxbMarshaller.marshal(licence, System.out);
+        jaxbMarshaller.marshal(licence, workingFile);
 
         // then
-        String xmlContent = stringWriter.toString();
-        String exptectedXmlContent = FileUtils.readFileToString(new File(getResourcePath(CORRECT_LICENCE_FILENAME)), Charset.forName("UTF-8"));
-
-        assertThat(xmlContent).isXmlEqualTo(exptectedXmlContent);
+        assertThat(FileUtils.contentEquals(workingFile, expectedXmlFile));
     }
 
     @Test
