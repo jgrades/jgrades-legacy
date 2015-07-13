@@ -1,4 +1,4 @@
-package org.jgrades.api.lic.model;
+package org.jgrades.lic.api.model;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;

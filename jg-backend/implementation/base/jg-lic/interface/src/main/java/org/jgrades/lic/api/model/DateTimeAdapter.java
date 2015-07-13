@@ -1,4 +1,4 @@
-package org.jgrades.api.lic.model;
+package org.jgrades.lic.api.model;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;

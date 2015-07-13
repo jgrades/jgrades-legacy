@@ -1,4 +1,4 @@
-package org.jgrades.api.lic.model;
+package org.jgrades.lic.api.model;
 
 import com.google.common.collect.Lists;
 import com.openpojo.reflection.PojoClass;

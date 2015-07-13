@@ -1,7 +1,7 @@
-package org.jgrades.api.lic.service;
+package org.jgrades.lic.api.service;
 
-import org.jgrades.api.lic.exception.LicenceException;
-import org.jgrades.api.lic.model.Licence;
+import org.jgrades.lic.api.exception.LicenceException;
+import org.jgrades.lic.api.model.Licence;
 
 import java.util.List;
 

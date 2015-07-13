@@ -1,4 +1,4 @@
-package org.jgrades.api.lic.aop;
+package org.jgrades.lic.api.aop;
 
 import org.springframework.stereotype.Component;
 

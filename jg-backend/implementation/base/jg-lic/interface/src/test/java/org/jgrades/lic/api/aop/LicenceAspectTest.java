@@ -1,7 +1,7 @@
-package org.jgrades.api.lic.aop;
+package org.jgrades.lic.api.aop;
 
-import org.jgrades.api.lic.exception.LicenceExpiredException;
-import org.jgrades.api.lic.service.LicenceCheckingService;
+import org.jgrades.lic.api.exception.LicenceExpiredException;
+import org.jgrades.lic.api.service.LicenceCheckingService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

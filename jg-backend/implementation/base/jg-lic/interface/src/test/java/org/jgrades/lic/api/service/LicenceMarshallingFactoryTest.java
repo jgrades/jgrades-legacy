@@ -1,11 +1,11 @@
-package org.jgrades.api.lic.service;
+package org.jgrades.lic.api.service;
 
 import com.google.common.collect.Lists;
 import org.apache.commons.io.FileUtils;
-import org.jgrades.api.lic.model.Customer;
-import org.jgrades.api.lic.model.Licence;
-import org.jgrades.api.lic.model.LicenceProperty;
-import org.jgrades.api.lic.model.Product;
+import org.jgrades.lic.api.model.Customer;
+import org.jgrades.lic.api.model.Licence;
+import org.jgrades.lic.api.model.LicenceProperty;
+import org.jgrades.lic.api.model.Product;
 import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Rule;
@@ -16,8 +16,6 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.UnmarshalException;
 import javax.xml.bind.Unmarshaller;
 import java.io.File;
-import java.io.StringWriter;
-import java.nio.charset.Charset;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;

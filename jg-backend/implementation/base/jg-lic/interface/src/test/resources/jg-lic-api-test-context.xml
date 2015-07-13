@@ -6,10 +6,10 @@
 	   					   http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean id="serviceMock" class="org.mockito.Mockito" factory-method="mock">
-        <constructor-arg value="org.jgrades.api.lic.service.LicenceCheckingService" />
+        <constructor-arg value="org.jgrades.lic.api.service.LicenceCheckingService" />
     </bean>
 
-    <bean id="fakeService" class="org.jgrades.api.lic.aop.FakeService"/>
+    <bean id="fakeService" class="org.jgrades.lic.api.aop.FakeService"/>
 
     <import resource="classpath:jg-lic-api-context.xml" />
 </beans>

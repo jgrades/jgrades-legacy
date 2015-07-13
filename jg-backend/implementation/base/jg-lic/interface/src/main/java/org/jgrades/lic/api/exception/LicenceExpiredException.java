@@ -1,4 +1,4 @@
-package org.jgrades.api.lic.exception;
+package org.jgrades.lic.api.exception;
 
 public class LicenceExpiredException extends LicenceException {
 }

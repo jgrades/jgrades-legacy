@@ -1,4 +1,4 @@
-package org.jgrades.api.lic.aop;
+package org.jgrades.lic.api.aop;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

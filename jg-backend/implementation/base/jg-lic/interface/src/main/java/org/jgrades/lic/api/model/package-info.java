@@ -1,4 +1,4 @@
-@XmlJavaTypeAdapters({@XmlJavaTypeAdapter(type = DateTime.class, value = DateTimeAdapter.class)}) package org.jgrades.api.lic.model;
+@XmlJavaTypeAdapters({@XmlJavaTypeAdapter(type = DateTime.class, value = DateTimeAdapter.class)}) package org.jgrades.lic.api.model;
 
 import org.joda.time.DateTime;
 

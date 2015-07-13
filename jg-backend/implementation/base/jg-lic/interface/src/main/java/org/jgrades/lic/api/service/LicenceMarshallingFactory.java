@@ -1,6 +1,6 @@
-package org.jgrades.api.lic.service;
+package org.jgrades.lic.api.service;
 
-import org.jgrades.api.lic.model.Licence;
+import org.jgrades.lic.api.model.Licence;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
