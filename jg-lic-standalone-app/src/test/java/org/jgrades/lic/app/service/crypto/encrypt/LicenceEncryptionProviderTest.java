@@ -8,8 +8,10 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.util.DigestUtils;
 
 import java.io.File;
+import java.io.FileInputStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -27,12 +29,16 @@ public class LicenceEncryptionProviderTest {
     }
 
     @Test
-    @Ignore("CI failed. Ignore temporary")
+    //@Ignore("CI failed. Ignore temporary")
     public void shouldEncryptLicence() throws Exception {
         // given
         Licence licence = LicenceFactory.getCorrectLicence();
 
         File encryptedLicence = new ClassPathResource("encrypted.lic").getFile();
+        System.out.println("md5encrypted: "+DigestUtils.md5DigestAsHex(FileUtils.readFileToByteArray(encryptedLicence)));
+        System.out.println("md5ks: "+DigestUtils.md5DigestAsHex(FileUtils.readFileToByteArray(new ClassPathResource("jg-ks-test.jceks").getFile())));
+        System.out.println("md5sec: "+DigestUtils.md5DigestAsHex(FileUtils.readFileToByteArray(new ClassPathResource("sec-test.dat").getFile())));
+
 
         // when
         byte[] encryptedBytes = encryptionProvider.encrypt(licence);
