@@ -15,5 +15,5 @@ echo $keystorepass >> $passfile
 echo $cryptopass >> $passfile
 echo $signpass >> $passfile
 
-keytool -genkey -keystore jg-ks.jceks -storetype JCEKS -alias jg-crypto -storepass $keystorepass -keypass $cryptopass -dname "CN=jGrades, C=PL" -validity 365 -keyalg RSA -keysize 4096
+keytool -genseckey -keystore jg-ks.jceks -storetype JCEKS -alias jg-crypto -storepass $keystorepass -keypass $cryptopass -dname "CN=jGrades, C=PL" -validity 365 -keyalg AES -keysize 128
 keytool -genkey -keystore jg-ks.jceks -storetype JCEKS -alias jg-signature -storepass $keystorepass -keypass $signpass -dname "CN=jGrades, C=PL" -validity 365 -keyalg RSA -keysize 4096
