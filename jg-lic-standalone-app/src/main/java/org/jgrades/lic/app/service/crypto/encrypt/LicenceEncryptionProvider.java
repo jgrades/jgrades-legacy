@@ -14,8 +14,11 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
+import java.util.Locale;
 
 public class LicenceEncryptionProvider {
     private final KeyStoreContentExtractor extractor;
@@ -26,6 +29,8 @@ public class LicenceEncryptionProvider {
 
     public byte[] encrypt(Licence licence) {
         byte[] licXmlBytes = transformToBytesArray(licence);
+        System.out.println("licxml:" + Arrays.toString(licXmlBytes));
+        System.out.println(Charset.defaultCharset() + " " + Locale.getDefault());
         return encrypt(licXmlBytes);
     }
 
