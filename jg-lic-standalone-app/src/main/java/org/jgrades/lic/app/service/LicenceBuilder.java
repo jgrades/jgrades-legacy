@@ -1,0 +1,115 @@
+package org.jgrades.lic.app.service;
+
+import com.google.common.collect.Lists;
+import org.apache.commons.lang3.StringUtils;
+import org.jgrades.lic.api.model.Customer;
+import org.jgrades.lic.api.model.Licence;
+import org.jgrades.lic.api.model.LicenceProperty;
+import org.jgrades.lic.api.model.Product;
+import org.joda.time.DateTime;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
+
+public class LicenceBuilder {
+    private final PropertiesTextAreaParser propertiesParser = new PropertiesTextAreaParser();
+
+    private Licence licence;
+    private Customer customer;
+    private Product product;
+    private List<LicenceProperty> properties;
+
+    public LicenceBuilder() {
+        initBuildingNewLicence();
+    }
+
+    public LicenceBuilder withLicenceUID(String uid) {
+        if (!StringUtils.isEmpty(uid)) {
+            licence.setUid(Long.parseLong(uid));
+        }
+        return this;
+    }
+
+    public LicenceBuilder withCustomerID(String id) {
+        if (!StringUtils.isEmpty(id)) {
+            customer.setId(Long.parseLong(id));
+        }
+        return this;
+    }
+
+    public LicenceBuilder withCustomerName(String name) {
+        if (!StringUtils.isEmpty(name)) {
+            customer.setName(name);
+        }
+        return this;
+    }
+
+    public LicenceBuilder withCustomerAddress(String address) {
+        if (!StringUtils.isEmpty(address)) {
+            customer.setAddress(address);
+        }
+        return this;
+    }
+
+    public LicenceBuilder withCustomerPhone(String phone) {
+        if (!StringUtils.isEmpty(phone)) {
+            customer.setPhone(phone);
+        }
+        return this;
+    }
+
+    public LicenceBuilder withProductName(String name) {
+        if (!StringUtils.isEmpty(name)) {
+            product.setName(name);
+        }
+        return this;
+    }
+
+    public LicenceBuilder withProductVersion(String version) {
+        if (!StringUtils.isEmpty(version)) {
+            product.setVersion(version);
+        }
+        return this;
+    }
+
+    public LicenceBuilder withStartOfValid(LocalDate fromDateTime) {
+        if (Optional.ofNullable(fromDateTime).isPresent() && !StringUtils.isEmpty(fromDateTime.toString())) {
+            product.setValidFrom(new DateTime(fromDateTime.toString()));
+        }
+        return this;
+    }
+
+    public LicenceBuilder withEndOfValid(LocalDate toDateTime) {
+        if (Optional.ofNullable(toDateTime).isPresent() && !StringUtils.isEmpty(toDateTime.toString())) {
+            product.setValidTo(new DateTime(toDateTime.toString()));
+        }
+        return this;
+    }
+
+    public LicenceBuilder withProperties(String propertiesText) {
+        if (!StringUtils.isEmpty(propertiesText)) {
+            properties.addAll(propertiesParser.getProperties(propertiesText));
+        }
+        return this;
+    }
+
+    private void initBuildingNewLicence() {
+        licence = new Licence();
+        customer = new Customer();
+        product = new Product();
+        properties = Lists.newArrayList();
+
+        licence.setCustomer(customer);
+        licence.setProduct(product);
+        licence.setProperties(properties);
+    }
+
+    public Licence build() {
+        try {
+            return licence;
+        } finally {
+            initBuildingNewLicence();
+        }
+    }
+}
