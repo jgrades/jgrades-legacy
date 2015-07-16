@@ -7,6 +7,7 @@ import org.jgrades.lic.api.model.Licence;
 import org.jgrades.lic.api.model.LicenceProperty;
 import org.jgrades.lic.api.model.Product;
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -47,6 +48,7 @@ public class LicenceMarshallingFactoryTest {
         File workingFile = folder.newFile();
 
         // when
+        jaxbMarshaller.marshal(licence, System.out);
         jaxbMarshaller.marshal(licence, workingFile);
 
         // then
@@ -90,8 +92,8 @@ public class LicenceMarshallingFactoryTest {
         Product product = new Product();
         product.setName("JG-BASE");
         product.setVersion("0.4");
-        product.setValidFrom(new DateTime(0));
-        product.setValidTo(new DateTime(0).plusMonths(1));
+        product.setValidFrom(new DateTime(0, DateTimeZone.UTC));
+        product.setValidTo(new DateTime(0, DateTimeZone.UTC).plusMonths(1));
 
         LicenceProperty licProperty1 = new LicenceProperty();
         licProperty1.setName("mac");

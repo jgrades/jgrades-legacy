@@ -29,16 +29,11 @@ public class LicenceEncryptionProviderTest {
     }
 
     @Test
-    //@Ignore("CI failed. Ignore temporary")
     public void shouldEncryptLicence() throws Exception {
         // given
         Licence licence = LicenceFactory.getCorrectLicence();
 
         File encryptedLicence = new ClassPathResource("encrypted.lic").getFile();
-        System.out.println("md5encrypted: "+DigestUtils.md5DigestAsHex(FileUtils.readFileToByteArray(encryptedLicence)));
-        System.out.println("md5ks: "+DigestUtils.md5DigestAsHex(FileUtils.readFileToByteArray(new ClassPathResource("jg-ks-test.jceks").getFile())));
-        System.out.println("md5sec: "+DigestUtils.md5DigestAsHex(FileUtils.readFileToByteArray(new ClassPathResource("sec-test.dat").getFile())));
-
 
         // when
         byte[] encryptedBytes = encryptionProvider.encrypt(licence);

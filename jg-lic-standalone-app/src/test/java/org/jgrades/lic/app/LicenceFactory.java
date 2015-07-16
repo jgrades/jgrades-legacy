@@ -6,6 +6,7 @@ import org.jgrades.lic.api.model.Licence;
 import org.jgrades.lic.api.model.LicenceProperty;
 import org.jgrades.lic.api.model.Product;
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 
 import java.util.List;
 
@@ -23,8 +24,8 @@ public class LicenceFactory {
         Product product = new Product();
         product.setName("JG-BASE");
         product.setVersion("0.4");
-        product.setValidFrom(new DateTime(0));
-        product.setValidTo(new DateTime(0).plusMonths(1));
+        product.setValidFrom(new DateTime(0, DateTimeZone.UTC));
+        product.setValidTo(new DateTime(0, DateTimeZone.UTC).plusMonths(1));
 
         LicenceProperty licProperty1 = new LicenceProperty();
         licProperty1.setName("mac");
