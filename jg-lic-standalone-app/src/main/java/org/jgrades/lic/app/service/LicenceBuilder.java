@@ -2,10 +2,7 @@ package org.jgrades.lic.app.service;
 
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringUtils;
-import org.jgrades.lic.api.model.Customer;
-import org.jgrades.lic.api.model.Licence;
-import org.jgrades.lic.api.model.LicenceProperty;
-import org.jgrades.lic.api.model.Product;
+import org.jgrades.lic.api.model.*;
 import org.joda.time.DateTime;
 
 import java.time.LocalDate;
@@ -14,6 +11,7 @@ import java.util.Optional;
 
 public class LicenceBuilder {
     private final PropertiesTextAreaParser propertiesParser = new PropertiesTextAreaParser();
+    private final LicenceDateTimeAdapter dateTimeAdapter = new LicenceDateTimeAdapter();
 
     private Licence licence;
     private Customer customer;
@@ -80,9 +78,23 @@ public class LicenceBuilder {
         return this;
     }
 
+    public LicenceBuilder withStartOfValid(String validFrom) {
+        if (!StringUtils.isEmpty(validFrom)) {
+            product.setValidFrom(dateTimeAdapter.unmarshal(validFrom));
+        }
+        return this;
+    }
+
     public LicenceBuilder withEndOfValid(LocalDate toDateTime) {
         if (Optional.ofNullable(toDateTime).isPresent() && !StringUtils.isEmpty(toDateTime.toString())) {
             product.setValidTo(new DateTime(toDateTime.toString()));
+        }
+        return this;
+    }
+
+    public LicenceBuilder withEndOfValid(String validTo) {
+        if (!StringUtils.isEmpty(validTo)) {
+            product.setValidTo(dateTimeAdapter.unmarshal(validTo));
         }
         return this;
     }

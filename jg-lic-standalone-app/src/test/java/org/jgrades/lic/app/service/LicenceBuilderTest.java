@@ -152,8 +152,8 @@ public class LicenceBuilderTest {
         builder.withCustomerPhone(StringUtils.EMPTY);
         builder.withProductName(StringUtils.EMPTY);
         builder.withProductVersion(StringUtils.EMPTY);
-        builder.withStartOfValid(null);
-        builder.withEndOfValid(null);
+        builder.withStartOfValid(StringUtils.EMPTY);
+        builder.withEndOfValid(StringUtils.EMPTY);
         builder.withProperties(StringUtils.EMPTY);
         Licence licence = builder.build();
 

@@ -24,12 +24,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class LicenceMarshallingFactoryTest {
     private static final String CORRECT_LICENCE_FILENAME = "correct_licence.xml";
     private static final String INCORRECT_DATETIME_LICENCE_FILENAME = "incorrect_datetime_licence.xml";
-
-    private Marshaller jaxbMarshaller;
-    private Unmarshaller jaxbUnmarshaller;
-
     @Rule
     public TemporaryFolder folder = new TemporaryFolder();
+    private Marshaller jaxbMarshaller;
+    private Unmarshaller jaxbUnmarshaller;
 
     @Before
     public void setUp() throws Exception {
@@ -48,7 +46,6 @@ public class LicenceMarshallingFactoryTest {
         File workingFile = folder.newFile();
 
         // when
-        jaxbMarshaller.marshal(licence, System.out);
         jaxbMarshaller.marshal(licence, workingFile);
 
         // then

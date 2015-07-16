@@ -7,7 +7,7 @@ import org.joda.time.format.DateTimeFormatter;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 import java.util.Locale;
 
-class DateTimeAdapter extends XmlAdapter<String, DateTime> {
+public class LicenceDateTimeAdapter extends XmlAdapter<String, DateTime> {
     private static final String PATTERN = "yyyy-MM-dd HH:mm:ss";
 
     private final DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern(PATTERN);

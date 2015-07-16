@@ -11,7 +11,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 @XmlRootElement(name = "product")
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(propOrder = {"name", "version", "validFrom", "validTo"})
-@XmlJavaTypeAdapter(type = DateTime.class, value = DateTimeAdapter.class)
+@XmlJavaTypeAdapter(type = DateTime.class, value = LicenceDateTimeAdapter.class)
 public class Product {
 
     @XmlElement(name = "name", required = true)

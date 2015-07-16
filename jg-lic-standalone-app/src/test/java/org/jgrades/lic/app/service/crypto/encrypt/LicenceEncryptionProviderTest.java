@@ -5,13 +5,10 @@ import org.jgrades.lic.api.model.Licence;
 import org.jgrades.lic.app.LicenceFactory;
 import org.jgrades.lic.app.service.crypto.KeyStoreContentExtractor;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.util.DigestUtils;
 
 import java.io.File;
-import java.io.FileInputStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
