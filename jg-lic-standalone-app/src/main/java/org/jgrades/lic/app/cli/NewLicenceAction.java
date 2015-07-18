@@ -1,12 +1,12 @@
 package org.jgrades.lic.app.cli;
 
 import org.apache.commons.lang3.StringUtils;
+import org.jgrades.lic.api.crypto.encrypt.LicenceEncryptionProvider;
+import org.jgrades.lic.api.crypto.encrypt.LicenceSaver;
+import org.jgrades.lic.api.crypto.encrypt.LicenceSigningProvider;
+import org.jgrades.lic.api.crypto.utils.KeyStoreContentExtractor;
 import org.jgrades.lic.api.model.Licence;
-import org.jgrades.lic.app.service.LicenceBuilder;
-import org.jgrades.lic.app.service.crypto.KeyStoreContentExtractor;
-import org.jgrades.lic.app.service.crypto.encrypt.LicenceEncryptionProvider;
-import org.jgrades.lic.app.service.crypto.encrypt.LicenceSaver;
-import org.jgrades.lic.app.service.crypto.encrypt.LicenceSigningProvider;
+import org.jgrades.lic.app.utils.LicenceBuilder;
 
 import java.io.File;
 import java.io.IOException;

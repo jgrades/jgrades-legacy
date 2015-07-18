@@ -15,19 +15,18 @@
 
     <dependencies>
         <dependency>
+            <!-- INTERNAL DEPENDENCIES -->
             <groupId>org.jgrades.app</groupId>
             <artifactId>jg-lic-api</artifactId>
             <version>${release.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.jgrades.app</groupId>
+            <artifactId>jg-lic-crypto-api</artifactId>
+            <version>${release.version}</version>
+        </dependency>
 
-        <dependency>
-            <groupId>org.bouncycastle</groupId>
-            <artifactId>bcprov-jdk15on</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.bouncycastle</groupId>
-            <artifactId>bcpg-jdk15on</artifactId>
-        </dependency>
+        <!-- EXTERNAL DEPENDENCIES -->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>

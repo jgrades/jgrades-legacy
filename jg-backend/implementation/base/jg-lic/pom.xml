@@ -18,6 +18,7 @@
 
     <modules>
         <module>interface</module>
+        <module>crypto-interface</module>
         <module>implementation</module>
     </modules>
 </project>

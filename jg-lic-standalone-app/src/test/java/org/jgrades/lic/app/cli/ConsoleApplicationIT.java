@@ -1,5 +1,6 @@
 package org.jgrades.lic.app.cli;
 
+import org.assertj.core.api.StrictAssertions;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -77,7 +78,7 @@ public class ConsoleApplicationIT {
     public void shouldShowWarning_whenGivenSignatureIsNotVerified() throws Exception {
         // given
         File licenceFile = tempFolder.newFile();
-        File notValidSignatureFile = new ClassPathResource("encrypted.lic.sign").getFile();
+        File notValidSignatureFile = new ClassPathResource("foreign.sign").getFile();
 
         // then
         exit.checkAssertionAfterwards(() -> {
@@ -143,6 +144,6 @@ public class ConsoleApplicationIT {
     }
 
     private void thenOutputContains(String content) {
-        assertThat(systemOutRule.getLog()).contains(content);
+        StrictAssertions.assertThat(systemOutRule.getLog()).contains(content);
     }
 }

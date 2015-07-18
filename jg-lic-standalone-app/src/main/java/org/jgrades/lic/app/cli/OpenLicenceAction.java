@@ -1,15 +1,14 @@
 package org.jgrades.lic.app.cli;
 
+import org.jgrades.lic.api.crypto.decrypt.LicenceDecryptionProvider;
+import org.jgrades.lic.api.crypto.decrypt.SignatureValidator;
+import org.jgrades.lic.api.crypto.utils.KeyStoreContentExtractor;
 import org.jgrades.lic.api.model.Licence;
+import org.jgrades.lic.api.model.LicenceDateTimeAdapter;
 import org.jgrades.lic.api.model.LicenceProperty;
-import org.jgrades.lic.app.service.crypto.KeyStoreContentExtractor;
-import org.jgrades.lic.app.service.crypto.decrypt.LicenceDecryptionProvider;
-import org.jgrades.lic.app.service.crypto.decrypt.SignatureValidator;
 
 import java.io.File;
 import java.io.IOException;
-
-import static org.jgrades.lic.api.model.LicenceDateTimeAdapter.getLicDateTimeFormatter;
 
 public class OpenLicenceAction implements ApplicationAction {
     public static final String LICENCE_OPENED_SUCCESS_MESSAGE = "SUCCESS! Licence opened correctly.";
@@ -67,8 +66,8 @@ public class OpenLicenceAction implements ApplicationAction {
         System.out.println("Customer phone: " + licence.getCustomer().getPhone());
         System.out.println("Product name: " + licence.getProduct().getName());
         System.out.println("Product version: " + licence.getProduct().getVersion());
-        System.out.println("Licence valid from: " + getLicDateTimeFormatter().print(licence.getProduct().getValidFrom()));
-        System.out.println("Licence valid to: " + getLicDateTimeFormatter().print(licence.getProduct().getValidTo()));
+        System.out.println("Licence valid from: " + LicenceDateTimeAdapter.getLicDateTimeFormatter().print(licence.getProduct().getValidFrom()));
+        System.out.println("Licence valid to: " + LicenceDateTimeAdapter.getLicDateTimeFormatter().print(licence.getProduct().getValidTo()));
         System.out.println("Licence properties:");
         for (LicenceProperty property : licence.getProperties()) {
             System.out.println(property.getName() + "=>" + property.getValue());
