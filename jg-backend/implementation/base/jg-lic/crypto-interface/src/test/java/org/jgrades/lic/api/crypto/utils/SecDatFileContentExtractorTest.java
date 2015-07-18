@@ -1,5 +1,6 @@
 package org.jgrades.lic.api.crypto.utils;
 
+import org.jgrades.lic.api.crypto.utils.SecDatFileContentExtractor;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;

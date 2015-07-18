@@ -1,13 +1,10 @@
 package org.jgrades.lic.app.cli;
 
-import org.jgrades.lic.api.crypto.decrypt.LicenceDecryptionProvider;
-import org.jgrades.lic.api.crypto.decrypt.SignatureValidator;
-import org.jgrades.lic.api.crypto.utils.KeyStoreContentExtractor;
+import org.jgrades.lic.api.crypto.decrypt.LicenceDecryptionService;
 import org.jgrades.lic.api.model.Licence;
 import org.jgrades.lic.api.model.LicenceDateTimeAdapter;
 import org.jgrades.lic.api.model.LicenceProperty;
 
-import java.io.File;
 import java.io.IOException;
 
 public class OpenLicenceAction implements ApplicationAction {
@@ -16,6 +13,7 @@ public class OpenLicenceAction implements ApplicationAction {
     public static final String SIGNATURE_NOT_VALID_WARNING_MESSAGE = "WARNING! Signature is not valid.";
 
     private ConsoleApplication console;
+    private LicenceDecryptionService licenceDecryptionService = new LicenceDecryptionService();
 
     public OpenLicenceAction(ConsoleApplication consoleApplication) {
         this.console = consoleApplication;
@@ -28,31 +26,22 @@ public class OpenLicenceAction implements ApplicationAction {
     }
 
     @Override
-    public void action() {
+    public void start() {
         String keystorePath = console.getLine("Enter keystore path");
         String secDatPath = console.getLine("Enter secure data path");
         String licencePath = console.getLine("Enter licence path");
         String signaturePath = console.getLine("Enter signature path");
 
         try {
-            KeyStoreContentExtractor extractor =
-                    new KeyStoreContentExtractor(new File(keystorePath), new File(secDatPath));
-            LicenceDecryptionProvider decryptionProvider = new LicenceDecryptionProvider(extractor);
+            Licence licence = licenceDecryptionService.decrypt(keystorePath, secDatPath, licencePath);
+            prettyPrint(licence);
+            System.out.println(LICENCE_OPENED_SUCCESS_MESSAGE);
 
-            SignatureValidator signatureValidator = new SignatureValidator(extractor);
-            boolean validationSuccess = signatureValidator.signatureValidated(
-                    new File(licencePath), new File(signaturePath));
-
-            if (validationSuccess) {
+            if (licenceDecryptionService.validSignature(keystorePath, secDatPath, licencePath, signaturePath)) {
                 System.out.println(SIGNATURE_VALID_SUCCESS_MESSAGE);
             } else {
                 System.out.println(SIGNATURE_NOT_VALID_WARNING_MESSAGE);
             }
-
-            Licence licence = decryptionProvider.decrypt(new File(licencePath));
-            prettyPrint(licence);
-
-            System.out.println(LICENCE_OPENED_SUCCESS_MESSAGE);
         } catch (IOException e) {
             System.err.println("Path(s) to one or more of input files is/are incorrect: " + e);
         }

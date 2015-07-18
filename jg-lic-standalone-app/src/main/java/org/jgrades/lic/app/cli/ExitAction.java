@@ -7,7 +7,7 @@ public class ExitAction implements ApplicationAction {
     }
 
     @Override
-    public void action() {
+    public void start() {
         System.exit(0);
     }
 }

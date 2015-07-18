@@ -6,7 +6,7 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class ConsoleApplication implements LicenceApplication {
-    public static final String APPLICATION_HEADER = "jGrades Licensing Standalone Application 0.4";
+    public static final String APPLICATION_HEADER = "jGrades Licensing Manager Application 0.4";
 
     private Scanner scanner = new Scanner(System.in, "UTF-8");
 
@@ -26,7 +26,7 @@ public class ConsoleApplication implements LicenceApplication {
         while (true) {
             ApplicationAction action = chooseAction();
             action.printDescription();
-            action.action();
+            action.start();
         }
     }
 

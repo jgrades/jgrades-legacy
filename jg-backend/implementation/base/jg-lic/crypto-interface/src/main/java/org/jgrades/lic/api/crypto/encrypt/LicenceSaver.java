@@ -6,7 +6,9 @@ import org.jgrades.lic.api.crypto.utils.LicConstants;
 import java.io.File;
 import java.io.IOException;
 
-public class LicenceSaver {
+import static org.jgrades.lic.api.crypto.utils.LicConstants.*;
+
+class LicenceSaver {
     private final File licenceFile;
 
     public LicenceSaver(String licenceFilePath) {
@@ -18,7 +20,7 @@ public class LicenceSaver {
     }
 
     public void saveSignature(byte[] signatureBytes) throws IOException {
-        String signatureFilePath = licenceFile.getAbsolutePath() + LicConstants.SIGNATURE_FILE_EXTENSION;
+        String signatureFilePath = licenceFile.getAbsolutePath() + SIGNATURE_FILE_EXTENSION;
         FileUtils.writeByteArrayToFile(new File(signatureFilePath), signatureBytes);
     }
 }

@@ -9,7 +9,9 @@ import java.io.IOException;
 import java.security.*;
 import java.security.cert.X509Certificate;
 
-public class SignatureValidator {
+import static org.jgrades.lic.api.crypto.utils.LicConstants.*;
+
+class SignatureValidator {
     private final KeyStoreContentExtractor keyExtractor;
 
     public SignatureValidator(KeyStoreContentExtractor keyExtractor) {
@@ -21,7 +23,7 @@ public class SignatureValidator {
             X509Certificate certificate = keyExtractor.getCertificateForVerification();
             PublicKey publicKey = certificate.getPublicKey();
 
-            Signature signature = Signature.getInstance(LicConstants.SIGNATURE_PROVIDER_INTERFACE);
+            Signature signature = Signature.getInstance(SIGNATURE_PROVIDER_INTERFACE);
             signature.initVerify(publicKey);
             signature.update(FileUtils.readFileToByteArray(encryptedLicenceFile));
 

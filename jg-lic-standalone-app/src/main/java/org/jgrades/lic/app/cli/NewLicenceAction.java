@@ -1,14 +1,10 @@
 package org.jgrades.lic.app.cli;
 
 import org.apache.commons.lang3.StringUtils;
-import org.jgrades.lic.api.crypto.encrypt.LicenceEncryptionProvider;
-import org.jgrades.lic.api.crypto.encrypt.LicenceSaver;
-import org.jgrades.lic.api.crypto.encrypt.LicenceSigningProvider;
-import org.jgrades.lic.api.crypto.utils.KeyStoreContentExtractor;
+import org.jgrades.lic.api.crypto.encrypt.LicenceEncryptionService;
 import org.jgrades.lic.api.model.Licence;
 import org.jgrades.lic.app.utils.LicenceBuilder;
 
-import java.io.File;
 import java.io.IOException;
 
 public class NewLicenceAction implements ApplicationAction {
@@ -17,6 +13,7 @@ public class NewLicenceAction implements ApplicationAction {
     private LicenceBuilder licenceBuilder = new LicenceBuilder();
 
     private ConsoleApplication console;
+    private LicenceEncryptionService licenceEncryptionService = new LicenceEncryptionService();
 
     public NewLicenceAction(ConsoleApplication consoleApplication) {
         this.console = consoleApplication;
@@ -29,25 +26,16 @@ public class NewLicenceAction implements ApplicationAction {
     }
 
     @Override
-    public void action() {
+    public void start() {
         String keystorePath = console.getLine("Enter keystore path");
         String secDatPath = console.getLine("Enter secure data path");
 
+        Licence licence = licenceCreator();
+
+        String licencePath = console.getLine("Enter path to save licence");
+
         try {
-            KeyStoreContentExtractor extractor =
-                    new KeyStoreContentExtractor(new File(keystorePath), new File(secDatPath));
-            Licence licence = licenceCreator();
-            LicenceEncryptionProvider encryptionProvider = new LicenceEncryptionProvider(extractor);
-            byte[] encryptedBytes = encryptionProvider.encrypt(licence);
-
-            LicenceSigningProvider signingProvider = new LicenceSigningProvider(extractor);
-            byte[] signature = signingProvider.sign(encryptedBytes);
-
-            String licencePath = console.getLine("Enter path to save licence");
-            LicenceSaver saver = new LicenceSaver(licencePath);
-
-            saver.saveLicence(encryptedBytes);
-            saver.saveSignature(signature);
+            licenceEncryptionService.encryptAndSign(licence, keystorePath, secDatPath, licencePath);
             System.out.println(SUCCESS_MESSAGE);
         } catch (IOException e) {
             System.err.println("Path to keystore or/and secDat file incorrect: " + e);
@@ -55,28 +43,17 @@ public class NewLicenceAction implements ApplicationAction {
     }
 
     private Licence licenceCreator() {
-        String licenceUid = console.getLine("Enter licence UID");
-        String customerId = console.getLine("Enter customer ID");
-        String customerName = console.getLine("Enter customer name");
-        String customerAddress = console.getLine("Enter customer address");
-        String customerPhone = console.getLine("Enter customer phone");
-        String productName = console.getLine("Enter product name");
-        String productVersion = console.getLine("Enter product version");
-        String licenceValidFrom = console.getLine("Licence valid from (YYYY-MM-DD hh:mm:ss)");
-        String licenceValidTo = console.getLine("Licence valid to (YYYY-MM-DD hh:mm:ss)");
-        String properties = propertiesCreator();
-
         licenceBuilder
-                .withLicenceUID(licenceUid)
-                .withCustomerID(customerId)
-                .withCustomerName(customerName)
-                .withCustomerAddress(customerAddress)
-                .withCustomerPhone(customerPhone)
-                .withProductName(productName)
-                .withProductVersion(productVersion)
-                .withStartOfValid(licenceValidFrom)
-                .withEndOfValid(licenceValidTo)
-                .withProperties(properties);
+                .withLicenceUID(console.getLine("Enter licence UID"))
+                .withCustomerID(console.getLine("Enter customer ID"))
+                .withCustomerName(console.getLine("Enter customer name"))
+                .withCustomerAddress(console.getLine("Enter customer address"))
+                .withCustomerPhone(console.getLine("Enter customer phone"))
+                .withProductName(console.getLine("Enter product name"))
+                .withProductVersion(console.getLine("Enter product version"))
+                .withStartOfValid(console.getLine("Licence valid from (YYYY-MM-DD hh:mm:ss)"))
+                .withEndOfValid(console.getLine("Licence valid to (YYYY-MM-DD hh:mm:ss)"))
+                .withProperties(propertiesCreator());
 
         return licenceBuilder.build();
     }

@@ -12,5 +12,5 @@
 
     <aop:aspectj-autoproxy proxy-target-class="true"/>
     <context:annotation-config/>
-    <context:component-scan base-package="org.jgrades.api.lic,org.jgrades.lic"/>
+    <context:component-scan base-package="org.jgrades.lic"/>
 </beans>
