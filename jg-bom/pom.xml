@@ -57,6 +57,10 @@
 
         <!-- CRYPTOGRAPHY COMPONENTS -->
         <bouncycastle.version>1.52</bouncycastle.version>
+
+        <!-- FRONT-END COMPONENTS -->
+        <controlsfx.version>8.40.9</controlsfx.version>
+        <testfx.version>1.3.2</testfx.version>
     </properties>
 
     <dependencyManagement>
@@ -259,6 +263,20 @@
                 <artifactId>bcpg-jdk15on</artifactId>
                 <version>${bouncycastle.version}</version>
             </dependency>
+
+            <!-- FRONT-END COMPONENTS -->
+            <dependency>
+                <groupId>org.controlsfx</groupId>
+                <artifactId>controlsfx</artifactId>
+                <version>${controlsfx.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.loadui</groupId>
+                <artifactId>testFx</artifactId>
+                <version>${testfx.version}</version>
+                <scope>test</scope>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 </project>

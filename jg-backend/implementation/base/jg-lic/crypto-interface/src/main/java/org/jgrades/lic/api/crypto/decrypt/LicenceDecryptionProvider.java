@@ -20,7 +20,9 @@ import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
-public class LicenceDecryptionProvider {
+import static org.jgrades.lic.api.crypto.utils.LicConstants.*;
+
+class LicenceDecryptionProvider {
     private final KeyStoreContentExtractor extractor;
 
     public LicenceDecryptionProvider(KeyStoreContentExtractor extractor) {
@@ -35,7 +37,7 @@ public class LicenceDecryptionProvider {
 
     private byte[] decrypt(byte[] encryptedLicXmlBytes) {
         try {
-            Cipher cipher = Cipher.getInstance(LicConstants.CIPHER_PROVIDER_INTERFACE);
+            Cipher cipher = Cipher.getInstance(CIPHER_PROVIDER_INTERFACE);
             SecretKeySpec secretKeySpec = extractor.getPrivateKeyForEncryptionAndDecryption();
             cipher.init(Cipher.DECRYPT_MODE, secretKeySpec);
             return getDecryptedOutputStream(encryptedLicXmlBytes, cipher).toByteArray();

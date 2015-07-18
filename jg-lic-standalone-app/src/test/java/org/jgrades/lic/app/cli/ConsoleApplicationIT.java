@@ -1,6 +1,5 @@
 package org.jgrades.lic.app.cli;
 
-import org.assertj.core.api.StrictAssertions;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -144,6 +143,6 @@ public class ConsoleApplicationIT {
     }
 
     private void thenOutputContains(String content) {
-        StrictAssertions.assertThat(systemOutRule.getLog()).contains(content);
+        assertThat(systemOutRule.getLog()).contains(content);
     }
 }

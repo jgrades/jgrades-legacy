@@ -16,6 +16,18 @@ public class UserInterfaceChooserTest {
     }
 
     @Test
+    public void shouldRunGUI_whenNullArgs() throws Exception {
+        // given
+        String[] args = null;
+
+        // when
+        LicenceApplication application = chooser.choose(args);
+
+        // then
+        assertThat(application).isInstanceOf(JavafxApplication.class);
+    }
+
+    @Test
     public void shouldRunGUI_whenNoArgs() throws Exception {
         // given
         String[] args = new String[]{};

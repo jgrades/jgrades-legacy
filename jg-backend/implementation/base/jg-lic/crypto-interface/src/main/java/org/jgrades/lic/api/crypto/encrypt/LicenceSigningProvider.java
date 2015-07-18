@@ -9,7 +9,9 @@ import java.security.Signature;
 import java.security.SignatureException;
 import java.util.Optional;
 
-public class LicenceSigningProvider {
+import static org.jgrades.lic.api.crypto.utils.LicConstants.*;
+
+class LicenceSigningProvider {
     private final KeyStoreContentExtractor extractor;
 
     public LicenceSigningProvider(KeyStoreContentExtractor extractor) {
@@ -21,7 +23,7 @@ public class LicenceSigningProvider {
             throw new IllegalArgumentException();
         }
         try {
-            Signature signature = Signature.getInstance(LicConstants.SIGNATURE_PROVIDER_INTERFACE);
+            Signature signature = Signature.getInstance(SIGNATURE_PROVIDER_INTERFACE);
             signature.initSign(extractor.getPrivateKeyForSigning());
             signature.update(encryptedLicXmlBytes);
             return signature.sign();

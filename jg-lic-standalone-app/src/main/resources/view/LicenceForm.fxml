@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+            minWidth="-Infinity"
+            prefHeight="480.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8"
+            fx:controller="org.jgrades.lic.app.controller.LicenceFormController">
+    <center>
+        <GridPane BorderPane.alignment="CENTER">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES"/>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0"
+                                   prefWidth="473.0"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="20.0" vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="40.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            </rowConstraints>
+            <children>
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Licence UID">
+                    <GridPane.margin>
+                        <Insets left="5.0"/>
+                    </GridPane.margin>
+                </Text>
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Customer ID" GridPane.rowIndex="1">
+                    <GridPane.margin>
+                        <Insets left="5.0"/>
+                    </GridPane.margin>
+                </Text>
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Customer name" GridPane.rowIndex="2">
+                    <GridPane.margin>
+                        <Insets left="5.0"/>
+                    </GridPane.margin>
+                </Text>
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Customer address" GridPane.rowIndex="3">
+                    <GridPane.margin>
+                        <Insets left="5.0"/>
+                    </GridPane.margin>
+                </Text>
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Customer phone" GridPane.rowIndex="4">
+                    <GridPane.margin>
+                        <Insets left="5.0"/>
+                    </GridPane.margin>
+                </Text>
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Product name" GridPane.rowIndex="5">
+                    <GridPane.margin>
+                        <Insets left="5.0"/>
+                    </GridPane.margin>
+                </Text>
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Product version" GridPane.rowIndex="6">
+                    <GridPane.margin>
+                        <Insets left="5.0"/>
+                    </GridPane.margin>
+                </Text>
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Licence valid from" GridPane.rowIndex="7">
+                    <GridPane.margin>
+                        <Insets left="5.0"/>
+                    </GridPane.margin>
+                </Text>
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Licence valid to" GridPane.rowIndex="8">
+                    <GridPane.margin>
+                        <Insets left="5.0"/>
+                    </GridPane.margin>
+                </Text>
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Properties" GridPane.rowIndex="9">
+                    <GridPane.margin>
+                        <Insets left="5.0"/>
+                    </GridPane.margin>
+                </Text>
+                <TextField fx:id="licenceUidField" prefWidth="300.0" GridPane.columnIndex="1"
+                           GridPane.halignment="RIGHT">
+                    <GridPane.margin>
+                        <Insets right="5.0"/>
+                    </GridPane.margin>
+                </TextField>
+                <TextField fx:id="customerIdField" prefWidth="300.0" GridPane.columnIndex="1"
+                           GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+                    <GridPane.margin>
+                        <Insets right="5.0"/>
+                    </GridPane.margin>
+                </TextField>
+                <TextField fx:id="customerNameField" prefWidth="300.0" GridPane.columnIndex="1"
+                           GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+                    <GridPane.margin>
+                        <Insets right="5.0"/>
+                    </GridPane.margin>
+                </TextField>
+                <TextField fx:id="customerAddrField" prefWidth="300.0" GridPane.columnIndex="1"
+                           GridPane.halignment="RIGHT" GridPane.rowIndex="3">
+                    <GridPane.margin>
+                        <Insets right="5.0"/>
+                    </GridPane.margin>
+                </TextField>
+                <TextField fx:id="customerPhoneField" prefWidth="300.0" GridPane.columnIndex="1"
+                           GridPane.halignment="RIGHT" GridPane.rowIndex="4">
+                    <GridPane.margin>
+                        <Insets right="5.0"/>
+                    </GridPane.margin>
+                </TextField>
+                <TextField fx:id="productNameField" prefWidth="300.0" GridPane.columnIndex="1"
+                           GridPane.halignment="RIGHT" GridPane.rowIndex="5">
+                    <GridPane.margin>
+                        <Insets right="5.0"/>
+                    </GridPane.margin>
+                </TextField>
+                <TextField fx:id="productVersionField" prefWidth="300.0" GridPane.columnIndex="1"
+                           GridPane.halignment="RIGHT" GridPane.rowIndex="6">
+                    <GridPane.margin>
+                        <Insets right="5.0"/>
+                    </GridPane.margin>
+                </TextField>
+                <DatePicker fx:id="licValidFromDate" maxWidth="1.7976931348623157E308" prefWidth="300.0"
+                            GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="7">
+                    <GridPane.margin>
+                        <Insets right="5.0"/>
+                    </GridPane.margin>
+                </DatePicker>
+                <DatePicker fx:id="licValidToDate" maxWidth="1.7976931348623157E308" prefWidth="300.0"
+                            GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="8">
+                    <GridPane.margin>
+                        <Insets right="5.0"/>
+                    </GridPane.margin>
+                </DatePicker>
+                <TextArea fx:id="propertiesArea" prefHeight="190.0" prefWidth="481.0"
+                          promptText="key=value per one line" GridPane.columnIndex="1" GridPane.halignment="RIGHT"
+                          GridPane.rowIndex="9">
+                    <GridPane.margin>
+                        <Insets right="5.0"/>
+                    </GridPane.margin>
+                </TextArea>
+            </children>
+        </GridPane>
+    </center>
+</BorderPane>

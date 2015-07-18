@@ -9,7 +9,7 @@ public class UserInterfaceChooser {
     private static final String DASH_DASH_NO_GUI = "--nogui";
 
     public LicenceApplication choose(String[] args) {
-        if (args.length >= 1 && argumentMatched(args[0])) {
+        if (args != null && args.length >= 1 && argumentMatched(args[0])) {
             return new ConsoleApplication();
         } else {
             return new JavafxApplication();

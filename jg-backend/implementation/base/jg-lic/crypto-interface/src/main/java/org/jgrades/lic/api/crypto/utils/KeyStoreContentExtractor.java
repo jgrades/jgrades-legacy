@@ -8,6 +8,8 @@ import java.security.*;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 
+import static org.jgrades.lic.api.crypto.utils.LicConstants.*;
+
 public class KeyStoreContentExtractor {
     private final File keystore;
     private final SecDatFileContentExtractor secExtractor;
@@ -18,20 +20,20 @@ public class KeyStoreContentExtractor {
     }
 
     public SecretKeySpec getPrivateKeyForEncryptionAndDecryption() {
-        return (SecretKeySpec) getPrivateKey(LicConstants.ENCRYPTION_KEY_ALIAS, secExtractor.getEncryptionDat());
+        return (SecretKeySpec) getPrivateKey(ENCRYPTION_KEY_ALIAS, secExtractor.getEncryptionDat());
     }
 
     public PrivateKey getPrivateKeyForSigning() {
-        return (PrivateKey) getPrivateKey(LicConstants.SIGNATURE_KEY_ALIAS, secExtractor.getSignatureDat());
+        return (PrivateKey) getPrivateKey(SIGNATURE_KEY_ALIAS, secExtractor.getSignatureDat());
     }
 
     public X509Certificate getCertificateForVerification() {
-        return getCertificate(LicConstants.SIGNATURE_KEY_ALIAS);
+        return getCertificate(SIGNATURE_KEY_ALIAS);
     }
 
     private Object getPrivateKey(String alias, char[] secDat) {
         try {
-            KeyStore ks = KeyStore.getInstance(LicConstants.KEYSTORE_TYPE);
+            KeyStore ks = KeyStore.getInstance(KEYSTORE_TYPE);
             ks.load(new FileInputStream(keystore), secExtractor.getKeystoreDat());
             return ks.getKey(alias, secDat);
         } catch (KeyStoreException | CertificateException | NoSuchAlgorithmException
@@ -43,7 +45,7 @@ public class KeyStoreContentExtractor {
 
     private X509Certificate getCertificate(String signatureKeyAlias) {
         try {
-            KeyStore ks = KeyStore.getInstance(LicConstants.KEYSTORE_TYPE);
+            KeyStore ks = KeyStore.getInstance(KEYSTORE_TYPE);
             ks.load(new FileInputStream(keystore), secExtractor.getKeystoreDat());
             return (X509Certificate) ks.getCertificate(signatureKeyAlias);
         } catch (KeyStoreException | CertificateException |
