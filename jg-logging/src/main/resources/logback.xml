@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true">
+  <appender class="ch.qos.logback.core.FileAppender" name="FileAppender">
+    <encoder>
+      <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+    </encoder>
+  </appender>
+  <appender class="ch.qos.logback.core.rolling.RollingFileAppender" name="RollingFileAppender">
+    <file>/var/log/jgrades/application.log</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>/var/log/jgrades/application_%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+      <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+        <MaxFileSize>1MB</MaxFileSize>
+      </triggeringPolicy>
+      <triggeringPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+        <MaxBackupIndex>7</MaxBackupIndex>
+      </triggeringPolicy>
+    </rollingPolicy>
+    <encoder>
+      <charset>UTF-8</charset>
+      <pattern>%d %-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
+    </encoder>
+  </appender>
+  <logger name="logger">
+    <appender-ref ref="FileAppender" />
+    <appender-ref ref="RollingFileAppender" />
+  </logger>
+</configuration>

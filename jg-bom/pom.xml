@@ -15,6 +15,9 @@
     <properties>
         <bom.version>0.4-DEV-SNAPSHOT</bom.version>
 
+
+        <!-- XML DOM PARSER -->
+        <xml.dom.parser>2.0.5</xml.dom.parser>
         <!-- COMMONS LIBS -->
         <guava.version>18.0</guava.version>
         <commons.lang3.version>3.4</commons.lang3.version>
@@ -61,6 +64,20 @@
 
     <dependencyManagement>
         <dependencies>
+
+            <!-- XML DOM PARSER -->
+            <dependency>
+                <groupId>org.jdom</groupId>
+                <artifactId>jdom2</artifactId>
+                <version>${xml.dom.parser}</version>
+            </dependency>
+            <dependency>
+                <groupId>jaxen</groupId>
+                <artifactId>jaxen</artifactId>
+                <version>1.1.6</version>
+            </dependency>
+
+
             <!-- COMMONS LIBS -->
             <dependency>
                 <groupId>com.google.guava</groupId>
