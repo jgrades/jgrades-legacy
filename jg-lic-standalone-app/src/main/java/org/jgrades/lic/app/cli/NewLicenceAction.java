@@ -12,6 +12,8 @@ import java.io.File;
 import java.io.IOException;
 
 public class NewLicenceAction implements ApplicationAction {
+    public static final String SUCCESS_MESSAGE = "SUCCESS! Licence and signature saved.";
+
     private LicenceBuilder licenceBuilder = new LicenceBuilder();
 
     private ConsoleApplication console;
@@ -46,8 +48,7 @@ public class NewLicenceAction implements ApplicationAction {
 
             saver.saveLicence(encryptedBytes);
             saver.saveSignature(signature);
-            System.out.println("Done.");
-
+            System.out.println(SUCCESS_MESSAGE);
         } catch (IOException e) {
             System.err.println("Path to keystore or/and secDat file incorrect: " + e);
         }

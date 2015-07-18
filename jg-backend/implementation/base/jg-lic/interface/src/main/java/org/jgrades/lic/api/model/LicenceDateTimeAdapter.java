@@ -10,7 +10,11 @@ import java.util.Locale;
 public class LicenceDateTimeAdapter extends XmlAdapter<String, DateTime> {
     private static final String PATTERN = "yyyy-MM-dd HH:mm:ss";
 
-    private final DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern(PATTERN);
+    private static final DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern(PATTERN);
+
+    public static DateTimeFormatter getLicDateTimeFormatter() {
+        return dateTimeFormatter;
+    }
 
     public DateTime unmarshal(String v) {
         dateTimeFormatter.withLocale(Locale.ENGLISH);

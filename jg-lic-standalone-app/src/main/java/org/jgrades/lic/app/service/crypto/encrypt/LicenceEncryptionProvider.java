@@ -14,6 +14,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
@@ -38,7 +39,6 @@ public class LicenceEncryptionProvider {
         } catch (JAXBException e) {
             e.printStackTrace();
         }
-
         return os.toByteArray();
     }
 
@@ -56,7 +56,7 @@ public class LicenceEncryptionProvider {
 
     private ByteArrayOutputStream getEncryptedOutputStream(byte[] licXmlBytes, Cipher cipher) throws IOException {
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        CipherOutputStream cos = new CipherOutputStream(bos, cipher);
+        OutputStream cos = new CipherOutputStream(bos, cipher);
         IOUtils.write(licXmlBytes, cos);
         cos.close();
         return bos;

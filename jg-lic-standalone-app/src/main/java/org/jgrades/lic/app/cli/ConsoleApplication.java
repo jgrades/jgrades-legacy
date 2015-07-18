@@ -6,7 +6,9 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class ConsoleApplication implements LicenceApplication {
-    private Scanner scanner = new Scanner(System.in);
+    public static final String APPLICATION_HEADER = "jGrades Licensing Standalone Application 0.4";
+
+    private Scanner scanner = new Scanner(System.in, "UTF-8");
 
     protected void printPrompt() {
         System.out.print(">: ");
@@ -59,7 +61,7 @@ public class ConsoleApplication implements LicenceApplication {
     }
 
     private void printGreetings() {
-        System.out.println("jGrades Licensing Standalone Application 0.4");
+        System.out.println(APPLICATION_HEADER);
         System.out.println("============================================");
     }
 }

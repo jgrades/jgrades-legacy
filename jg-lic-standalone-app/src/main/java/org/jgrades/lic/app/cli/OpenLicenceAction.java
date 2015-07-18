@@ -9,7 +9,13 @@ import org.jgrades.lic.app.service.crypto.decrypt.SignatureValidator;
 import java.io.File;
 import java.io.IOException;
 
+import static org.jgrades.lic.api.model.LicenceDateTimeAdapter.getLicDateTimeFormatter;
+
 public class OpenLicenceAction implements ApplicationAction {
+    public static final String LICENCE_OPENED_SUCCESS_MESSAGE = "SUCCESS! Licence opened correctly.";
+    public static final String SIGNATURE_VALID_SUCCESS_MESSAGE = "SUCCESS! Signature is valid";
+    public static final String SIGNATURE_NOT_VALID_WARNING_MESSAGE = "WARNING! Signature is not valid.";
+
     private ConsoleApplication console;
 
     public OpenLicenceAction(ConsoleApplication consoleApplication) {
@@ -39,15 +45,15 @@ public class OpenLicenceAction implements ApplicationAction {
                     new File(licencePath), new File(signaturePath));
 
             if (validationSuccess) {
-                System.out.println("Signature is correct");
+                System.out.println(SIGNATURE_VALID_SUCCESS_MESSAGE);
             } else {
-                System.out.println("Warning! Signature is not correct");
+                System.out.println(SIGNATURE_NOT_VALID_WARNING_MESSAGE);
             }
 
             Licence licence = decryptionProvider.decrypt(new File(licencePath));
             prettyPrint(licence);
 
-            System.out.println("Done.");
+            System.out.println(LICENCE_OPENED_SUCCESS_MESSAGE);
         } catch (IOException e) {
             System.err.println("Path(s) to one or more of input files is/are incorrect: " + e);
         }
@@ -61,8 +67,8 @@ public class OpenLicenceAction implements ApplicationAction {
         System.out.println("Customer phone: " + licence.getCustomer().getPhone());
         System.out.println("Product name: " + licence.getProduct().getName());
         System.out.println("Product version: " + licence.getProduct().getVersion());
-        System.out.println("Licence valid from: " + licence.getProduct().getValidFrom());
-        System.out.println("Licence valid to: " + licence.getProduct().getValidTo());
+        System.out.println("Licence valid from: " + getLicDateTimeFormatter().print(licence.getProduct().getValidFrom()));
+        System.out.println("Licence valid to: " + getLicDateTimeFormatter().print(licence.getProduct().getValidTo()));
         System.out.println("Licence properties:");
         for (LicenceProperty property : licence.getProperties()) {
             System.out.println(property.getName() + "=>" + property.getValue());

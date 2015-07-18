@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<licence uid="1234">
+    <customer id="1">
+        <name>ąęłżźóĎ÷€€€€€</name>
+        <address>address1</address>
+        <phone>+48 601 234 567</phone>
+    </customer>
+    <product>
+        <name>JG-BASE</name>
+        <version>0.4</version>
+        <valid_from>1970-01-01 00:00:00</valid_from>
+        <valid_to>1970-02-01 00:00:00</valid_to>
+    </product>
+    <properties>
+        <property name="mac">00:0A:E6:3E:FD:E1</property>
+        <property name="expiredDays">14</property>
+    </properties>
+</licence>

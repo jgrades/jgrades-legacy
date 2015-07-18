@@ -23,7 +23,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class LicenceMarshallingFactoryTest {
     private static final String CORRECT_LICENCE_FILENAME = "correct_licence.xml";
+    private static final String CORRECT_LICENCE_UTF8_FILENAME = "correct_licence_utf8.xml";
     private static final String INCORRECT_DATETIME_LICENCE_FILENAME = "incorrect_datetime_licence.xml";
+
     @Rule
     public TemporaryFolder folder = new TemporaryFolder();
     private Marshaller jaxbMarshaller;
@@ -41,8 +43,22 @@ public class LicenceMarshallingFactoryTest {
     @Test
     public void shouldMarshall_whenCorrectLicence() throws Exception {
         // given
-        Licence licence = getCorrectLicence();
+        Licence licence = getCorrectLicence("customerName");
         File expectedXmlFile = new File(getResourcePath(CORRECT_LICENCE_FILENAME));
+        File workingFile = folder.newFile();
+
+        // when
+        jaxbMarshaller.marshal(licence, workingFile);
+
+        // then
+        assertThat(FileUtils.contentEquals(workingFile, expectedXmlFile));
+    }
+
+    @Test
+    public void shouldMarshall_whenCorrectLicenceWithUtf8Characters() throws Exception {
+        // given
+        Licence licence = getCorrectLicence("ąęłżźóĎ÷€€€€€");
+        File expectedXmlFile = new File(getResourcePath(CORRECT_LICENCE_UTF8_FILENAME));
         File workingFile = folder.newFile();
 
         // when
@@ -61,7 +77,19 @@ public class LicenceMarshallingFactoryTest {
         Licence licence = (Licence) jaxbUnmarshaller.unmarshal(new File(licenceFilePath));
 
         // then
-        assertThat(licence).isEqualTo(getCorrectLicence());
+        assertThat(licence).isEqualTo(getCorrectLicence("school1"));
+    }
+
+    @Test
+    public void shouldUnmarshall_whenCorrectXMLWithUtf8Characters() throws Exception {
+        // given
+        String licenceFilePath = getResourcePath(CORRECT_LICENCE_UTF8_FILENAME);
+
+        // when
+        Licence licence = (Licence) jaxbUnmarshaller.unmarshal(new File(licenceFilePath));
+
+        // then
+        assertThat(licence).isEqualTo(getCorrectLicence("ąęłżźóĎ÷€€€€€"));
     }
 
     @Test(expected = UnmarshalException.class)
@@ -76,13 +104,13 @@ public class LicenceMarshallingFactoryTest {
         // should throw UnmarshalException
     }
 
-    private Licence getCorrectLicence() {
+    private Licence getCorrectLicence(String customerName) {
         Licence licence = new Licence();
         licence.setUid(1234L);
 
         Customer customer = new Customer();
         customer.setId(1L);
-        customer.setName("school1");
+        customer.setName(customerName);
         customer.setAddress("address1");
         customer.setPhone("+48 601 234 567");
 
