@@ -14,6 +14,9 @@ import java.io.IOException;
 import java.util.Optional;
 
 public class OpeningLicenceWindowController {
+    private static final String SIGNATURE_IS_VALID = "Signature is valid";
+    private static final String SIGNATURE_IS_NOT_VALID = "Signature is not valid";
+
     @FXML
     private TextField securityDataField;
 
@@ -78,9 +81,9 @@ public class OpeningLicenceWindowController {
             boolean validationSuccess = licenceDecryptionService.validSignature(keystoreField.getText(),
                     securityDataField.getText(), licenceField.getText(), signatureField.getText());
             if (validationSuccess) {
-                DialogFactory.showInformationDialog("Signature is valid");
+                DialogFactory.showInformationDialog(SIGNATURE_IS_VALID);
             } else {
-                DialogFactory.showWarningDialog("Signature is not valid");
+                DialogFactory.showWarningDialog(SIGNATURE_IS_NOT_VALID);
             }
         } catch (IOException e) {
             DialogFactory.showExceptionDialog(e);
