@@ -12,7 +12,7 @@ public class LicenceDateTimeAdapterTest {
     public void shouldReturnCorrectFormatter() throws Exception {
         // given
         DateTime dateTime = new DateTime(2015, 7, 19, 5, 59, 59);
-        String expectedString = "2015-07-19 5:59:59";
+        String expectedString = "2015-07-19 05:59:59";
 
         // when
         DateTimeFormatter formatter = LicenceDateTimeAdapter.getLicDateTimeFormatter();

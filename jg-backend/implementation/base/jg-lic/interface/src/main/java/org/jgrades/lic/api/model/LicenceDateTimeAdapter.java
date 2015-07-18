@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
 import java.util.Locale;
 
 public class LicenceDateTimeAdapter extends XmlAdapter<String, DateTime> {
-    private static final String PATTERN = "yyyy-MM-dd H:mm:ss";
+    private static final String PATTERN = "yyyy-MM-dd HH:mm:ss";
 
     private static final DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern(PATTERN);
 
