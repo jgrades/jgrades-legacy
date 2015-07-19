@@ -63,7 +63,7 @@
 
         <!-- FRONT-END COMPONENTS -->
         <controlsfx.version>8.40.9</controlsfx.version>
-        <testfx.version>3.1.2</testfx.version>
+        <testfx.version>3.1.0</testfx.version>
     </properties>
 
     <dependencyManagement>
