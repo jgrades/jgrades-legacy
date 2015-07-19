@@ -86,7 +86,7 @@ public class JavafxApplicationIT {
         ((TextArea) find("#propertiesArea")).setText(macProperty + "\n" + expiredDaysProperty);
 
         controller.click("#mainActionButton");
-        Thread.sleep(5000);
+        Thread.sleep(3000);
         ((TextField) find("#mockField")).setText(licenceFile.getAbsolutePath());
         controller.click("#mockButton");
 
@@ -134,7 +134,7 @@ public class JavafxApplicationIT {
         controller.click("#mainActionButton");
         controller.closeCurrentWindow();
         controller.click("#openLicenceButton");
-        Thread.sleep(1000);
+        Thread.sleep(3000);
         controller.click("#browseLicenceFileButton");
         controller.closeCurrentWindow();
         controller.click("#browseSignatureFileButton");
