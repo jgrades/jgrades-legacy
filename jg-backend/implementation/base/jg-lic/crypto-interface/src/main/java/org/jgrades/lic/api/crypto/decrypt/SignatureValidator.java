@@ -2,14 +2,13 @@ package org.jgrades.lic.api.crypto.decrypt;
 
 import org.apache.commons.io.FileUtils;
 import org.jgrades.lic.api.crypto.utils.KeyStoreContentExtractor;
-import org.jgrades.lic.api.crypto.utils.LicConstants;
 
 import java.io.File;
 import java.io.IOException;
 import java.security.*;
 import java.security.cert.X509Certificate;
 
-import static org.jgrades.lic.api.crypto.utils.LicConstants.*;
+import static org.jgrades.lic.api.crypto.utils.LicConstants.SIGNATURE_PROVIDER_INTERFACE;
 
 class SignatureValidator {
     private final KeyStoreContentExtractor keyExtractor;
@@ -18,7 +17,7 @@ class SignatureValidator {
         this.keyExtractor = keyExtractor;
     }
 
-    public boolean signatureValidated(File encryptedLicenceFile, File signatureFile) {
+    public boolean signatureValidated(File encryptedLicenceFile, File signatureFile) throws IOException {
         try {
             X509Certificate certificate = keyExtractor.getCertificateForVerification();
             PublicKey publicKey = certificate.getPublicKey();
@@ -28,7 +27,7 @@ class SignatureValidator {
             signature.update(FileUtils.readFileToByteArray(encryptedLicenceFile));
 
             return signature.verify(FileUtils.readFileToByteArray(signatureFile));
-        } catch (NoSuchAlgorithmException | InvalidKeyException | SignatureException | IOException e) {
+        } catch (NoSuchAlgorithmException | InvalidKeyException | SignatureException e) {
             e.printStackTrace();
             return false;
         }

@@ -4,10 +4,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.TextField;
-import javafx.stage.FileChooser;
 import org.jgrades.lic.api.crypto.decrypt.LicenceDecryptionService;
 import org.jgrades.lic.api.model.Licence;
 import org.jgrades.lic.app.utils.DialogFactory;
+import org.jgrades.lic.app.utils.FileChooserFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,7 +21,7 @@ public class OpeningLicenceWindowController {
     private TextField securityDataField;
 
     @FXML
-    private TextField keystoreField;
+    private TextField keystoreFileField;
 
     @FXML
     private TextField signatureField;
@@ -35,8 +35,8 @@ public class OpeningLicenceWindowController {
     @FXML
     void openLicenceAction(ActionEvent event) {
         try {
-            Licence licence = licenceDecryptionService.decrypt(keystoreField.getText(), securityDataField.getText(), licenceField.getText());
-            mainWindowController.setLicence(licence, keystoreField.getText(), securityDataField.getText());
+            Licence licence = licenceDecryptionService.decrypt(keystoreFileField.getText(), securityDataField.getText(), licenceField.getText());
+            mainWindowController.setLicence(licence, keystoreFileField.getText(), securityDataField.getText());
             ((Node) (event.getSource())).getScene().getWindow().hide();
         } catch (Exception e) {
             DialogFactory.showExceptionDialog(e);
@@ -55,7 +55,7 @@ public class OpeningLicenceWindowController {
 
     @FXML
     void browseKeystoreFileAction(ActionEvent event) {
-        browse("Choose keystore file", event, keystoreField);
+        browse("Choose keystore file", event, keystoreFileField);
     }
 
     @FXML
@@ -64,9 +64,7 @@ public class OpeningLicenceWindowController {
     }
 
     private void browse(String title, ActionEvent event, TextField textField) {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle(title);
-        File chosenFile = fileChooser.showOpenDialog(((Node) event.getTarget()).getScene().getWindow());
+        File chosenFile = FileChooserFactory.showOpenDialog(title, event);
         if (Optional.ofNullable(chosenFile).isPresent()) {
             textField.setText(chosenFile.getAbsolutePath());
         }
@@ -78,7 +76,7 @@ public class OpeningLicenceWindowController {
 
     public void verifySignature() {
         try {
-            boolean validationSuccess = licenceDecryptionService.validSignature(keystoreField.getText(),
+            boolean validationSuccess = licenceDecryptionService.validSignature(keystoreFileField.getText(),
                     securityDataField.getText(), licenceField.getText(), signatureField.getText());
             if (validationSuccess) {
                 DialogFactory.showInformationDialog(SIGNATURE_IS_VALID);

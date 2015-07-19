@@ -8,14 +8,31 @@ import org.jgrades.lic.app.launch.LicenceApplication;
 
 import static org.jgrades.lic.app.utils.AppConstants.*;
 
-//TODO Entire javaFX application code needs to be refactored ASAP
 public class JavafxApplication extends Application implements LicenceApplication {
+    private static boolean testingModeEnabled = false;
+
+    private static Scene scene;
+    private static Stage stage;
+
+    public static boolean isTestingModeEnabled() {
+        return testingModeEnabled;
+    }
+
+    public static Scene getScene() {
+        return scene;
+    }
+
+    public static Stage getStage() {
+        return stage;
+    }
+
     @Override
     public void start(Stage primaryStage) throws Exception {
+        stage = primaryStage;
         FXMLLoader loader =
                 new FXMLLoader(this.getClass().getClassLoader().getResource(MAIN_WINDOW_FXML_PATH));
 
-        Scene scene = new Scene(loader.load(), MAIN_WINDOW_WIDTH, MAIN_WINDOW_HEIGHT);
+        scene = new Scene(loader.load(), MAIN_WINDOW_WIDTH, MAIN_WINDOW_HEIGHT);
         prepareMainWindow(primaryStage, scene);
     }
 

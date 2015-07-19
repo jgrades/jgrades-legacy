@@ -166,6 +166,81 @@ public class PropertiesTextAreaParserTest {
         failBecauseExceptionWasNotThrown(IllegalArgumentException.class);
     }
 
+    @Test
+    public void shouldReturnEmptyString_whenNullList() throws Exception {
+        // given
+        List<LicenceProperty> properties = null;
+
+        // when
+        String result = parser.getPropertiesText(properties);
+
+        // then
+        assertThat(result).isEmpty();
+    }
+
+    @Test
+    public void shouldReturnEmptyString_whenEmptyList() throws Exception {
+        // given
+        List<LicenceProperty> properties = Lists.newArrayList();
+
+        // when
+        String result = parser.getPropertiesText(properties);
+
+        // then
+        assertThat(result).isEmpty();
+    }
+
+    @Test
+    public void shouldReturnStringWithOneProperty() throws Exception {
+        // given
+        List<LicenceProperty> properties = Lists.newArrayList(buildProperty("name", "value"));
+
+        // when
+        String result = parser.getPropertiesText(properties);
+
+        // then
+        assertThat(result).isEqualTo("name=value\n");
+    }
+
+    @Test
+    public void shouldReturnStringWithTwoProperties() throws Exception {
+        // given
+        List<LicenceProperty> properties = Lists.newArrayList(
+                buildProperty("name1", "value1"),
+                buildProperty("name2", "value2")
+        );
+
+        // when
+        String result = parser.getPropertiesText(properties);
+
+        // then
+        assertThat(result).isEqualTo("name1=value1\nname2=value2\n");
+    }
+
+    @Test
+    public void shouldReturnStringWithFiveProperties() throws Exception {
+        // given
+        String content = "key=value\n" +
+                "key2==value 2\n" +
+                " key3 = val =\n" +
+                "= key4==value4:\n" +
+                "= key4==value4:\n";
+
+        List<LicenceProperty> properties = Lists.newArrayList(
+                buildProperty("key", "value"),
+                buildProperty("key2", "=value 2"),
+                buildProperty(" key3 ", " val ="),
+                buildProperty(StringUtils.EMPTY, " key4==value4:"),
+                buildProperty(StringUtils.EMPTY, " key4==value4:")
+        );
+
+        // when
+        String result = parser.getPropertiesText(properties);
+
+        // then
+        assertThat(result).isEqualTo(content);
+    }
+
     private LicenceProperty buildProperty(String name, String value) {
         LicenceProperty property = new LicenceProperty();
         property.setName(name);

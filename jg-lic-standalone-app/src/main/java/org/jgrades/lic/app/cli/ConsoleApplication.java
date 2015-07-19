@@ -7,6 +7,8 @@ import java.util.Scanner;
 
 public class ConsoleApplication implements LicenceApplication {
     public static final String APPLICATION_HEADER = "jGrades Licensing Manager Application 0.4";
+    public static final String INVALID_OPTION_MESSAGE = "Invalid option. Try again.";
+    public static final String UNKNOWN_OPTION_MESSAGE = "Unknown option. Try again.";
 
     private Scanner scanner = new Scanner(System.in, "UTF-8");
 
@@ -48,15 +50,18 @@ public class ConsoleApplication implements LicenceApplication {
                 throw new IllegalArgumentException();
             }
         } catch (NoSuchElementException e) {
-            System.out.println("Invalid option. Try again.");
-            scanner.reset();
+            System.out.println(INVALID_OPTION_MESSAGE);
             scanner = new Scanner(System.in);
             return chooseAction();
         } catch (IllegalArgumentException e) {
-            System.out.println("Unknown option. Try again.");
+            System.out.println(UNKNOWN_OPTION_MESSAGE);
             return chooseAction();
         } finally {
-            scanner.nextLine();
+            try {
+                scanner.nextLine();
+            } catch (NoSuchElementException e) {
+                //not needed...
+            }
         }
     }
 

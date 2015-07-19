@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<BorderPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+            minWidth="-Infinity"
             prefHeight="186.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8"
             fx:controller="org.jgrades.lic.app.controller.OpeningLicenceWindowController">
     <bottom>
         <FlowPane alignment="BOTTOM_RIGHT" prefHeight="39.0" prefWidth="600.0" BorderPane.alignment="BOTTOM_RIGHT">
             <children>
-                <Button alignment="BOTTOM_RIGHT" mnemonicParsing="false" onAction="#openLicenceAction" text="Open">
+                <Button fx:id="openButton" alignment="BOTTOM_RIGHT" mnemonicParsing="false"
+                        onAction="#openLicenceAction" text="Open">
                     <FlowPane.margin>
                         <Insets bottom="5.0" right="5.0"/>
                     </FlowPane.margin>
@@ -54,28 +55,29 @@
                 </Label>
                 <TextField fx:id="licenceField" GridPane.columnIndex="1"/>
                 <TextField fx:id="signatureField" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-                <TextField fx:id="keystoreField" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                <TextField fx:id="keystoreFileField" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
                 <TextField fx:id="securityDataField" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
-                <Button mnemonicParsing="false" onAction="#browseLicenceFileAction" text="Browse"
-                        GridPane.columnIndex="2" GridPane.halignment="RIGHT">
+                <Button fx:id="browseLicenceFileButton" mnemonicParsing="false" onAction="#browseLicenceFileAction"
+                        text="Browse" GridPane.columnIndex="2" GridPane.halignment="RIGHT">
                     <GridPane.margin>
                         <Insets left="5.0" right="5.0"/>
                     </GridPane.margin>
                 </Button>
-                <Button mnemonicParsing="false" onAction="#browseSignatureFileAction" text="Browse"
-                        GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+                <Button fx:id="browseSignatureFileButton" mnemonicParsing="false" onAction="#browseSignatureFileAction"
+                        text="Browse" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
                     <GridPane.margin>
                         <Insets left="5.0" right="5.0"/>
                     </GridPane.margin>
                 </Button>
-                <Button mnemonicParsing="false" onAction="#browseKeystoreFileAction" text="Browse"
-                        GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+                <Button fx:id="browseKeystoreFileButton" mnemonicParsing="false" onAction="#browseKeystoreFileAction"
+                        text="Browse" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
                     <GridPane.margin>
                         <Insets left="5.0" right="5.0"/>
                     </GridPane.margin>
                 </Button>
-                <Button mnemonicParsing="false" onAction="#browseSecurityDataFileAction" text="Browse"
-                        GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
+                <Button fx:id="browseSecurityDataFileButton" mnemonicParsing="false"
+                        onAction="#browseSecurityDataFileAction" text="Browse" GridPane.columnIndex="2"
+                        GridPane.halignment="RIGHT" GridPane.rowIndex="3">
                     <GridPane.margin>
                         <Insets left="5.0" right="5.0"/>
                     </GridPane.margin>

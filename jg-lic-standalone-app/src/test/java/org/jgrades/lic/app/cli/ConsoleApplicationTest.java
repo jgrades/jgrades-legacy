@@ -14,10 +14,12 @@ public class ConsoleApplicationTest {
     @Rule
     public final ExpectedSystemExit exit = ExpectedSystemExit.none();
     private ConsoleApplication consoleApplication;
+    private String[] args;
 
     @Before
     public void setUp() throws Exception {
         consoleApplication = new ConsoleApplication();
+        args = new String[]{};
         assertThat(consoleApplication).isNotNull();
     }
 

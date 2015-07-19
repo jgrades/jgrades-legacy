@@ -5,10 +5,9 @@ import org.jgrades.lic.api.crypto.encrypt.LicenceEncryptionService;
 import org.jgrades.lic.api.model.Licence;
 import org.jgrades.lic.app.utils.LicenceBuilder;
 
-import java.io.IOException;
-
 public class NewLicenceAction implements ApplicationAction {
     public static final String SUCCESS_MESSAGE = "SUCCESS! Licence and signature saved.";
+    public static final String GENERAL_ERROR_MESSAGE = "Operation interrupted by error: ";
 
     private LicenceBuilder licenceBuilder = new LicenceBuilder();
 
@@ -27,18 +26,17 @@ public class NewLicenceAction implements ApplicationAction {
 
     @Override
     public void start() {
-        String keystorePath = console.getLine("Enter keystore path");
-        String secDatPath = console.getLine("Enter secure data path");
-
-        Licence licence = licenceCreator();
-
-        String licencePath = console.getLine("Enter path to save licence");
-
         try {
+            String keystorePath = console.getLine("Enter keystore path");
+            String secDatPath = console.getLine("Enter secure data path");
+
+            Licence licence = licenceCreator();
+
+            String licencePath = console.getLine("Enter path to save licence");
             licenceEncryptionService.encryptAndSign(licence, keystorePath, secDatPath, licencePath);
             System.out.println(SUCCESS_MESSAGE);
-        } catch (IOException e) {
-            System.err.println("Path to keystore or/and secDat file incorrect: " + e);
+        } catch (Exception e) {
+            System.err.println(GENERAL_ERROR_MESSAGE + e);
         }
     }
 

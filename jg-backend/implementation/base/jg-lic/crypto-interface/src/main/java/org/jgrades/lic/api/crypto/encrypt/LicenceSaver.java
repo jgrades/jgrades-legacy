@@ -1,12 +1,11 @@
 package org.jgrades.lic.api.crypto.encrypt;
 
 import org.apache.commons.io.FileUtils;
-import org.jgrades.lic.api.crypto.utils.LicConstants;
 
 import java.io.File;
 import java.io.IOException;
 
-import static org.jgrades.lic.api.crypto.utils.LicConstants.*;
+import static org.jgrades.lic.api.crypto.utils.LicConstants.SIGNATURE_FILE_EXTENSION;
 
 class LicenceSaver {
     private final File licenceFile;

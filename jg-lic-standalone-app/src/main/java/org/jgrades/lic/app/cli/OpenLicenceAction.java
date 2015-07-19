@@ -2,15 +2,15 @@ package org.jgrades.lic.app.cli;
 
 import org.jgrades.lic.api.crypto.decrypt.LicenceDecryptionService;
 import org.jgrades.lic.api.model.Licence;
-import org.jgrades.lic.api.model.LicenceDateTimeAdapter;
 import org.jgrades.lic.api.model.LicenceProperty;
 
-import java.io.IOException;
+import static org.jgrades.lic.api.model.LicenceDateTimeAdapter.getLicDateTimeFormatter;
 
 public class OpenLicenceAction implements ApplicationAction {
     public static final String LICENCE_OPENED_SUCCESS_MESSAGE = "SUCCESS! Licence opened correctly.";
     public static final String SIGNATURE_VALID_SUCCESS_MESSAGE = "SUCCESS! Signature is valid";
     public static final String SIGNATURE_NOT_VALID_WARNING_MESSAGE = "WARNING! Signature is not valid.";
+    public static final String GENERAL_ERROR_MESSAGE = "Operation interrupted by error: ";
 
     private ConsoleApplication console;
     private LicenceDecryptionService licenceDecryptionService = new LicenceDecryptionService();
@@ -27,12 +27,12 @@ public class OpenLicenceAction implements ApplicationAction {
 
     @Override
     public void start() {
-        String keystorePath = console.getLine("Enter keystore path");
-        String secDatPath = console.getLine("Enter secure data path");
-        String licencePath = console.getLine("Enter licence path");
-        String signaturePath = console.getLine("Enter signature path");
-
         try {
+            String keystorePath = console.getLine("Enter keystore path");
+            String secDatPath = console.getLine("Enter secure data path");
+            String licencePath = console.getLine("Enter licence path");
+            String signaturePath = console.getLine("Enter signature path");
+
             Licence licence = licenceDecryptionService.decrypt(keystorePath, secDatPath, licencePath);
             prettyPrint(licence);
             System.out.println(LICENCE_OPENED_SUCCESS_MESSAGE);
@@ -42,8 +42,8 @@ public class OpenLicenceAction implements ApplicationAction {
             } else {
                 System.out.println(SIGNATURE_NOT_VALID_WARNING_MESSAGE);
             }
-        } catch (IOException e) {
-            System.err.println("Path(s) to one or more of input files is/are incorrect: " + e);
+        } catch (Exception e) {
+            System.err.println(GENERAL_ERROR_MESSAGE + e);
         }
     }
 
@@ -55,11 +55,11 @@ public class OpenLicenceAction implements ApplicationAction {
         System.out.println("Customer phone: " + licence.getCustomer().getPhone());
         System.out.println("Product name: " + licence.getProduct().getName());
         System.out.println("Product version: " + licence.getProduct().getVersion());
-        System.out.println("Licence valid from: " + LicenceDateTimeAdapter.getLicDateTimeFormatter().print(licence.getProduct().getValidFrom()));
-        System.out.println("Licence valid to: " + LicenceDateTimeAdapter.getLicDateTimeFormatter().print(licence.getProduct().getValidTo()));
+        System.out.println("Licence valid from: " + getLicDateTimeFormatter().print(licence.getProduct().getValidFrom()));
+        System.out.println("Licence valid to: " + getLicDateTimeFormatter().print(licence.getProduct().getValidTo()));
         System.out.println("Licence properties:");
         for (LicenceProperty property : licence.getProperties()) {
-            System.out.println(property.getName() + "=>" + property.getValue());
+            System.out.println(property.getName() + " => " + property.getValue());
         }
     }
 }

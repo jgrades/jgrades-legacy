@@ -3,7 +3,6 @@ package org.jgrades.lic.api.crypto.decrypt;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.jgrades.lic.api.crypto.utils.KeyStoreContentExtractor;
-import org.jgrades.lic.api.crypto.utils.LicConstants;
 import org.jgrades.lic.api.model.Licence;
 import org.jgrades.lic.api.service.LicenceMarshallingFactory;
 
@@ -20,7 +19,7 @@ import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
-import static org.jgrades.lic.api.crypto.utils.LicConstants.*;
+import static org.jgrades.lic.api.crypto.utils.LicConstants.CIPHER_PROVIDER_INTERFACE;
 
 class LicenceDecryptionProvider {
     private final KeyStoreContentExtractor extractor;

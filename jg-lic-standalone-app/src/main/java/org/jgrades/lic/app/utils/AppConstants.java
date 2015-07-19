@@ -8,6 +8,7 @@ public final class AppConstants {
     public static final String MAIN_WINDOW_FXML_PATH = "view/MainWindow.fxml";
     public static final String LICENCE_FORM_FXML_PATH = "view/LicenceForm.fxml";
     public static final String OPENING_LIC_WINDOW_FXML_PATH = "view/OpeningLicenceWindow.fxml";
+    public static final String BROWSE_FILE_MOCK_WINDOW_FXML_PATH = "view/BrowseFileWindowMockForTesting.fxml";
 
     private AppConstants() {
     }

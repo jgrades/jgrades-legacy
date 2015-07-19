@@ -3,19 +3,18 @@ package org.jgrades.lic.app.controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
-import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.jgrades.lic.api.crypto.encrypt.LicenceEncryptionService;
 import org.jgrades.lic.api.model.Licence;
 import org.jgrades.lic.app.utils.DialogFactory;
+import org.jgrades.lic.app.utils.FileChooserFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -60,9 +59,7 @@ public class MainWindowController {
             String keystorePath = keystoreField.getText();
             String secDatPath = secDatField.getText();
 
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("Choose location for licence file");
-            File licenceFile = fileChooser.showSaveDialog(((Node) event.getTarget()).getScene().getWindow());
+            File licenceFile = FileChooserFactory.showSaveDialog("Choose location for licence file", event);
             if (Optional.ofNullable(licenceFile).isPresent()) {
                 try {
                     Licence licence = licenceFormController.getLicenceModel();
@@ -79,9 +76,7 @@ public class MainWindowController {
 
     @FXML
     void browseKeystoreAction(ActionEvent event) {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Choose keystore file");
-        File chosenFile = fileChooser.showOpenDialog(((Node) event.getTarget()).getScene().getWindow());
+        File chosenFile = FileChooserFactory.showOpenDialog("Choose keystore file", event);
         if (Optional.ofNullable(chosenFile).isPresent()) {
             keystoreField.setText(chosenFile.getAbsolutePath());
         }
@@ -89,9 +84,7 @@ public class MainWindowController {
 
     @FXML
     void browseSecDatAction(ActionEvent event) {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Choose security data file");
-        File chosenFile = fileChooser.showOpenDialog(((Node) event.getTarget()).getScene().getWindow());
+        File chosenFile = FileChooserFactory.showOpenDialog("Choose security data file", event);
         if (Optional.ofNullable(chosenFile).isPresent()) {
             secDatField.setText(chosenFile.getAbsolutePath());
         }

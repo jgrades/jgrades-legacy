@@ -5,6 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.jgrades.lic.api.model.LicenceProperty;
 
 import java.util.List;
+import java.util.Optional;
 
 public class PropertiesTextAreaParser {
     private static final String ERROR_PARSING_MESSAGE = "Invalid property definition appears in line: ";
@@ -39,6 +40,9 @@ public class PropertiesTextAreaParser {
     }
 
     public String getPropertiesText(List<LicenceProperty> properties) {
+        if (!Optional.ofNullable(properties).isPresent()) {
+            return StringUtils.EMPTY;
+        }
         StringBuilder sb = new StringBuilder();
         for (LicenceProperty property : properties) {
             sb.append(property.getName());

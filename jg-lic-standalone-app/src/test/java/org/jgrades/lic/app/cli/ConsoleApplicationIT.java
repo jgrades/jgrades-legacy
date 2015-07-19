@@ -48,12 +48,16 @@ public class ConsoleApplicationIT {
     private File keystore;
     private File secData;
 
+    private String[] args;
+
     @Before
     public void setUp() throws Exception {
         this.consoleApplication = new ConsoleApplication();
 
         keystore = new ClassPathResource("jg-ks-test.jceks").getFile();
         secData = new ClassPathResource("sec-test.dat").getFile();
+
+        args = new String[]{};
     }
 
     @Test
@@ -89,6 +93,49 @@ public class ConsoleApplicationIT {
         // when
         invokeGenerationAndOpeningWithVerification(licenceFile, notValidSignatureFile);
     }
+
+    @Test
+    public void shouldShowWarning_whenUserChoseInvalidOption() throws Exception {
+        // given
+        String choice = "one";
+
+        // then
+        exit.expectSystemExitWithStatus(0);
+
+        exit.checkAssertionAfterwards(() -> {
+            thenOutputContains(ConsoleApplication.INVALID_OPTION_MESSAGE);
+        });
+
+        // when
+        systemInMock.provideLines(
+                choice,
+                INVOKE_EXIT_ACTION_CODE
+        );
+
+        consoleApplication.runApp();
+    }
+
+    @Test
+    public void shouldShowWarning_whenUserChoseUnknownOption() throws Exception {
+        // given
+        String choice = "4";
+
+        // then
+        exit.expectSystemExitWithStatus(0);
+
+        exit.checkAssertionAfterwards(() -> {
+            thenOutputContains(ConsoleApplication.UNKNOWN_OPTION_MESSAGE);
+        });
+
+        // when
+        systemInMock.provideLines(
+                choice,
+                INVOKE_EXIT_ACTION_CODE
+        );
+
+        consoleApplication.runApp();
+    }
+
 
     private void invokeGenerationAndOpeningWithVerification(File licenceFile, File signatureFile) {
         // then

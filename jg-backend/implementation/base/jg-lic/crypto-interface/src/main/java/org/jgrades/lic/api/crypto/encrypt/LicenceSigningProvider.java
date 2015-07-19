@@ -1,7 +1,6 @@
 package org.jgrades.lic.api.crypto.encrypt;
 
 import org.jgrades.lic.api.crypto.utils.KeyStoreContentExtractor;
-import org.jgrades.lic.api.crypto.utils.LicConstants;
 
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -9,7 +8,7 @@ import java.security.Signature;
 import java.security.SignatureException;
 import java.util.Optional;
 
-import static org.jgrades.lic.api.crypto.utils.LicConstants.*;
+import static org.jgrades.lic.api.crypto.utils.LicConstants.SIGNATURE_PROVIDER_INTERFACE;
 
 class LicenceSigningProvider {
     private final KeyStoreContentExtractor extractor;
