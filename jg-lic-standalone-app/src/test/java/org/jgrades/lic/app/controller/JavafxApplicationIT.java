@@ -64,7 +64,7 @@ public class JavafxApplicationIT {
     }
 
     @Test
-    public void foo() throws Throwable {
+    public void shouldFillForm_saveLicence_thenOpen_andVerifySignature() throws Throwable {
         ReflectionTestUtils.setField(new JavafxApplication(), "testingModeEnabled", true);
         controller.click("#newLicenceButton");
         checkIsFormEditable(true);
@@ -86,7 +86,7 @@ public class JavafxApplicationIT {
         ((TextArea) find("#propertiesArea")).setText(macProperty + "\n" + expiredDaysProperty);
 
         controller.click("#mainActionButton");
-        Thread.sleep(1000);
+        Thread.sleep(5000);
         ((TextField) find("#mockField")).setText(licenceFile.getAbsolutePath());
         controller.click("#mockButton");
 
