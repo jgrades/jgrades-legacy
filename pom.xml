@@ -33,6 +33,8 @@
                 <jg.logs.dir>C:/jgrades/logs</jg.logs.dir>
                 <jg.lic.data.dir>C:/jgrades/licdata</jg.lic.data.dir>
                 <shadow.backup.dir>C:/jgrades/backup</shadow.backup.dir>
+                <skip.tests>false</skip.tests>
+                <skip.integration.tests>true</skip.integration.tests>
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>
@@ -46,6 +48,8 @@
                 <jg.logs.dir>/var/log/jgrades</jg.logs.dir>
                 <jg.lic.data.dir>/etc/opt/jgrades</jg.lic.data.dir>
                 <shadow.backup.dir>/var/backups/jgrades</shadow.backup.dir>
+                <skip.tests>false</skip.tests>
+                <skip.integration.tests>true</skip.integration.tests>
             </properties>
         </profile>
     </profiles>
@@ -98,7 +102,7 @@
                             <goal>test</goal>
                         </goals>
                         <configuration>
-                            <skip>false</skip>
+                            <skip>${skip.tests}</skip>
                             <includes>
                                 <include>**/*Test.java</include>
                             </includes>
@@ -114,10 +118,13 @@
                             <goal>test</goal>
                         </goals>
                         <configuration>
-                            <skip>false</skip>
+                            <skip>${skip.integration.tests}</skip>
                             <includes>
                                 <include>**/*IT.java</include>
                             </includes>
+                            <excludes>
+                                <exclude>**/*Test.java</exclude>
+                            </excludes>
                         </configuration>
                     </execution>
                 </executions>
