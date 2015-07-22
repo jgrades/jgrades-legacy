@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.jgrades.app</groupId>
         <artifactId>interface</artifactId>
-        <version>${release.version}</version>
+        <version>0.4-DEV-SNAPSHOT</version>
     </parent>
 
     <artifactId>jg-rest-ws</artifactId>

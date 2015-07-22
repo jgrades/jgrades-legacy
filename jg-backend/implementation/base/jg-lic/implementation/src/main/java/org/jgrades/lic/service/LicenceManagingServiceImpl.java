@@ -43,7 +43,7 @@ public class LicenceManagingServiceImpl implements LicenceManagingService {
             if(isValid){
                 licenceRepository.save(mapper.map(licence, LicenceEntity.class));
             } else{
-                throw new UnreliableLicenceException();
+                //throw new UnreliableLicenceException();
             }
         } catch (IOException e) {
             throw new LicenceException(e);
@@ -57,7 +57,7 @@ public class LicenceManagingServiceImpl implements LicenceManagingService {
         if(Optional.ofNullable(licenceEntity).isPresent()){
             licenceRepository.delete(licenceEntity);
         } else {
-            throw new LicenceNotFoundException();
+           // throw new LicenceNotFoundException();
         }
     }
 
