@@ -6,7 +6,7 @@
 
     <groupId>org.jgrades</groupId>
     <artifactId>jgrades-all</artifactId>
-    <version>${release.version}</version>
+    <version>0.4-DEV-SNAPSHOT</version>
 
     <packaging>pom</packaging>
     <name>jGrades Application</name>
@@ -77,6 +77,20 @@
                     <source>1.8</source>
                     <target>1.8</target>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>versions-maven-plugin</artifactId>
+                <version>2.2</version>
+                <executions>
+                    <execution>
+                        <id>update-child-modules</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>update-child-modules</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.jacoco</groupId>
