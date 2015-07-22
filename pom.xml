@@ -31,10 +31,12 @@
                 <tomcat.installation.dir>C:/jgrades/tomcat8</tomcat.installation.dir>
                 <tomcat.logs.dir>C:/jgrades/tomcat8/logs</tomcat.logs.dir>
                 <jg.logs.dir>C:/jgrades/logs</jg.logs.dir>
-                <jg.lic.data.dir>C:/jgrades/licdata</jg.lic.data.dir>
+                <jg.internal.data.dir>C:/jgrades/internal</jg.internal.data.dir>
                 <shadow.backup.dir>C:/jgrades/backup</shadow.backup.dir>
                 <skip.tests>false</skip.tests>
                 <skip.integration.tests>true</skip.integration.tests>
+                <db.operations.debug>true</db.operations.debug>
+                <db.schema.orm.policy>create-drop</db.schema.orm.policy>
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>
@@ -46,10 +48,12 @@
                 <tomcat.installation.dir>/etc/tomcat8</tomcat.installation.dir>
                 <tomcat.logs.dir>/var/log/tomcat8</tomcat.logs.dir>
                 <jg.logs.dir>/var/log/jgrades</jg.logs.dir>
-                <jg.lic.data.dir>/etc/opt/jgrades</jg.lic.data.dir>
+                <jg.internal.data.dir>/etc/opt/jgrades</jg.internal.data.dir>
                 <shadow.backup.dir>/var/backups/jgrades</shadow.backup.dir>
                 <skip.tests>false</skip.tests>
                 <skip.integration.tests>true</skip.integration.tests>
+                <db.operations.debug>false</db.operations.debug>
+                <db.schema.orm.policy>none</db.schema.orm.policy>
             </properties>
         </profile>
     </profiles>
