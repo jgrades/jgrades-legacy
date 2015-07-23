@@ -99,6 +99,7 @@ public class JavafxApplicationIT {
         Thread.sleep(1000);
         controller.closeCurrentWindow();
         Thread.sleep(1000);
+        FXTestUtils.awaitEvents();
         controller.click("#newLicenceButton");
         controller.click("#openLicenceButton");
         ((TextField) find("#licenceField")).setText(licenceFile.getAbsolutePath());
@@ -129,6 +130,7 @@ public class JavafxApplicationIT {
         controller.click("#newLicenceButton");
         controller.click("#browseKeystoreButton");
         controller.closeCurrentWindow();
+        FXTestUtils.awaitEvents();
         controller.click("#browseSecDatButton");
         controller.closeCurrentWindow();
         controller.click("#mainActionButton");
