@@ -28,22 +28,17 @@ class LicenceDecryptionProvider {
         this.extractor = extractor;
     }
 
-    public Licence decrypt(File encryptedLicenceFile) throws IOException {
+    public Licence decrypt(File encryptedLicenceFile) throws IOException, NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException {
         byte[] encryptedLicXmlBytes = FileUtils.readFileToByteArray(encryptedLicenceFile);
         byte[] decryptedLicXmlBytes = decrypt(encryptedLicXmlBytes);
         return transformToObject(decryptedLicXmlBytes);
     }
 
-    private byte[] decrypt(byte[] encryptedLicXmlBytes) {
-        try {
-            Cipher cipher = Cipher.getInstance(CIPHER_PROVIDER_INTERFACE);
-            SecretKeySpec secretKeySpec = extractor.getPrivateKeyForEncryptionAndDecryption();
-            cipher.init(Cipher.DECRYPT_MODE, secretKeySpec);
-            return getDecryptedOutputStream(encryptedLicXmlBytes, cipher).toByteArray();
-        } catch (NoSuchAlgorithmException | InvalidKeyException | NoSuchPaddingException | IOException e) {
-            e.printStackTrace();
-        }
-        return null;
+    private byte[] decrypt(byte[] encryptedLicXmlBytes) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, IOException {
+        Cipher cipher = Cipher.getInstance(CIPHER_PROVIDER_INTERFACE);
+        SecretKeySpec secretKeySpec = extractor.getPrivateKeyForEncryptionAndDecryption();
+        cipher.init(Cipher.DECRYPT_MODE, secretKeySpec);
+        return getDecryptedOutputStream(encryptedLicXmlBytes, cipher).toByteArray();
     }
 
     private ByteArrayOutputStream getDecryptedOutputStream(byte[] encryptedLicXmlBytes, Cipher cipher) throws IOException {

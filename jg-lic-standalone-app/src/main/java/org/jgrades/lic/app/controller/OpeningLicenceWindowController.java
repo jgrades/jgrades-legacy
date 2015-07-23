@@ -11,6 +11,9 @@ import org.jgrades.lic.app.utils.FileChooserFactory;
 
 import java.io.File;
 import java.io.IOException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.SignatureException;
 import java.util.Optional;
 
 public class OpeningLicenceWindowController {
@@ -83,7 +86,7 @@ public class OpeningLicenceWindowController {
             } else {
                 DialogFactory.showWarningDialog(SIGNATURE_IS_NOT_VALID);
             }
-        } catch (IOException e) {
+        } catch (IOException | NoSuchAlgorithmException | SignatureException | InvalidKeyException e) {
             DialogFactory.showExceptionDialog(e);
         }
     }

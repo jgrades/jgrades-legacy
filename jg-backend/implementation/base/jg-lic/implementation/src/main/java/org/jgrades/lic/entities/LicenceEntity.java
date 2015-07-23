@@ -15,10 +15,10 @@ public class LicenceEntity implements Serializable {
     @Id
     private Long uid;
 
-    @OneToOne(cascade=CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
     private CustomerEntity customer;
 
-    @OneToOne(cascade=CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
     private ProductEntity product;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -75,7 +75,6 @@ public class LicenceEntity implements Serializable {
     public void setSignatureFilePath(String signatureFilePath) {
         this.signatureFilePath = signatureFilePath;
     }
-
 
 
     @Override

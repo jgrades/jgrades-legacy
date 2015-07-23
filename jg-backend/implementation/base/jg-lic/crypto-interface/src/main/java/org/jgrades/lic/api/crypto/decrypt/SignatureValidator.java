@@ -17,18 +17,17 @@ class SignatureValidator {
         this.keyExtractor = keyExtractor;
     }
 
-    public boolean signatureValidated(File encryptedLicenceFile, File signatureFile) throws IOException {
-        try {
-            X509Certificate certificate = keyExtractor.getCertificateForVerification();
-            PublicKey publicKey = certificate.getPublicKey();
+    public boolean signatureValidated(File encryptedLicenceFile, File signatureFile) throws IOException, NoSuchAlgorithmException, InvalidKeyException {
+        X509Certificate certificate = keyExtractor.getCertificateForVerification();
+        PublicKey publicKey = certificate.getPublicKey();
 
-            Signature signature = Signature.getInstance(SIGNATURE_PROVIDER_INTERFACE);
-            signature.initVerify(publicKey);
+        Signature signature = Signature.getInstance(SIGNATURE_PROVIDER_INTERFACE);
+        signature.initVerify(publicKey);
+        try {
             signature.update(FileUtils.readFileToByteArray(encryptedLicenceFile));
 
             return signature.verify(FileUtils.readFileToByteArray(signatureFile));
-        } catch (NoSuchAlgorithmException | InvalidKeyException | SignatureException e) {
-            e.printStackTrace();
+        } catch (SignatureException e) {
             return false;
         }
     }

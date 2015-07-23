@@ -8,10 +8,8 @@ import org.dozer.Mapper;
 import org.junit.Rule;
 import org.junit.rules.TemporaryFolder;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -30,7 +28,7 @@ import java.util.List;
 import java.util.Properties;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(loader=AnnotationConfigContextLoader.class)
+@ContextConfiguration(loader = AnnotationConfigContextLoader.class)
 public abstract class BaseTest {
 
     @Configuration
@@ -44,6 +42,11 @@ public abstract class BaseTest {
         private String showSql = "true";
         private String formatSql = "true";
         private String schemaOrmPolicy = "create-drop";
+
+        @Bean
+        public static PropertySourcesPlaceholderConfigurer propertyConfig() {
+            return new PropertySourcesPlaceholderConfigurer();
+        }
 
         @Bean(destroyMethod = "close")
         DataSource dataSource() throws IOException {
@@ -85,11 +88,6 @@ public abstract class BaseTest {
         Mapper mapper() {
             List<String> mappingFiles = Lists.newArrayList("lic_models_mapping.xml");
             return new DozerBeanMapper(mappingFiles);
-        }
-
-        @Bean
-        public static PropertySourcesPlaceholderConfigurer propertyConfig() {
-            return new PropertySourcesPlaceholderConfigurer();
         }
     }
 }

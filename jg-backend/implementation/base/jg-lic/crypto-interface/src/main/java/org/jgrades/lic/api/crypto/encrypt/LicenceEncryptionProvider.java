@@ -26,33 +26,24 @@ class LicenceEncryptionProvider {
         this.extractor = extractor;
     }
 
-    public byte[] encrypt(Licence licence) {
+    public byte[] encrypt(Licence licence) throws JAXBException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IOException {
         byte[] licXmlBytes = transformToBytesArray(licence);
         return encrypt(licXmlBytes);
     }
 
-    private byte[] transformToBytesArray(Licence licence) {
+    private byte[] transformToBytesArray(Licence licence) throws JAXBException {
         Marshaller marshaller = LicenceMarshallingFactory.getMarshaller();
         ByteArrayOutputStream os = new ByteArrayOutputStream();
 
-        try {
-            marshaller.marshal(licence, os);
-        } catch (JAXBException e) {
-            e.printStackTrace();
-        }
+        marshaller.marshal(licence, os);
         return os.toByteArray();
     }
 
-    private byte[] encrypt(byte[] licXmlBytes) {
-        try {
-            Cipher cipher = Cipher.getInstance(CIPHER_PROVIDER_INTERFACE);
-            SecretKeySpec privKey = extractor.getPrivateKeyForEncryptionAndDecryption();
-            cipher.init(Cipher.ENCRYPT_MODE, privKey);
-            return getEncryptedOutputStream(licXmlBytes, cipher).toByteArray();
-        } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IOException e) {
-            e.printStackTrace();
-        }
-        return null;
+    private byte[] encrypt(byte[] licXmlBytes) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, IOException {
+        Cipher cipher = Cipher.getInstance(CIPHER_PROVIDER_INTERFACE);
+        SecretKeySpec privKey = extractor.getPrivateKeyForEncryptionAndDecryption();
+        cipher.init(Cipher.ENCRYPT_MODE, privKey);
+        return getEncryptedOutputStream(licXmlBytes, cipher).toByteArray();
     }
 
     private ByteArrayOutputStream getEncryptedOutputStream(byte[] licXmlBytes, Cipher cipher) throws IOException {

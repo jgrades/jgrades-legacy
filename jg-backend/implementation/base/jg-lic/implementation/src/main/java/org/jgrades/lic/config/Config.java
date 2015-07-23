@@ -14,7 +14,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
-import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.persistence.EntityManagerFactory;
@@ -38,6 +37,11 @@ public class Config {
 
     @Value("${lic.schema.orm.policy}")
     private String schemaOrmPolicy;
+
+    @Bean
+    public static PropertySourcesPlaceholderConfigurer propertyConfig() {
+        return new PropertySourcesPlaceholderConfigurer();
+    }
 
     @Bean(destroyMethod = "close")
     DataSource dataSource() {
@@ -77,10 +81,5 @@ public class Config {
     Mapper mapper() {
         List<String> mappingFiles = Lists.newArrayList("lic_models_mapping.xml");
         return new DozerBeanMapper(mappingFiles);
-    }
-
-    @Bean
-    public static PropertySourcesPlaceholderConfigurer propertyConfig() {
-        return new PropertySourcesPlaceholderConfigurer();
     }
 }

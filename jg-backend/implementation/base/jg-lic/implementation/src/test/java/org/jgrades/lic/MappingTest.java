@@ -1,6 +1,7 @@
 package org.jgrades.lic;
 
 import org.dozer.Mapper;
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -10,9 +11,18 @@ public class MappingTest extends BaseTest {
     @Autowired
     private Mapper mapper;
 
-    @Test
-    public void testName() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         assertThat(mapper).isNotNull();
+    }
 
+    @Test
+    public void shouldMapLicenceToEntity() throws Exception {
+        //TODO
+    }
+
+    @Test
+    public void shouldMapEntityToLicence() throws Exception {
+        //TODO
     }
 }

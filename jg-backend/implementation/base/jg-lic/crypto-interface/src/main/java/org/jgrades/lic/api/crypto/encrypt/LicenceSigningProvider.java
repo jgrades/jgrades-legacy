@@ -17,18 +17,13 @@ class LicenceSigningProvider {
         this.extractor = extractor;
     }
 
-    public byte[] sign(byte[] encryptedLicXmlBytes) {
+    public byte[] sign(byte[] encryptedLicXmlBytes) throws NoSuchAlgorithmException, InvalidKeyException, SignatureException {
         if (!Optional.ofNullable(encryptedLicXmlBytes).isPresent()) {
             throw new IllegalArgumentException();
         }
-        try {
-            Signature signature = Signature.getInstance(SIGNATURE_PROVIDER_INTERFACE);
-            signature.initSign(extractor.getPrivateKeyForSigning());
-            signature.update(encryptedLicXmlBytes);
-            return signature.sign();
-        } catch (NoSuchAlgorithmException | InvalidKeyException | SignatureException e) {
-            e.printStackTrace();
-        }
-        return null;
+        Signature signature = Signature.getInstance(SIGNATURE_PROVIDER_INTERFACE);
+        signature.initSign(extractor.getPrivateKeyForSigning());
+        signature.update(encryptedLicXmlBytes);
+        return signature.sign();
     }
 }
