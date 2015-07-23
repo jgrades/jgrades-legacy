@@ -99,6 +99,7 @@ public class JavafxApplicationIT {
         Thread.sleep(1000);
         controller.closeCurrentWindow();
         Thread.sleep(1000);
+        FXTestUtils.bringToFront(JavafxApplication.getStage());
         FXTestUtils.awaitEvents();
         controller.click("#newLicenceButton");
         controller.click("#openLicenceButton");
