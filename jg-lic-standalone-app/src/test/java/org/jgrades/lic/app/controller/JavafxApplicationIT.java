@@ -86,7 +86,8 @@ public class JavafxApplicationIT {
         ((TextArea) find("#propertiesArea")).setText(macProperty + "\n" + expiredDaysProperty);
 
         controller.click("#mainActionButton");
-        Thread.sleep(3000);
+        //Thread.sleep(3000);
+        FXTestUtils.awaitEvents();
         ((TextField) find("#mockField")).setText(licenceFile.getAbsolutePath());
         controller.click("#mockButton");
 
@@ -96,10 +97,11 @@ public class JavafxApplicationIT {
         assertThat(signatureFile).exists();
         assertThat(signatureFile.length()).isPositive();
 
-        Thread.sleep(1000);
+        //Thread.sleep(1000);
+        FXTestUtils.awaitEvents();
         controller.closeCurrentWindow();
-        Thread.sleep(1000);
-        FXTestUtils.bringToFront(JavafxApplication.getStage());
+        //Thread.sleep(1000);
+        //FXTestUtils.bringToFront(JavafxApplication.getStage());
         FXTestUtils.awaitEvents();
         controller.click("#newLicenceButton");
         controller.click("#openLicenceButton");
@@ -108,7 +110,8 @@ public class JavafxApplicationIT {
         ((TextField) find("#keystoreFileField")).setText(keystore.getAbsolutePath());
         ((TextField) find("#securityDataField")).setText(secData.getAbsolutePath());
         controller.click("#openButton");
-        Thread.sleep(2000);
+        //Thread.sleep(2000);
+        FXTestUtils.awaitEvents();
         assertThat(((Button) find("#mainActionButton")).getText()).isEqualTo("Valid signature");
         checkIsFormEditable(false);
 
@@ -137,7 +140,8 @@ public class JavafxApplicationIT {
         controller.click("#mainActionButton");
         controller.closeCurrentWindow();
         controller.click("#openLicenceButton");
-        Thread.sleep(3000);
+        //Thread.sleep(3000);
+        FXTestUtils.awaitEvents();
         controller.click("#browseLicenceFileButton");
         controller.closeCurrentWindow();
         controller.click("#browseSignatureFileButton");
