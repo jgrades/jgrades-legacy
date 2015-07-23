@@ -51,7 +51,7 @@
                 <jg.internal.data.dir>/etc/opt/jgrades</jg.internal.data.dir>
                 <shadow.backup.dir>/var/backups/jgrades</shadow.backup.dir>
                 <skip.tests>false</skip.tests>
-                <skip.integration.tests>true</skip.integration.tests>
+                <skip.integration.tests>false</skip.integration.tests>
                 <db.operations.debug>false</db.operations.debug>
                 <db.schema.orm.policy>none</db.schema.orm.policy>
             </properties>
