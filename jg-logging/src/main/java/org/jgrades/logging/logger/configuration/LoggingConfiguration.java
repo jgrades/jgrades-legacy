@@ -1,8 +1,6 @@
 package org.jgrades.logging.logger.configuration;
 
-/**
- * Created by Piotr on 2015-07-15.
- */
+
 public enum LoggingConfiguration {
 
     LOG_PER_TYPE{

@@ -12,9 +12,6 @@ import java.io.IOException;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 
-/**
- * Created by Piotr on 2015-07-23.
- */
 public class PropertyUtilsTest {
 
     @After

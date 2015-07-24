@@ -23,9 +23,6 @@ import java.util.function.Consumer;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.input.DOMBuilder;
-/**
- * Created by Piotr on 2015-07-18.
- */ 
 
     
 public class ConfigurationDOMParser implements ConfigurationParser {

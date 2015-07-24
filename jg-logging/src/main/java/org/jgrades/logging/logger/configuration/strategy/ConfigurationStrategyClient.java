@@ -5,9 +5,7 @@ import org.jgrades.logging.logger.configuration.LoggingConfiguration;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
 
-/**
- * Created by Piotr on 2015-07-23.
- */
+
 public class ConfigurationStrategyClient {
 
     private ConfigurationStrategy strategy;

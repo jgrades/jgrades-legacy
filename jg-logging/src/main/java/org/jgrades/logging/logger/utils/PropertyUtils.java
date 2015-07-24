@@ -15,9 +15,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-/**
- * Created by Piotr on 2015-07-23.
- */
+
 public class PropertyUtils {
 
     private static final String PROPERTIES_FILE = "jgrades_logger.properties";

@@ -14,9 +14,7 @@ import java.net.URL;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 
-/**
- * Created by Piotr on 2015-07-18.
- */
+
 @Ignore
 public class ConfigurationParserTest {
 

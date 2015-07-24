@@ -7,9 +7,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import ch.qos.logback.classic.Level;
 
-/**
- * Created by Piotr on 2015-07-15.
- */
+
 public interface JgLoggingService {
 
     void setLevel(Level level);

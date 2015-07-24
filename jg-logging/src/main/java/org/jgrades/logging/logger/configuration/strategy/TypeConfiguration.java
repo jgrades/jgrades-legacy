@@ -14,9 +14,7 @@ import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Piotr on 2015-07-23.
- */
+
 public class TypeConfiguration implements ConfigurationStrategy{
 
     private static final String LOG_BACK_CONFIGURATION_PER_TYPE = "src/main/resources/logback_per_type_logging.xml";

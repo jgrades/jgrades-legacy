@@ -15,9 +15,6 @@ import java.util.Properties;
 
 import static org.jgrades.logging.logger.configuration.LoggingConfiguration.LOG_PER_TYPE;
 
-/**
- * Created by Piotr on 2015-07-15.
- */
 public class JGLoggingFactory {
 
     public static JGradesLogger getLogger(Class clazz) throws IOException {

@@ -14,9 +14,7 @@ import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Piotr on 2015-07-23.
- */
+
 public class ModuleConfiguration implements ConfigurationStrategy{
 
     private static final String LOG_BACK_CONFIGURATION_PER_MODULE = "src/main/resources/logback_per_module_logging.xml";

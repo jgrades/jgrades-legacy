@@ -10,9 +10,7 @@ import java.net.URL;
 import java.nio.channels.FileChannel;
 import java.util.List;
 
-/**
- * Created by Piotr on 2015-07-23.
- */
+
 public class TypeModuleConfiguration implements ConfigurationStrategy{
 
     private static final String LOG_BACK_CONFIGURATION_PER_TYPE_AND_MODULE = "src/main/resources/logback_per_type_and_module_logging.xml";

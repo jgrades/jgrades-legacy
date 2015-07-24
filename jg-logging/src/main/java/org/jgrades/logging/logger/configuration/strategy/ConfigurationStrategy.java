@@ -8,9 +8,7 @@ import java.io.IOException;
 import java.nio.channels.FileChannel;
 import java.util.List;
 
-/**
- * Created by Piotr on 2015-07-23.
- */
+
 public interface ConfigurationStrategy {
 
     FileChannel getFileChannel() throws IOException;
