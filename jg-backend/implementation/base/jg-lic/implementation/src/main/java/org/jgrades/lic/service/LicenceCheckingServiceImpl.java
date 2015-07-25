@@ -10,20 +10,26 @@ import org.jgrades.lic.entities.LicenceEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 
 @Service
 public class LicenceCheckingServiceImpl implements LicenceCheckingService {
     @Autowired
-    private VersionRule versionRule;
-
-    private final List<ValidationRule> rules = ImmutableList.of(new DateRule(), new MacRule(), versionRule);
-
-    @Autowired
     private LicenceRepository licenceRepository;
 
     @Autowired
     private Mapper mapper;
+
+    @Autowired
+    private VersionRule versionRule;
+
+    private List<ValidationRule> rules;
+
+    @PostConstruct
+    public void initIt() throws Exception {
+        rules = ImmutableList.of(new DateRule(), new MacRule(), versionRule);
+    }
 
     @Override
     public boolean checkValid(Licence licence) throws LicenceException {

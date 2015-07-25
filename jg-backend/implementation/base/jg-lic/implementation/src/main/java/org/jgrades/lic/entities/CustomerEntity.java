@@ -1,5 +1,7 @@
 package org.jgrades.lic.entities;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import javax.persistence.*;
@@ -70,5 +72,33 @@ public class CustomerEntity implements Serializable {
                 .append("address", address)
                 .append("phone", phone)
                 .toString();
+    }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+        if (obj.getClass() != getClass()) {
+            return false;
+        }
+        CustomerEntity rhs = (CustomerEntity) obj;
+        return new EqualsBuilder()
+                .append(this.customerId, rhs.customerId)
+                .append(this.name, rhs.name)
+                .append(this.address, rhs.address)
+                .append(this.phone, rhs.phone)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder()
+                .append(customerId)
+                .toHashCode();
     }
 }

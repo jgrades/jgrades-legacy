@@ -7,6 +7,7 @@ import org.dozer.DozerBeanMapper;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
@@ -14,6 +15,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.persistence.EntityManagerFactory;
@@ -25,7 +27,9 @@ import java.util.Properties;
 @EnableJpaRepositories(basePackages = {"org.jgrades.lic.dao"})
 @PropertySource("classpath:jg-lic.properties")
 @EnableTransactionManagement
-public class Config {
+@EnableScheduling
+@ComponentScan("org.jgrades.lic")
+public class LicConfig {
     @Value("${lic.db.path}")
     private String licDbPath;
 

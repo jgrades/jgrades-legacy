@@ -1,5 +1,7 @@
 package org.jgrades.lic.entities;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
@@ -75,5 +77,34 @@ public class ProductEntity {
                 .append("validFrom", validFrom)
                 .append("validTo", validTo)
                 .toString();
+    }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+        if (obj.getClass() != getClass()) {
+            return false;
+        }
+        ProductEntity rhs = (ProductEntity) obj;
+        return new EqualsBuilder()
+                .append(this.name, rhs.name)
+                .append(this.version, rhs.version)
+                .append(this.validFrom, rhs.validFrom)
+                .append(this.validTo, rhs.validTo)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder()
+                .append(name)
+                .append(version)
+                .toHashCode();
     }
 }

@@ -5,11 +5,10 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.dozer.DozerBeanMapper;
 import org.dozer.Mapper;
-import org.junit.Rule;
-import org.junit.rules.TemporaryFolder;
+import org.jgrades.lic.config.LicConfig;
 import org.junit.runner.RunWith;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.*;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -22,7 +21,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Properties;
@@ -32,16 +30,23 @@ import java.util.Properties;
 public abstract class BaseTest {
 
     @Configuration
+    @PropertySource("classpath:jg-lic-test.properties")
     @EnableJpaRepositories(basePackages = {"org.jgrades.lic.dao"})
     @EnableTransactionManagement
+    @ComponentScan(basePackages = {"org.jgrades.lic"}, excludeFilters = {
+            @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = LicConfig.class)})
     static class ContextConfiguration {
-        @Rule
-        public TemporaryFolder temporaryFolder = new TemporaryFolder();
-
+        @Value("${lic.db.path}")
         private String licDbPath;
-        private String showSql = "true";
-        private String formatSql = "true";
-        private String schemaOrmPolicy = "create-drop";
+
+        @Value("${lic.show.sql}")
+        private String showSql;
+
+        @Value("${lic.format.sql}")
+        private String formatSql;
+
+        @Value("${lic.schema.orm.policy}")
+        private String schemaOrmPolicy;
 
         @Bean
         public static PropertySourcesPlaceholderConfigurer propertyConfig() {
@@ -50,8 +55,6 @@ public abstract class BaseTest {
 
         @Bean(destroyMethod = "close")
         DataSource dataSource() throws IOException {
-            licDbPath = File.createTempFile("lic", "db").getAbsolutePath();
-
             HikariConfig dataSourceConfig = new HikariConfig();
             dataSourceConfig.setDriverClassName("org.h2.Driver");
             dataSourceConfig.setJdbcUrl("jdbc:h2:" + licDbPath);
