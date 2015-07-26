@@ -32,7 +32,7 @@ public class ConfigurationDOMParser implements ConfigurationParser {
     private List<Element> elementLogFileSize = new ArrayList<>();
     private List<Element> elementLogStorageTimeLimit = new ArrayList<>();
 
-    private static final String LOG_FILE_EXTENSION = "MB";
+    private String logFileExtension = "MB";
 
     private final static long KB_FACTOR = 1024;
     private final static long MB_FACTOR = 1024 * KB_FACTOR;
@@ -61,19 +61,9 @@ public class ConfigurationDOMParser implements ConfigurationParser {
 
     }
 
-    private void findCurrentLogFileSize() {
-        elementLogFileSize = configurationStrategy.getListCurrentLogFileSize(xmlFile);
-    }
-
-    private void findCurrentLogFileStorageTimeLimit() {
-        elementLogStorageTimeLimit = configurationStrategy.getListCurrentLogFileStorageTimeLimit(xmlFile);
-    }
-
     @Override
     public void setLogFileStorageTimeLimit(int limit,String logbackConfigurationPath,String loggingTypeConfigurationPath) throws IOException {
-        if( elementLogStorageTimeLimit.size() == 0) {
-            findCurrentLogFileStorageTimeLimit();
-        }
+        checkElementsListSize();
 
         elementLogStorageTimeLimit.forEach(new Consumer<Element>() {
             @Override
@@ -89,16 +79,13 @@ public class ConfigurationDOMParser implements ConfigurationParser {
 
     @Override
     public void setLogFileSize(String limit, String logbackConfigurationPath,String loggingTypeConfigurationPath) throws IOException {
-
         int convertedLimit = convertToInteger(limit);
-        if( elementLogFileSize.size() == 0) {
-            findCurrentLogFileSize();
-        }
+        checkElementsListSize();
 
         elementLogFileSize.forEach(new Consumer<Element>() {
             @Override
             public void accept(Element element) {
-                element.setText(String.valueOf(convertedLimit) + LOG_FILE_EXTENSION);
+                element.setText(String.valueOf(convertedLimit) + logFileExtension);
             }
         });
 
@@ -109,17 +96,18 @@ public class ConfigurationDOMParser implements ConfigurationParser {
 
     @Override
     public int getElementLogFileSize(){
-        return Integer.parseInt(elementLogFileSize.get(0).getText().replaceAll(LOG_FILE_EXTENSION ,""));
+        checkElementsListSize();
+        return Integer.parseInt(elementLogFileSize.get(0).getText().replaceAll(logFileExtension,""));
     }
 
     @Override
     public int getElementLogStorageTimeLimit(){
+        checkElementsListSize();
         return Integer.parseInt(elementLogStorageTimeLimit.get(0).getText());
     }
 
     @Override
-    public void copyContent(FileChannel input) throws IOException {
-        FileChannel output = createOutputFileChannel();
+    public void copyContent(FileChannel output,FileChannel input) throws IOException {
 
         ByteBuffer buffer = ByteBuffer.allocateDirect(6 * 1024);
         long len = 0;
@@ -134,28 +122,22 @@ public class ConfigurationDOMParser implements ConfigurationParser {
 
     }
 
-    @Override
-    public String getLogBackPathToConfiguration() {
-        return LOG_BACK_PATH_TO_CONFIGURATION;
-    }
-
-    private FileChannel createOutputFileChannel() throws FileNotFoundException {
-        FileOutputStream outputStream = new FileOutputStream(new File(getLogBackPathToConfiguration()));
-        return outputStream.getChannel();
-    }
-
     private int convertToInteger(String arg0) {
         int spaceNdx = arg0.indexOf(" ");
-        int value = Integer.parseInt(arg0.substring(0, spaceNdx));
-        String factor = arg0.substring(spaceNdx + 1);
-        switch (factor) {
-            case "GB":
-                return (int) (value * GB_FACTOR);
-            case "MB":
-                return (int) (value * MB_FACTOR);
-            case "KB":
-                return (int) (value * KB_FACTOR);
-        }
-        return -1;
+        logFileExtension =  arg0.substring(spaceNdx + 1);
+        return Integer.parseInt(arg0.substring(0, spaceNdx));
+    }
+
+    private void findCurrentLogFileSize() {
+        elementLogFileSize = configurationStrategy.getListCurrentLogFileSize(xmlFile);
+    }
+
+    private void findCurrentLogFileStorageTimeLimit() {
+        elementLogStorageTimeLimit = configurationStrategy.getListCurrentLogFileStorageTimeLimit(xmlFile);
+    }
+
+    private void checkElementsListSize(){
+        if(elementLogFileSize.size() == 0 ) { findCurrentLogFileSize(); }
+        if(elementLogStorageTimeLimit.size() == 0) { findCurrentLogFileStorageTimeLimit(); }
     }
 }

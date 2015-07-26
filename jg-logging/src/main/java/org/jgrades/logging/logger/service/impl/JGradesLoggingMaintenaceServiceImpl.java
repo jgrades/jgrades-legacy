@@ -12,6 +12,10 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.channels.FileChannel;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import ch.qos.logback.classic.Level;
 
 /**
@@ -42,7 +46,7 @@ public class JGradesLoggingMaintenaceServiceImpl implements JgLoggingService {
     public void setLoggingMode(LoggingConfiguration mode) throws IOException {
         PropertyUtils.setNewLoggerConfiguration(mode.toString());
         configurationStrategyClient.setStrategy(mode);
-        parser.copyContent(configurationStrategyClient.getFileChannel());
+        parser.copyContent(createOuputChannel(), createInputChannel());
     }
 
     @Override
@@ -69,12 +73,21 @@ public class JGradesLoggingMaintenaceServiceImpl implements JgLoggingService {
         return url.getPath();
     }
 
-
     public ConfigurationStrategyClient getConfigurationStrategyClient() {
         return configurationStrategyClient;
     }
 
+
     public ConfigurationParser getParser() {
         return parser;
+    }
+
+    private FileChannel createOuputChannel() throws IOException {
+        Path path = Paths.get(getLogbackConfigurationFile());
+        return FileChannel.open(path);
+    }
+
+    private FileChannel createInputChannel() throws IOException {
+        return configurationStrategyClient.getFileChannel();
     }
 }

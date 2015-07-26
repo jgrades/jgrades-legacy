@@ -23,7 +23,6 @@ public interface ConfigurationParser {
 
     int getElementLogStorageTimeLimit();
 
-    void copyContent(FileChannel fileChannel) throws IOException;
+    void copyContent(FileChannel outputChannel,FileChannel inputChannel) throws IOException;
 
-    String getLogBackPathToConfiguration();
 }

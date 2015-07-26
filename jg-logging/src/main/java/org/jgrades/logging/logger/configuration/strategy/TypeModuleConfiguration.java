@@ -13,7 +13,7 @@ import java.util.List;
 
 public class TypeModuleConfiguration implements ConfigurationStrategy{
 
-    private static final String LOG_BACK_CONFIGURATION_PER_TYPE_AND_MODULE = "src/main/resources/logback_per_type_and_module_logging.xml";
+    private static final String LOG_BACK_CONFIGURATION_PER_TYPE_AND_MODULE = "logback_per_type_and_module_logging.xml";
 
     @Override
     public FileChannel getFileChannel() throws IOException {

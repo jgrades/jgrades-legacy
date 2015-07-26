@@ -17,7 +17,7 @@ import java.util.List;
 
 public class TypeConfiguration implements ConfigurationStrategy{
 
-    private static final String LOG_BACK_CONFIGURATION_PER_TYPE = "src/main/resources/logback_per_type_logging.xml";
+    private static final String LOG_BACK_CONFIGURATION_PER_TYPE = "logback_per_type_logging.xml";
 
     @Override
     public FileChannel getFileChannel() throws IOException {

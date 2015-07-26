@@ -11,10 +11,10 @@
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
           <fileNamePattern>/var/jgrades/jgrades_${logging_configuration}_module_%d{yyyy-MM-dd}.%i.log</fileNamePattern>
           <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
-            <MaxFileSize>1MB</MaxFileSize>
+            <MaxFileSize>2147483647MB</MaxFileSize>
           </triggeringPolicy>
           <triggeringPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <MaxBackupIndex>365</MaxBackupIndex>
+            <MaxBackupIndex>2147483647</MaxBackupIndex>
           </triggeringPolicy>
         </rollingPolicy>
         <encoder>

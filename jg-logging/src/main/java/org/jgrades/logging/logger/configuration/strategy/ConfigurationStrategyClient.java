@@ -18,10 +18,13 @@ public class ConfigurationStrategyClient {
         switch (configuration) {
             case LOG_PER_MODULE:
                 strategy = new ModuleConfiguration();
+                break;
             case LOG_PER_TYPE:
                 strategy = new TypeConfiguration();
+                break;
             case LOG_PER_TYPE_MODULE:
                 strategy = new TypeModuleConfiguration();
+                break;
         }
     }
 

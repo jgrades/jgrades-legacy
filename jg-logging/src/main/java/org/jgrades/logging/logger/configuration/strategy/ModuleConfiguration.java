@@ -17,7 +17,7 @@ import java.util.List;
 
 public class ModuleConfiguration implements ConfigurationStrategy{
 
-    private static final String LOG_BACK_CONFIGURATION_PER_MODULE = "src/main/resources/logback_per_module_logging.xml";
+    private static final String LOG_BACK_CONFIGURATION_PER_MODULE = "logback_per_module_logging.xml";
 
     @Override
     public FileChannel getFileChannel() throws IOException {
