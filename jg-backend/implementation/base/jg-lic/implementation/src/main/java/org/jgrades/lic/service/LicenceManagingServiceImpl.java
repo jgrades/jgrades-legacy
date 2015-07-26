@@ -1,5 +1,6 @@
 package org.jgrades.lic.service;
 
+import com.google.common.collect.Lists;
 import org.apache.commons.collections.IteratorUtils;
 import org.apache.commons.io.FileUtils;
 import org.dozer.Mapper;
@@ -43,8 +44,9 @@ public class LicenceManagingServiceImpl implements LicenceManagingService {
 
     @Override
     public Licence installLicence(String licencePath, String signaturePath) throws LicenceException {
+        Licence licence = null;
         try {
-            Licence licence = licenceDecryptionService.decrypt(keystorePath, secDataPath, licencePath);
+            licence = licenceDecryptionService.decrypt(keystorePath, secDataPath, licencePath);
             boolean isValid = licenceDecryptionService.validSignature(keystorePath, secDataPath, licencePath, signaturePath);
 
             if (isValid) {
@@ -58,7 +60,7 @@ public class LicenceManagingServiceImpl implements LicenceManagingService {
         } catch (IOException | InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException | SignatureException e) {
             throw new UnreliableLicenceException(e);
         }
-        return null;
+        return licence;
     }
 
     @Override
@@ -75,6 +77,11 @@ public class LicenceManagingServiceImpl implements LicenceManagingService {
 
     @Override
     public List<Licence> getAll() {
-        return IteratorUtils.toList(licenceRepository.findAll().iterator());
+        List<Licence> licences = Lists.newArrayList();
+        List<LicenceEntity> entitiesList = IteratorUtils.toList(licenceRepository.findAll().iterator());
+        for (LicenceEntity entity : entitiesList) {
+            licences.add(mapper.map(entity, Licence.class));
+        }
+        return licences;
     }
 }

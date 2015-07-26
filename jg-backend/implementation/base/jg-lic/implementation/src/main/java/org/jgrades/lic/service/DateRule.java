@@ -18,7 +18,7 @@ class DateRule implements ValidationRule {
         boolean startDateIsBeforeNow = product.getValidFrom().isBeforeNow();
         boolean endDateIsAfterNow = product.getValidTo().isAfterNow();
         boolean isExpiredDaysModeActive = checkExpiredDaysMode(licence);
-        return (startDateIsBeforeNow && endDateIsAfterNow) || isExpiredDaysModeActive;
+        return startDateIsBeforeNow && (endDateIsAfterNow || isExpiredDaysModeActive);
     }
 
     private boolean checkExpiredDaysMode(Licence licence) {

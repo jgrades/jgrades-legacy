@@ -1,5 +1,7 @@
 package org.jgrades.lic.entities;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import javax.persistence.*;
@@ -47,5 +49,32 @@ public class LicencePropertyEntity implements Serializable {
                 .append("name", name)
                 .append("value", value)
                 .toString();
+    }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+        if (obj.getClass() != getClass()) {
+            return false;
+        }
+        LicencePropertyEntity rhs = (LicencePropertyEntity) obj;
+        return new EqualsBuilder()
+                .append(this.name, rhs.name)
+                .append(this.value, rhs.value)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder()
+                .append(name)
+                .append(value)
+                .toHashCode();
     }
 }

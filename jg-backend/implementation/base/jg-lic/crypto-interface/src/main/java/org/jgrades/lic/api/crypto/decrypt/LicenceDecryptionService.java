@@ -2,6 +2,7 @@ package org.jgrades.lic.api.crypto.decrypt;
 
 import org.jgrades.lic.api.crypto.utils.KeyStoreContentExtractor;
 import org.jgrades.lic.api.model.Licence;
+import org.springframework.stereotype.Component;
 
 import javax.crypto.NoSuchPaddingException;
 import java.io.File;
@@ -10,6 +11,7 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SignatureException;
 
+@Component
 public class LicenceDecryptionService {
     public Licence decrypt(String keystorePath, String secDatPath, String licencePath) throws IOException, NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException {
         KeyStoreContentExtractor extractor =

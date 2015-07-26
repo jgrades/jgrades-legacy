@@ -4,9 +4,18 @@
           xsi:schemaLocation="http://dozer.sourceforge.net
           http://dozer.sourceforge.net/schema/beanmapping.xsd">
 
+    <configuration>
+        <custom-converters>
+            <converter type="org.jgrades.lic.utils.DateTimeMappingConverter">
+                <class-a>org.joda.time.DateTime</class-a>
+                <class-b>org.joda.time.DateTime</class-b>
+            </converter>
+        </custom-converters>
+    </configuration>
+
     <mapping>
         <class-a>org.jgrades.lic.entities.CustomerEntity</class-a>
-        <class-b>org.jgrades.api.lic.model.Customer</class-b>
+        <class-b>org.jgrades.lic.api.model.Customer</class-b>
         <field>
             <a>customerId</a>
             <b>id</b>
@@ -15,16 +24,17 @@
 
     <mapping>
         <class-a>org.jgrades.lic.entities.LicenceEntity</class-a>
-        <class-b>org.jgrades.api.lic.model.Licence</class-b>
+        <class-b>org.jgrades.lic.api.model.Licence</class-b>
     </mapping>
 
     <mapping>
         <class-a>org.jgrades.lic.entities.LicencePropertyEntity</class-a>
-        <class-b>org.jgrades.api.lic.model.LicenceProperty</class-b>
+        <class-b>org.jgrades.lic.api.model.LicenceProperty</class-b>
     </mapping>
 
     <mapping>
         <class-a>org.jgrades.lic.entities.ProductEntity</class-a>
-        <class-b>org.jgrades.api.lic.model.Product</class-b>
+        <class-b>org.jgrades.lic.api.model.Product</class-b>
     </mapping>
+
 </mappings>

@@ -15,7 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class LicenceRepositoryTest extends BaseTest {
     @Autowired
-    LicenceRepository licenceRepository;
+    private LicenceRepository licenceRepository;
 
     @Before
     public void setUp() throws Exception {
@@ -29,12 +29,14 @@ public class LicenceRepositoryTest extends BaseTest {
         LicenceEntity licenceEntity = new LicenceEntity();
         licenceEntity.setUid(1L);
         licenceEntity.setLicenceFilePath("lic.enc");
+        System.err.println("A" + licenceEntity.getProperties().isEmpty());
 
         // when
         licenceRepository.save(licenceEntity);
         Iterable<LicenceEntity> licences = licenceRepository.findAll();
         Iterator<LicenceEntity> iterator = licences.iterator();
         LicenceEntity licence = iterator.next();
+        System.err.println("Q" + licence.getProperties().isEmpty());
 
         // then
         assertThat(licence).isEqualTo(licenceEntity);

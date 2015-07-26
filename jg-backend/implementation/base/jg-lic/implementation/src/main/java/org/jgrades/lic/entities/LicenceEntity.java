@@ -1,12 +1,13 @@
 package org.jgrades.lic.entities;
 
+import com.google.common.collect.Lists;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -22,7 +23,7 @@ public class LicenceEntity implements Serializable {
     private ProductEntity product;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<LicencePropertyEntity> properties = new ArrayList<>();
+    private List<LicencePropertyEntity> properties = Lists.<LicencePropertyEntity>newArrayList();
 
     private String licenceFilePath;
 
@@ -89,6 +90,7 @@ public class LicenceEntity implements Serializable {
                 .toString();
     }
 
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -101,9 +103,15 @@ public class LicenceEntity implements Serializable {
             return false;
         }
         LicenceEntity rhs = (LicenceEntity) obj;
-        return new EqualsBuilder()
+        boolean equals = new EqualsBuilder()
                 .append(this.uid, rhs.uid)
+                .append(this.customer, rhs.customer)
+                .append(this.product, rhs.product)
+                .append(this.licenceFilePath, rhs.licenceFilePath)
+                .append(this.signatureFilePath, rhs.signatureFilePath)
                 .isEquals();
+
+        return equals && CollectionUtils.containsAll(this.properties, rhs.properties);
     }
 
     @Override

@@ -51,7 +51,7 @@ class MacRule implements ValidationRule {
         return true;
     }
 
-    private String getCurrentMac() throws UnknownHostException, SocketException {
+    protected String getCurrentMac() throws UnknownHostException, SocketException {
         if (!Optional.ofNullable(networkInterface).isPresent()) {
             prepareNetworkInterfaceOfLocalhost();
         }
