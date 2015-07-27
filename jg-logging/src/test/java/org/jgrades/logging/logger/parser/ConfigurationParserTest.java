@@ -31,7 +31,8 @@ public class ConfigurationParserTest {
     }
 
     @After
-    public void clean() throws IOException {
+    public void clean() throws IOException, IllegalAccessException, SAXException, ParserConfigurationException {
+        parser.parse(LOG_BACK_CONFIGURATION_FILE_PATH);
         parser.setLogFileStorageTimeLimit(Integer.MAX_VALUE,LOG_BACK_CONFIGURATION_FILE_PATH,LOG_BACK_MODULE_CONFIGURATION_FILE_PATH);
         parser.setLogFileSize(String.valueOf(Integer.MAX_VALUE+" "+"MB"), LOG_BACK_CONFIGURATION_FILE_PATH,LOG_BACK_MODULE_CONFIGURATION_FILE_PATH);
 
