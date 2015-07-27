@@ -27,8 +27,8 @@
     </build>
 
     <dependencies>
+        <!-- INTERNAL DEPENDENCIES -->
         <dependency>
-            <!-- INTERNAL DEPENDENCIES -->
             <groupId>org.jgrades.app</groupId>
             <artifactId>jg-lic-api</artifactId>
             <version>${release.version}</version>

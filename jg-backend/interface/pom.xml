@@ -17,7 +17,6 @@
     <name>jGrades External Interfaces for Back-end</name>
 
     <modules>
-        <module>jg-ws-api</module>
         <module>jg-rest-ws</module>
         <module>jg-soap-ws</module>
     </modules>

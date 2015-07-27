@@ -4,27 +4,27 @@ import com.google.common.collect.Lists;
 import org.jgrades.lic.api.model.Licence;
 import org.jgrades.lic.api.model.LicenceProperty;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
+import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.powermock.api.mockito.PowerMockito.verifyZeroInteractions;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({NetworkInterface.class})
+@PrepareForTest({MacRule.class})
 public class MacRuleTest {
     private MacRule macRule;
 
-    private NetworkInterface networkInterface;
+    private List<NetworkInterface> networkInterfaces;
 
     private Licence licence;
 
@@ -39,8 +39,8 @@ public class MacRuleTest {
     @Test
     public void shouldValid_whenMacPropertyIsAbsent() throws Exception {
         // given
-        networkInterface = PowerMockito.mock(NetworkInterface.class);
-        macRule = new MacRule(networkInterface);
+        networkInterfaces = PowerMockito.mock(List.class);
+        macRule = new MacRule(networkInterfaces);
         licence.setProperties(Lists.newArrayList());
 
         // when
@@ -48,13 +48,13 @@ public class MacRuleTest {
 
         // then
         assertThat(isValid).isTrue();
-        verifyZeroInteractions(networkInterface);
+        verifyZeroInteractions(networkInterfaces);
     }
 
     @Test
     public void shouldValid_whenMacPropertyIsPresent_andMatched() throws Exception {
         // given
-        licence.setProperties(getPropertyWithMac(macRule.getCurrentMac()));
+        licence.setProperties(getPropertyWithMac(macRule.getCurrentMac(getExampleNetworkInterfaceWithHardwareAddress())));
 
         // when
         boolean isValid = macRule.isValid(licence);
@@ -66,7 +66,7 @@ public class MacRuleTest {
     @Test
     public void shouldNotValid_whenMacPropertyIsPresent_andNotMatched() throws Exception {
         // given
-        licence.setProperties(getPropertyWithMac("00:00:00:00:00:0A"));
+        licence.setProperties(getPropertyWithMac("00:00:11:00:00:0A"));
 
         // when
         boolean isValid = macRule.isValid(licence);
@@ -75,16 +75,17 @@ public class MacRuleTest {
         assertThat(isValid).isFalse();
     }
 
-    @Ignore("Some issue with PowerMock")
     @Test(expected = SocketException.class)
     public void shouldThrowException_whenMacPropertyIsPresent_andWasIssueDueToInetAddrRetrieved() throws Exception {
         // given
-        networkInterface = PowerMockito.spy(NetworkInterface.getByInetAddress(InetAddress.getLocalHost()));
+        NetworkInterface networkInterface = PowerMockito.spy(getExampleNetworkInterfaceWithHardwareAddress());
         PowerMockito.doThrow(new SocketException()).when(networkInterface).getHardwareAddress();
-        macRule = new MacRule(networkInterface);
+        macRule = new MacRule(Lists.newArrayList(networkInterface));
 
         // when
-        macRule.getCurrentMac();
+        macRule.getCurrentMac(networkInterface);
+
+        Mockito.verify(networkInterface).getHardwareAddress();
 
         // then
         // should throw SocketException
@@ -97,5 +98,16 @@ public class MacRuleTest {
         property.setValue(mac);
         properties.add(property);
         return properties;
+    }
+
+    private NetworkInterface getExampleNetworkInterfaceWithHardwareAddress() throws Exception {
+        List<NetworkInterface> list = Collections.list(NetworkInterface.getNetworkInterfaces());
+        for (NetworkInterface ni : list) {
+            byte[] address = ni.getHardwareAddress();
+            if (address != null) {
+                return ni;
+            }
+        }
+        return null;
     }
 }

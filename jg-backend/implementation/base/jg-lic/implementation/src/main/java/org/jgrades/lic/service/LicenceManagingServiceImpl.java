@@ -76,6 +76,11 @@ public class LicenceManagingServiceImpl implements LicenceManagingService {
     }
 
     @Override
+    public Licence get(Long uid) {
+        return mapper.map(licenceRepository.findOne(uid), Licence.class);
+    }
+
+    @Override
     public List<Licence> getAll() {
         List<Licence> licences = Lists.newArrayList();
         List<LicenceEntity> entitiesList = IteratorUtils.toList(licenceRepository.findAll().iterator());

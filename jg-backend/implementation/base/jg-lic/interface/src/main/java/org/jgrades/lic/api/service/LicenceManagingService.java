@@ -10,5 +10,7 @@ public interface LicenceManagingService {
 
     void uninstallLicence(Licence licence);
 
+    Licence get(Long uid);
+
     List<Licence> getAll();
 }

@@ -1,5 +1,6 @@
 package org.jgrades.lic.api.model;
 
+import com.google.common.collect.Lists;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -52,6 +53,9 @@ public class Licence {
     }
 
     public List<LicenceProperty> getProperties() {
+        if (properties == null) {
+            properties = Lists.newArrayList();
+        }
         return properties;
     }
 
