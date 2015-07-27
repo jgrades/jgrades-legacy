@@ -12,13 +12,13 @@ public interface JgLoggingService {
 
     void setLevel(Level level);
 
-    void setLoggingMode(LoggingConfiguration mode) throws IOException;
+    void setLoggingMode(LoggingConfiguration mode);
 
-    void setMaxSize(String size) throws IOException, ParserConfigurationException, SAXException, IllegalAccessException;
+    void setMaxSize(String size);
 
-    void setCleaningAfterDays(Integer days) throws IOException, ParserConfigurationException, SAXException, IllegalAccessException;
+    void setCleaningAfterDays(Integer days);
 
-    LoggingConfiguration getLoggingConfiguration() throws IOException;
+    LoggingConfiguration getLoggingConfiguration();
 
 
 }

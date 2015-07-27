@@ -16,9 +16,7 @@ import java.util.List;
 
 import static org.assertj.core.api.StrictAssertions.assertThat;
 
-/**
- * Created by Piotr on 2015-07-26.
- */
+
 public class ModuleConfigurationTest {
 
     private ModuleConfiguration moduleConfiguration;

@@ -7,9 +7,9 @@
         </discriminator>
         <sift>
             <appender class="ch.qos.logback.core.rolling.RollingFileAppender" name="RollingFileAppender-${logging_type}">
-                <file>/var/jgrades/jgrades_${logging_type}.log</file>
+                <file>${jg.logs.dir}/jgrades_${logging_type}.log</file>
                 <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-                    <fileNamePattern>/var/jgrades/jgrades_${logging_type}_%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+                    <fileNamePattern>${jg.logs.dir}/jgrades_${logging_type}_%d{yyyy-MM-dd}.%i.log</fileNamePattern>
                     <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
                         <MaxFileSize>1MB</MaxFileSize>
                     </triggeringPolicy>

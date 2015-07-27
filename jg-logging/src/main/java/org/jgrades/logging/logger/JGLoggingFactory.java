@@ -17,17 +17,8 @@ import static org.jgrades.logging.logger.configuration.LoggingConfiguration.LOG_
 
 public class JGLoggingFactory {
 
-    public static JGradesLogger getLogger(Class clazz) throws IOException {
+    public static JGradesLogger getLogger(Class clazz) {
         return new JGradesLogger(clazz);
     }
-
-    public static void main(String ... strings) throws IOException {
-        JGradesLogger logger = getLogger(JGLoggingFactory.class);
-
-        logger.info("JGLoggingFactroy class");
-
-
-    }
-
 
 }

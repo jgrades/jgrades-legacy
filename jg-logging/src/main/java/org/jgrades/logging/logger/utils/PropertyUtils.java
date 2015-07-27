@@ -23,40 +23,46 @@ public class PropertyUtils {
 
     private static Properties prop;
 
-    public synchronized static LoggingConfiguration getCurrentLoggerConfiguration() throws IOException {
+    public synchronized static LoggingConfiguration getCurrentLoggerConfiguration() {
         readPropertyFile();
         return LoggingConfiguration.valueOf(prop.getProperty(CURRENT_CONFIGURATION_PROPERTY_FILED));
     }
 
-    public static void setNewLoggerConfiguration(String newConfiguration) throws IOException {
+    public static void setNewLoggerConfiguration(String newConfiguration) {
         readPropertyFile();
         Validate.validState(EnumUtils.isValidEnum(LoggingConfiguration.class, newConfiguration));
 
         prop.setProperty(CURRENT_CONFIGURATION_PROPERTY_FILED, newConfiguration);
     }
 
-    public synchronized static ConfigurationStrategy readConfigurationStrategy(LoggingConfiguration configuration) throws IllegalAccessException {
+    public synchronized static ConfigurationStrategy readConfigurationStrategy(LoggingConfiguration configuration) {
+        ConfigurationStrategy strategy = null;
             switch(configuration) {
                 case LOG_PER_TYPE:
-                    return new TypeConfiguration();
+                    strategy = new TypeConfiguration();
                 case LOG_PER_MODULE:
-                    return new ModuleConfiguration();
+                    strategy = new ModuleConfiguration();
                 case LOG_PER_TYPE_MODULE:
-                    return new TypeModuleConfiguration();
-                default:
-                    throw new IllegalAccessException();
+                    strategy = new TypeModuleConfiguration();
             }
+        return strategy;
     }
 
-    private static void readPropertyFile() throws IOException {
+    private static void readPropertyFile() {
         prop = new Properties();
         String propFileName = PROPERTIES_FILE;
         InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(propFileName);
 
-        if (inputStream != null) {
-            prop.load(inputStream);
-        } else {
-            throw new FileNotFoundException("Property file '" + propFileName + "' not found in the classpath");
+        try {
+
+            if (inputStream != null) {
+                prop.load(inputStream);
+            } else {
+                throw new FileNotFoundException("Property file '" + propFileName + "' not found in the classpath");
+            }
+        }
+        catch(IOException ex) {
+            ex.printStackTrace();
         }
     }
 

@@ -8,12 +8,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
 
-/**
- * Created by Piotr on 2015-07-18.
- */
 public interface ConfigurationParser {
 
-    void parse(String pathToFile) throws ParserConfigurationException, IOException, SAXException, IllegalAccessException;
+    void parse(String pathToFile) throws ParserConfigurationException, IOException, SAXException;
 
     void setLogFileStorageTimeLimit(int limit,String logbacConfigurationPath,String loggingTypeConfigurationPath) throws IOException;
 

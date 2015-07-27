@@ -1,5 +1,6 @@
 package org.jgrades.logging.logger.parser;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
@@ -34,16 +35,10 @@ public class ConfigurationDOMParser implements ConfigurationParser {
 
     private String logFileExtension = "MB";
 
-    private final static long KB_FACTOR = 1024;
-    private final static long MB_FACTOR = 1024 * KB_FACTOR;
-    private final static long GB_FACTOR = 1024 * MB_FACTOR;
-
-    private final static String LOG_BACK_PATH_TO_CONFIGURATION = "src/main/resources/logback.xml";
-
     private ConfigurationStrategy configurationStrategy;
 
     @Override
-    public void parse(String pathToFile) throws ParserConfigurationException, IOException, SAXException, IllegalAccessException {
+    public void parse(String pathToFile) throws ParserConfigurationException, IOException, SAXException {
 
         Validate.notEmpty(pathToFile);
 
@@ -97,7 +92,7 @@ public class ConfigurationDOMParser implements ConfigurationParser {
     @Override
     public int getElementLogFileSize(){
         checkElementsListSize();
-        return Integer.parseInt(elementLogFileSize.get(0).getText().replaceAll(logFileExtension,""));
+        return Integer.parseInt(elementLogFileSize.get(0).getText().replaceAll(logFileExtension, StringUtils.EMPTY));
     }
 
     @Override
@@ -109,13 +104,7 @@ public class ConfigurationDOMParser implements ConfigurationParser {
     @Override
     public void copyContent(FileChannel output,FileChannel input) throws IOException {
 
-        ByteBuffer buffer = ByteBuffer.allocateDirect(6 * 1024);
-        long len = 0;
-        while((len = input.read(buffer)) != -1) {
-            buffer.flip();
-            output.write(buffer);
-            buffer.clear();
-        }
+        output.transferFrom(input, 0, input.size());
 
         output.close();
         input.close();

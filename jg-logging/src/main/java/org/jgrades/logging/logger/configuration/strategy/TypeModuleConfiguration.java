@@ -3,11 +3,15 @@ package org.jgrades.logging.logger.configuration.strategy;
 import com.google.common.io.Resources;
 import org.jdom2.Document;
 import org.jdom2.Element;
+import org.jdom2.filter.Filters;
+import org.jdom2.xpath.XPathExpression;
+import org.jdom2.xpath.XPathFactory;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.net.URL;
 import java.nio.channels.FileChannel;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -23,12 +27,44 @@ public class TypeModuleConfiguration implements ConfigurationStrategy{
 
     @Override
     public List<Element> getListCurrentLogFileStorageTimeLimit(Document xmlFile) {
-        return null;
+        List<Element> elementList = new ArrayList<>();
+        XPathExpression<Element> xpath;
+
+        xpath = XPathFactory.instance().compile("/configuration/appender[1]/sift/appender/rollingPolicy/triggeringPolicy[2]/MaxBackupIndex",
+                Filters.element());
+        elementList.add(xpath.evaluateFirst(xmlFile));
+
+        xpath = XPathFactory.instance().compile("/configuration/appender[2]/sift/appender/rollingPolicy/triggeringPolicy[2]/MaxBackupIndex",
+                Filters.element());
+        elementList.add(xpath.evaluateFirst(xmlFile));
+
+        xpath = XPathFactory.instance().compile("/configuration/appender[3]/sift/appender/rollingPolicy/triggeringPolicy[2]/MaxBackupIndex",
+                Filters.element());
+        elementList.add(xpath.evaluateFirst(xmlFile));
+
+
+        return elementList;
     }
 
     @Override
     public List<Element> getListCurrentLogFileSize(Document xmlFile) {
-        return null;
+        List<Element> elementList = new ArrayList<>();
+        XPathExpression<Element> xpath;
+
+        xpath = XPathFactory.instance().compile("/configuration/appender[1]/sift/appender/rollingPolicy/triggeringPolicy[1]/MaxFileSize",
+                Filters.element());
+        elementList.add(xpath.evaluateFirst(xmlFile));
+
+        xpath = XPathFactory.instance().compile("/configuration/appender[2]/sift/appender/rollingPolicy/triggeringPolicy[1]/MaxFileSize",
+                Filters.element());
+        elementList.add(xpath.evaluateFirst(xmlFile));
+
+        xpath = XPathFactory.instance().compile("/configuration/appender[3]/sift/appender/rollingPolicy/triggeringPolicy[1]/MaxFileSize",
+                Filters.element());
+        elementList.add(xpath.evaluateFirst(xmlFile));
+
+
+        return elementList;
     }
 
     @Override

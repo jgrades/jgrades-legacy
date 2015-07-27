@@ -2,6 +2,7 @@ package org.jgrades.logging.logger.parser;
 
 import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 
 
-@Ignore
+
 public class ConfigurationParserTest {
 
     private ConfigurationParser parser;
@@ -42,7 +43,7 @@ public class ConfigurationParserTest {
     @Test(expected = IllegalArgumentException.class)
     public void emptyPathToLogBackConfiguration_ThrowException() throws ParserConfigurationException, IllegalAccessException, SAXException, IOException {
 
-        parser.parse("");
+        parser.parse(StringUtils.EMPTY);
     }
 
     @Test(expected = IOException.class)
@@ -58,7 +59,7 @@ public class ConfigurationParserTest {
     }
 
     @Test
-    public void changeLogStorageTimeLimit__Module_Configuration_NoException() throws ParserConfigurationException, IllegalAccessException, SAXException, IOException {
+    public void changeLogStorageTimeLimit__Module_Configuration_NoException() throws IOException, ParserConfigurationException, SAXException {
 
         parser.parse(LOG_BACK_CONFIGURATION_FILE_PATH);
         parser.setLogFileStorageTimeLimit(365, LOG_BACK_CONFIGURATION_FILE_PATH, LOG_BACK_MODULE_CONFIGURATION_FILE_PATH);
