@@ -1,0 +1,13 @@
+machine:
+  java:
+    version: oraclejdk8
+
+dependencies:
+  pre:
+    - cd jg-bom
+    - mvn clean install
+    - cd ..
+
+  override:
+    - mvn clean install -Pprod -fae
+
