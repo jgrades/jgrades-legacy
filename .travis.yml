@@ -17,7 +17,7 @@ before_install:
   - cd ..
   
 install: 
-  - mvn clean install -Pprod
+  - mvn clean install -Pprod -fae
 
 after_success:
   - mvn test jacoco:report org.eluder.coveralls:coveralls-maven-plugin:report
