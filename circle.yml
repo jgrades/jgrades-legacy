@@ -4,9 +4,9 @@ machine:
 
 dependencies:
   pre:
-    - cd jg-bom
+    - cd /home/ubuntu/jgrades/jg-bom
     - mvn clean install
-    - cd ..
+    - cd /home/ubuntu/jgrades/
 
   override:
     - mvn clean install -Pprod -fae
