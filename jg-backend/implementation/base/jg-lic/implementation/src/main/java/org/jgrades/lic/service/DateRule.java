@@ -5,18 +5,24 @@ import com.google.common.collect.UnmodifiableIterator;
 import org.jgrades.lic.api.model.Licence;
 import org.jgrades.lic.api.model.LicenceProperty;
 import org.jgrades.lic.api.model.Product;
+import org.jgrades.logging.logger.JGLoggingFactory;
+import org.jgrades.logging.logger.JGradesLogger;
 
 import java.util.List;
 import java.util.Optional;
 
 class DateRule implements ValidationRule {
+    private static final JGradesLogger LOGGER = JGLoggingFactory.getLogger(DateRule.class);
     private static final String EXPIRED_DAYS_PROPERTY_NAME = "expiredDays";
 
     @Override
     public boolean isValid(Licence licence) {
+        LOGGER.debug("Start checking DateRule for licence with uid {}", licence.getUid());
         Product product = licence.getProduct();
         boolean startDateIsBeforeNow = product.getValidFrom().isBeforeNow();
         boolean endDateIsAfterNow = product.getValidTo().isAfterNow();
+        LOGGER.debug("Is start date before now for licence with uid {}: {}", licence.getUid(), startDateIsBeforeNow);
+        LOGGER.debug("Is end date after now for licence with uid {}: {}", licence.getUid(), endDateIsAfterNow);
         boolean isExpiredDaysModeActive = checkExpiredDaysMode(licence);
         return startDateIsBeforeNow && (endDateIsAfterNow || isExpiredDaysModeActive);
     }
@@ -32,12 +38,15 @@ class DateRule implements ValidationRule {
         }
 
         if (Optional.ofNullable(property).isPresent()) {
+            LOGGER.debug("ExpiredDays property found for licence with uid {}", licence.getUid());
             int days = Integer.parseInt(property.getValue());
             if (licence.getProduct().getValidTo().plusDays(days).isAfterNow()) {
+                LOGGER.debug("Licence with uid {} is in expiredDays period ({} extra days)", licence.getUid(), days);
                 return true;
             }
+        } else {
+            LOGGER.debug("ExpiredDays property not found for licence with uid {}", licence.getUid());
         }
-
         return false;
     }
 }

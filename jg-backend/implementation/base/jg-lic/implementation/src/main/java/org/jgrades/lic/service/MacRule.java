@@ -6,6 +6,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.jgrades.lic.api.exception.ViolationOfLicenceConditionException;
 import org.jgrades.lic.api.model.Licence;
 import org.jgrades.lic.api.model.LicenceProperty;
+import org.jgrades.logging.logger.JGLoggingFactory;
+import org.jgrades.logging.logger.JGradesLogger;
 
 import java.net.NetworkInterface;
 import java.net.SocketException;
@@ -14,6 +16,8 @@ import java.util.List;
 import java.util.Optional;
 
 class MacRule implements ValidationRule {
+    private static final JGradesLogger LOGGER = JGLoggingFactory.getLogger(MacRule.class);
+
     private static final String MAC_PROPERTY_NAME = "mac";
 
     private List<NetworkInterface> networkInterfaces;
@@ -27,6 +31,7 @@ class MacRule implements ValidationRule {
 
     @Override
     public boolean isValid(Licence licence) {
+        LOGGER.debug("Start checking MacRule for licence with uid {}", licence.getUid());
         List<LicenceProperty> properties = licence.getProperties();
         UnmodifiableIterator<LicenceProperty> macPropertyIterator = Iterators.filter(
                 properties.iterator(), licenceProperty -> {
@@ -38,23 +43,31 @@ class MacRule implements ValidationRule {
         }
 
         if (Optional.ofNullable(property).isPresent()) {
+            LOGGER.debug("Mac property found for licence with uid {}", licence.getUid());
             try {
                 prepareNetworkInterfacesIfNeeded();
             } catch (SocketException e) {
+                LOGGER.error("Error during preparing network interfaces", e);
                 throw new ViolationOfLicenceConditionException(e);
             }
             String requestedMac = property.getValue();
+            LOGGER.debug("Requested MAC: {}", requestedMac);
             for (NetworkInterface networkInterface : networkInterfaces) {
                 try {
                     String currentMac = getCurrentMac(networkInterface);
+                    LOGGER.trace("Proceeded network interface: {}, with MAC: {}", networkInterface.getDisplayName(), currentMac);
                     if (currentMac.equalsIgnoreCase(requestedMac)) {
+                        LOGGER.debug("MAC {} is matching to expected MAC", currentMac);
                         return true;
                     }
                 } catch (SocketException e) {
-                    //TODO log
+                    LOGGER.debug("Error during extracting MAC for network interface {}", networkInterface.getDisplayName());
                 }
             }
+            LOGGER.debug("There is no any network interfaces or all has not correctly MAC");
             return false;
+        } else {
+            LOGGER.debug("Mac property not found for licence with uid {}", licence.getUid());
         }
         return true;
     }
@@ -62,6 +75,7 @@ class MacRule implements ValidationRule {
     private void prepareNetworkInterfacesIfNeeded() throws SocketException {
         if (networkInterfaces == null) {
             networkInterfaces = Collections.list(NetworkInterface.getNetworkInterfaces());
+            LOGGER.trace("Network interfaces in system: {}", networkInterfaces);
         }
     }
 

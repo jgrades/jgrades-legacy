@@ -3,19 +3,17 @@ package org.jgrades.rest.lic;
 import org.jgrades.lic.api.model.Licence;
 import org.jgrades.lic.api.service.LicenceCheckingService;
 import org.jgrades.lic.api.service.LicenceManagingService;
+import org.jgrades.logging.logger.JGLoggingFactory;
+import org.jgrades.logging.logger.JGradesLogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(
-        value = "/licence/check",
-        produces = MediaType.APPLICATION_JSON_VALUE
-)
+@RequestMapping(value = "/licence/check", produces = MediaType.APPLICATION_JSON_VALUE)
 public class LicenceCheckService {
+    private static final JGradesLogger LOGGER = JGLoggingFactory.getLogger(LicenceCheckService.class);
+
     @Autowired
     private LicenceManagingService licenceManagingService;
 
@@ -23,13 +21,19 @@ public class LicenceCheckService {
     private LicenceCheckingService licenceCheckingService;
 
     @RequestMapping(value = "/{uid}", method = RequestMethod.GET)
-    public boolean check(@PathVariable Long uid) {
+    public
+    @ResponseBody
+    boolean check(@PathVariable Long uid) {
+        LOGGER.info("Checking licence with uid {}", uid);
         Licence licence = licenceManagingService.get(uid);
         return licenceCheckingService.checkValid(licence);
     }
 
     @RequestMapping(value = "/product/{productName}", method = RequestMethod.GET)
-    public boolean checkForProduct(@PathVariable String productName) {
+    public
+    @ResponseBody
+    boolean checkForProduct(@PathVariable String productName) {
+        LOGGER.info("Checking licence for product {}", productName);
         return licenceCheckingService.checkValidForProduct(productName);
     }
 }

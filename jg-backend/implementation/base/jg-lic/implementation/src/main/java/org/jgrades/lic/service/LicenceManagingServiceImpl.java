@@ -12,6 +12,8 @@ import org.jgrades.lic.api.model.Licence;
 import org.jgrades.lic.api.service.LicenceManagingService;
 import org.jgrades.lic.dao.LicenceRepository;
 import org.jgrades.lic.entities.LicenceEntity;
+import org.jgrades.logging.logger.JGLoggingFactory;
+import org.jgrades.logging.logger.JGradesLogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -27,6 +29,8 @@ import java.util.Optional;
 
 @Service
 public class LicenceManagingServiceImpl implements LicenceManagingService {
+    private static final JGradesLogger LOGGER = JGLoggingFactory.getLogger(LicenceManagingServiceImpl.class);
+
     @Value("${lic.keystore.path}")
     private String keystorePath;
 
@@ -44,20 +48,26 @@ public class LicenceManagingServiceImpl implements LicenceManagingService {
 
     @Override
     public Licence installLicence(String licencePath, String signaturePath) throws LicenceException {
+        LOGGER.debug("Starting installation of licence: {} with signature: {}", licencePath, signaturePath);
         Licence licence = null;
         try {
             licence = licenceDecryptionService.decrypt(keystorePath, secDataPath, licencePath);
+            LOGGER.debug("Licence file decrypted correctly");
             boolean isValid = licenceDecryptionService.validSignature(keystorePath, secDataPath, licencePath, signaturePath);
 
             if (isValid) {
+                LOGGER.debug("Signature matches to the licence file. Saving licence in system");
                 LicenceEntity licenceEntity = mapper.map(licence, LicenceEntity.class);
                 licenceEntity.setLicenceFilePath(licencePath);
                 licenceEntity.setSignatureFilePath(signaturePath);
                 licenceRepository.save(licenceEntity);
+                LOGGER.debug("Licence saved in system");
             } else {
+                LOGGER.debug("Signature doesn't to the licence file");
                 throw new SignatureException();
             }
         } catch (IOException | InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException | SignatureException e) {
+            LOGGER.error("Exception during attempt to install licence: {} with signature: {}", licencePath, signaturePath, e);
             throw new UnreliableLicenceException(e);
         }
         return licence;
@@ -65,28 +75,36 @@ public class LicenceManagingServiceImpl implements LicenceManagingService {
 
     @Override
     public void uninstallLicence(Licence licence) {
+        LOGGER.debug("Starting to uninstall licence with uid {}", licence.getUid());
         LicenceEntity licenceEntity = licenceRepository.findOne(licence.getUid());
         if (Optional.ofNullable(licenceEntity).isPresent()) {
-            FileUtils.deleteQuietly(new File(licenceEntity.getLicenceFilePath()));
-            FileUtils.deleteQuietly(new File(licenceEntity.getSignatureFilePath()));
+            boolean licenceFileDeleted = FileUtils.deleteQuietly(new File(licenceEntity.getLicenceFilePath()));
+            LOGGER.debug("Licence file {} deleted: {}", licenceEntity.getLicenceFilePath(), licenceFileDeleted);
+            boolean signatureFileDeleted = FileUtils.deleteQuietly(new File(licenceEntity.getSignatureFilePath()));
+            LOGGER.debug("Signature file {} deleted: {}", licenceEntity.getSignatureFilePath(), signatureFileDeleted);
             licenceRepository.delete(licenceEntity);
+            LOGGER.debug("Information about licence with uid {} removed from system", licence.getUid());
         } else {
+            LOGGER.error("Licence with uid {} not found", licence.getUid());
             throw new LicenceNotFoundException("Licence with UID: " + licence.getUid() + " is not found in system");
         }
     }
 
     @Override
     public Licence get(Long uid) {
+        LOGGER.debug("Getting licence with uid {}", uid);
         return mapper.map(licenceRepository.findOne(uid), Licence.class);
     }
 
     @Override
     public List<Licence> getAll() {
+        LOGGER.debug("Getting all licences in system");
         List<Licence> licences = Lists.newArrayList();
         List<LicenceEntity> entitiesList = IteratorUtils.toList(licenceRepository.findAll().iterator());
         for (LicenceEntity entity : entitiesList) {
             licences.add(mapper.map(entity, Licence.class));
         }
+        LOGGER.trace("Returing all licences in system: {}", licences);
         return licences;
     }
 }
