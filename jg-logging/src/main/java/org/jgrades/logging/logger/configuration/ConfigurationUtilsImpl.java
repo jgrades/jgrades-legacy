@@ -1,4 +1,4 @@
-package org.jgrades.logging.logger.configuration.strategy;
+package org.jgrades.logging.logger.configuration;
 
 import com.google.common.io.Resources;
 import org.jdom2.Document;
@@ -6,18 +6,16 @@ import org.jdom2.Element;
 import org.jdom2.filter.Filters;
 import org.jdom2.xpath.XPathExpression;
 import org.jdom2.xpath.XPathFactory;
+import org.jgrades.logging.logger.configuration.ConfigurationUtils;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.net.URL;
 import java.nio.channels.FileChannel;
-import java.util.ArrayList;
-import java.util.List;
 
+public class ConfigurationUtilsImpl implements ConfigurationUtils {
 
-public class ModuleConfiguration implements ConfigurationStrategy{
-
-    private static final String LOG_BACK_CONFIGURATION_PER_MODULE = "logback_per_module_logging.xml";
+    private static final String LOGBACK_CONFIGURATION_FILE= "logback.xml";
 
     @Override
     public FileChannel getFileChannel() throws IOException {
@@ -26,37 +24,27 @@ public class ModuleConfiguration implements ConfigurationStrategy{
     }
 
     @Override
-    public List<Element> getListCurrentLogFileStorageTimeLimit(Document xmlFile) {
-        List<Element> elementList = new ArrayList<>();
+    public Element getCurrentLogFileStorageTimeLimitElement(Document xmlFile) {
         XPathExpression<Element> xpath;
 
         xpath = XPathFactory.instance().compile("/configuration/appender/sift/appender/rollingPolicy/triggeringPolicy[2]/MaxBackupIndex",
                 Filters.element());
-        elementList.add(xpath.evaluateFirst(xmlFile));
 
-        return elementList;
+        return xpath.evaluateFirst(xmlFile);
     }
 
     @Override
-    public List<Element> getListCurrentLogFileSize(Document xmlFile) {
-        List<Element> elementList = new ArrayList<>();
+    public Element getCurrentLogFileSizeElement(Document xmlFile) {
         XPathExpression<Element> xpath;
 
         xpath = XPathFactory.instance().compile("/configuration/appender/sift/appender/rollingPolicy/triggeringPolicy[1]/MaxFileSize",
                 Filters.element());
-        elementList.add(xpath.evaluateFirst(xmlFile));
 
-        return elementList;
+        return xpath.evaluateFirst(xmlFile);
     }
-
-    @Override
-    public String getConfigurationFilePath() {
-        return LOG_BACK_CONFIGURATION_PER_MODULE;
-    }
-
 
     private String getLogbackConfigurationFile() throws IOException {
-        URL url = Resources.getResource(getConfigurationFilePath());
+        URL url = Resources.getResource(LOGBACK_CONFIGURATION_FILE);
         return url.getPath();
     }
 

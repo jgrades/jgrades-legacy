@@ -3,13 +3,13 @@
     <appender name="sift" class="ch.qos.logback.classic.sift.SiftingAppender">
         <discriminator>
             <key>logging_configuration</key>
-            <defaultValue>jgrades_log</defaultValue>
+            <defaultValue>external_lib</defaultValue>
         </discriminator>
         <sift>
             <appender class="ch.qos.logback.core.rolling.RollingFileAppender" name="RollingFileAppender-${logging_configuration}">
-                <file>${jg.logs.dir}/jgrades_${logging_configuration}_module.log</file>
+                <file>${jg.logs.dir}/jgrades_${logging_configuration}.log</file>
                 <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-                    <fileNamePattern>${jg.logs.dir}/jgrades_${logging_configuration}_module_%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+                    <fileNamePattern>${jg.logs.dir}/jgrades_${logging_configuration}_%d{yyyy-MM-dd}.%i.log</fileNamePattern>
                     <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
                         <MaxFileSize>1MB</MaxFileSize>
                     </triggeringPolicy>
@@ -19,14 +19,14 @@
                 </rollingPolicy>
                 <encoder>
                     <charset>UTF-8</charset>
-                    <pattern>[%d{yyyy-MM-dd HH:mm:ss}] [%thread] %-5level --> %msg%n</pattern>
+                    <pattern>[%d{yyyy-MM-dd HH:mm:ss}] %[%thread] %-5level --> %msg%n</pattern>
                 </encoder>
             </appender>
         </sift>
     </appender>
 
-    <logger name="logger">
-        <appender-ref ref="sift" />
-    </logger>
+    <root  level="ALL">
+        <appender-ref ref="sift"/>
+    </root>
 
 </configuration>

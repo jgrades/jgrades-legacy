@@ -10,6 +10,9 @@ import org.slf4j.Marker;
 
 public class JGradesLogger {
     private static final String MDC_KEY = "logging_configuration";
+    private static final String SEPARATOR = "_";
+    private static final String MODULE = "module";
+    private static final String LEVEL = "level";
 
     private final Logger logger;
     private final String moduleName;
@@ -282,13 +285,14 @@ public class JGradesLogger {
     private void setMDC(Level loggingLevel) {
         switch (PropertyUtils.getCurrentLoggerConfiguration()) {
             case LOG_PER_TYPE:
-                MDC.put(StringUtils.EMPTY, StringUtils.EMPTY);
+                MDC.put(MDC_KEY,loggingLevel.toString().toLowerCase()+SEPARATOR+LEVEL);
                 break;
             case LOG_PER_MODULE:
-                MDC.put(MDC_KEY, moduleName);
+                MDC.put(MDC_KEY, moduleName + SEPARATOR+MODULE);
                 break;
             case LOG_PER_TYPE_MODULE:
-                String moduleNameWithLoggingLevel = moduleName + "_" + loggingLevel.toString().toLowerCase();
+                String moduleNameWithLoggingLevel = moduleName + SEPARATOR+MODULE+SEPARATOR+ loggingLevel.toString().toLowerCase()+
+                        SEPARATOR+LEVEL;
                 MDC.put(MDC_KEY, moduleNameWithLoggingLevel);
                 break;
         }

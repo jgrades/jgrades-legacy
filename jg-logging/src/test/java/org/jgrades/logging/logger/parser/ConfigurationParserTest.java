@@ -23,8 +23,6 @@ public class ConfigurationParserTest {
 
     private ConfigurationParser parser;
     private static final String LOG_BACK_CONFIGURATION_FILE_PATH = "src/test/resources/logback_test.xml";
-    private static final String LOG_BACK_MODULE_CONFIGURATION_FILE_PATH = "src/test/resources/logback_per_module_logging_test.xml";
-    private static final String LOG_BACK_TYPE_AND_MODULE_CONFIGURATION_PATH = "src/test/resources/logback_per_type_and_module_logging_test.xml";
 
     @Before
     public void init(){
@@ -34,10 +32,9 @@ public class ConfigurationParserTest {
     @After
     public void clean() throws IOException, IllegalAccessException, SAXException, ParserConfigurationException {
         parser.parse(LOG_BACK_CONFIGURATION_FILE_PATH);
-        parser.setLogFileStorageTimeLimit(Integer.MAX_VALUE,LOG_BACK_CONFIGURATION_FILE_PATH,LOG_BACK_MODULE_CONFIGURATION_FILE_PATH);
-        parser.setLogFileSize(String.valueOf(Integer.MAX_VALUE+" "+"MB"), LOG_BACK_CONFIGURATION_FILE_PATH,LOG_BACK_MODULE_CONFIGURATION_FILE_PATH);
+        parser.setLogFileStorageTimeLimit(Integer.MAX_VALUE,LOG_BACK_CONFIGURATION_FILE_PATH);
+        parser.setLogFileSize(String.valueOf(Integer.MAX_VALUE+" "+"MB"), LOG_BACK_CONFIGURATION_FILE_PATH);
 
-        parser.copyContent(createOutputFileChannel(LOG_BACK_CONFIGURATION_FILE_PATH),createInputFileChannel(LOG_BACK_MODULE_CONFIGURATION_FILE_PATH));
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -62,7 +59,7 @@ public class ConfigurationParserTest {
     public void changeLogStorageTimeLimit__Module_Configuration_NoException() throws IOException, ParserConfigurationException, SAXException {
 
         parser.parse(LOG_BACK_CONFIGURATION_FILE_PATH);
-        parser.setLogFileStorageTimeLimit(365, LOG_BACK_CONFIGURATION_FILE_PATH, LOG_BACK_MODULE_CONFIGURATION_FILE_PATH);
+        parser.setLogFileStorageTimeLimit(365, LOG_BACK_CONFIGURATION_FILE_PATH);
 
         assertEquals(365, parser.getElementLogStorageTimeLimit());
     }
@@ -71,19 +68,9 @@ public class ConfigurationParserTest {
     public void changeLogStorageTimeLimit_Module_Configuration_NoException() throws ParserConfigurationException, IllegalAccessException, SAXException, IOException {
 
         parser.parse(LOG_BACK_CONFIGURATION_FILE_PATH);
-        parser.setLogFileSize("10 MB", LOG_BACK_CONFIGURATION_FILE_PATH, LOG_BACK_MODULE_CONFIGURATION_FILE_PATH);
+        parser.setLogFileSize("10 MB", LOG_BACK_CONFIGURATION_FILE_PATH);
 
         assertEquals(10, parser.getElementLogFileSize());
-    }
-
-    @Test
-    public void copyContentFileTest_NoException() throws ParserConfigurationException, IllegalAccessException, SAXException, IOException {
-
-        parser.parse(LOG_BACK_CONFIGURATION_FILE_PATH);
-        parser.copyContent(createOutputFileChannel(LOG_BACK_CONFIGURATION_FILE_PATH), createInputFileChannel(LOG_BACK_TYPE_AND_MODULE_CONFIGURATION_PATH));
-
-        assertEquals(FileUtils.readFileToString(new File(LOG_BACK_CONFIGURATION_FILE_PATH), "utf-8"),
-                FileUtils.readFileToString(new File(LOG_BACK_TYPE_AND_MODULE_CONFIGURATION_PATH), "utf-8"));
     }
 
     private FileChannel createOutputFileChannel(String pathConf) throws IOException {

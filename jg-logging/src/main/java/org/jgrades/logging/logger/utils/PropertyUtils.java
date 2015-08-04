@@ -1,14 +1,8 @@
 package org.jgrades.logging.logger.utils;
 
 import org.apache.commons.lang3.EnumUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
 import org.jgrades.logging.logger.configuration.LoggingConfiguration;
-import org.jgrades.logging.logger.configuration.strategy.ConfigurationStrategy;
-import org.jgrades.logging.logger.configuration.strategy.ModuleConfiguration;
-import org.jgrades.logging.logger.configuration.strategy.TypeConfiguration;
-import org.jgrades.logging.logger.configuration.strategy.TypeModuleConfiguration;
-import org.slf4j.MDC;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -18,7 +12,7 @@ import java.util.Properties;
 
 public class PropertyUtils {
 
-    private static final String PROPERTIES_FILE = "jgrades_logger.properties";
+    private static final String PROPERTIES_FILE = "jg-logging.properties";
     private static final String CURRENT_CONFIGURATION_PROPERTY_FILED = "current.configuration";
 
     private static Properties prop;
@@ -33,19 +27,6 @@ public class PropertyUtils {
         Validate.validState(EnumUtils.isValidEnum(LoggingConfiguration.class, newConfiguration));
 
         prop.setProperty(CURRENT_CONFIGURATION_PROPERTY_FILED, newConfiguration);
-    }
-
-    public synchronized static ConfigurationStrategy readConfigurationStrategy(LoggingConfiguration configuration) {
-        ConfigurationStrategy strategy = null;
-            switch(configuration) {
-                case LOG_PER_TYPE:
-                    strategy = new TypeConfiguration();
-                case LOG_PER_MODULE:
-                    strategy = new ModuleConfiguration();
-                case LOG_PER_TYPE_MODULE:
-                    strategy = new TypeModuleConfiguration();
-            }
-        return strategy;
     }
 
     private static void readPropertyFile() {
