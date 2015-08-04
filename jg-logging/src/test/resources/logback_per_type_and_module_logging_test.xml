@@ -3,7 +3,7 @@
     <appender name="sift_info" class="ch.qos.logback.classic.sift.SiftingAppender">
         <discriminator>
             <key>logging_configuration</key>
-            <defaultValue>jgrades_log</defaultValue>
+            <defaultValue>external-lib</defaultValue>
         </discriminator>
         <sift>
             <appender class="ch.qos.logback.core.rolling.RollingFileAppender" name="RollingFileAppender-${logging_configuration}">
@@ -33,7 +33,7 @@
     <appender name="sift_error" class="ch.qos.logback.classic.sift.SiftingAppender">
         <discriminator>
             <key>logging_configuration</key>
-            <defaultValue>jgrades_log</defaultValue>
+            <defaultValue>external-lib</defaultValue>
         </discriminator>
         <sift>
             <appender class="ch.qos.logback.core.rolling.RollingFileAppender" name="RollingFileAppender-${logging_configuration}">
@@ -63,7 +63,7 @@
     <appender name="sift_trace" class="ch.qos.logback.classic.sift.SiftingAppender">
         <discriminator>
             <key>logging_configuration</key>
-            <defaultValue>jgrades_log</defaultValue>
+            <defaultValue>external-lib</defaultValue>
         </discriminator>
         <sift>
             <appender class="ch.qos.logback.core.rolling.RollingFileAppender" name="RollingFileAppender-${logging_configuration}">

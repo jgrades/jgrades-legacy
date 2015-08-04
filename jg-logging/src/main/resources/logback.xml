@@ -3,7 +3,7 @@
     <appender name="sift" class="ch.qos.logback.classic.sift.SiftingAppender">
         <discriminator>
             <key>logging_configuration</key>
-            <defaultValue>jgrades_log</defaultValue>
+            <defaultValue>external-lib</defaultValue>
         </discriminator>
         <sift>
             <appender class="ch.qos.logback.core.rolling.RollingFileAppender" name="RollingFileAppender-${logging_configuration}">
@@ -25,8 +25,8 @@
         </sift>
     </appender>
 
-    <logger name="logger">
-        <appender-ref ref="sift" />
-    </logger>
+    <root  level="INFO">
+        <appender-ref ref="sift"/>
+    </root>
 
 </configuration>
