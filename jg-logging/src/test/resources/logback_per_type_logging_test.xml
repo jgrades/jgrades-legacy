@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" debug="true">
+    <appender name="sift_info" class="ch.qos.logback.classic.sift.SiftingAppender">
+        <discriminator>
+            <key>logging_type</key>
+            <defaultValue>external-lib</defaultValue>
+        </discriminator>
+        <sift>
+            <appender class="ch.qos.logback.core.rolling.RollingFileAppender" name="RollingFileAppender-${logging_type}">
+                <file>${jg.logs.dir}/jgrades_${logging_type}.log</file>
+                <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                    <fileNamePattern>${jg.logs.dir}/jgrades_${logging_type}_%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+                    <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+                        <MaxFileSize>1MB</MaxFileSize>
+                    </triggeringPolicy>
+                    <triggeringPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                        <MaxBackupIndex>7</MaxBackupIndex>
+                    </triggeringPolicy>
+                </rollingPolicy>
+                <encoder>
+                    <charset>UTF-8</charset>
+                    <pattern>[%d{yyyy-MM-dd HH:mm:ss}] [%thread] %-5level --> %msg%n</pattern>
+                </encoder>
+                <filter class="ch.qos.logback.classic.filter.LevelFilter">
+                    <level>INFO</level>
+                    <onMatch>ACCEPT</onMatch>
+                    <onMismatch>DENY</onMismatch>
+                </filter>
+            </appender>
+        </sift>
+    </appender>
+
+    <appender name="sift_error" class="ch.qos.logback.classic.sift.SiftingAppender">
+        <discriminator>
+            <key>logging_type</key>
+            <defaultValue>external-lib</defaultValue>
+        </discriminator>
+        <sift>
+            <appender class="ch.qos.logback.core.rolling.RollingFileAppender" name="RollingFileAppender-${logging_type}">
+                <file>jgrades_${logging_type}.log</file>
+                <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                    <fileNamePattern>jgrades_${logging_type}_%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+                    <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+                        <MaxFileSize>1MB</MaxFileSize>
+                    </triggeringPolicy>
+                    <triggeringPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                        <MaxBackupIndex>7</MaxBackupIndex>
+                    </triggeringPolicy>
+                </rollingPolicy>
+                <encoder>
+                    <charset>UTF-8</charset>
+                    <pattern>[%d{yyyy-MM-dd HH:mm:ss}] [%thread] %-5level --> %msg%n</pattern>
+                </encoder>
+                <filter class="ch.qos.logback.classic.filter.LevelFilter">
+                    <level>ERROR</level>
+                    <onMatch>ACCEPT</onMatch>
+                    <onMismatch>DENY</onMismatch>
+                </filter>
+            </appender>
+        </sift>
+    </appender>
+
+    <appender name="sift_trace" class="ch.qos.logback.classic.sift.SiftingAppender">
+        <discriminator>
+            <key>logging_type</key>
+            <defaultValue>external-lib</defaultValue>
+        </discriminator>
+        <sift>
+            <appender class="ch.qos.logback.core.rolling.RollingFileAppender" name="RollingFileAppender-${logging_type}">
+                <file>jgrades_${logging_type}.log</file>
+                <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                    <fileNamePattern>jgrades_${logging_type}_%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+                    <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+                        <MaxFileSize>1MB</MaxFileSize>
+                    </triggeringPolicy>
+                    <triggeringPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                        <MaxBackupIndex>7</MaxBackupIndex>
+                    </triggeringPolicy>
+                </rollingPolicy>
+                <encoder>
+                    <charset>UTF-8</charset>
+                    <pattern>[%d{yyyy-MM-dd HH:mm:ss}] [%thread] %-5level --> %msg%n</pattern>
+                </encoder>
+                <filter class="ch.qos.logback.classic.filter.LevelFilter">
+                    <level>TRACE</level>
+                    <onMatch>ACCEPT</onMatch>
+                    <onMismatch>DENY</onMismatch>
+                </filter>
+            </appender>
+        </sift>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="sift_info"/>
+    </root>
+
+    <root level="ERROR">
+        <appender-ref ref="sift_error"/>
+    </root>
+
+    <root level="TRACE">
+        <appender-ref ref="sift_trace"/>
+    </root>
+
+</configuration>

@@ -25,6 +25,10 @@
         </sift>
     </appender>
 
+    <logger name="logger">
+        <appender-ref ref="sift" />
+    </logger>
+
     <root  level="INFO">
         <appender-ref ref="sift"/>
     </root>
