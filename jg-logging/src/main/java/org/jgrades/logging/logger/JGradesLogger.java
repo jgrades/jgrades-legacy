@@ -1,9 +1,9 @@
 package org.jgrades.logging.logger;
 
 import ch.qos.logback.classic.Level;
+import ch.qos.logback.classic.Logger;
 import org.apache.commons.lang3.StringUtils;
 import org.jgrades.logging.logger.utils.PropertyUtils;
-import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 import org.slf4j.Marker;
@@ -18,8 +18,14 @@ public class JGradesLogger {
     private final String moduleName;
 
     public JGradesLogger(Class clazz) {
-        this.logger = LoggerFactory.getLogger(clazz);
+        this.logger = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(clazz);
+        setCurrentLoggingLevelToLogger(logger);
         this.moduleName = getModuleName(clazz);
+    }
+
+    private void setCurrentLoggingLevelToLogger(Logger logger) {
+        Level currentLevel = PropertyUtils.getCurrentLoggingLevel();
+        logger.setLevel(currentLevel);
     }
 
     //------------------------------------ TRACE ----------------------------------//
