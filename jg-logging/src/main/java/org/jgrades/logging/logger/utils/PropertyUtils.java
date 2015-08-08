@@ -1,8 +1,6 @@
 package org.jgrades.logging.logger.utils;
 
 import ch.qos.logback.classic.Level;
-import org.apache.commons.configuration.ConfigurationException;
-import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.commons.lang3.EnumUtils;
 import org.apache.commons.lang3.Validate;
 import org.jgrades.logging.logger.configuration.LoggingConfiguration;
