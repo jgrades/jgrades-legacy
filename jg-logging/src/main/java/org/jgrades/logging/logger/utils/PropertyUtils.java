@@ -6,7 +6,6 @@ import org.apache.commons.lang3.Validate;
 import org.jgrades.logging.logger.configuration.LoggingConfiguration;
 
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -15,13 +14,13 @@ import java.util.Properties;
 public class PropertyUtils {
 
     private static final String PROPERTIES_FILE = "jg-logging.properties";
-    private static final String CURRENT_CONFIGURATION_PROPERTY_FILED = "current.configuration";
-    private static final String CURRENT_LOGGING_LEVEL = "current.logging.level";
+    private static final String CURRENT_CONFIGURATION_PROPERTY_FILE = "logging.configuration.strategy";
+    private static final String CURRENT_LOGGING_LEVEL = "logging.level";
     private static Properties prop;
 
     public synchronized static LoggingConfiguration getCurrentLoggerConfiguration() {
         checkReadedPropertyFile();
-        return LoggingConfiguration.valueOf(prop.getProperty(CURRENT_CONFIGURATION_PROPERTY_FILED));
+        return LoggingConfiguration.valueOf(prop.getProperty(CURRENT_CONFIGURATION_PROPERTY_FILE));
     }
 
     public synchronized static Level getCurrentLoggingLevel(){
@@ -38,7 +37,7 @@ public class PropertyUtils {
         checkReadedPropertyFile();
         Validate.validState(EnumUtils.isValidEnum(LoggingConfiguration.class, newConfiguration));
 
-        prop.setProperty(CURRENT_CONFIGURATION_PROPERTY_FILED, newConfiguration);
+        prop.setProperty(CURRENT_CONFIGURATION_PROPERTY_FILE, newConfiguration);
 
 
     }

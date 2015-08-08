@@ -5,10 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.joda.JodaModule;
 import cz.jirutka.spring.exhandler.RestHandlerExceptionResolver;
 import cz.jirutka.spring.exhandler.support.HttpMessageConverterUtils;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.*;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
@@ -28,7 +25,10 @@ import java.util.List;
 
 @Configuration
 @ComponentScan("org.jgrades.rest")
-@PropertySource("classpath:jg-rest.properties")
+@PropertySources({
+        @PropertySource("classpath:jg-rest.properties"),
+        @PropertySource(value = "file:${jgrades.application.properties.file}", ignoreResourceNotFound = true)
+})
 public class RestConfig extends WebMvcConfigurationSupport {
 
     @Bean
