@@ -6,10 +6,7 @@ import com.zaxxer.hikari.HikariDataSource;
 import org.dozer.DozerBeanMapper;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.*;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -25,7 +22,10 @@ import java.util.Properties;
 
 @Configuration
 @EnableJpaRepositories(basePackages = {"org.jgrades.lic.dao"})
-@PropertySource("classpath:jg-lic.properties")
+@PropertySources({
+        @PropertySource("classpath:jg-lic.properties"),
+        @PropertySource(value = "file:${jgrades.application.properties.file}", ignoreResourceNotFound = true)
+})
 @EnableTransactionManagement
 @EnableScheduling
 @ComponentScan("org.jgrades.lic")

@@ -1,6 +1,7 @@
 package org.jgrades.rest;
 
 import org.jgrades.lic.config.LicConfig;
+import org.jgrades.property.ApplicationPropertiesConfig;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
@@ -15,14 +16,14 @@ public class WebAppInitializer implements WebApplicationInitializer {
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException {
         AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
-        rootContext.register(LicConfig.class);
+        rootContext.register(ApplicationPropertiesConfig.class, LicConfig.class);
         rootContext.refresh();
 
         servletContext.addListener(new ContextLoaderListener(rootContext));
         servletContext.setInitParameter("defaultHtmlEscape", "true");
 
         AnnotationConfigWebApplicationContext mvcContext = new AnnotationConfigWebApplicationContext();
-        mvcContext.register(RestConfig.class);
+        mvcContext.register(ApplicationPropertiesConfig.class, RestConfig.class);
 
         ServletRegistration.Dynamic appServlet = servletContext.addServlet("jgRestServlet", new DispatcherServlet(mvcContext));
         appServlet.setLoadOnStartup(1);

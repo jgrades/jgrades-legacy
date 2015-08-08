@@ -39,6 +39,7 @@
                 <skip.integration.tests>true</skip.integration.tests>
                 <db.operations.debug>true</db.operations.debug>
                 <db.schema.orm.policy>create-drop</db.schema.orm.policy>
+                <application.properties>C:/jgrades/internal/app.properties</application.properties>
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>
@@ -56,12 +57,14 @@
                 <skip.integration.tests>false</skip.integration.tests>
                 <db.operations.debug>false</db.operations.debug>
                 <db.schema.orm.policy>none</db.schema.orm.policy>
+                <application.properties>/etc/opt/jgrades/app.properties</application.properties>
             </properties>
         </profile>
     </profiles>
 
     <modules>
         <!-- BOM NEEDS TO BE BUILD AS FIRST SEPARATELY -->
+        <module>jg-properties</module>
         <module>jg-logging</module>
         <module>jg-backend</module>
         <module>jg-web-app</module>
