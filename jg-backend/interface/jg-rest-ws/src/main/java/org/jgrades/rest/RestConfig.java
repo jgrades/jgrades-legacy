@@ -4,10 +4,12 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.joda.JodaModule;
 import cz.jirutka.spring.exhandler.RestHandlerExceptionResolver;
+import cz.jirutka.spring.exhandler.interpolators.SpelMessageInterpolator;
 import cz.jirutka.spring.exhandler.support.HttpMessageConverterUtils;
+import org.jgrades.lic.api.exception.LicenceException;
+import org.jgrades.lic.api.exception.LicenceNotFoundException;
 import org.springframework.context.annotation.*;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -92,8 +94,10 @@ public class RestConfig extends WebMvcConfigurationSupport {
         return RestHandlerExceptionResolver.builder()
                 .withDefaultMessageSource(true)
                 .withDefaultHandlers(true)
+                .messageInterpolator(new SpelMessageInterpolator())
+                .addHandler(new CustomErrorMessageRestExceptionHandler<LicenceException>(HttpStatus.INTERNAL_SERVER_ERROR))
+                .addHandler(new CustomErrorMessageRestExceptionHandler<LicenceNotFoundException>(HttpStatus.NOT_FOUND))
                 .defaultContentType(MediaType.APPLICATION_JSON)
-                .addErrorMessageHandler(EmptyResultDataAccessException.class, HttpStatus.NOT_FOUND)
                 .build();
     }
 }

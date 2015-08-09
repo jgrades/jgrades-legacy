@@ -1,6 +1,7 @@
 package org.jgrades.lic.service;
 
 import org.jgrades.lic.BaseTest;
+import org.jgrades.lic.api.exception.LicenceNotFoundException;
 import org.jgrades.lic.api.model.Customer;
 import org.jgrades.lic.api.model.Licence;
 import org.jgrades.lic.api.model.LicenceProperty;
@@ -142,6 +143,12 @@ public class LicenceCheckingServiceImplTest extends BaseTest {
 
         // then
         assertThat(isValid).isFalse();
+    }
+
+    @Test(expected = LicenceNotFoundException.class)
+    public void shouldThrowException_whenNullLicenceHandled() throws Exception {
+        // when
+        checkingService.checkValid(null);
     }
 
     @After

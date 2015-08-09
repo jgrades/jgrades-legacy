@@ -27,6 +27,10 @@ import java.security.SignatureException;
 import java.util.List;
 import java.util.Optional;
 
+import static org.hamcrest.core.IsNull.notNullValue;
+import static org.valid4j.Validation.otherwiseThrowing;
+import static org.valid4j.Validation.validate;
+
 @Service
 public class LicenceManagingServiceImpl implements LicenceManagingService {
     private static final JGradesLogger LOGGER = JGLoggingFactory.getLogger(LicenceManagingServiceImpl.class);
@@ -63,7 +67,7 @@ public class LicenceManagingServiceImpl implements LicenceManagingService {
                 licenceRepository.save(licenceEntity);
                 LOGGER.debug("Licence saved in system");
             } else {
-                LOGGER.debug("Signature doesn't to the licence file");
+                LOGGER.debug("Signature doesn't match to the licence file");
                 throw new SignatureException();
             }
         } catch (IOException | InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException | SignatureException e) {
@@ -93,7 +97,9 @@ public class LicenceManagingServiceImpl implements LicenceManagingService {
     @Override
     public Licence get(Long uid) {
         LOGGER.debug("Getting licence with uid {}", uid);
-        return mapper.map(licenceRepository.findOne(uid), Licence.class);
+        LicenceEntity licenceEntity = licenceRepository.findOne(uid);
+        validate(licenceEntity, notNullValue(), otherwiseThrowing(LicenceNotFoundException.class));
+        return mapper.map(licenceEntity, Licence.class);
     }
 
     @Override

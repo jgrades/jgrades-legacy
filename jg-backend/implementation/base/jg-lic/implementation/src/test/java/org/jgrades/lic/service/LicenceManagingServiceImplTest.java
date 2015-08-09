@@ -3,6 +3,7 @@ package org.jgrades.lic.service;
 import com.google.common.collect.Lists;
 import org.apache.commons.io.FileUtils;
 import org.jgrades.lic.BaseTest;
+import org.jgrades.lic.api.exception.LicenceNotFoundException;
 import org.jgrades.lic.api.exception.UnreliableLicenceException;
 import org.jgrades.lic.api.model.Customer;
 import org.jgrades.lic.api.model.Licence;
@@ -150,6 +151,18 @@ public class LicenceManagingServiceImplTest extends BaseTest {
 
         // then
         assertThat(licences).isEmpty();
+    }
+
+    @Test(expected = LicenceNotFoundException.class)
+    public void shouldThrowException_whenLicenceWIthGivenUidIsNotPresent() throws Exception {
+        // given
+        Long uid = 1225L;
+
+        // when
+        managingService.get(uid);
+
+        // then
+        // should throw LicenceNotFoundException
     }
 
     @After

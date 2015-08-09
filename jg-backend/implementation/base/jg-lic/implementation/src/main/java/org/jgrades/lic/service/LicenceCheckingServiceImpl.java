@@ -1,8 +1,10 @@
 package org.jgrades.lic.service;
 
+import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import org.dozer.Mapper;
 import org.jgrades.lic.api.exception.LicenceException;
+import org.jgrades.lic.api.exception.LicenceNotFoundException;
 import org.jgrades.lic.api.model.Licence;
 import org.jgrades.lic.api.service.LicenceCheckingService;
 import org.jgrades.lic.dao.LicenceRepository;
@@ -14,6 +16,10 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
+
+import static org.hamcrest.core.IsNull.notNullValue;
+import static org.valid4j.Validation.otherwiseThrowing;
+import static org.valid4j.Validation.validate;
 
 @Service
 public class LicenceCheckingServiceImpl implements LicenceCheckingService {
@@ -38,6 +44,7 @@ public class LicenceCheckingServiceImpl implements LicenceCheckingService {
     @Override
     public boolean checkValid(Licence licence) throws LicenceException {
         LOGGER.debug("Start checking validation of licence {}", licence);
+        validate(licence, notNullValue(), otherwiseThrowing(LicenceNotFoundException.class));
         for (ValidationRule rule : rules) {
             LOGGER.debug("Start checking rule of validation: {} for licence with uid {}", rule.getClass().getName(), licence.getUid());
             if (!rule.isValid(licence)) {
