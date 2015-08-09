@@ -30,16 +30,16 @@
         <profile>
             <id>dev</id>
             <properties>
-                <tomcat.installation.dir>C:/jgrades/tomcat8</tomcat.installation.dir>
-                <tomcat.logs.dir>C:/jgrades/tomcat8/logs</tomcat.logs.dir>
-                <jg.logs.dir>C:/jgrades/logs</jg.logs.dir>
-                <jg.internal.data.dir>C:/jgrades/internal</jg.internal.data.dir>
-                <shadow.backup.dir>C:/jgrades/backup</shadow.backup.dir>
-                <skip.tests>false</skip.tests>
-                <skip.integration.tests>true</skip.integration.tests>
-                <db.operations.debug>true</db.operations.debug>
-                <db.schema.orm.policy>create-drop</db.schema.orm.policy>
-                <application.properties>C:/jgrades/internal/app.properties</application.properties>
+                <TOMCAT.INSTALLATION.DIR>C:/jgrades/tomcat8</TOMCAT.INSTALLATION.DIR>
+                <TOMCAT.LOGS.DIR>C:/jgrades/tomcat8/logs</TOMCAT.LOGS.DIR>
+                <JG.LOGS.DIR>C:/jgrades/logs</JG.LOGS.DIR>
+                <JG.INTERNAL.DATA.DIR>C:/jgrades/internal</JG.INTERNAL.DATA.DIR>
+                <SHADOW.BACKUP.DIR>C:/jgrades/backup</SHADOW.BACKUP.DIR>
+                <SKIP.TESTS>false</SKIP.TESTS>
+                <SKIP.INTEGRATION.TESTS>true</SKIP.INTEGRATION.TESTS>
+                <DB.OPERATIONS.DEBUG>true</DB.OPERATIONS.DEBUG>
+                <DB.SCHEMA.ORM.POLICY>create-drop</DB.SCHEMA.ORM.POLICY>
+                <APPLICATION.PROPERTIES>C:/jgrades/internal/app.properties</APPLICATION.PROPERTIES>
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>
@@ -48,16 +48,16 @@
         <profile>
             <id>prod</id>
             <properties>
-                <tomcat.installation.dir>/etc/tomcat8</tomcat.installation.dir>
-                <tomcat.logs.dir>/var/log/tomcat8</tomcat.logs.dir>
-                <jg.logs.dir>/var/log/jgrades</jg.logs.dir>
-                <jg.internal.data.dir>/etc/opt/jgrades</jg.internal.data.dir>
-                <shadow.backup.dir>/var/backups/jgrades</shadow.backup.dir>
-                <skip.tests>false</skip.tests>
-                <skip.integration.tests>false</skip.integration.tests>
-                <db.operations.debug>false</db.operations.debug>
-                <db.schema.orm.policy>none</db.schema.orm.policy>
-                <application.properties>/etc/opt/jgrades/app.properties</application.properties>
+                <TOMCAT.INSTALLATION.DIR>/etc/tomcat8</TOMCAT.INSTALLATION.DIR>
+                <TOMCAT.LOGS.DIR>/var/log/tomcat8</TOMCAT.LOGS.DIR>
+                <JG.LOGS.DIR>/var/log/jgrades</JG.LOGS.DIR>
+                <JG.INTERNAL.DATA.DIR>/etc/opt/jgrades</JG.INTERNAL.DATA.DIR>
+                <SHADOW.BACKUP.DIR>/var/backups/jgrades</SHADOW.BACKUP.DIR>
+                <SKIP.TESTS>false</SKIP.TESTS>
+                <SKIP.INTEGRATION.TESTS>false</SKIP.INTEGRATION.TESTS>
+                <DB.OPERATIONS.DEBUG>false</DB.OPERATIONS.DEBUG>
+                <DB.SCHEMA.ORM.POLICY>none</DB.SCHEMA.ORM.POLICY>
+                <APPLICATION.PROPERTIES>/etc/opt/jgrades/app.properties</APPLICATION.PROPERTIES>
             </properties>
         </profile>
     </profiles>
@@ -126,7 +126,7 @@
                             <goal>test</goal>
                         </goals>
                         <configuration>
-                            <skip>${skip.tests}</skip>
+                            <skip>${SKIP.TESTS}</skip>
                             <includes>
                                 <include>**/*Test.java</include>
                             </includes>
@@ -142,7 +142,7 @@
                             <goal>test</goal>
                         </goals>
                         <configuration>
-                            <skip>${skip.integration.tests}</skip>
+                            <skip>${SKIP.INTEGRATION.TESTS}</skip>
                             <includes>
                                 <include>**/*IT.java</include>
                             </includes>
