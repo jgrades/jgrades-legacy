@@ -20,9 +20,37 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
+                <version>2.6</version>
                 <configuration>
-                    <warName>jg-rest</warName>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.cargo</groupId>
+                <artifactId>cargo-maven2-plugin</artifactId>
+                <version>1.4.15</version>
+                <configuration>
+                    <container>
+                        <containerId>tomcat8x</containerId>
+                        <home>${TOMCAT.INSTALLATION.DIR}</home>
+                    </container>
+                    <configuration>
+                        <type>existing</type>
+                        <home>${TOMCAT.INSTALLATION.DIR}</home>
+                    </configuration>
+                    <deployables>
+                        <deployable>
+                            <groupId>org.jgrades.app</groupId>
+                            <artifactId>jg-rest-ws</artifactId>
+                            <type>war</type>
+                            <properties>
+                                <context>jg-rest</context>
+                            </properties>
+                        </deployable>
+                    </deployables>
+                    <deployer>
+                        <type>installed</type>
+                    </deployer>
                 </configuration>
             </plugin>
         </plugins>
