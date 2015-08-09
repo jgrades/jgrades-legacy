@@ -22,7 +22,7 @@ import static org.junit.Assert.assertEquals;
 public class ConfigurationParserTest {
 
     private ConfigurationParser parser;
-    private static final String LOG_BACK_CONFIGURATION_FILE_PATH = "src/test/resources/logback_test.xml";
+    private static final String LOG_BACK_CONFIGURATION_FILE_PATH = "src/test/resources/logback.xml";
 
     @Before
     public void init(){
@@ -46,7 +46,7 @@ public class ConfigurationParserTest {
     @Test(expected = IOException.class)
     public void wrongPathToLogBackConfigurtation_ThrowException() throws ParserConfigurationException, IllegalAccessException, SAXException, IOException {
 
-        parser.parse("fake/path/to/logback_test.xml");
+        parser.parse("fake/path/to/logback.xml");
     }
 
     @Test

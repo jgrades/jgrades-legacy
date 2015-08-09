@@ -30,18 +30,35 @@ public class JGradesLoggingMaintenaceServiceImpl implements JgLoggingService {
     public JGradesLoggingMaintenaceServiceImpl(ConfigurationParser parser) {
         this.parser = parser;
     }
+
+    /**
+     * These method is using to change logging level
+     * @param level new logging level, for example : INFO, ERROR
+     *
+     */
     @Override
     public void setLevel(Level level) {
         ch.qos.logback.classic.Logger root = (ch.qos.logback.classic.Logger) org.slf4j.LoggerFactory.getLogger(ch.qos.logback.classic.Logger.ROOT_LOGGER_NAME);
         root.setLevel(level);
+
+        PropertyUtils.setNewLoggingLevel(level);
     }
 
+    /**
+     * These method is using to change current logging configuration.
+     * Old logs won't be change
+     * @param mode new logging cofiguration, for example : LOG_PER_TYPE, LOG_PER_MODULE
+     */
     @Override
     public void setLoggingMode(LoggingConfiguration mode) {
         PropertyUtils.setNewLoggerConfiguration(mode.toString());
 
     }
 
+    /**
+     * These method is using to change maksimum of log size
+     * @param size new log size, input is a String, for example: "100 MB", "100 KB"
+     */
     @Override
     public void setMaxSize(String size) {
         try {
@@ -49,10 +66,14 @@ public class JGradesLoggingMaintenaceServiceImpl implements JgLoggingService {
             parser.setLogFileSize(size, getLogbackConfigurationFile());
         }
         catch(IOException | ParserConfigurationException | SAXException |  IllegalArgumentException ex) {
-            logger.error("[JGradesLoggingMaintenaceServiceImpl[setMaxSize()] "+ex);
+            logger.error("Error when try set new max file size "+ex);
         }
     }
 
+    /**
+     * These method is using to change number of days when logback should clean logs file
+     * @param days number of days to clean procedure
+     */
     @Override
     public void setCleaningAfterDays(Integer days) {
         try {
@@ -60,10 +81,14 @@ public class JGradesLoggingMaintenaceServiceImpl implements JgLoggingService {
             parser.setLogFileStorageTimeLimit(days, getLogbackConfigurationFile());
         }
         catch(IOException | ParserConfigurationException | SAXException |  IllegalArgumentException ex) {
-            logger.error("[JGradesLoggingMaintenaceServiceImpl[setCleaningAfterDays()] "+ex);
+            logger.error("Error when try set new clean time "+ex);
         }
     }
 
+    /**
+     * These method is using to get current logging confiuguration saved in .property file
+     * @return current logging configuration
+     */
     @Override
     public LoggingConfiguration getLoggingConfiguration() {
         return PropertyUtils.getCurrentLoggerConfiguration();

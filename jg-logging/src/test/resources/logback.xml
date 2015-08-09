@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true">
-  <appender name="sift" class="ch.qos.logback.classic.sift.SiftingAppender">
+  <appender class="ch.qos.logback.classic.sift.SiftingAppender" name="sift">
     <discriminator>
       <key>logging_configuration</key>
       <defaultValue>external-lib</defaultValue>
@@ -11,22 +11,20 @@
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
           <fileNamePattern>${JG.LOGS.DIR}/jgrades_${logging_configuration}_module_%d{yyyy-MM-dd}.%i.log</fileNamePattern>
           <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
-            <MaxFileSize>1MB</MaxFileSize>
+            <MaxFileSize>2147483647MB</MaxFileSize>
           </triggeringPolicy>
           <triggeringPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <MaxBackupIndex>7</MaxBackupIndex>
+            <MaxBackupIndex>2147483647</MaxBackupIndex>
           </triggeringPolicy>
         </rollingPolicy>
         <encoder>
           <charset>UTF-8</charset>
-          <pattern>[%d{yyyy-MM-dd HH:mm:ss}] [%thread] %-5level --> [Class: %c][Code Line: %L][Message: %m]%n</pattern>
+          <pattern>[%d{yyyy-MM-dd HH:mm:ss}] [%thread] %-5level --&gt; [Class: %c][Code Line: %L][Message: %m]%n</pattern>
         </encoder>
       </appender>
     </sift>
   </appender>
-
   <root level="ALL">
-    <appender-ref ref="sift"/>
+    <appender-ref ref="sift" />
   </root>
-
 </configuration>

@@ -1,8 +1,6 @@
 package org.jgrades.logging.logger.utils;
 
 import ch.qos.logback.classic.Level;
-import org.jgrades.logging.logger.configuration.LoggingConfiguration;
-import org.jgrades.logging.logger.configuration.ConfigurationUtils;
 import org.junit.After;
 import org.junit.Test;
 

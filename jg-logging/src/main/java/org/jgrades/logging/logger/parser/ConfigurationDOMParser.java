@@ -101,4 +101,8 @@ public class ConfigurationDOMParser implements ConfigurationParser {
         if(elementLogStorageTimeLimit == null ) { findCurrentLogFileStorageTimeLimit(); }
 
     }
+
+    public Document getXmlFile() {
+        return xmlFile;
+    }
 }
