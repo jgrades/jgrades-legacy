@@ -18,6 +18,7 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.http.converter.support.AllEncompassingFormHttpMessageConverter;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.HandlerExceptionResolver;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 import org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver;
 import org.springframework.web.servlet.resource.DefaultServletHttpRequestHandler;
@@ -27,6 +28,7 @@ import java.util.List;
 
 @Configuration
 @ComponentScan("org.jgrades.rest")
+@Import(RestDocsConfig.class)
 @PropertySources({
         @PropertySource("classpath:jg-rest.properties"),
         @PropertySource(value = "file:${jgrades.application.properties.file}", ignoreResourceNotFound = true)
@@ -99,5 +101,14 @@ public class RestConfig extends WebMvcConfigurationSupport {
                 .addHandler(new CustomErrorMessageRestExceptionHandler<LicenceNotFoundException>(HttpStatus.NOT_FOUND))
                 .defaultContentType(MediaType.APPLICATION_JSON)
                 .build();
+    }
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("swagger-ui.html")
+                .addResourceLocations("classpath:/META-INF/resources/");
+
+        registry.addResourceHandler("/webjars/**")
+                .addResourceLocations("classpath:/META-INF/resources/webjars/");
     }
 }

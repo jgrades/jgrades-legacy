@@ -1,5 +1,6 @@
 package org.jgrades.rest.lic;
 
+import io.swagger.annotations.ApiOperation;
 import org.jgrades.lic.api.model.Licence;
 import org.jgrades.lic.api.service.LicenceCheckingService;
 import org.jgrades.lic.api.service.LicenceManagingService;
@@ -21,6 +22,7 @@ public class LicenceCheckService {
     private LicenceCheckingService licenceCheckingService;
 
     @RequestMapping(value = "/{uid}", method = RequestMethod.GET)
+    @ApiOperation(value = "Check is licence with given UID valid")
     public
     @ResponseBody
     boolean check(@PathVariable Long uid) {
