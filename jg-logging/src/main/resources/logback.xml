@@ -25,7 +25,7 @@
         </sift>
     </appender>
 
-    <root  level="INFO">
+    <root  level="ALL">
         <appender-ref ref="sift"/>
     </root>
 
