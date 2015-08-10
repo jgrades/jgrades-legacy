@@ -25,7 +25,7 @@ after_success:
 deploy:
   provider: heroku
   api_key:
-    secure: HR3GKYkETIDvPq/37UQSOnF2qZd8VdMhWkU6qNTz3Wx/QrknGpN5uijHcQd7T2AQvWCwc2eodIL8BYy3xqoEBt5FJ/SeV9qJxbLtlOgjGL6RqkratshvBsXNOdx4RKIUocyLl9nctaELBJTwhwCCFqDljIWriM7k0daLuDMArWo=
+    secure: EIxRbFsd7VYxzkCg2+k6YSTYP7+VHvTI9mQ+5/uFvk2Fo1idnxpGPlgn/ieGhmACW3Q+scQpOmKjQsdVFK9RMyR83xCgFyrF80NnNesDlPCGO6/zR5njLOftCQdFUvgIgVKcKko3O7g1RiyKDDKx9gjBrwnmIioywBHGbLqCdLo=
   buildpack: https://github.com/jgrades/heroku-buildpack-java.git
 
 notifications:
