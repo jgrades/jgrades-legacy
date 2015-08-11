@@ -16,11 +16,11 @@ install:
 - mvn clean install -Pprod -fae 
 after_success:
 - mvn test jacoco:report org.eluder.coveralls:coveralls-maven-plugin:report
-deploy:
-  provider: heroku
-  api_key:
-    secure: AKScRuyb9sQyjw1gkj7x2bcMvwwqJES12HiiIyOVX9ESOR5ekXIya8Z+4FhSjx/SagObPUQjJoVviDePn3nVRxho0BrP3Byf+sNDkZRett6qkJDn3BQCmXxXc8QnCeO7o5aWJRiDH1C0atnOYyyTiJxGcHnwwc+9wMSg7HK+oJA=
-  buildpack: https://github.com/jgrades/heroku-buildpack-oracle-java.git
+#deploy:
+#  provider: heroku
+#  api_key:
+#    secure: AKScRuyb9sQyjw1gkj7x2bcMvwwqJES12HiiIyOVX9ESOR5ekXIya8Z+4FhSjx/SagObPUQjJoVviDePn3nVRxho0BrP3Byf+sNDkZRett6qkJDn3BQCmXxXc8QnCeO7o5aWJRiDH1C0atnOYyyTiJxGcHnwwc+9wMSg7HK+oJA=
+#  buildpack: https://github.com/jgrades/heroku-buildpack-oracle-java.git
 notifications:
   email:
     recipients:
