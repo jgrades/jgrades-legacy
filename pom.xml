@@ -60,6 +60,21 @@
                 <APPLICATION.PROPERTIES>/etc/opt/jgrades/app.properties</APPLICATION.PROPERTIES>
             </properties>
         </profile>
+        <profile>
+            <id>heroku</id>
+            <properties>
+                <TOMCAT.INSTALLATION.DIR>/app/tomcat8</TOMCAT.INSTALLATION.DIR>
+                <TOMCAT.LOGS.DIR>/app/tomcat8/logs</TOMCAT.LOGS.DIR>
+                <JG.LOGS.DIR>/app/log</JG.LOGS.DIR>
+                <JG.INTERNAL.DATA.DIR>/app/internal</JG.INTERNAL.DATA.DIR>
+                <SHADOW.BACKUP.DIR>/app/backups</SHADOW.BACKUP.DIR>
+                <SKIP.TESTS>true</SKIP.TESTS>
+                <SKIP.INTEGRATION.TESTS>true</SKIP.INTEGRATION.TESTS>
+                <DB.OPERATIONS.DEBUG>false</DB.OPERATIONS.DEBUG>
+                <DB.SCHEMA.ORM.POLICY>none</DB.SCHEMA.ORM.POLICY>
+                <APPLICATION.PROPERTIES>/app/app.properties</APPLICATION.PROPERTIES>
+            </properties>
+        </profile>
     </profiles>
 
     <modules>
