@@ -8,6 +8,7 @@ import cz.jirutka.spring.exhandler.interpolators.SpelMessageInterpolator;
 import cz.jirutka.spring.exhandler.support.HttpMessageConverterUtils;
 import org.jgrades.lic.api.exception.LicenceException;
 import org.jgrades.lic.api.exception.LicenceNotFoundException;
+import org.jgrades.lic.api.exception.UnreliableLicenceException;
 import org.springframework.context.annotation.*;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.http.HttpStatus;
@@ -99,6 +100,7 @@ public class RestConfig extends WebMvcConfigurationSupport {
                 .messageInterpolator(new SpelMessageInterpolator())
                 .addHandler(new CustomErrorMessageRestExceptionHandler<LicenceException>(HttpStatus.INTERNAL_SERVER_ERROR))
                 .addHandler(new CustomErrorMessageRestExceptionHandler<LicenceNotFoundException>(HttpStatus.NOT_FOUND))
+                .addHandler(new CustomErrorMessageRestExceptionHandler<UnreliableLicenceException>(HttpStatus.INTERNAL_SERVER_ERROR))
                 .defaultContentType(MediaType.APPLICATION_JSON)
                 .build();
     }

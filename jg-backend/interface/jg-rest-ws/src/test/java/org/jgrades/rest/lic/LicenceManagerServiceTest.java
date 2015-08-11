@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jgrades.lic.api.exception.LicenceNotFoundException;
+import org.jgrades.lic.api.exception.UnreliableLicenceException;
 import org.jgrades.lic.api.model.Customer;
 import org.jgrades.lic.api.model.Licence;
 import org.jgrades.lic.api.model.Product;
@@ -116,7 +117,7 @@ public class LicenceManagerServiceTest {
 
         // when
         mockMvc.perform(get("/licence/{uid}", uid))
-                .andExpect(status().isNotFound())
+                .andExpect(status().is5xxServerError())
                 .andExpect(jsonPath("$.title", is(LicenceNotFoundException.class.getSimpleName())));
 
         // then
@@ -177,7 +178,7 @@ public class LicenceManagerServiceTest {
                 fileUpload("/licence")
                         .file(licenceInputFile)
                         .file(signatureInputFile))
-                .andExpect(status().isNotFound())
+                .andExpect(status().isInternalServerError())
                 .andExpect(jsonPath("$.title", is(IllegalArgumentException.class.getSimpleName())));
     }
 
@@ -194,8 +195,41 @@ public class LicenceManagerServiceTest {
         mockMvc.perform(fileUpload("/licence")
                 .file(licenceInputFile)
                 .file(signatureInputFile))
-                .andExpect(status().isNotFound())
+                .andExpect(status().isInternalServerError())
                 .andExpect(jsonPath("$.title", is(IllegalArgumentException.class.getSimpleName())));
+    }
+
+    @Test
+    public void shouldRemoveReceivedFilesFromFileSystem_whenSomethingWrongDuringInstallationHappened() throws Exception {
+        // given
+        File licenceTargetFile = tempFolder.newFile();
+        File signatureTargetFile = tempFolder.newFile();
+
+        when(incomingFilesNameResolverMock.getLicenceFile()).thenReturn(licenceTargetFile);
+        when(incomingFilesNameResolverMock.getSignatureFile()).thenReturn(signatureTargetFile);
+
+
+        byte[] licenceFileContent = "LIC_CONTENT".getBytes();
+        byte[] signatureFileContent = "SIGNATURE_CONTENT".getBytes();
+
+        MockMultipartFile licenceInputFile = new MockMultipartFile("licence", "jg.lic", "text/plain", licenceFileContent);
+        MockMultipartFile signatureInputFile = new MockMultipartFile("signature", "jg.lic.sign", "text/plain", signatureFileContent);
+
+        when(licenceManagingServiceMock.installLicence(
+                        eq(licenceTargetFile.getAbsolutePath()),
+                        eq(signatureTargetFile.getAbsolutePath()))
+        ).thenThrow(UnreliableLicenceException.class);
+
+        // when
+        mockMvc.perform(fileUpload("/licence")
+                .file(licenceInputFile)
+                .file(signatureInputFile))
+                .andExpect(status().isInternalServerError())
+                .andExpect(jsonPath("$.title", is(UnreliableLicenceException.class.getSimpleName())));
+
+        // then
+        assertThat(licenceTargetFile).doesNotExist();
+        assertThat(signatureTargetFile).doesNotExist();
     }
 
     @Test

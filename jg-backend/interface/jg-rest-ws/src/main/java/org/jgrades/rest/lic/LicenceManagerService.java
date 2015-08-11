@@ -1,6 +1,7 @@
 package org.jgrades.rest.lic;
 
 import org.apache.commons.io.FileUtils;
+import org.jgrades.lic.api.exception.LicenceException;
 import org.jgrades.lic.api.model.Licence;
 import org.jgrades.lic.api.service.LicenceManagingService;
 import org.jgrades.logging.logger.JGLoggingFactory;
@@ -52,13 +53,24 @@ public class LicenceManagerService {
         File licenceFile = filesNameResolver.getLicenceFile();
         File signatureFile = filesNameResolver.getSignatureFile();
 
-        LOGGER.info("Saving received licence file to {}", licenceFile.getAbsolutePath());
+        String licenceFilePath = licenceFile.getAbsolutePath();
+        String signatureFilePath = signatureFile.getAbsolutePath();
+
+        LOGGER.info("Saving received licence file to {}", licenceFilePath);
         FileUtils.writeByteArrayToFile(licenceFile, licence.getBytes());
 
-        LOGGER.info("Saving received signature file to {}", signatureFile.getAbsolutePath());
+        LOGGER.info("Saving received signature file to {}", signatureFilePath);
         FileUtils.writeByteArrayToFile(signatureFile, signature.getBytes());
 
-        return licenceManagingService.installLicence(licenceFile.getAbsolutePath(), signatureFile.getAbsolutePath());
+        try{
+            return licenceManagingService.installLicence(licenceFilePath, signatureFilePath);
+        } catch(LicenceException ex){
+            LOGGER.error("Problem during installation licence: {} and signature: {}", licenceFilePath, signatureFilePath, ex);
+            LOGGER.error("Due to exception during installation saved file will be removed: {} , {}", licenceFilePath, signatureFilePath);
+            FileUtils.deleteQuietly(licenceFile);
+            FileUtils.deleteQuietly(signatureFile);
+            throw ex;
+        }
     }
 
     private void checkFilesExisting(MultipartFile licence, MultipartFile signature) {
