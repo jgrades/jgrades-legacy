@@ -85,14 +85,14 @@ public class LicenceCheckServiceTest {
     }
 
     @Test
-    public void shouldReturnNotFoundStatus_whenLicenceNotFound() throws Exception {
+    public void shouldReturnLicenceNotFoundException_whenLicenceNotFound() throws Exception {
         // given
         when(licenceManagingServiceMock.get(anyLong())).thenReturn(null);
         when(licenceCheckingServiceMock.checkValid(null)).thenThrow(LicenceNotFoundException.class);
 
         // when then
         mockMvc.perform(get("/licence/check/{uid}", 1500100900L))
-                .andExpect(status().isNotFound())
+                .andExpect(status().is5xxServerError())
                 .andExpect(jsonPath("$.title", is(LicenceNotFoundException.class.getSimpleName())));
     }
 
