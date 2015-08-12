@@ -24,6 +24,14 @@
                     <include>**/*.xml</include>
                 </includes>
             </resource>
+            <resource>
+                <directory>src/test/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>**/*.properties</include>
+                    <include>**/*.xml</include>
+                </includes>
+            </resource>
         </resources>
     </build>
 

@@ -30,6 +30,7 @@
         <profile>
             <id>dev</id>
             <properties>
+                <LOGGER.PROPERTIES.FILE>C:/jgrades/logger/jg-logging.properties</LOGGER.PROPERTIES.FILE>
                 <TOMCAT.INSTALLATION.DIR>C:/jgrades/tomcat8</TOMCAT.INSTALLATION.DIR>
                 <TOMCAT.LOGS.DIR>C:/jgrades/tomcat8/logs</TOMCAT.LOGS.DIR>
                 <JG.LOGS.DIR>C:/jgrades/logs</JG.LOGS.DIR>
@@ -48,6 +49,7 @@
         <profile>
             <id>prod</id>
             <properties>
+                <LOGGER.PROPERTIES.FILE>/var/log/logger/jg-logging.properties</LOGGER.PROPERTIES.FILE>
                 <TOMCAT.INSTALLATION.DIR>/etc/tomcat8</TOMCAT.INSTALLATION.DIR>
                 <TOMCAT.LOGS.DIR>/var/log/tomcat8</TOMCAT.LOGS.DIR>
                 <JG.LOGS.DIR>/var/log/jgrades</JG.LOGS.DIR>
