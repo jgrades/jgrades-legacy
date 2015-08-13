@@ -16,6 +16,8 @@ install:
 - mvn clean install -Pprod -fae 
 after_success:
 - mvn test jacoco:report org.eluder.coveralls:coveralls-maven-plugin:report
+after_failure:
+  - cat target/surefire-reports/*.txt
 #deploy:
 #  provider: heroku
 #  api_key:
