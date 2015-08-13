@@ -2,14 +2,26 @@ package org.jgrades.logging.logger.utils;
 
 import ch.qos.logback.classic.Level;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.util.Properties;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
 
 public class PropertyUtilsTest {
+
+    private Properties properties;
+
+    @Before
+    public void init(){
+        properties = new Properties();
+        properties.setProperty("logging.configuration.strategy","LOG_PER_TYPE_MODULE");
+        properties.setProperty("logging.level","INFO");
+
+        PropertyUtils.setPropertiesFile(properties);
+    }
 
     @After
     public void clean() throws IOException {

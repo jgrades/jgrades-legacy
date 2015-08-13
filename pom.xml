@@ -30,7 +30,7 @@
         <profile>
             <id>dev</id>
             <properties>
-                <LOGGER.PROPERTIES.FILE>C:/jgrades/logger/jg-logging.properties</LOGGER.PROPERTIES.FILE>
+                <LOGGER.PROPERTIES.FILE>C:/jgrades/logs/logger/jg-logging.properties</LOGGER.PROPERTIES.FILE>
                 <TOMCAT.INSTALLATION.DIR>C:/jgrades/tomcat8</TOMCAT.INSTALLATION.DIR>
                 <TOMCAT.LOGS.DIR>C:/jgrades/tomcat8/logs</TOMCAT.LOGS.DIR>
                 <JG.LOGS.DIR>C:/jgrades/logs</JG.LOGS.DIR>

@@ -15,42 +15,42 @@ public class PropertyUtils {
     private static final String CURRENT_LOGGING_PROPERTIES_DIR = "logging.properties.dir";
     private static final String CURRENT_CONFIGURATION_PROPERTY_FILE = "logging.configuration.strategy";
     private static final String CURRENT_LOGGING_LEVEL = "logging.level";
-    private static Properties internalProperties,externalProperties;
+    private static Properties INTERNAL_PROPERTIES,EXTERNAL_PROPERTIES;
 
     public synchronized static LoggingConfiguration getCurrentLoggerConfiguration() {
         checkReadPropertyFile();
-        return LoggingConfiguration.valueOf(externalProperties.getProperty(CURRENT_CONFIGURATION_PROPERTY_FILE));
+        return LoggingConfiguration.valueOf(EXTERNAL_PROPERTIES.getProperty(CURRENT_CONFIGURATION_PROPERTY_FILE));
     }
 
     public synchronized static Level getCurrentLoggingLevel(){
         checkReadPropertyFile();
-        return Level.valueOf(externalProperties.getProperty(CURRENT_LOGGING_LEVEL));
+        return Level.valueOf(EXTERNAL_PROPERTIES.getProperty(CURRENT_LOGGING_LEVEL));
     }
 
 
     public static void setNewLoggingLevel(Level level){
         checkReadPropertyFile();
-        externalProperties.setProperty(CURRENT_LOGGING_LEVEL, level.toString());
+        EXTERNAL_PROPERTIES.setProperty(CURRENT_LOGGING_LEVEL, level.toString());
     }
 
     public static void setNewLoggerConfiguration(String newConfiguration) {
         checkReadPropertyFile();
         Validate.validState(EnumUtils.isValidEnum(LoggingConfiguration.class, newConfiguration));
 
-        externalProperties.setProperty(CURRENT_CONFIGURATION_PROPERTY_FILE, newConfiguration);
+        EXTERNAL_PROPERTIES.setProperty(CURRENT_CONFIGURATION_PROPERTY_FILE, newConfiguration);
 
 
     }
 
     private static void checkReadPropertyFile(){
         try {
-            if (internalProperties == null) {
-                internalProperties = new Properties();
-                readPropertyFile(internalProperties, Thread.currentThread().getContextClassLoader().getResourceAsStream(PROPERTIES_FILE));
+            if (INTERNAL_PROPERTIES == null) {
+                INTERNAL_PROPERTIES = new Properties();
+                readPropertyFile(INTERNAL_PROPERTIES, Thread.currentThread().getContextClassLoader().getResourceAsStream(PROPERTIES_FILE));
             }
-            if (externalProperties == null) {
-                externalProperties = new Properties();
-                readPropertyFile(externalProperties, new FileInputStream(new File(internalProperties.getProperty(CURRENT_LOGGING_PROPERTIES_DIR))));
+            if (EXTERNAL_PROPERTIES == null) {
+                EXTERNAL_PROPERTIES = new Properties();
+                readPropertyFile(EXTERNAL_PROPERTIES, new FileInputStream(new File(INTERNAL_PROPERTIES.getProperty(CURRENT_LOGGING_PROPERTIES_DIR))));
             }
         }
         catch(IOException ex) {
@@ -59,13 +59,11 @@ public class PropertyUtils {
     }
 
     private static void readPropertyFile(Properties propertiesFile,InputStream inputToPropertiesFile) {
-        String propFileName = PROPERTIES_FILE;
-
         try {
             if (inputToPropertiesFile != null) {
                 propertiesFile.load(inputToPropertiesFile);
             } else {
-                throw new FileNotFoundException("Property file '" + propFileName + "' was  not found");
+                throw new FileNotFoundException("Property file was  not found");
             }
         }
         catch(IOException ex) {
@@ -78,6 +76,11 @@ public class PropertyUtils {
                 e.printStackTrace();
             }
         }
+    }
+
+    public static void setPropertiesFile(Properties file){
+        PropertyUtils.INTERNAL_PROPERTIES = new Properties();
+        PropertyUtils.EXTERNAL_PROPERTIES = file;
     }
 
 
