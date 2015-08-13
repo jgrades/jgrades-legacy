@@ -1,8 +1,6 @@
 package org.jgrades.lic.api.service;
 
 import org.jgrades.lic.api.model.Licence;
-import org.jgrades.logging.logger.JGLoggingFactory;
-import org.jgrades.logging.logger.JGradesLogger;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -12,7 +10,6 @@ import javax.xml.bind.helpers.DefaultValidationEventHandler;
 
 public final class LicenceMarshallingFactory {
     private static JAXBContext jaxbContext;
-    private static JGradesLogger logger = JGLoggingFactory.getLogger(LicenceMarshallingFactory.class);
     static {
         try {
             jaxbContext = JAXBContext.newInstance(Licence.class);
@@ -27,7 +24,6 @@ public final class LicenceMarshallingFactory {
     public static Marshaller getMarshaller() {
         Marshaller jaxbMarshaller = null;
         try {
-            logger.info("LOG LOG LOG");
             jaxbMarshaller = jaxbContext.createMarshaller();
             jaxbMarshaller.setProperty(Marshaller.JAXB_ENCODING, "UTF-8");
             jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
