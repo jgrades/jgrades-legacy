@@ -28,6 +28,7 @@ public class PropertyUtilsTest {
         PropertyUtils.setNewLoggerConfiguration("LOG_PER_TYPE");
         PropertyUtils.setNewLoggingLevel(Level.INFO);
     }
+
     @Test
     public void currentConfigurationShouldntBeNull() throws IOException {
 

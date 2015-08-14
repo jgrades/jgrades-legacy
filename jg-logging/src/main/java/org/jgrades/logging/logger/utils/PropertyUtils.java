@@ -19,12 +19,22 @@ public class PropertyUtils {
 
     public synchronized static LoggingConfiguration getCurrentLoggerConfiguration() {
         checkReadPropertyFile();
-        return LoggingConfiguration.valueOf(EXTERNAL_PROPERTIES.getProperty(CURRENT_CONFIGURATION_PROPERTY_FILE));
+        if(EnumUtils.isValidEnum(LoggingConfiguration.class,EXTERNAL_PROPERTIES.getProperty(CURRENT_CONFIGURATION_PROPERTY_FILE))){
+            return LoggingConfiguration.valueOf(EXTERNAL_PROPERTIES.getProperty(CURRENT_CONFIGURATION_PROPERTY_FILE));
+        }
+        else {
+            return LoggingConfiguration.LOG_PER_TYPE;
+        }
     }
 
     public synchronized static Level getCurrentLoggingLevel(){
         checkReadPropertyFile();
-        return Level.valueOf(EXTERNAL_PROPERTIES.getProperty(CURRENT_LOGGING_LEVEL));
+        try {
+            return Level.valueOf(EXTERNAL_PROPERTIES.getProperty(CURRENT_LOGGING_LEVEL));
+        }
+        catch(NullPointerException ex) {
+            return Level.INFO;
+        }
     }
 
 
@@ -62,8 +72,6 @@ public class PropertyUtils {
         try {
             if (inputToPropertiesFile != null) {
                 propertiesFile.load(inputToPropertiesFile);
-            } else {
-                throw new FileNotFoundException("Property file was  not found");
             }
         }
         catch(IOException ex) {

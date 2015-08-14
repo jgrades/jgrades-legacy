@@ -1,6 +1,7 @@
 package org.jgrades.logging.logger;
 
-public final class JGLoggingFactory {
+public class JGLoggingFactory {
+
     private JGLoggingFactory() {
     }
 
