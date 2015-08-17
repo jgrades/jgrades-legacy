@@ -21,7 +21,7 @@
                     <onMismatch>DENY</onMismatch>
                 </filter>
                 <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-                    <fileNamePattern>${JG.LOGS.DIR}/logs/jg_${module-name-placeholder}_trace_%d{yyyy-MM-dd}_%i.log</fileNamePattern>
+                    <fileNamePattern>${JG.LOGS.DIR}/jg_${module-name-placeholder}_trace_%d{yyyy-MM-dd}_%i.log</fileNamePattern>
                     <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                         <maxFileSize>${DEFAULT.LOGGING.MAX.FILE.SIZE}</maxFileSize>
                     </timeBasedFileNamingAndTriggeringPolicy>
@@ -48,7 +48,7 @@
                     <onMismatch>DENY</onMismatch>
                 </filter>
                 <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-                    <fileNamePattern>${JG.LOGS.DIR}/logs/jg_${module-name-placeholder}_debug_%d{yyyy-MM-dd}_%i.log</fileNamePattern>
+                    <fileNamePattern>${JG.LOGS.DIR}/jg_${module-name-placeholder}_debug_%d{yyyy-MM-dd}_%i.log</fileNamePattern>
                     <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                         <maxFileSize>${DEFAULT.LOGGING.MAX.FILE.SIZE}</maxFileSize>
                     </timeBasedFileNamingAndTriggeringPolicy>
@@ -75,7 +75,7 @@
                     <onMismatch>DENY</onMismatch>
                 </filter>
                 <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-                    <fileNamePattern>${JG.LOGS.DIR}/logs/jg_${module-name-placeholder}_info_%d{yyyy-MM-dd}_%i.log</fileNamePattern>
+                    <fileNamePattern>${JG.LOGS.DIR}/jg_${module-name-placeholder}_info_%d{yyyy-MM-dd}_%i.log</fileNamePattern>
                     <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                         <maxFileSize>${DEFAULT.LOGGING.MAX.FILE.SIZE}</maxFileSize>
                     </timeBasedFileNamingAndTriggeringPolicy>
@@ -102,7 +102,7 @@
                     <onMismatch>DENY</onMismatch>
                 </filter>
                 <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-                    <fileNamePattern>${JG.LOGS.DIR}/logs/jg_${module-name-placeholder}_warn_%d{yyyy-MM-dd}_%i.log</fileNamePattern>
+                    <fileNamePattern>${JG.LOGS.DIR}/jg_${module-name-placeholder}_warn_%d{yyyy-MM-dd}_%i.log</fileNamePattern>
                     <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                         <maxFileSize>${DEFAULT.LOGGING.MAX.FILE.SIZE}</maxFileSize>
                     </timeBasedFileNamingAndTriggeringPolicy>
@@ -129,7 +129,7 @@
                     <onMismatch>DENY</onMismatch>
                 </filter>
                 <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-                    <fileNamePattern>${JG.LOGS.DIR}/logs/jg_${module-name-placeholder}_error_%d{yyyy-MM-dd}_%i.log</fileNamePattern>
+                    <fileNamePattern>${JG.LOGS.DIR}/jg_${module-name-placeholder}_error_%d{yyyy-MM-dd}_%i.log</fileNamePattern>
                     <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                         <maxFileSize>${DEFAULT.LOGGING.MAX.FILE.SIZE}</maxFileSize>
                     </timeBasedFileNamingAndTriggeringPolicy>
@@ -156,7 +156,7 @@
                     <onMismatch>DENY</onMismatch>
                 </filter>
                 <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-                    <fileNamePattern>${JG.LOGS.DIR}/logs/jg_external-lib_trace_%d{yyyy-MM-dd}_%i.log</fileNamePattern>
+                    <fileNamePattern>${JG.LOGS.DIR}/jg_external-lib_trace_%d{yyyy-MM-dd}_%i.log</fileNamePattern>
                     <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                         <maxFileSize>${DEFAULT.LOGGING.MAX.FILE.SIZE}</maxFileSize>
                     </timeBasedFileNamingAndTriggeringPolicy>
@@ -183,7 +183,7 @@
                     <onMismatch>DENY</onMismatch>
                 </filter>
                 <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-                    <fileNamePattern>${JG.LOGS.DIR}/logs/jg_external-lib_debug_%d{yyyy-MM-dd}_%i.log</fileNamePattern>
+                    <fileNamePattern>${JG.LOGS.DIR}/jg_external-lib_debug_%d{yyyy-MM-dd}_%i.log</fileNamePattern>
                     <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                         <maxFileSize>${DEFAULT.LOGGING.MAX.FILE.SIZE}</maxFileSize>
                     </timeBasedFileNamingAndTriggeringPolicy>
@@ -210,7 +210,7 @@
                     <onMismatch>DENY</onMismatch>
                 </filter>
                 <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-                    <fileNamePattern>${JG.LOGS.DIR}/logs/jg_external-lib_info_%d{yyyy-MM-dd}_%i.log</fileNamePattern>
+                    <fileNamePattern>${JG.LOGS.DIR}/jg_external-lib_info_%d{yyyy-MM-dd}_%i.log</fileNamePattern>
                     <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                         <maxFileSize>${DEFAULT.LOGGING.MAX.FILE.SIZE}</maxFileSize>
                     </timeBasedFileNamingAndTriggeringPolicy>
@@ -237,7 +237,7 @@
                     <onMismatch>DENY</onMismatch>
                 </filter>
                 <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-                    <fileNamePattern>${JG.LOGS.DIR}/logs/jg_external-lib_warn_%d{yyyy-MM-dd}_%i.log</fileNamePattern>
+                    <fileNamePattern>${JG.LOGS.DIR}/jg_external-lib_warn_%d{yyyy-MM-dd}_%i.log</fileNamePattern>
                     <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                         <maxFileSize>${DEFAULT.LOGGING.MAX.FILE.SIZE}</maxFileSize>
                     </timeBasedFileNamingAndTriggeringPolicy>
@@ -264,7 +264,7 @@
                     <onMismatch>DENY</onMismatch>
                 </filter>
                 <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-                    <fileNamePattern>${JG.LOGS.DIR}/logs/jg_external-lib_error_%d{yyyy-MM-dd}_%i.log</fileNamePattern>
+                    <fileNamePattern>${JG.LOGS.DIR}/jg_external-lib_error_%d{yyyy-MM-dd}_%i.log</fileNamePattern>
                     <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                         <maxFileSize>${DEFAULT.LOGGING.MAX.FILE.SIZE}</maxFileSize>
                     </timeBasedFileNamingAndTriggeringPolicy>

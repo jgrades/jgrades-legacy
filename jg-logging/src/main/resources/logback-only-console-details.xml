@@ -9,7 +9,7 @@
         </encoder>
     </appender>
 
-    <root level="${DEFAULT.LOGGING.LEVEL}">
+    <root level="${CONSOLE.LOGGING.LEVEL}">
         <appender-ref ref="CONSOLE"/>
     </root>
 </configuration>
