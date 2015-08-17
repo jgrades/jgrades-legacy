@@ -19,7 +19,7 @@ public class JgLogger {
     }
 
     private void setMdcModuleName() {
-        MDC.put(MODULE_NAME_PLACEHOLDER, this.moduleName);
+        MDC.put(MODULE_NAME_PLACEHOLDER, moduleName);
     }
 
     private void removeMdcModuleName() {

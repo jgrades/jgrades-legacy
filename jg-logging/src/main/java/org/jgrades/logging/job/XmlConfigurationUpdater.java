@@ -20,21 +20,8 @@ public class XmlConfigurationUpdater {
         updateMaxFileSize(targetConfig.getMaxFileSize());
         updateMaxDays(targetConfig.getMaxDays());
         XmlUtils.saveUpdated();
-        LoggerContext context = (LoggerContext) LoggerFactory.getILoggerFactory();
-        context.reset();
-        JoranConfigurator configurator = new JoranConfigurator();
-        configurator.setContext(context);
-
-        File externalXmlFile = new File(InternalProperties.XML_FILE);
-        if(externalXmlFile.exists()){
-            try {
-                configurator.doConfigure(externalXmlFile);
-            } catch (JoranException e) {
-                setDefaultConfiguration(configurator);
-            }
-        } else{
-            setDefaultConfiguration(configurator);
-        }
+        LoggerContextReloader reloader = new LoggerContextReloader();
+        reloader.reload();
     }
 
     private static void setDefaultConfiguration(JoranConfigurator configurator){

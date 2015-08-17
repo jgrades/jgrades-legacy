@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="false">
+    <appender class="ch.qos.logback.core.ConsoleAppender" name="CONSOLE">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>${CONSOLE.LOGGING.LEVEL}</level>
+        </filter>
+        <encoder>
+            <pattern>[%d{dd-MM-yyyy HH:mm:ss.SSS}] [%thread] %-5level --&gt; [%c][%L] %m%n</pattern>
+        </encoder>
+    </appender>
+
+    <root level="${DEFAULT.LOGGING.LEVEL}">
+        <appender-ref ref="CONSOLE"/>
+    </root>
+</configuration>
