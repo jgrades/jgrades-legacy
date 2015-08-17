@@ -4,7 +4,7 @@ import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 
-public final class LoggerInternalProperties {
+public final class InternalProperties {
     private static Configuration configuration;
 
     static {
@@ -24,9 +24,9 @@ public final class LoggerInternalProperties {
     public static final String MAX_FILE_SIZE = configuration.getString("logging.max.file.size");
     public static final Integer MAX_DAYS = configuration.getInt("logging.max.days");
     public static final String DEFAULT_XML_FILE =
-            LoggerInternalProperties.class.getClassLoader()
+            InternalProperties.class.getClassLoader()
             .getResource("logback-default.xml").getFile();
 
-    private LoggerInternalProperties() {
+    private InternalProperties() {
     }
 }

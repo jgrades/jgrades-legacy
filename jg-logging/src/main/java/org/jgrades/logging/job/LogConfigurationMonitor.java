@@ -7,23 +7,28 @@ import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
-public class ExternalConfigurationMonitoringJob implements Job {
+public class LogConfigurationMonitor implements Job {
     private static LoggingConfiguration cachedConfig;
 
     private LoggingConfigurationDao dao = new LoggingConfigurationDaoFileImpl();
     private XmlConfigurationUpdater updater = new XmlConfigurationUpdater();
+    private LoggerContextReloader reloader = new LoggerContextReloader();
 
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
         LoggingConfiguration targetConfig = dao.getConfiguration();
         if(cachedConfig != null){
             if(!cachedConfig.equals(targetConfig)){
-                updater.update(targetConfig);
-                cachedConfig = targetConfig;
+                processNewConfig(targetConfig);
             }
         } else{
-            updater.update(targetConfig);
-            cachedConfig = targetConfig;
+            processNewConfig(targetConfig);
         }
+    }
+
+    private void processNewConfig(LoggingConfiguration targetConfig) {
+        updater.update(targetConfig);
+        cachedConfig = targetConfig;
+        reloader.reload();
     }
 }

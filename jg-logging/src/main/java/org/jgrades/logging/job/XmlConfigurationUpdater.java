@@ -6,13 +6,11 @@ import ch.qos.logback.classic.joran.JoranConfigurator;
 import ch.qos.logback.core.joran.spi.JoranException;
 import org.jgrades.logging.model.LoggingConfiguration;
 import org.jgrades.logging.model.LoggingStrategy;
-import org.jgrades.logging.utils.LoggerInternalProperties;
+import org.jgrades.logging.utils.InternalProperties;
 import org.jgrades.logging.utils.XmlUtils;
 import org.slf4j.LoggerFactory;
-import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
-import javax.xml.xpath.XPathExpressionException;
 import java.io.File;
 
 public class XmlConfigurationUpdater {
@@ -27,7 +25,7 @@ public class XmlConfigurationUpdater {
         JoranConfigurator configurator = new JoranConfigurator();
         configurator.setContext(context);
 
-        File externalXmlFile = new File(LoggerInternalProperties.XML_FILE);
+        File externalXmlFile = new File(InternalProperties.XML_FILE);
         if(externalXmlFile.exists()){
             try {
                 configurator.doConfigure(externalXmlFile);
@@ -41,7 +39,7 @@ public class XmlConfigurationUpdater {
 
     private static void setDefaultConfiguration(JoranConfigurator configurator){
         try {
-            configurator.doConfigure(LoggerInternalProperties.DEFAULT_XML_FILE);
+            configurator.doConfigure(InternalProperties.DEFAULT_XML_FILE);
         } catch (JoranException e) {
             // not needed...
         }
@@ -52,33 +50,21 @@ public class XmlConfigurationUpdater {
     }
 
     private void updateLevel(Level level) {
-        try {
             NodeList nodeList = XmlUtils.getNodeList(".//root/@level");
             nodeList.item(0).setTextContent(level.toString().toUpperCase());
-        } catch (XPathExpressionException e) {
-            e.printStackTrace();
-        }
     }
 
     private void updateMaxFileSize(String maxFileSize) {
-        try {
             NodeList nodeList = XmlUtils.getNodeList(".//maxFileSize");
             for(int i=0; i<nodeList.getLength(); i++){
                 nodeList.item(i).setTextContent(maxFileSize);
             }
-        } catch (XPathExpressionException e) {
-            //not needed...
-        }
     }
 
     private void updateMaxDays(Integer maxDays) {
-        try {
             NodeList nodeList = XmlUtils.getNodeList(".//maxHistory");
             for(int i=0; i<nodeList.getLength(); i++){
                 nodeList.item(i).setTextContent(maxDays.toString());
             }
-        } catch (XPathExpressionException e) {
-            //not needed...
-        }
     }
 }

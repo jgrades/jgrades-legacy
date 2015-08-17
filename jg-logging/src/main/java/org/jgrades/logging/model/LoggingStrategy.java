@@ -1,68 +1,13 @@
 package org.jgrades.logging.model;
 
-import org.jgrades.logging.utils.LoggerInternalProperties;
-import org.jgrades.logging.utils.XmlUtils;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-
-import javax.xml.xpath.XPathExpressionException;
-
-import static org.jgrades.logging.utils.LoggerInternalProperties.*;
+import org.jgrades.logging.model.updater.PerLevelUpdater;
+import org.jgrades.logging.model.updater.PerModuleAndLevelUpdater;
+import org.jgrades.logging.model.updater.PerModuleUpdater;
 
 public enum LoggingStrategy {
-    LOG_FILE_PER_MODULE(new XmlFileNameTagsUpdater() {
-        @Override
-        public void updateStrategy() {
-            try {
-                NodeList nodeList = XmlUtils.getNodeList(".//fileNamePattern");
-                for(int i=0; i<nodeList.getLength(); i++){
-                    if(nodeList.item(i).getTextContent().contains("external-lib")){
-                        nodeList.item(i).setTextContent(LOGS_DIRECTORY + "/jg_external-lib_%d{yyyy-MM-dd}_%i.log");
-                    } else{
-                        nodeList.item(i).setTextContent(LOGS_DIRECTORY + "/jg_${module-name-placeholder}_%d{yyyy-MM-dd}_%i.log");
-                    }
-                }
-            } catch (XPathExpressionException e) {
-                //not needed...
-            }
-        }
-    }),
-
-    LOG_FILE_PER_LEVEL(new XmlFileNameTagsUpdater() {
-        @Override
-        public void updateStrategy() {
-            try {
-                NodeList nodeList = XmlUtils.getNodeList(".//fileNamePattern");
-                for(int i=0; i<nodeList.getLength(); i++){
-                    String name = ((Element) nodeList.item(i).getParentNode().getParentNode()).getAttribute("name");
-                    String levelName = name.substring(name.lastIndexOf("-") + 1);
-                    nodeList.item(i).setTextContent(LOGS_DIRECTORY + "/jg_"+levelName+"_%d{yyyy-MM-dd}_%i.log");
-                }
-            } catch (XPathExpressionException e) {
-                //not needed...
-            }
-        }
-    }),
-
-    LOG_FILE_PER_MODULE_AND_LEVEL(new XmlFileNameTagsUpdater() {
-        @Override
-        public void updateStrategy() {
-            try {
-                NodeList nodeList = XmlUtils.getNodeList(".//fileNamePattern");
-                for(int i=0; i<nodeList.getLength(); i++){
-                    String name = ((Element) nodeList.item(i).getParentNode().getParentNode()).getAttribute("name");
-                    String levelName = name.substring(name.lastIndexOf("-") + 1);
-                    if(nodeList.item(i).getTextContent().contains("external-lib")){
-                        nodeList.item(i).setTextContent(LOGS_DIRECTORY + "/jg_external-lib_"+levelName+"_%d{yyyy-MM-dd}_%i.log");
-                    } else{
-                        nodeList.item(i).setTextContent(LOGS_DIRECTORY + "/jg_${module-name-placeholder}_"+levelName+"_%d{yyyy-MM-dd}_%i.log");
-                    }
-                }
-            } catch (XPathExpressionException e) {
-                //not needed...
-            }
-        }
-    });
+    LOG_FILE_PER_MODULE(new PerModuleUpdater()),
+    LOG_FILE_PER_LEVEL(new PerLevelUpdater()),
+    LOG_FILE_PER_MODULE_AND_LEVEL(new PerModuleAndLevelUpdater());
 
     private final XmlFileNameTagsUpdater updater;
 

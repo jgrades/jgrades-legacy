@@ -24,7 +24,7 @@ public final class XmlUtils {
         try {
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-            return docBuilder.parse(LoggerInternalProperties.XML_FILE);
+            return docBuilder.parse(InternalProperties.XML_FILE);
         } catch (ParserConfigurationException | SAXException | IOException e) {
             return null;
         }
@@ -36,11 +36,15 @@ public final class XmlUtils {
         return xpath.compile(xpathExpression);
     }
 
-    public static NodeList getNodeList(String xpathExpression) throws XPathExpressionException {
+    public static NodeList getNodeList(String xpathExpression)  {
         if(doc == null){
             doc = getConfigDocument();
         }
-        return (NodeList) getXPathExpression(xpathExpression).evaluate(doc, XPathConstants.NODESET);
+        try {
+            return (NodeList) getXPathExpression(xpathExpression).evaluate(doc, XPathConstants.NODESET);
+        } catch (XPathExpressionException e) {
+            return null;
+        }
     }
 
 
@@ -49,7 +53,7 @@ public final class XmlUtils {
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             DOMSource source = new DOMSource(doc);
-            StreamResult result = new StreamResult(new File(LoggerInternalProperties.XML_FILE));
+            StreamResult result = new StreamResult(new File(InternalProperties.XML_FILE));
             transformer.transform(source, result);
             doc = null;
         } catch (TransformerException e) {
