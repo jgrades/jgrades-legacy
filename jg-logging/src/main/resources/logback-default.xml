@@ -1,30 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="false">
-    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+    <appender class="ch.qos.logback.core.ConsoleAppender" name="CONSOLE">
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
             <level>${CONSOLE.LOGGING.LEVEL}</level>
         </filter>
         <encoder>
-            <pattern>[%d{yyyy-MM-dd HH:mm:ss}] [%thread] %-5level --> [%c:%L] %m%n</pattern>
+            <pattern>[%d{yyyy-MM-dd HH:mm:ss}] [%thread] %-5level --&gt; [%c][%L] %m%n</pattern>
         </encoder>
     </appender>
-    <appender name="FILESYSTEM" class="ch.qos.logback.classic.sift.SiftingAppender">
+    <appender class="ch.qos.logback.classic.sift.SiftingAppender" name="FILESYSTEM-trace">
         <discriminator>
             <key>module-name-placeholder</key>
-            <defaultValue>external-lib</defaultValue>
+            <defaultValue>warm-up</defaultValue>
         </discriminator>
         <sift>
-            <appender name="RollingFileAppender-trace" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <appender class="ch.qos.logback.core.rolling.RollingFileAppender" name="RollingFileAppender-${module-name-placeholder}-trace">
                 <filter class="ch.qos.logback.classic.filter.LevelFilter">
                     <level>TRACE</level>
                     <onMatch>ACCEPT</onMatch>
                     <onMismatch>DENY</onMismatch>
                 </filter>
-                <file>${JG.LOGS.DIR}/jg_${module-name-placeholder}_trace.log</file>
-                <rollingPolicy class="org.jgrades.logging.CustomTimeBasedRollingPolicy">
-                    <fileNamePattern>${JG.LOGS.DIR}/jg_${module-name-placeholder}_trace_%d{yyyy-MM-dd}_%i.log</fileNamePattern>
-                    <timeBasedFileNamingAndTriggeringPolicy
-                            class="org.jgrades.logging.CustomSizeAndTimeBasedFNATP">
+                <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                    <fileNamePattern>${JG.LOGS.DIR}/logs/jg_${module-name-placeholder}_trace_%d{yyyy-MM-dd}_%i.log</fileNamePattern>
+                    <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                         <maxFileSize>${DEFAULT.LOGGING.MAX.FILE.SIZE}</maxFileSize>
                     </timeBasedFileNamingAndTriggeringPolicy>
                 </rollingPolicy>
@@ -32,20 +30,26 @@
                 <cleanHistoryOnStart>true</cleanHistoryOnStart>
                 <encoder>
                     <charset>UTF-8</charset>
-                    <pattern>[%d{yyyy-MM-dd HH:mm:ss}] [%thread] %-5level --> [%c:%L] %m%n</pattern>
+                    <pattern>[%d{yyyy-MM-dd HH:mm:ss}] [%thread] %-5level --&gt; [%c][%L] %m%n</pattern>
                 </encoder>
             </appender>
-            <appender name="RollingFileAppender-debug" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        </sift>
+    </appender>
+    <appender class="ch.qos.logback.classic.sift.SiftingAppender" name="FILESYSTEM-debug">
+        <discriminator>
+            <key>module-name-placeholder</key>
+            <defaultValue>warm-up</defaultValue>
+        </discriminator>
+        <sift>
+            <appender class="ch.qos.logback.core.rolling.RollingFileAppender" name="RollingFileAppender-${module-name-placeholder}-debug">
                 <filter class="ch.qos.logback.classic.filter.LevelFilter">
                     <level>DEBUG</level>
                     <onMatch>ACCEPT</onMatch>
                     <onMismatch>DENY</onMismatch>
                 </filter>
-                <file>${JG.LOGS.DIR}/jg_${module-name-placeholder}_debug.log</file>
-                <rollingPolicy class="org.jgrades.logging.CustomTimeBasedRollingPolicy">
-                    <fileNamePattern>${JG.LOGS.DIR}/jg_${module-name-placeholder}_debug_%d{yyyy-MM-dd}_%i.log</fileNamePattern>
-                    <timeBasedFileNamingAndTriggeringPolicy
-                            class="org.jgrades.logging.CustomSizeAndTimeBasedFNATP">
+                <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                    <fileNamePattern>${JG.LOGS.DIR}/logs/jg_${module-name-placeholder}_debug_%d{yyyy-MM-dd}_%i.log</fileNamePattern>
+                    <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                         <maxFileSize>${DEFAULT.LOGGING.MAX.FILE.SIZE}</maxFileSize>
                     </timeBasedFileNamingAndTriggeringPolicy>
                 </rollingPolicy>
@@ -53,20 +57,26 @@
                 <cleanHistoryOnStart>true</cleanHistoryOnStart>
                 <encoder>
                     <charset>UTF-8</charset>
-                    <pattern>[%d{yyyy-MM-dd HH:mm:ss}] [%thread] %-5level --> [%c:%L] %m%n</pattern>
+                    <pattern>[%d{yyyy-MM-dd HH:mm:ss}] [%thread] %-5level --&gt; [%c][%L] %m%n</pattern>
                 </encoder>
             </appender>
-            <appender name="RollingFileAppender-info" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        </sift>
+    </appender>
+    <appender class="ch.qos.logback.classic.sift.SiftingAppender" name="FILESYSTEM-info">
+        <discriminator>
+            <key>module-name-placeholder</key>
+            <defaultValue>warm-up</defaultValue>
+        </discriminator>
+        <sift>
+            <appender class="ch.qos.logback.core.rolling.RollingFileAppender" name="RollingFileAppender-${module-name-placeholder}-info">
                 <filter class="ch.qos.logback.classic.filter.LevelFilter">
                     <level>INFO</level>
                     <onMatch>ACCEPT</onMatch>
                     <onMismatch>DENY</onMismatch>
                 </filter>
-                <file>${JG.LOGS.DIR}/jg_${module-name-placeholder}_info.log</file>
-                <rollingPolicy class="org.jgrades.logging.CustomTimeBasedRollingPolicy">
-                    <fileNamePattern>${JG.LOGS.DIR}/jg_${module-name-placeholder}_info_%d{yyyy-MM-dd}_%i.log</fileNamePattern>
-                    <timeBasedFileNamingAndTriggeringPolicy
-                            class="org.jgrades.logging.CustomSizeAndTimeBasedFNATP">
+                <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                    <fileNamePattern>${JG.LOGS.DIR}/logs/jg_${module-name-placeholder}_info_%d{yyyy-MM-dd}_%i.log</fileNamePattern>
+                    <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                         <maxFileSize>${DEFAULT.LOGGING.MAX.FILE.SIZE}</maxFileSize>
                     </timeBasedFileNamingAndTriggeringPolicy>
                 </rollingPolicy>
@@ -74,20 +84,26 @@
                 <cleanHistoryOnStart>true</cleanHistoryOnStart>
                 <encoder>
                     <charset>UTF-8</charset>
-                    <pattern>[%d{yyyy-MM-dd HH:mm:ss}] [%thread] %-5level --> [%c:%L] %m%n</pattern>
+                    <pattern>[%d{yyyy-MM-dd HH:mm:ss}] [%thread] %-5level --&gt; [%c][%L] %m%n</pattern>
                 </encoder>
             </appender>
-            <appender name="RollingFileAppender-warn" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        </sift>
+    </appender>
+    <appender class="ch.qos.logback.classic.sift.SiftingAppender" name="FILESYSTEM-warn">
+        <discriminator>
+            <key>module-name-placeholder</key>
+            <defaultValue>warm-up</defaultValue>
+        </discriminator>
+        <sift>
+            <appender class="ch.qos.logback.core.rolling.RollingFileAppender" name="RollingFileAppender-${module-name-placeholder}-warn">
                 <filter class="ch.qos.logback.classic.filter.LevelFilter">
                     <level>WARN</level>
                     <onMatch>ACCEPT</onMatch>
                     <onMismatch>DENY</onMismatch>
                 </filter>
-                <file>${JG.LOGS.DIR}/jg_${module-name-placeholder}_warn.log</file>
-                <rollingPolicy class="org.jgrades.logging.CustomTimeBasedRollingPolicy">
-                    <fileNamePattern>${JG.LOGS.DIR}/jg_${module-name-placeholder}_warn_%d{yyyy-MM-dd}_%i.log</fileNamePattern>
-                    <timeBasedFileNamingAndTriggeringPolicy
-                            class="org.jgrades.logging.CustomSizeAndTimeBasedFNATP">
+                <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                    <fileNamePattern>${JG.LOGS.DIR}/logs/jg_${module-name-placeholder}_warn_%d{yyyy-MM-dd}_%i.log</fileNamePattern>
+                    <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                         <maxFileSize>${DEFAULT.LOGGING.MAX.FILE.SIZE}</maxFileSize>
                     </timeBasedFileNamingAndTriggeringPolicy>
                 </rollingPolicy>
@@ -95,20 +111,26 @@
                 <cleanHistoryOnStart>true</cleanHistoryOnStart>
                 <encoder>
                     <charset>UTF-8</charset>
-                    <pattern>[%d{yyyy-MM-dd HH:mm:ss}] [%thread] %-5level --> [%c:%L] %m%n</pattern>
+                    <pattern>[%d{yyyy-MM-dd HH:mm:ss}] [%thread] %-5level --&gt; [%c][%L] %m%n</pattern>
                 </encoder>
             </appender>
-            <appender name="RollingFileAppender-error" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        </sift>
+    </appender>
+    <appender class="ch.qos.logback.classic.sift.SiftingAppender" name="FILESYSTEM-error">
+        <discriminator>
+            <key>module-name-placeholder</key>
+            <defaultValue>warm-up</defaultValue>
+        </discriminator>
+        <sift>
+            <appender class="ch.qos.logback.core.rolling.RollingFileAppender" name="RollingFileAppender-${module-name-placeholder}-error">
                 <filter class="ch.qos.logback.classic.filter.LevelFilter">
                     <level>ERROR</level>
                     <onMatch>ACCEPT</onMatch>
                     <onMismatch>DENY</onMismatch>
                 </filter>
-                <file>${JG.LOGS.DIR}/jg_${module-name-placeholder}_error.log</file>
-                <rollingPolicy class="org.jgrades.logging.CustomTimeBasedRollingPolicy">
-                    <fileNamePattern>${JG.LOGS.DIR}/jg_${module-name-placeholder}_error_%d{yyyy-MM-dd}_%i.log</fileNamePattern>
-                    <timeBasedFileNamingAndTriggeringPolicy
-                            class="org.jgrades.logging.CustomSizeAndTimeBasedFNATP">
+                <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                    <fileNamePattern>${JG.LOGS.DIR}/logs/jg_${module-name-placeholder}_error_%d{yyyy-MM-dd}_%i.log</fileNamePattern>
+                    <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                         <maxFileSize>${DEFAULT.LOGGING.MAX.FILE.SIZE}</maxFileSize>
                     </timeBasedFileNamingAndTriggeringPolicy>
                 </rollingPolicy>
@@ -116,7 +138,142 @@
                 <cleanHistoryOnStart>true</cleanHistoryOnStart>
                 <encoder>
                     <charset>UTF-8</charset>
-                    <pattern>[%d{yyyy-MM-dd HH:mm:ss}] [%thread] %-5level --> [%c:%L] %m%n</pattern>
+                    <pattern>[%d{yyyy-MM-dd HH:mm:ss}] [%thread] %-5level --&gt; [%c][%L] %m%n</pattern>
+                </encoder>
+            </appender>
+        </sift>
+    </appender>
+    <appender class="ch.qos.logback.classic.sift.SiftingAppender" name="FILESYSTEM-ext-trace">
+        <discriminator>
+            <key>module-name-placeholder</key>
+            <defaultValue>warm-up</defaultValue>
+        </discriminator>
+        <sift>
+            <appender class="ch.qos.logback.core.rolling.RollingFileAppender" name="RollingFileAppender-ext-trace">
+                <filter class="ch.qos.logback.classic.filter.LevelFilter">
+                    <level>TRACE</level>
+                    <onMatch>ACCEPT</onMatch>
+                    <onMismatch>DENY</onMismatch>
+                </filter>
+                <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                    <fileNamePattern>${JG.LOGS.DIR}/logs/jg_external-lib_trace_%d{yyyy-MM-dd}_%i.log</fileNamePattern>
+                    <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                        <maxFileSize>${DEFAULT.LOGGING.MAX.FILE.SIZE}</maxFileSize>
+                    </timeBasedFileNamingAndTriggeringPolicy>
+                </rollingPolicy>
+                <maxHistory>${DEFAULT.LOGGING.MAX.DAYS}</maxHistory>
+                <cleanHistoryOnStart>true</cleanHistoryOnStart>
+                <encoder>
+                    <charset>UTF-8</charset>
+                    <pattern>[%d{yyyy-MM-dd HH:mm:ss}] [%thread] %-5level --&gt; [%c][%L] %m%n</pattern>
+                </encoder>
+            </appender>
+        </sift>
+    </appender>
+    <appender class="ch.qos.logback.classic.sift.SiftingAppender" name="FILESYSTEM-ext-debug">
+        <discriminator>
+            <key>module-name-placeholder</key>
+            <defaultValue>warm-up</defaultValue>
+        </discriminator>
+        <sift>
+            <appender class="ch.qos.logback.core.rolling.RollingFileAppender" name="RollingFileAppender-ext-debug">
+                <filter class="ch.qos.logback.classic.filter.LevelFilter">
+                    <level>DEBUG</level>
+                    <onMatch>ACCEPT</onMatch>
+                    <onMismatch>DENY</onMismatch>
+                </filter>
+                <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                    <fileNamePattern>${JG.LOGS.DIR}/logs/jg_external-lib_debug_%d{yyyy-MM-dd}_%i.log</fileNamePattern>
+                    <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                        <maxFileSize>${DEFAULT.LOGGING.MAX.FILE.SIZE}</maxFileSize>
+                    </timeBasedFileNamingAndTriggeringPolicy>
+                </rollingPolicy>
+                <maxHistory>${DEFAULT.LOGGING.MAX.DAYS}</maxHistory>
+                <cleanHistoryOnStart>true</cleanHistoryOnStart>
+                <encoder>
+                    <charset>UTF-8</charset>
+                    <pattern>[%d{yyyy-MM-dd HH:mm:ss}] [%thread] %-5level --&gt; [%c][%L] %m%n</pattern>
+                </encoder>
+            </appender>
+        </sift>
+    </appender>
+    <appender class="ch.qos.logback.classic.sift.SiftingAppender" name="FILESYSTEM-ext-info">
+        <discriminator>
+            <key>module-name-placeholder</key>
+            <defaultValue>warm-up</defaultValue>
+        </discriminator>
+        <sift>
+            <appender class="ch.qos.logback.core.rolling.RollingFileAppender" name="RollingFileAppender-ext-info">
+                <filter class="ch.qos.logback.classic.filter.LevelFilter">
+                    <level>INFO</level>
+                    <onMatch>ACCEPT</onMatch>
+                    <onMismatch>DENY</onMismatch>
+                </filter>
+                <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                    <fileNamePattern>${JG.LOGS.DIR}/logs/jg_external-lib_info_%d{yyyy-MM-dd}_%i.log</fileNamePattern>
+                    <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                        <maxFileSize>${DEFAULT.LOGGING.MAX.FILE.SIZE}</maxFileSize>
+                    </timeBasedFileNamingAndTriggeringPolicy>
+                </rollingPolicy>
+                <maxHistory>${DEFAULT.LOGGING.MAX.DAYS}</maxHistory>
+                <cleanHistoryOnStart>true</cleanHistoryOnStart>
+                <encoder>
+                    <charset>UTF-8</charset>
+                    <pattern>[%d{yyyy-MM-dd HH:mm:ss}] [%thread] %-5level --&gt; [%c][%L] %m%n</pattern>
+                </encoder>
+            </appender>
+        </sift>
+    </appender>
+    <appender class="ch.qos.logback.classic.sift.SiftingAppender" name="FILESYSTEM-ext-warn">
+        <discriminator>
+            <key>module-name-placeholder</key>
+            <defaultValue>warm-up</defaultValue>
+        </discriminator>
+        <sift>
+            <appender class="ch.qos.logback.core.rolling.RollingFileAppender" name="RollingFileAppender-ext-warn">
+                <filter class="ch.qos.logback.classic.filter.LevelFilter">
+                    <level>WARN</level>
+                    <onMatch>ACCEPT</onMatch>
+                    <onMismatch>DENY</onMismatch>
+                </filter>
+                <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                    <fileNamePattern>${JG.LOGS.DIR}/logs/jg_external-lib_warn_%d{yyyy-MM-dd}_%i.log</fileNamePattern>
+                    <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                        <maxFileSize>${DEFAULT.LOGGING.MAX.FILE.SIZE}</maxFileSize>
+                    </timeBasedFileNamingAndTriggeringPolicy>
+                </rollingPolicy>
+                <maxHistory>${DEFAULT.LOGGING.MAX.DAYS}</maxHistory>
+                <cleanHistoryOnStart>true</cleanHistoryOnStart>
+                <encoder>
+                    <charset>UTF-8</charset>
+                    <pattern>[%d{yyyy-MM-dd HH:mm:ss}] [%thread] %-5level --&gt; [%c][%L] %m%n</pattern>
+                </encoder>
+            </appender>
+        </sift>
+    </appender>
+    <appender class="ch.qos.logback.classic.sift.SiftingAppender" name="FILESYSTEM-ext-error">
+        <discriminator>
+            <key>module-name-placeholder</key>
+            <defaultValue>warm-up</defaultValue>
+        </discriminator>
+        <sift>
+            <appender class="ch.qos.logback.core.rolling.RollingFileAppender" name="RollingFileAppender-ext-error">
+                <filter class="ch.qos.logback.classic.filter.LevelFilter">
+                    <level>ERROR</level>
+                    <onMatch>ACCEPT</onMatch>
+                    <onMismatch>DENY</onMismatch>
+                </filter>
+                <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                    <fileNamePattern>${JG.LOGS.DIR}/logs/jg_external-lib_error_%d{yyyy-MM-dd}_%i.log</fileNamePattern>
+                    <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                        <maxFileSize>${DEFAULT.LOGGING.MAX.FILE.SIZE}</maxFileSize>
+                    </timeBasedFileNamingAndTriggeringPolicy>
+                </rollingPolicy>
+                <maxHistory>${DEFAULT.LOGGING.MAX.DAYS}</maxHistory>
+                <cleanHistoryOnStart>true</cleanHistoryOnStart>
+                <encoder>
+                    <charset>UTF-8</charset>
+                    <pattern>[%d{yyyy-MM-dd HH:mm:ss}] [%thread] %-5level --&gt; [%c][%L] %m%n</pattern>
                 </encoder>
             </appender>
         </sift>
@@ -124,16 +281,19 @@
 
     <root level="${DEFAULT.LOGGING.LEVEL}">
         <appender-ref ref="CONSOLE"/>
-        <appender-ref ref="FILESYSTEM"/>
+        <appender-ref ref="FILESYSTEM-ext-trace"/>
+        <appender-ref ref="FILESYSTEM-ext-debug"/>
+        <appender-ref ref="FILESYSTEM-ext-info"/>
+        <appender-ref ref="FILESYSTEM-ext-warn"/>
+        <appender-ref ref="FILESYSTEM-ext-error"/>
     </root>
 
-    <logger name="org.springframework" additivity="false">
+    <logger name="org.jgrades" additivity="false">
         <appender-ref ref="CONSOLE"/>
-        <appender-ref ref="FILESYSTEM"/>
-    </logger>
-
-    <logger name="org.hibernate" additivity="false">
-        <appender-ref ref="CONSOLE"/>
-        <appender-ref ref="FILESYSTEM"/>
+        <appender-ref ref="FILESYSTEM-trace"/>
+        <appender-ref ref="FILESYSTEM-debug"/>
+        <appender-ref ref="FILESYSTEM-info"/>
+        <appender-ref ref="FILESYSTEM-warn"/>
+        <appender-ref ref="FILESYSTEM-error"/>
     </logger>
 </configuration>

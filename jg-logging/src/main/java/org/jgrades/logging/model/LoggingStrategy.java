@@ -17,7 +17,11 @@ public enum LoggingStrategy {
             try {
                 NodeList nodeList = XmlUtils.getNodeList(".//fileNamePattern");
                 for(int i=0; i<nodeList.getLength(); i++){
-                    nodeList.item(i).setTextContent(LOGS_DIRECTORY + "/jg_${module-name-placeholder}_%d{yyyy-MM-dd}_%i.log");
+                    if(nodeList.item(i).getTextContent().contains("external-lib")){
+                        nodeList.item(i).setTextContent(LOGS_DIRECTORY + "/jg_external-lib_%d{yyyy-MM-dd}_%i.log");
+                    } else{
+                        nodeList.item(i).setTextContent(LOGS_DIRECTORY + "/jg_${module-name-placeholder}_%d{yyyy-MM-dd}_%i.log");
+                    }
                 }
             } catch (XPathExpressionException e) {
                 //not needed...
@@ -49,7 +53,11 @@ public enum LoggingStrategy {
                 for(int i=0; i<nodeList.getLength(); i++){
                     String name = ((Element) nodeList.item(i).getParentNode().getParentNode()).getAttribute("name");
                     String levelName = name.substring(name.lastIndexOf("-") + 1);
-                    nodeList.item(i).setTextContent(LOGS_DIRECTORY + "/jg_${module-name-placeholder}_"+levelName+"_%d{yyyy-MM-dd}_%i.log");
+                    if(nodeList.item(i).getTextContent().contains("external-lib")){
+                        nodeList.item(i).setTextContent(LOGS_DIRECTORY + "/jg_external-lib_"+levelName+"_%d{yyyy-MM-dd}_%i.log");
+                    } else{
+                        nodeList.item(i).setTextContent(LOGS_DIRECTORY + "/jg_${module-name-placeholder}_"+levelName+"_%d{yyyy-MM-dd}_%i.log");
+                    }
                 }
             } catch (XPathExpressionException e) {
                 //not needed...
