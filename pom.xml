@@ -41,7 +41,7 @@
                 <DB.SCHEMA.ORM.POLICY>create-drop</DB.SCHEMA.ORM.POLICY>
                 <APPLICATION.PROPERTIES>C:/jgrades/internal/app.properties</APPLICATION.PROPERTIES>
                 <LOGGING.CONFIGURATION.FILE>C:/jgrades/logs/jg-logging.conf</LOGGING.CONFIGURATION.FILE>
-                <LOGGING.XML.FILE>C:/jgrades/internal/logback.xml</LOGGING.XML.FILE>
+                <LOGGING.XML.FILE>C:/jgrades/internal/logback-details.xml</LOGGING.XML.FILE>
                 <DEFAULT.LOGGING.STRATEGY>LOG_FILE_PER_MODULE_AND_LEVEL</DEFAULT.LOGGING.STRATEGY>
                 <DEFAULT.LOGGING.LEVEL>TRACE</DEFAULT.LOGGING.LEVEL>
                 <DEFAULT.LOGGING.MAX.FILE.SIZE>1MB</DEFAULT.LOGGING.MAX.FILE.SIZE>
@@ -66,7 +66,7 @@
                 <DB.SCHEMA.ORM.POLICY>none</DB.SCHEMA.ORM.POLICY>
                 <APPLICATION.PROPERTIES>/etc/opt/jgrades/app.properties</APPLICATION.PROPERTIES>
                 <LOGGING.CONFIGURATION.FILE>/var/log/jgrades/jg-logging.conf</LOGGING.CONFIGURATION.FILE>
-                <LOGGING.XML.FILE>/etc/opt/jgrades/logback.xml</LOGGING.XML.FILE>
+                <LOGGING.XML.FILE>/etc/opt/jgrades/logback-details.xml</LOGGING.XML.FILE>
                 <DEFAULT.LOGGING.STRATEGY>LOG_FILE_PER_MODULE</DEFAULT.LOGGING.STRATEGY>
                 <DEFAULT.LOGGING.LEVEL>INFO</DEFAULT.LOGGING.LEVEL>
                 <DEFAULT.LOGGING.MAX.FILE.SIZE>5MB</DEFAULT.LOGGING.MAX.FILE.SIZE>

@@ -20,6 +20,7 @@
                 <directory>src/main/resources</directory>
                 <filtering>true</filtering>
                 <includes>
+                    <include>**/*.conf</include>
                     <include>**/*.properties</include>
                     <include>**/*.xml</include>
                 </includes>

@@ -40,13 +40,18 @@ public class LoggingConfigurationDaoFileImpl implements LoggingConfigurationDao 
     }
 
     @Override
-    public LoggingConfiguration getConfiguration() {
+    public LoggingConfiguration getCurrentConfiguration() {
         try {
             Configuration externalConfig = externalConfiguration();
             return extractConfigurationProperties(externalConfig);
         } catch (ConfigurationException e) {
-            return defaultConfiguration();
+            return getDefaultConfiguration();
         }
+    }
+
+    @Override
+    public LoggingConfiguration getDefaultConfiguration() {
+        return extractConfigurationProperties(internalConfiguration());
     }
 
     @Override
@@ -70,20 +75,7 @@ public class LoggingConfigurationDaoFileImpl implements LoggingConfigurationDao 
         String maxSizeValue = externalConfig.getString(MAX_FILE_SIZE_PROPERTY_NAME);
         int maxDaysValue = externalConfig.getInt(MAX_DAYS_PROPERTY_NAME);
 
-        return new LoggingConfiguration(
-                LoggingStrategy.valueOf(strategyName),
-                Level.toLevel(levelName),
-                maxSizeValue,
-                maxDaysValue
-        );
-    }
-
-    private LoggingConfiguration defaultConfiguration() {
-        return extractConfigurationProperties(internalConfiguration());
-    }
-
-    @Override
-    public boolean isConfigurationCustomized() {
-        return !defaultConfiguration().equals(getConfiguration());
+        return new LoggingConfiguration(LoggingStrategy.valueOf(strategyName), Level.toLevel(levelName),
+                maxSizeValue, maxDaysValue);
     }
 }

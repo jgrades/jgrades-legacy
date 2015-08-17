@@ -12,11 +12,13 @@ public class XmlConfigurationUpdater {
     private LoggerContextReloader reloader = new LoggerContextReloader();
 
     public void update(LoggingConfiguration targetConfig) {
-        updateFileNames(targetConfig.getLoggingStrategy());
-        updateLevel(targetConfig.getLevel());
-        updateMaxFileSize(targetConfig.getMaxFileSize());
-        updateMaxDays(targetConfig.getMaxDays());
-        xmlEditor.saveWithChanges();
+        if(xmlEditor.isXmlExists()){
+            updateFileNames(targetConfig.getLoggingStrategy());
+            updateLevel(targetConfig.getLevel());
+            updateMaxFileSize(targetConfig.getMaxFileSize());
+            updateMaxDays(targetConfig.getMaxDays());
+            xmlEditor.saveWithChanges();
+        }
         reloader.reload();
     }
 

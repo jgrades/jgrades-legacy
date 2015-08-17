@@ -16,7 +16,7 @@ public class LogConfigurationMonitor implements Job {
 
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
-        LoggingConfiguration targetConfig = configurationDao.getConfiguration();
+        LoggingConfiguration targetConfig = configurationDao.getCurrentConfiguration();
         if(cachedConfig == null || !cachedConfig.equals(targetConfig)){
             processNewConfig(targetConfig);
         }

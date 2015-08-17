@@ -29,7 +29,7 @@ public class LoggerContextReloader {
 
     private void setDefaultConfiguration(JoranConfigurator configurator){
         try {
-            configurator.doConfigure(InternalProperties.DEFAULT_XML_FILE);
+            configurator.doConfigure(InternalProperties.ONLY_CONSOLE_XML_FILE);
         } catch (JoranException e) {
             // not possible...
         }
