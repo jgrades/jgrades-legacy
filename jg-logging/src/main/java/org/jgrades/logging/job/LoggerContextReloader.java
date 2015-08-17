@@ -31,7 +31,7 @@ public class LoggerContextReloader {
         try {
             configurator.doConfigure(InternalProperties.DEFAULT_XML_FILE);
         } catch (JoranException e) {
-            // not needed...
+            // not possible...
         }
     }
 }

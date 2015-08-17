@@ -1,6 +1,8 @@
 package org.jgrades.logging.utils;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
@@ -35,7 +37,28 @@ public final class LogbackXmlEditor {
         return xpath.compile(xpathExpression);
     }
 
-    public NodeList getNodes(String xpathExpression)  {
+    public NodeList getFileNamePatternNodes() {
+        return getNodes(".//fileNamePattern");
+    }
+
+    public NodeList getMaxFileSizeNodes() {
+        return getNodes(".//maxFileSize");
+    }
+
+    public NodeList getMaxDays() {
+        return getNodes(".//maxHistory");
+    }
+
+    public String getLevelNameFromAppenderName(Node fileNamePatternNode){
+        String appenderName = ((Element) fileNamePatternNode.getParentNode().getParentNode()).getAttribute("name");
+        return appenderName.substring(appenderName.lastIndexOf("-") + 1);
+    }
+
+    public Node getLevelNode() {
+        return getNodes(".//root/@level").item(0);
+    }
+
+    private NodeList getNodes(String xpathExpression)  {
         if(documentUnderEdit == null){
             documentUnderEdit = getConfigDocument();
         }

@@ -7,17 +7,11 @@ import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.jgrades.logging.model.LoggingConfiguration;
 import org.jgrades.logging.model.LoggingStrategy;
-import org.jgrades.logging.utils.InternalProperties;
 import org.slf4j.LoggerFactory;
 
+import static org.jgrades.logging.utils.InternalProperties.*;
+
 public class LoggingConfigurationDaoFileImpl implements LoggingConfigurationDao {
-    private static final String STRATEGY_PROPERTY_NAME = "logging.strategy";
-    private static final String LEVEL_PROPERTY_NAME = "logging.level";
-    private static final String MAX_FILE_SIZE_PROPERTY_NAME = "logging.max.file.size";
-    private static final String MAX_DAYS_PROPERTY_NAME = "logging.max.days";
-
-    private static final String INTERNAL_CONFIG_FILE_PATH = "jg-logging.properties";
-
     private String externalConfigFilePath;
 
     public LoggingConfigurationDaoFileImpl() {
@@ -29,7 +23,7 @@ public class LoggingConfigurationDaoFileImpl implements LoggingConfigurationDao 
     }
 
     private String extractExternalConfigFilePath() {
-        return InternalProperties.CONFIG_FILE;
+        return CONFIG_FILE;
     }
 
     private Configuration internalConfiguration() {

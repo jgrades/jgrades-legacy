@@ -7,15 +7,7 @@ import org.jgrades.logging.utils.LogbackXmlEditor;
 
 public class LoggingServiceImpl implements LoggingService {
     private LogbackXmlEditor xmlEditor = new LogbackXmlEditor();
-    private LoggingConfigurationDao dao;
-
-    public LoggingServiceImpl() {
-        this.dao = new LoggingConfigurationDaoFileImpl();
-    }
-
-    public LoggingServiceImpl(LoggingConfigurationDao dao) {
-        this.dao = dao;
-    }
+    private LoggingConfigurationDao dao = new LoggingConfigurationDaoFileImpl();
 
     @Override
     public LoggingConfiguration getLoggingConfiguration() {
