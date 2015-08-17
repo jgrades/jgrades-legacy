@@ -1,6 +1,5 @@
 package org.jgrades.logging.model;
 
-import org.jdom2.Attribute;
 import org.jgrades.logging.utils.LoggerInternalProperties;
 import org.jgrades.logging.utils.XmlUtils;
 import org.w3c.dom.Element;
