@@ -5,15 +5,15 @@ import org.jgrades.lic.api.model.Licence;
 import org.jgrades.lic.api.service.LicenceCheckingService;
 import org.jgrades.lic.dao.LicenceRepository;
 import org.jgrades.lic.entities.LicenceEntity;
-import org.jgrades.logging.logger.JGLoggingFactory;
-import org.jgrades.logging.logger.JGradesLogger;
+import org.jgrades.logging.JgLogger;
+import org.jgrades.logging.JgLoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 @Service
 public class LicenceSchedulerService {
-    private static final JGradesLogger LOGGER = JGLoggingFactory.getLogger(LicenceSchedulerService.class);
+    private static final JgLogger LOGGER = JgLoggerFactory.getLogger(LicenceSchedulerService.class);
 
     @Autowired
     private LicenceRepository licenceRepository;

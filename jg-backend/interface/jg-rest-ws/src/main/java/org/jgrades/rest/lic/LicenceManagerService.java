@@ -4,8 +4,8 @@ import org.apache.commons.io.FileUtils;
 import org.jgrades.lic.api.exception.LicenceException;
 import org.jgrades.lic.api.model.Licence;
 import org.jgrades.lic.api.service.LicenceManagingService;
-import org.jgrades.logging.logger.JGLoggingFactory;
-import org.jgrades.logging.logger.JGradesLogger;
+import org.jgrades.logging.JgLogger;
+import org.jgrades.logging.JgLoggerFactory;;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +18,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/licence", produces = MediaType.APPLICATION_JSON_VALUE)
 public class LicenceManagerService {
-    private static final JGradesLogger LOGGER = JGLoggingFactory.getLogger(LicenceManagerService.class);
+    private static final JgLogger LOGGER = JgLoggerFactory.getLogger(LicenceManagerService.class);
 
     @Autowired
     private LicenceManagingService licenceManagingService;

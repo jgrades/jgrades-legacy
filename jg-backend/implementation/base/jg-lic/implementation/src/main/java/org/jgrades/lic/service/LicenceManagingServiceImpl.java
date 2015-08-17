@@ -12,8 +12,8 @@ import org.jgrades.lic.api.model.Licence;
 import org.jgrades.lic.api.service.LicenceManagingService;
 import org.jgrades.lic.dao.LicenceRepository;
 import org.jgrades.lic.entities.LicenceEntity;
-import org.jgrades.logging.logger.JGLoggingFactory;
-import org.jgrades.logging.logger.JGradesLogger;
+import org.jgrades.logging.JgLogger;
+import org.jgrades.logging.JgLoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -33,7 +33,7 @@ import static org.valid4j.Validation.validate;
 
 @Service
 public class LicenceManagingServiceImpl implements LicenceManagingService {
-    private static final JGradesLogger LOGGER = JGLoggingFactory.getLogger(LicenceManagingServiceImpl.class);
+    private static final JgLogger LOGGER = JgLoggerFactory.getLogger(LicenceManagingServiceImpl.class);
 
     @Value("${lic.keystore.path}")
     private String keystorePath;
