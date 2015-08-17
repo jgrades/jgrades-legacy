@@ -16,11 +16,10 @@ import javax.xml.xpath.*;
 import java.io.File;
 import java.io.IOException;
 
-public final class XmlUtils {
-    private static Document doc;
-    private XmlUtils() { }
+public final class LogbackXmlEditor {
+    private static Document documentUnderEdit;
 
-    private static Document getConfigDocument(){
+    private Document getConfigDocument(){
         try {
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
@@ -30,34 +29,37 @@ public final class XmlUtils {
         }
     }
 
-    private static XPathExpression getXPathExpression(String xpathExpression) throws XPathExpressionException {
+    private XPathExpression getXPathExpression(String xpathExpression) throws XPathExpressionException {
         XPathFactory xPathfactory = XPathFactory.newInstance();
         XPath xpath = xPathfactory.newXPath();
         return xpath.compile(xpathExpression);
     }
 
-    public static NodeList getNodeList(String xpathExpression)  {
-        if(doc == null){
-            doc = getConfigDocument();
+    public NodeList getNodes(String xpathExpression)  {
+        if(documentUnderEdit == null){
+            documentUnderEdit = getConfigDocument();
         }
         try {
-            return (NodeList) getXPathExpression(xpathExpression).evaluate(doc, XPathConstants.NODESET);
+            return (NodeList) getXPathExpression(xpathExpression).evaluate(documentUnderEdit, XPathConstants.NODESET);
         } catch (XPathExpressionException e) {
             return null;
         }
     }
-
-
-    public static void saveUpdated() {
+    
+    public void saveWithChanges() {
         try {
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
-            DOMSource source = new DOMSource(doc);
+            DOMSource source = new DOMSource(documentUnderEdit);
             StreamResult result = new StreamResult(new File(InternalProperties.XML_FILE));
             transformer.transform(source, result);
-            doc = null;
+            documentUnderEdit = null;
         } catch (TransformerException e) {
             e.printStackTrace();
         }
+    }
+
+    public boolean isXmlExists() {
+        return new File(InternalProperties.XML_FILE).exists();
     }
 }

@@ -1,11 +1,12 @@
 package org.jgrades.logging.service;
 
-import org.apache.commons.lang.NotImplementedException;
 import org.jgrades.logging.dao.LoggingConfigurationDao;
 import org.jgrades.logging.dao.LoggingConfigurationDaoFileImpl;
 import org.jgrades.logging.model.LoggingConfiguration;
+import org.jgrades.logging.utils.LogbackXmlEditor;
 
 public class LoggingServiceImpl implements LoggingService {
+    private LogbackXmlEditor xmlEditor = new LogbackXmlEditor();
     private LoggingConfigurationDao dao;
 
     public LoggingServiceImpl() {
@@ -28,6 +29,6 @@ public class LoggingServiceImpl implements LoggingService {
 
     @Override
     public boolean isUsingDefaultConfiguration() {
-        return !dao.isConfigurationCustomized();
+        return !xmlEditor.isXmlExists() || !dao.isConfigurationCustomized();
     }
 }

@@ -1,25 +1,23 @@
 package org.jgrades.logging.job;
 
 import ch.qos.logback.classic.Level;
-import ch.qos.logback.classic.LoggerContext;
 import ch.qos.logback.classic.joran.JoranConfigurator;
 import ch.qos.logback.core.joran.spi.JoranException;
 import org.jgrades.logging.model.LoggingConfiguration;
 import org.jgrades.logging.model.LoggingStrategy;
 import org.jgrades.logging.utils.InternalProperties;
-import org.jgrades.logging.utils.XmlUtils;
-import org.slf4j.LoggerFactory;
+import org.jgrades.logging.utils.LogbackXmlEditor;
 import org.w3c.dom.NodeList;
 
-import java.io.File;
-
 public class XmlConfigurationUpdater {
+    private LogbackXmlEditor xmlEditor = new LogbackXmlEditor();
+
     public void update(LoggingConfiguration targetConfig) {
         updateFileNames(targetConfig.getLoggingStrategy());
         updateLevel(targetConfig.getLevel());
         updateMaxFileSize(targetConfig.getMaxFileSize());
         updateMaxDays(targetConfig.getMaxDays());
-        XmlUtils.saveUpdated();
+        xmlEditor.saveWithChanges();
         LoggerContextReloader reloader = new LoggerContextReloader();
         reloader.reload();
     }
@@ -37,19 +35,19 @@ public class XmlConfigurationUpdater {
     }
 
     private void updateLevel(Level level) {
-            NodeList nodeList = XmlUtils.getNodeList(".//root/@level");
+            NodeList nodeList = xmlEditor.getNodes(".//root/@level");
             nodeList.item(0).setTextContent(level.toString().toUpperCase());
     }
 
     private void updateMaxFileSize(String maxFileSize) {
-            NodeList nodeList = XmlUtils.getNodeList(".//maxFileSize");
+        NodeList nodeList = xmlEditor.getNodes(".//maxFileSize");
             for(int i=0; i<nodeList.getLength(); i++){
                 nodeList.item(i).setTextContent(maxFileSize);
             }
     }
 
     private void updateMaxDays(Integer maxDays) {
-            NodeList nodeList = XmlUtils.getNodeList(".//maxHistory");
+        NodeList nodeList = xmlEditor.getNodes(".//maxHistory");
             for(int i=0; i<nodeList.getLength(); i++){
                 nodeList.item(i).setTextContent(maxDays.toString());
             }
