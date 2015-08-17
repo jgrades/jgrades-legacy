@@ -46,7 +46,7 @@
                 <DEFAULT.LOGGING.LEVEL>TRACE</DEFAULT.LOGGING.LEVEL>
                 <DEFAULT.LOGGING.MAX.FILE.SIZE>1MB</DEFAULT.LOGGING.MAX.FILE.SIZE>
                 <DEFAULT.LOGGING.MAX.DAYS>30</DEFAULT.LOGGING.MAX.DAYS>
-                <CONSOLE.LOGGING.LEVEL>DEBUG</CONSOLE.LOGGING.LEVEL>
+                <CONSOLE.LOGGING.LEVEL>ERROR</CONSOLE.LOGGING.LEVEL>
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>
