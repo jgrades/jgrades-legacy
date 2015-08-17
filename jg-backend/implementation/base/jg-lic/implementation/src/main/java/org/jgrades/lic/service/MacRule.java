@@ -6,8 +6,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.jgrades.lic.api.exception.ViolationOfLicenceConditionException;
 import org.jgrades.lic.api.model.Licence;
 import org.jgrades.lic.api.model.LicenceProperty;
-import org.jgrades.logging.logger.JGLoggingFactory;
-import org.jgrades.logging.logger.JGradesLogger;
+import org.jgrades.logging.JgLogger;
+import org.jgrades.logging.JgLoggerFactory;
 
 import java.net.NetworkInterface;
 import java.net.SocketException;
@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 class MacRule implements ValidationRule {
-    private static final JGradesLogger LOGGER = JGLoggingFactory.getLogger(MacRule.class);
+    private static final JgLogger LOGGER = JgLoggerFactory.getLogger(MacRule.class);
 
     private static final String MAC_PROPERTY_NAME = "mac";
 

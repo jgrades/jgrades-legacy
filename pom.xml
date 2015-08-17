@@ -30,17 +30,23 @@
         <profile>
             <id>dev</id>
             <properties>
-                <LOGGER.PROPERTIES.FILE>C:/jgrades/logs/jg-logging.properties</LOGGER.PROPERTIES.FILE>
                 <TOMCAT.INSTALLATION.DIR>C:/jgrades/tomcat8</TOMCAT.INSTALLATION.DIR>
                 <TOMCAT.LOGS.DIR>C:/jgrades/tomcat8/logs</TOMCAT.LOGS.DIR>
                 <JG.LOGS.DIR>C:/jgrades/logs</JG.LOGS.DIR>
                 <JG.INTERNAL.DATA.DIR>C:/jgrades/internal</JG.INTERNAL.DATA.DIR>
-                <SHADOW.BACKUP.DIR>C:/jgrades/backup</SHADOW.BACKUP.DIR>
+                <LOCAL.BACKUP.DIR>C:/jgrades/backup</LOCAL.BACKUP.DIR>
                 <SKIP.TESTS>false</SKIP.TESTS>
                 <SKIP.INTEGRATION.TESTS>true</SKIP.INTEGRATION.TESTS>
                 <DB.OPERATIONS.DEBUG>true</DB.OPERATIONS.DEBUG>
                 <DB.SCHEMA.ORM.POLICY>create-drop</DB.SCHEMA.ORM.POLICY>
                 <APPLICATION.PROPERTIES>C:/jgrades/internal/app.properties</APPLICATION.PROPERTIES>
+                <LOGGING.CONFIGURATION.FILE>C:/jgrades/logs/jg-logging.conf</LOGGING.CONFIGURATION.FILE>
+                <LOGGING.XML.FILE>C:/jgrades/internal/logback.xml</LOGGING.XML.FILE>
+                <DEFAULT.LOGGING.STRATEGY>LOG_FILE_PER_MODULE_AND_LEVEL</DEFAULT.LOGGING.STRATEGY>
+                <DEFAULT.LOGGING.LEVEL>TRACE</DEFAULT.LOGGING.LEVEL>
+                <DEFAULT.LOGGING.MAX.FILE.SIZE>1MB</DEFAULT.LOGGING.MAX.FILE.SIZE>
+                <DEFAULT.LOGGING.MAX.DAYS>30</DEFAULT.LOGGING.MAX.DAYS>
+                <CONSOLE.LOGGING.LEVEL>DEBUG</CONSOLE.LOGGING.LEVEL>
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>
@@ -49,32 +55,23 @@
         <profile>
             <id>prod</id>
             <properties>
-                <LOGGER.PROPERTIES.FILE>/var/log/jg-logging.properties</LOGGER.PROPERTIES.FILE>
                 <TOMCAT.INSTALLATION.DIR>/etc/tomcat8</TOMCAT.INSTALLATION.DIR>
                 <TOMCAT.LOGS.DIR>/var/log/tomcat8</TOMCAT.LOGS.DIR>
                 <JG.LOGS.DIR>/var/log/jgrades</JG.LOGS.DIR>
                 <JG.INTERNAL.DATA.DIR>/etc/opt/jgrades</JG.INTERNAL.DATA.DIR>
-                <SHADOW.BACKUP.DIR>/var/backups/jgrades</SHADOW.BACKUP.DIR>
+                <LOCAL.BACKUP.DIR>/var/backups/jgrades</LOCAL.BACKUP.DIR>
                 <SKIP.TESTS>false</SKIP.TESTS>
                 <SKIP.INTEGRATION.TESTS>false</SKIP.INTEGRATION.TESTS>
                 <DB.OPERATIONS.DEBUG>false</DB.OPERATIONS.DEBUG>
                 <DB.SCHEMA.ORM.POLICY>none</DB.SCHEMA.ORM.POLICY>
                 <APPLICATION.PROPERTIES>/etc/opt/jgrades/app.properties</APPLICATION.PROPERTIES>
-            </properties>
-        </profile>
-        <profile>
-            <id>heroku</id>
-            <properties>
-                <TOMCAT.INSTALLATION.DIR>/app/tomcat8</TOMCAT.INSTALLATION.DIR>
-                <TOMCAT.LOGS.DIR>/app/tomcat8/logs</TOMCAT.LOGS.DIR>
-                <JG.LOGS.DIR>/app/log</JG.LOGS.DIR>
-                <JG.INTERNAL.DATA.DIR>/app/internal</JG.INTERNAL.DATA.DIR>
-                <SHADOW.BACKUP.DIR>/app/backups</SHADOW.BACKUP.DIR>
-                <SKIP.TESTS>true</SKIP.TESTS>
-                <SKIP.INTEGRATION.TESTS>true</SKIP.INTEGRATION.TESTS>
-                <DB.OPERATIONS.DEBUG>false</DB.OPERATIONS.DEBUG>
-                <DB.SCHEMA.ORM.POLICY>none</DB.SCHEMA.ORM.POLICY>
-                <APPLICATION.PROPERTIES>/app/app.properties</APPLICATION.PROPERTIES>
+                <LOGGING.CONFIGURATION.FILE>/var/log/jgrades/jg-logging.conf</LOGGING.CONFIGURATION.FILE>
+                <LOGGING.XML.FILE>/etc/opt/jgrades/logback.xml</LOGGING.XML.FILE>
+                <DEFAULT.LOGGING.STRATEGY>LOG_FILE_PER_MODULE</DEFAULT.LOGGING.STRATEGY>
+                <DEFAULT.LOGGING.LEVEL>INFO</DEFAULT.LOGGING.LEVEL>
+                <DEFAULT.LOGGING.MAX.FILE.SIZE>5MB</DEFAULT.LOGGING.MAX.FILE.SIZE>
+                <DEFAULT.LOGGING.MAX.DAYS>90</DEFAULT.LOGGING.MAX.DAYS>
+                <CONSOLE.LOGGING.LEVEL>OFF</CONSOLE.LOGGING.LEVEL>
             </properties>
         </profile>
     </profiles>

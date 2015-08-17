@@ -4,8 +4,8 @@ import io.swagger.annotations.ApiOperation;
 import org.jgrades.lic.api.model.Licence;
 import org.jgrades.lic.api.service.LicenceCheckingService;
 import org.jgrades.lic.api.service.LicenceManagingService;
-import org.jgrades.logging.logger.JGLoggingFactory;
-import org.jgrades.logging.logger.JGradesLogger;
+import org.jgrades.logging.JgLogger;
+import org.jgrades.logging.JgLoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(value = "/licence/check", produces = MediaType.APPLICATION_JSON_VALUE)
 public class LicenceCheckService {
-    private static final JGradesLogger LOGGER = JGLoggingFactory.getLogger(LicenceCheckService.class);
+    private static final JgLogger LOGGER = JgLoggerFactory.getLogger(LicenceCheckService.class);
 
     @Autowired
     private LicenceManagingService licenceManagingService;

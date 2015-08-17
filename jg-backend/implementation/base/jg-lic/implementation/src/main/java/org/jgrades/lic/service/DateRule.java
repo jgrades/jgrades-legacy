@@ -5,14 +5,14 @@ import com.google.common.collect.UnmodifiableIterator;
 import org.jgrades.lic.api.model.Licence;
 import org.jgrades.lic.api.model.LicenceProperty;
 import org.jgrades.lic.api.model.Product;
-import org.jgrades.logging.logger.JGLoggingFactory;
-import org.jgrades.logging.logger.JGradesLogger;
+import org.jgrades.logging.JgLogger;
+import org.jgrades.logging.JgLoggerFactory;
 
 import java.util.List;
 import java.util.Optional;
 
 class DateRule implements ValidationRule {
-    private static final JGradesLogger LOGGER = JGLoggingFactory.getLogger(DateRule.class);
+    private static final JgLogger LOGGER = JgLoggerFactory.getLogger(DateRule.class);
     private static final String EXPIRED_DAYS_PROPERTY_NAME = "expiredDays";
 
     @Override

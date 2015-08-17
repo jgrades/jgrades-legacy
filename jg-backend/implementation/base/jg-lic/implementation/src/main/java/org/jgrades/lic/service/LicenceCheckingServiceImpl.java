@@ -9,8 +9,8 @@ import org.jgrades.lic.api.model.Licence;
 import org.jgrades.lic.api.service.LicenceCheckingService;
 import org.jgrades.lic.dao.LicenceRepository;
 import org.jgrades.lic.entities.LicenceEntity;
-import org.jgrades.logging.logger.JGLoggingFactory;
-import org.jgrades.logging.logger.JGradesLogger;
+import org.jgrades.logging.JgLogger;
+import org.jgrades.logging.JgLoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +23,7 @@ import static org.valid4j.Validation.validate;
 
 @Service
 public class LicenceCheckingServiceImpl implements LicenceCheckingService {
-    private static final JGradesLogger LOGGER = JGLoggingFactory.getLogger(LicenceCheckingServiceImpl.class);
+    private static final JgLogger LOGGER = JgLoggerFactory.getLogger(LicenceCheckingServiceImpl.class);
 
     @Autowired
     private LicenceRepository licenceRepository;
