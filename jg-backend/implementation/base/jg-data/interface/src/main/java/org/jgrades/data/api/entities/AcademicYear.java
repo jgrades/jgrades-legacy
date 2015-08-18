@@ -9,9 +9,7 @@ import java.util.List;
 @Table(name = "JG_DATA_ACADEMIC_YEAR")
 public class AcademicYear {
     private Long id;
-
     private String name;
-
     private School school;
 
     private List<Semester> semesters = Lists.newArrayList();

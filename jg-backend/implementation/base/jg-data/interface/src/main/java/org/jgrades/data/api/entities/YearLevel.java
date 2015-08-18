@@ -9,13 +9,12 @@ import java.util.List;
 @Table(name = "JG_DATA_YEAR_LEVEL")
 public class YearLevel {
     private Long id;
-
     private String name;
-
-    private List<Semester> semesters = Lists.newArrayList();
+    private List<SemesterYearLevel> semesters = Lists.newArrayList();
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "YEAR_LEVEL_ID", unique = true, nullable = false)
     public Long getId() {
         return id;
     }
@@ -33,11 +32,11 @@ public class YearLevel {
     }
 
     @OneToMany(mappedBy = "pk.semester", cascade = CascadeType.ALL)
-    public List<Semester> getSemesters() {
+    public List<SemesterYearLevel> getSemesters() {
         return semesters;
     }
 
-    public void setSemesters(List<Semester> semesters) {
+    public void setSemesters(List<SemesterYearLevel> semesters) {
         this.semesters = semesters;
     }
 }

@@ -15,8 +15,6 @@ import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import java.util.Properties;
 
-import org.postgresql.Driver;
-
 @Configuration
 @EnableJpaRepositories(basePackages = {"org.jgrades.data.dao"})
 @PropertySources({
@@ -26,7 +24,7 @@ import org.postgresql.Driver;
 @EnableTransactionManagement
 @ComponentScan("org.jgrades.data")
 public class DataConfig {
-    @Value("${data.db.driver.class.name}")
+    @Value("${data.db.driver.class.name:org.postgresql.Driver}")
     private String driverClassName;
 
     @Value("${data.db.jdbc.url}")
@@ -58,8 +56,13 @@ public class DataConfig {
 
     @Bean(destroyMethod = "close")
     DataSource dataSource() {
+        try {
+            Class.forName(driverClassName);
+        } catch (ClassNotFoundException e) {
+            driverClassName = "org.postgresql.Driver";
+        }
         HikariConfig dataSourceConfig = new HikariConfig();
-        dataSourceConfig.setDriverClassName(Driver.class.getName());
+        dataSourceConfig.setDriverClassName(driverClassName);
         dataSourceConfig.setJdbcUrl(jdbcUrl);
         dataSourceConfig.setUsername(username);
         dataSourceConfig.setPassword(password);
