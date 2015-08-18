@@ -5,7 +5,9 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.dozer.DozerBeanMapper;
 import org.dozer.Mapper;
+import org.h2.tools.Server;
 import org.jgrades.lic.api.config.LicApiConfig;
+import org.jgrades.lic.utils.DbCloser;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.*;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
@@ -18,6 +20,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Properties;
 
@@ -49,11 +52,15 @@ public class LicConfig {
         return new PropertySourcesPlaceholderConfigurer();
     }
 
-    @Bean(destroyMethod = "close")
-    DataSource dataSource() {
+    @Bean
+    DataSource dataSource() throws ClassNotFoundException, SQLException {
+        Class.forName("org.h2.Driver");
+        Server.createTcpServer("-tcpPort", "9092", "-tcpAllowOthers").start();
+
+
         HikariConfig dataSourceConfig = new HikariConfig();
         dataSourceConfig.setDriverClassName("org.h2.Driver");
-        dataSourceConfig.setJdbcUrl("jdbc:h2:" + licDbPath);
+        dataSourceConfig.setJdbcUrl("jdbc:h2:tcp://localhost/" + licDbPath);
         dataSourceConfig.setUsername("sa");
         dataSourceConfig.setPassword("");
         return new HikariDataSource(dataSourceConfig);
@@ -87,5 +94,10 @@ public class LicConfig {
     Mapper mapper() {
         List<String> mappingFiles = Lists.newArrayList("lic_models_mapping.xml");
         return new DozerBeanMapper(mappingFiles);
+    }
+
+    @Bean
+    DbCloser dbCloser(DataSource dataSource) {
+        return new DbCloser(dataSource);
     }
 }
