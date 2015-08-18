@@ -37,7 +37,7 @@ public class LicenceCheckingServiceImpl implements LicenceCheckingService {
     private List<ValidationRule> rules;
 
     @PostConstruct
-    public void initIt() throws Exception {
+    public void initIt() {
         rules = ImmutableList.of(new DateRule(), new MacRule(), versionRule);
     }
 
