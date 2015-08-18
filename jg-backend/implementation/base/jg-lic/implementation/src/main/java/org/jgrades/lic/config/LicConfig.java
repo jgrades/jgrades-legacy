@@ -5,6 +5,7 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.dozer.DozerBeanMapper;
 import org.dozer.Mapper;
+import org.jgrades.lic.api.config.LicApiConfig;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.*;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
@@ -28,6 +29,7 @@ import java.util.Properties;
 })
 @EnableTransactionManagement
 @EnableScheduling
+@Import(LicApiConfig.class)
 @ComponentScan("org.jgrades.lic")
 public class LicConfig {
     @Value("${lic.db.path}")

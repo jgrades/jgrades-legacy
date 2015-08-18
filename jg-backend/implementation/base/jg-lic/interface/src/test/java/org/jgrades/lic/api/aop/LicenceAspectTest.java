@@ -1,5 +1,7 @@
 package org.jgrades.lic.api.aop;
 
+import org.jgrades.lic.api.LicServiceMockConfig;
+import org.jgrades.lic.api.config.LicApiConfig;
 import org.jgrades.lic.api.exception.LicenceExpiredException;
 import org.jgrades.lic.api.service.LicenceCheckingService;
 import org.junit.Before;
@@ -13,7 +15,7 @@ import static org.mockito.Mockito.*;
 import static org.mockito.internal.verification.VerificationModeFactory.times;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:jg-lic-api-test-context.xml")
+@ContextConfiguration(classes = {LicApiConfig.class, LicServiceMockConfig.class})
 public class LicenceAspectTest {
     private static final String BASE_PRODUCT_NAME = "JG-BASE";
     private static final String EXAMPLE_CUSTOM_PRODUCT_NAME = FakeService.CUSTOM_PRODUCT_NAME;
