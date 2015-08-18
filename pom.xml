@@ -47,6 +47,11 @@
                 <DEFAULT.LOGGING.MAX.FILE.SIZE>1MB</DEFAULT.LOGGING.MAX.FILE.SIZE>
                 <DEFAULT.LOGGING.MAX.DAYS>30</DEFAULT.LOGGING.MAX.DAYS>
                 <CONSOLE.LOGGING.LEVEL>ERROR</CONSOLE.LOGGING.LEVEL>
+                <DB.DRIVER.CLASS.NAME>org.postgresql.Drive</DB.DRIVER.CLASS.NAME>
+                <DB.JDBC.URL>jdbc:postgresql://localhost:5432/jgrades-db</DB.JDBC.URL>
+                <DB.USERNAME>postgres</DB.USERNAME>
+                <DB.PASSWORD>postgres</DB.PASSWORD>
+                <DB.HIBERNATE.DIALECT>org.hibernate.dialect.PostgreSQLDialect</DB.HIBERNATE.DIALECT>
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>
@@ -72,6 +77,11 @@
                 <DEFAULT.LOGGING.MAX.FILE.SIZE>5MB</DEFAULT.LOGGING.MAX.FILE.SIZE>
                 <DEFAULT.LOGGING.MAX.DAYS>90</DEFAULT.LOGGING.MAX.DAYS>
                 <CONSOLE.LOGGING.LEVEL>OFF</CONSOLE.LOGGING.LEVEL>
+                <DB.DRIVER.CLASS.NAME>org.postgresql.Drive</DB.DRIVER.CLASS.NAME>
+                <DB.JDBC.URL>jdbc:postgresql://localhost:5432/jgrades-db</DB.JDBC.URL>
+                <DB.USERNAME>postgres</DB.USERNAME>
+                <DB.PASSWORD>postgres</DB.PASSWORD>
+                <DB.HIBERNATE.DIALECT>org.hibernate.dialect.PostgreSQLDialect</DB.HIBERNATE.DIALECT>
             </properties>
         </profile>
     </profiles>
