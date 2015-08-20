@@ -13,11 +13,38 @@ import com.openpojo.validation.test.impl.GetterTester;
 import com.openpojo.validation.test.impl.SetterTester;
 import org.jgrades.data.api.entities.*;
 import org.junit.Test;
+import org.meanbean.test.BeanTester;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class PojosTest {
+    private static final List<Class> POJOS = Lists.newArrayList(
+            AcademicYear.class,
+            Administrator.class,
+            ClassGroup.class,
+            Classroom.class,
+            Division.class,
+            Manager.class,
+            Parent.class,
+            School.class,
+            SchoolDay.class,
+            SchoolDayPeriod.class,
+            Semester.class,
+            SemesterYearLevel.class,
+            SemesterYearLevelId.class,
+            Student.class,
+            SubGroup.class,
+            Subject.class,
+            Teacher.class,
+            User.class,
+            YearLevel.class
+    );
+
+    static {
+        System.setProperty("org.apache.commons.logging.Log",
+                "org.apache.commons.logging.impl.NoOpLog");
+    }
+
     @Test
     public void shouldSettersAndGettersBePresentForAllFields() {
         // given
@@ -37,6 +64,15 @@ public class PojosTest {
         // when then
         for (PojoClass pojoClass : entitiesClass) {
             pojoValidator.runValidation(pojoClass);
+        }
+    }
+
+    @Test
+    public void testGettersAndSetters() throws Exception {
+        BeanTester tester = new BeanTester();
+        tester.setIterations(1);
+        for (Class clazz : POJOS) {
+            tester.testBean(clazz);
         }
     }
 }

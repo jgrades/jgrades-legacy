@@ -33,6 +33,7 @@
         <mockito.version>1.10.19</mockito.version>
         <powermock.version>1.6.2</powermock.version>
         <openpojo.version>0.7.3</openpojo.version>
+        <meanbean.version>2.0.3</meanbean.version>
         <equalsverifier.version>1.7.2</equalsverifier.version>
         <system.rules.version>1.12.0</system.rules.version>
         <json.path.assert.version>2.0.0</json.path.assert.version>
@@ -175,6 +176,12 @@
                 <groupId>com.openpojo</groupId>
                 <artifactId>openpojo</artifactId>
                 <version>${openpojo.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.meanbean</groupId>
+                <artifactId>meanbean</artifactId>
+                <version>${meanbean.version}</version>
                 <scope>test</scope>
             </dependency>
             <dependency>
