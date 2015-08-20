@@ -8,11 +8,6 @@ import org.springframework.test.util.ReflectionTestUtils;
 import static org.assertj.core.api.StrictAssertions.assertThat;
 
 public class JgLoggerFactoryTest {
-    @Before
-    public void setUp() throws Exception {
-        Class.forName("org.jgrades.logging.JgLoggerFactory");
-    }
-
     @Test
     public void shouldSetJGradesModuleName_whenConstructWithJGradesClass() throws Exception {
         // given
