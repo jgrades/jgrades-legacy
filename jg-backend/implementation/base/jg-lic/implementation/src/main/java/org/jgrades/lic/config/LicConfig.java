@@ -54,9 +54,13 @@ public class LicConfig {
 
     @Bean
     DataSource dataSource() throws ClassNotFoundException, SQLException {
+        Class.forName("org.h2.Driver");
+        Server.createTcpServer("-tcpPort", "9092", "-tcpAllowOthers").start();
+
+
         HikariConfig dataSourceConfig = new HikariConfig();
         dataSourceConfig.setDriverClassName("org.h2.Driver");
-        dataSourceConfig.setJdbcUrl("jdbc:h2:" + licDbPath);
+        dataSourceConfig.setJdbcUrl("jdbc:h2:tcp://localhost/" + licDbPath);
         dataSourceConfig.setUsername("sa");
         dataSourceConfig.setPassword("");
         return new HikariDataSource(dataSourceConfig);
