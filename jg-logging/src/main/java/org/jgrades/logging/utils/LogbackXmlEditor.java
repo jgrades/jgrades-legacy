@@ -18,7 +18,7 @@ import javax.xml.xpath.*;
 import java.io.File;
 import java.io.IOException;
 
-public final class LogbackXmlEditor {
+public class LogbackXmlEditor {
     private static Document documentUnderEdit;
 
     private Document getConfigDocument(){

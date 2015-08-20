@@ -1,8 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<configuration scan="false">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><configuration scan="false">
     <appender class="ch.qos.logback.core.ConsoleAppender" name="CONSOLE">
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-            <level>OFF</level>
+            <level>${CONSOLE.LOGGING.LEVEL}</level>
         </filter>
         <encoder>
             <pattern>[%d{dd-MM-yyyy HH:mm:ss.SSS}] [%thread] %-5level --&gt; [%c][%L] %m%n</pattern>
@@ -21,12 +20,12 @@
                     <onMismatch>DENY</onMismatch>
                 </filter>
                 <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-                    <fileNamePattern>./src/test/resources/jg_${module-name-placeholder}_trace_%d{yyyy-MM-dd}_%i.log</fileNamePattern>
+                    <fileNamePattern>src/test/resources//jg_${module-name-placeholder}_trace_%d{yyyy-MM-dd}_%i.log</fileNamePattern>
                     <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                         <maxFileSize>100KB</maxFileSize>
                     </timeBasedFileNamingAndTriggeringPolicy>
                 </rollingPolicy>
-                <maxHistory>7</maxHistory>
+                <maxHistory>30</maxHistory>
                 <cleanHistoryOnStart>true</cleanHistoryOnStart>
                 <encoder>
                     <charset>UTF-8</charset>
@@ -48,12 +47,12 @@
                     <onMismatch>DENY</onMismatch>
                 </filter>
                 <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-                    <fileNamePattern>./src/test/resources/jg_${module-name-placeholder}_debug_%d{yyyy-MM-dd}_%i.log</fileNamePattern>
+                    <fileNamePattern>src/test/resources//jg_${module-name-placeholder}_debug_%d{yyyy-MM-dd}_%i.log</fileNamePattern>
                     <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                         <maxFileSize>100KB</maxFileSize>
                     </timeBasedFileNamingAndTriggeringPolicy>
                 </rollingPolicy>
-                <maxHistory>7</maxHistory>
+                <maxHistory>30</maxHistory>
                 <cleanHistoryOnStart>true</cleanHistoryOnStart>
                 <encoder>
                     <charset>UTF-8</charset>
@@ -75,12 +74,12 @@
                     <onMismatch>DENY</onMismatch>
                 </filter>
                 <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-                    <fileNamePattern>./src/test/resources/jg_${module-name-placeholder}_info_%d{yyyy-MM-dd}_%i.log</fileNamePattern>
+                    <fileNamePattern>src/test/resources//jg_${module-name-placeholder}_info_%d{yyyy-MM-dd}_%i.log</fileNamePattern>
                     <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                         <maxFileSize>100KB</maxFileSize>
                     </timeBasedFileNamingAndTriggeringPolicy>
                 </rollingPolicy>
-                <maxHistory>7</maxHistory>
+                <maxHistory>30</maxHistory>
                 <cleanHistoryOnStart>true</cleanHistoryOnStart>
                 <encoder>
                     <charset>UTF-8</charset>
@@ -102,12 +101,12 @@
                     <onMismatch>DENY</onMismatch>
                 </filter>
                 <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-                    <fileNamePattern>./src/test/resources/jg_${module-name-placeholder}_warn_%d{yyyy-MM-dd}_%i.log</fileNamePattern>
+                    <fileNamePattern>src/test/resources//jg_${module-name-placeholder}_warn_%d{yyyy-MM-dd}_%i.log</fileNamePattern>
                     <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                         <maxFileSize>100KB</maxFileSize>
                     </timeBasedFileNamingAndTriggeringPolicy>
                 </rollingPolicy>
-                <maxHistory>7</maxHistory>
+                <maxHistory>30</maxHistory>
                 <cleanHistoryOnStart>true</cleanHistoryOnStart>
                 <encoder>
                     <charset>UTF-8</charset>
@@ -129,12 +128,12 @@
                     <onMismatch>DENY</onMismatch>
                 </filter>
                 <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-                    <fileNamePattern>./src/test/resources/jg_${module-name-placeholder}_error_%d{yyyy-MM-dd}_%i.log</fileNamePattern>
+                    <fileNamePattern>src/test/resources//jg_${module-name-placeholder}_error_%d{yyyy-MM-dd}_%i.log</fileNamePattern>
                     <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                         <maxFileSize>100KB</maxFileSize>
                     </timeBasedFileNamingAndTriggeringPolicy>
                 </rollingPolicy>
-                <maxHistory>7</maxHistory>
+                <maxHistory>30</maxHistory>
                 <cleanHistoryOnStart>true</cleanHistoryOnStart>
                 <encoder>
                     <charset>UTF-8</charset>
@@ -156,12 +155,12 @@
                     <onMismatch>DENY</onMismatch>
                 </filter>
                 <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-                    <fileNamePattern>./src/test/resources/jg_external-lib_trace_%d{yyyy-MM-dd}_%i.log</fileNamePattern>
+                    <fileNamePattern>src/test/resources//jg_external-lib_trace_%d{yyyy-MM-dd}_%i.log</fileNamePattern>
                     <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                         <maxFileSize>100KB</maxFileSize>
                     </timeBasedFileNamingAndTriggeringPolicy>
                 </rollingPolicy>
-                <maxHistory>7</maxHistory>
+                <maxHistory>30</maxHistory>
                 <cleanHistoryOnStart>true</cleanHistoryOnStart>
                 <encoder>
                     <charset>UTF-8</charset>
@@ -183,12 +182,12 @@
                     <onMismatch>DENY</onMismatch>
                 </filter>
                 <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-                    <fileNamePattern>./src/test/resources/jg_external-lib_debug_%d{yyyy-MM-dd}_%i.log</fileNamePattern>
+                    <fileNamePattern>src/test/resources//jg_external-lib_debug_%d{yyyy-MM-dd}_%i.log</fileNamePattern>
                     <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                         <maxFileSize>100KB</maxFileSize>
                     </timeBasedFileNamingAndTriggeringPolicy>
                 </rollingPolicy>
-                <maxHistory>7</maxHistory>
+                <maxHistory>30</maxHistory>
                 <cleanHistoryOnStart>true</cleanHistoryOnStart>
                 <encoder>
                     <charset>UTF-8</charset>
@@ -210,12 +209,12 @@
                     <onMismatch>DENY</onMismatch>
                 </filter>
                 <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-                    <fileNamePattern>./src/test/resources/jg_external-lib_info_%d{yyyy-MM-dd}_%i.log</fileNamePattern>
+                    <fileNamePattern>src/test/resources//jg_external-lib_info_%d{yyyy-MM-dd}_%i.log</fileNamePattern>
                     <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                         <maxFileSize>100KB</maxFileSize>
                     </timeBasedFileNamingAndTriggeringPolicy>
                 </rollingPolicy>
-                <maxHistory>7</maxHistory>
+                <maxHistory>30</maxHistory>
                 <cleanHistoryOnStart>true</cleanHistoryOnStart>
                 <encoder>
                     <charset>UTF-8</charset>
@@ -237,12 +236,12 @@
                     <onMismatch>DENY</onMismatch>
                 </filter>
                 <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-                    <fileNamePattern>./src/test/resources/jg_external-lib_warn_%d{yyyy-MM-dd}_%i.log</fileNamePattern>
+                    <fileNamePattern>src/test/resources//jg_external-lib_warn_%d{yyyy-MM-dd}_%i.log</fileNamePattern>
                     <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                         <maxFileSize>100KB</maxFileSize>
                     </timeBasedFileNamingAndTriggeringPolicy>
                 </rollingPolicy>
-                <maxHistory>7</maxHistory>
+                <maxHistory>30</maxHistory>
                 <cleanHistoryOnStart>true</cleanHistoryOnStart>
                 <encoder>
                     <charset>UTF-8</charset>
@@ -264,12 +263,12 @@
                     <onMismatch>DENY</onMismatch>
                 </filter>
                 <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-                    <fileNamePattern>./src/test/resources/jg_external-lib_error_%d{yyyy-MM-dd}_%i.log</fileNamePattern>
+                    <fileNamePattern>src/test/resources//jg_external-lib_error_%d{yyyy-MM-dd}_%i.log</fileNamePattern>
                     <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                         <maxFileSize>100KB</maxFileSize>
                     </timeBasedFileNamingAndTriggeringPolicy>
                 </rollingPolicy>
-                <maxHistory>7</maxHistory>
+                <maxHistory>30</maxHistory>
                 <cleanHistoryOnStart>true</cleanHistoryOnStart>
                 <encoder>
                     <charset>UTF-8</charset>
@@ -279,7 +278,7 @@
         </sift>
     </appender>
 
-    <root level="TRACE">
+    <root level="ERROR">
         <appender-ref ref="CONSOLE"/>
         <appender-ref ref="FILESYSTEM-ext-trace"/>
         <appender-ref ref="FILESYSTEM-ext-debug"/>
@@ -288,7 +287,7 @@
         <appender-ref ref="FILESYSTEM-ext-error"/>
     </root>
 
-    <logger name="org.jgrades" additivity="false">
+    <logger additivity="false" name="org.jgrades">
         <appender-ref ref="CONSOLE"/>
         <appender-ref ref="FILESYSTEM-trace"/>
         <appender-ref ref="FILESYSTEM-debug"/>

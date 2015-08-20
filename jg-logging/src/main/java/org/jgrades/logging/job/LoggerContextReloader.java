@@ -9,29 +9,31 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 
 public class LoggerContextReloader {
+    private JoranConfigurator configurator;
+
     public void reload() {
         LoggerContext context = (LoggerContext) LoggerFactory.getILoggerFactory();
         context.reset();
-        JoranConfigurator configurator = new JoranConfigurator();
+        configurator = new JoranConfigurator();
         configurator.setContext(context);
 
         File externalXmlFile = new File(InternalProperties.XML_FILE);
         if(externalXmlFile.exists()){
-            try {
-                configurator.doConfigure(externalXmlFile);
-            } catch (JoranException e) {
-                setDefaultConfiguration(configurator);
-            }
+            setConfiguration(externalXmlFile.getAbsolutePath());
         } else{
-            setDefaultConfiguration(configurator);
+            setDefaultConfiguration();
         }
     }
 
-    private void setDefaultConfiguration(JoranConfigurator configurator){
+    private void setConfiguration(String configXmlFilePath){
         try {
-            configurator.doConfigure(InternalProperties.ONLY_CONSOLE_XML_FILE);
+            configurator.doConfigure(configXmlFilePath);
         } catch (JoranException e) {
-            // not possible...
+            setDefaultConfiguration();
         }
+    }
+
+    private void setDefaultConfiguration(){
+        setConfiguration(InternalProperties.ONLY_CONSOLE_XML_FILE);
     }
 }
