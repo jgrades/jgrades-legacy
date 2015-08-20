@@ -32,10 +32,6 @@ public class DbCloser {
             stat.execute("SHUTDOWN");
             LOGGER.info("Shutting down licensing database done");
 
-            LOGGER.info("Licensing DB server stopping started");
-            Server.shutdownTcpServer("tcp://localhost:9092", "", true, true);
-            LOGGER.info("Licensing DB server stopped correctly");
-
             LOGGER.info("Unloading JDBC H2 driver");
             org.h2.Driver.unload();
             LOGGER.info("Unloading JDBC H2 driver done");
