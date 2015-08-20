@@ -36,7 +36,7 @@
                 <JG.INTERNAL.DATA.DIR>C:/jgrades/internal</JG.INTERNAL.DATA.DIR>
                 <LOCAL.BACKUP.DIR>C:/jgrades/backup</LOCAL.BACKUP.DIR>
                 <SKIP.TESTS>false</SKIP.TESTS>
-                <SKIP.INTEGRATION.TESTS>true</SKIP.INTEGRATION.TESTS>
+                <SKIP.INTEGRATION.TESTS>false</SKIP.INTEGRATION.TESTS>
                 <DB.OPERATIONS.DEBUG>true</DB.OPERATIONS.DEBUG>
                 <DB.SCHEMA.ORM.POLICY>create-drop</DB.SCHEMA.ORM.POLICY>
                 <APPLICATION.PROPERTIES>C:/jgrades/internal/app.properties</APPLICATION.PROPERTIES>
