@@ -23,12 +23,6 @@ public class PerModuleUpdaterTest {
     @InjectMocks
     private PerModuleUpdater perModuleUpdater;
 
-    @Before
-    public void setUp() throws Exception {
-        perModuleUpdater = new PerModuleUpdater();
-        ReflectionTestUtils.setField(perModuleUpdater, "xmlEditor", xmlEditorMock);
-    }
-
     @Test
     public void shouldSetFileNameWithModule_whenNodeListHandled() throws Exception {
         // given

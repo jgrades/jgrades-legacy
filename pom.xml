@@ -12,7 +12,7 @@
     <name>jGrades Application</name>
 
     <properties>
-        <release.version>0.4-DEV-SNAPSHOT</release.version>
+        <RELEASE.VERSION>0.4-DEV-SNAPSHOT</RELEASE.VERSION>
 
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
@@ -30,6 +30,7 @@
         <profile>
             <id>dev</id>
             <properties>
+                <!-- IF YOU ARE CHANGE ANYTHING PLEASE UPDATE INTERNAL DOCUMENTATION IN GOOGLE DRIVE! !-->
                 <TOMCAT.INSTALLATION.DIR>C:/jgrades/tomcat8</TOMCAT.INSTALLATION.DIR>
                 <TOMCAT.LOGS.DIR>C:/jgrades/tomcat8/logs</TOMCAT.LOGS.DIR>
                 <JG.LOGS.DIR>C:/jgrades/logs</JG.LOGS.DIR>
@@ -43,9 +44,9 @@
                 <LOGGING.CONFIGURATION.FILE>C:/jgrades/logs/jg-logging.conf</LOGGING.CONFIGURATION.FILE>
                 <LOGGING.XML.FILE>C:/jgrades/internal/logback-details.xml</LOGGING.XML.FILE>
                 <DEFAULT.LOGGING.STRATEGY>LOG_FILE_PER_MODULE_AND_LEVEL</DEFAULT.LOGGING.STRATEGY>
-                <DEFAULT.LOGGING.LEVEL>TRACE</DEFAULT.LOGGING.LEVEL>
-                <DEFAULT.LOGGING.MAX.FILE.SIZE>1MB</DEFAULT.LOGGING.MAX.FILE.SIZE>
-                <DEFAULT.LOGGING.MAX.DAYS>30</DEFAULT.LOGGING.MAX.DAYS>
+                <DEFAULT.LOGGING.LEVEL>DEBUG</DEFAULT.LOGGING.LEVEL>
+                <DEFAULT.LOGGING.MAX.FILE.SIZE>10MB</DEFAULT.LOGGING.MAX.FILE.SIZE>
+                <DEFAULT.LOGGING.MAX.DAYS>7</DEFAULT.LOGGING.MAX.DAYS>
                 <CONSOLE.LOGGING.LEVEL>OFF</CONSOLE.LOGGING.LEVEL>
                 <DB.DRIVER.CLASS.NAME>org.postgresql.Drive</DB.DRIVER.CLASS.NAME>
                 <DB.JDBC.URL>jdbc:postgresql://localhost:5432/jgrades-db</DB.JDBC.URL>
@@ -60,6 +61,7 @@
         <profile>
             <id>prod</id>
             <properties>
+                <!-- IF YOU ARE CHANGE ANYTHING PLEASE UPDATE INTERNAL DOCUMENTATION IN GOOGLE DRIVE! !-->
                 <TOMCAT.INSTALLATION.DIR>/etc/tomcat8</TOMCAT.INSTALLATION.DIR>
                 <TOMCAT.LOGS.DIR>/var/log/tomcat8</TOMCAT.LOGS.DIR>
                 <JG.LOGS.DIR>/var/log/jgrades</JG.LOGS.DIR>
@@ -185,7 +187,7 @@
             <dependency>
                 <groupId>org.jgrades</groupId>
                 <artifactId>jg-bom</artifactId>
-                <version>${release.version}</version>
+                <version>${RELEASE.VERSION}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>

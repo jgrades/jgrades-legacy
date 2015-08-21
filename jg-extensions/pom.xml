@@ -19,7 +19,7 @@
         <dependency>
             <groupId>org.jgrades</groupId>
             <artifactId>jg-logging</artifactId>
-            <version>${release.version}</version>
+            <version>${RELEASE.VERSION}</version>
         </dependency>
 
         <!-- EXTERNAL DEPENDENCIES -->

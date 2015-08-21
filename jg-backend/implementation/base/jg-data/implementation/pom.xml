@@ -31,7 +31,7 @@
         <dependency>
             <groupId>org.jgrades.app</groupId>
             <artifactId>jg-data-api</artifactId>
-            <version>${release.version}</version>
+            <version>${RELEASE.VERSION}</version>
         </dependency>
 
         <!-- EXTERNAL DEPENDENCIES -->

@@ -63,12 +63,12 @@
         <dependency>
             <groupId>org.jgrades.app</groupId>
             <artifactId>jg-lic-api</artifactId>
-            <version>${release.version}</version>
+            <version>${RELEASE.VERSION}</version>
         </dependency>
         <dependency>
             <groupId>org.jgrades.app</groupId>
             <artifactId>jg-lic-crypto-api</artifactId>
-            <version>${release.version}</version>
+            <version>${RELEASE.VERSION}</version>
         </dependency>
 
         <!-- EXTERNAL DEPENDENCIES -->
