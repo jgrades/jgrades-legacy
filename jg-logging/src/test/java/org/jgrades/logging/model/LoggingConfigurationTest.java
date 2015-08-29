@@ -75,6 +75,6 @@ public class LoggingConfigurationTest {
         String string = configuration.toString();
 
         // then
-        assertThat(string).contains("loggingStrategy=LOG_FILE_PER_LEVEL,level=WARN,maxFileSize=100KB,maxDays=7");
+        assertThat(string).contains("LoggingConfiguration(loggingStrategy=LOG_FILE_PER_LEVEL, level=WARN, maxFileSize=100KB, maxDays=7)");
     }
 }

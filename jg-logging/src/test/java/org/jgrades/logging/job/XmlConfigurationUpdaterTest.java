@@ -46,12 +46,11 @@ public class XmlConfigurationUpdaterTest {
         // given
         when(xmlEditorMock.isXmlExists()).thenReturn(true);
 
-        LoggingConfiguration conf = mock(LoggingConfiguration.class);
-        when(conf.getLevel()).thenReturn(Level.DEBUG);
-
-        when(conf.getLoggingStrategy()).thenReturn(LoggingStrategy.LOG_FILE_PER_LEVEL);
-        when(conf.getMaxDays()).thenReturn(7);
-        when(conf.getMaxFileSize()).thenReturn("100KB");
+        LoggingConfiguration conf = new LoggingConfiguration();
+        conf.setLevel(Level.DEBUG);
+        conf.setLoggingStrategy(LoggingStrategy.LOG_FILE_PER_LEVEL);
+        conf.setMaxDays(7);
+        conf.setMaxFileSize("100KB");
 
         Node levelNode = mock(Node.class);
         when(xmlEditorMock.getLevelNode()).thenReturn(levelNode);

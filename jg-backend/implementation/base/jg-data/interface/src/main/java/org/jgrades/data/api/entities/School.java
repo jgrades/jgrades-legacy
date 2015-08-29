@@ -1,126 +1,40 @@
 package org.jgrades.data.api.entities;
 
-
 import com.google.common.collect.Lists;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name = "JG_DATA_SCHOOL")
+@Data
 public class School {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
+
     private String shortName;
+
     private String nameOnDiploma;
+
     private String nameOnGraduateDiploma;
-    private SchoolType type;
-    private String address;
-    private String vatIdentificationNumber;
-    private String webpage;
-    private String email;
-    private String contactPhone;
-
-    private List<AcademicYear> academicYears = Lists.newArrayList();
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getShortName() {
-        return shortName;
-    }
-
-    public void setShortName(String shortName) {
-        this.shortName = shortName;
-    }
-
-    public String getNameOnDiploma() {
-        return nameOnDiploma;
-    }
-
-    public void setNameOnDiploma(String nameOnDiploma) {
-        this.nameOnDiploma = nameOnDiploma;
-    }
-
-    public String getNameOnGraduateDiploma() {
-        return nameOnGraduateDiploma;
-    }
-
-    public void setNameOnGraduateDiploma(String nameOnGraduateDiploma) {
-        this.nameOnGraduateDiploma = nameOnGraduateDiploma;
-    }
 
     @Enumerated(EnumType.STRING)
-    public SchoolType getType() {
-        return type;
-    }
+    private SchoolType type;
 
-    public void setType(SchoolType type) {
-        this.type = type;
-    }
+    private String address;
 
-    public String getAddress() {
-        return address;
-    }
+    private String vatIdentificationNumber;
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
+    private String webpage;
 
-    public String getVatIdentificationNumber() {
-        return vatIdentificationNumber;
-    }
+    private String email;
 
-    public void setVatIdentificationNumber(String vatIdentificationNumber) {
-        this.vatIdentificationNumber = vatIdentificationNumber;
-    }
-
-    public String getWebpage() {
-        return webpage;
-    }
-
-    public void setWebpage(String webpage) {
-        this.webpage = webpage;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getContactPhone() {
-        return contactPhone;
-    }
-
-    public void setContactPhone(String contactPhone) {
-        this.contactPhone = contactPhone;
-    }
+    private String contactPhone;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "school")
-    public List<AcademicYear> getAcademicYears() {
-        return academicYears;
-    }
-
-    public void setAcademicYears(List<AcademicYear> academicYears) {
-        this.academicYears = academicYears;
-    }
+    private List<AcademicYear> academicYears = Lists.newArrayList();
 }

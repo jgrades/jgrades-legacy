@@ -1,6 +1,7 @@
 package org.jgrades.data.api.entities;
 
 import com.google.common.collect.Lists;
+import lombok.Data;
 import org.hibernate.annotations.Type;
 import org.jgrades.data.api.utils.CustomType;
 import org.joda.time.DateTime;
@@ -15,22 +16,22 @@ import java.util.List;
                 joinColumns = @JoinColumn(name = "SEMESTER_ID")),
         @AssociationOverride(name = "pk.yearLevel",
                 joinColumns = @JoinColumn(name = "YEAR_LEVEL_ID"))})
+@Data
 public class SemesterYearLevel {
+    @EmbeddedId
     private SemesterYearLevelId pk = new SemesterYearLevelId();
 
+    @Column
+    @Type(type = CustomType.JODA_DATE_TIME)
     private DateTime startDateTime;
+
+    @Column
+    @Type(type = CustomType.JODA_DATE_TIME)
     private DateTime endDateTime;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "semesterYearLevel")
     private List<ClassGroup> classGroups = Lists.newArrayList();
 
-    @EmbeddedId
-    public SemesterYearLevelId getPk() {
-        return pk;
-    }
-
-    public void setPk(SemesterYearLevelId pk) {
-        this.pk = pk;
-    }
 
     @Transient
     public Semester getSemester() {
@@ -48,34 +49,5 @@ public class SemesterYearLevel {
 
     public void setYearLevel(YearLevel yearLevel) {
         getPk().setYearLevel(yearLevel);
-    }
-
-    @Column
-    @Type(type = CustomType.JODA_DATE_TIME)
-    public DateTime getStartDateTime() {
-        return startDateTime;
-    }
-
-    public void setStartDateTime(DateTime startDateTime) {
-        this.startDateTime = startDateTime;
-    }
-
-    @Column
-    @Type(type = CustomType.JODA_DATE_TIME)
-    public DateTime getEndDateTime() {
-        return endDateTime;
-    }
-
-    public void setEndDateTime(DateTime endDateTime) {
-        this.endDateTime = endDateTime;
-    }
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "semesterYearLevel")
-    public List<ClassGroup> getClassGroups() {
-        return classGroups;
-    }
-
-    public void setClassGroups(List<ClassGroup> classGroups) {
-        this.classGroups = classGroups;
     }
 }

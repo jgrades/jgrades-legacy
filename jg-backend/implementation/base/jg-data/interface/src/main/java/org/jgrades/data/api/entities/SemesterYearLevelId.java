@@ -1,29 +1,17 @@
 package org.jgrades.data.api.entities;
 
+import lombok.Data;
+
 import javax.persistence.Embeddable;
 import javax.persistence.ManyToOne;
 import java.io.Serializable;
 
 @Embeddable
+@Data
 public class SemesterYearLevelId implements Serializable {
+    @ManyToOne
     private Semester semester;
+
+    @ManyToOne
     private YearLevel yearLevel;
-
-    @ManyToOne
-    public Semester getSemester() {
-        return semester;
-    }
-
-    public void setSemester(Semester semester) {
-        this.semester = semester;
-    }
-
-    @ManyToOne
-    public YearLevel getYearLevel() {
-        return yearLevel;
-    }
-
-    public void setYearLevel(YearLevel yearLevel) {
-        this.yearLevel = yearLevel;
-    }
 }
