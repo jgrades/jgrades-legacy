@@ -9,6 +9,8 @@ import cz.jirutka.spring.exhandler.support.HttpMessageConverterUtils;
 import org.jgrades.lic.api.exception.LicenceException;
 import org.jgrades.lic.api.exception.LicenceNotFoundException;
 import org.jgrades.lic.api.exception.UnreliableLicenceException;
+import org.jgrades.logging.service.LoggingService;
+import org.jgrades.logging.service.LoggingServiceImpl;
 import org.springframework.context.annotation.*;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.http.HttpStatus;
@@ -112,5 +114,10 @@ public class RestConfig extends WebMvcConfigurationSupport {
 
         registry.addResourceHandler("/webjars/**")
                 .addResourceLocations("classpath:/META-INF/resources/webjars/");
+    }
+
+    @Bean
+    public LoggingService loggingService() {
+        return new LoggingServiceImpl();
     }
 }
