@@ -10,6 +10,8 @@ import java.util.List;
 @Table(name = "JG_DATA_DIVISION")
 @Data
 public class Division {
+    public static final String FULL_CLASSGROUP_DIVISION_NAME = "_DEFAULT_DIVISION";
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

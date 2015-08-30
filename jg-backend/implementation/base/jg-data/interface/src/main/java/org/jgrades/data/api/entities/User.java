@@ -2,6 +2,7 @@ package org.jgrades.data.api.entities;
 
 import lombok.Data;
 import org.hibernate.annotations.Type;
+import org.jgrades.data.api.roles.Roles;
 import org.jgrades.data.api.utils.CustomType;
 import org.joda.time.DateTime;
 
@@ -27,6 +28,9 @@ public class User {
     private String email;
 
     private boolean active;
+
+    @Transient
+    private Roles roles = new Roles();
 
     @Column
     @Type(type = CustomType.JODA_DATE_TIME)

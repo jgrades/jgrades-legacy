@@ -27,4 +27,15 @@ public class ClassGroup {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "classGroup")
     private List<Division> divisions = Lists.newArrayList();
+
+    // TODO add methods to quickly setting/extracting members of ClassGroup
+//    @Transient
+//    public Set<Student> getMembers() {
+//        Division classGroupDivision = CollectionUtils.find(divisions, division -> Division.FULL_CLASSGROUP_DIVISION_NAME.equals(division.getName()));
+//        SubGroup subGroup = Iterables.getFirst(classGroupDivision.getSubGroups(), null);
+//    }
+//
+//    public void setMembers(Set<Student> students){
+//
+//    }
 }
