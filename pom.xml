@@ -82,7 +82,7 @@
                 <DB.DRIVER.CLASS.NAME>org.postgresql.Drive</DB.DRIVER.CLASS.NAME>
                 <DB.JDBC.URL>jdbc:postgresql://localhost:5432/jgrades-db</DB.JDBC.URL>
                 <DB.USERNAME>postgres</DB.USERNAME>
-                <DB.PASSWORD>postgres</DB.PASSWORD>
+                <DB.PASSWORD></DB.PASSWORD>
                 <DB.HIBERNATE.DIALECT>org.hibernate.dialect.PostgreSQLDialect</DB.HIBERNATE.DIALECT>
             </properties>
         </profile>

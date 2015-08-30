@@ -4,6 +4,7 @@ import org.h2.tools.Server;
 import org.jgrades.logging.JgLogger;
 import org.jgrades.logging.JgLoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PreDestroy;
@@ -19,7 +20,7 @@ public class DbCloser {
     private DataSource ds;
 
     @Autowired
-    public DbCloser(DataSource ds) {
+    public DbCloser(@Qualifier("licDataSource") DataSource ds) {
         this.ds = ds;
     }
 

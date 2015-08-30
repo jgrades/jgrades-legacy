@@ -21,7 +21,10 @@ import java.util.List;
 import java.util.Properties;
 
 @Configuration
-@EnableJpaRepositories(basePackages = {"org.jgrades.data.dao"})
+@EnableJpaRepositories(
+        basePackages = {"org.jgrades.data.api.dao"},
+        entityManagerFactoryRef = "mainEntityManagerFactory",
+        transactionManagerRef = "mainTransactionManager")
 @PropertySources({
         @PropertySource("classpath:jg-data.properties"),
         @PropertySource(value = "file:${jgrades.application.properties.file}", ignoreResourceNotFound = true)
@@ -66,7 +69,7 @@ public class DataConfig {
     }
 
     @Bean(destroyMethod = "close")
-    DataSource dataSource() {
+    DataSource mainDataSource() {
         try {
             Class.forName(driverClassName);
         } catch (ClassNotFoundException e) {
@@ -81,9 +84,9 @@ public class DataConfig {
     }
 
     @Bean
-    LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
+    LocalContainerEntityManagerFactoryBean mainEntityManagerFactory(DataSource mainDataSource) {
         LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
-        entityManagerFactoryBean.setDataSource(dataSource);
+        entityManagerFactoryBean.setDataSource(mainDataSource);
         entityManagerFactoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
         entityManagerFactoryBean.setPackagesToScan(packagesToScan.toArray(new String[]{}));
 
@@ -98,9 +101,9 @@ public class DataConfig {
     }
 
     @Bean
-    JpaTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
+    JpaTransactionManager mainTransactionManager(EntityManagerFactory mainEntityManagerFactory) {
         JpaTransactionManager transactionManager = new JpaTransactionManager();
-        transactionManager.setEntityManagerFactory(entityManagerFactory);
+        transactionManager.setEntityManagerFactory(mainEntityManagerFactory);
         return transactionManager;
     }
 

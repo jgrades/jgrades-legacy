@@ -1,5 +1,6 @@
 package org.jgrades.rest.lic;
 
+import org.jgrades.data.api.service.DataSourceService;
 import org.jgrades.lic.api.service.LicenceCheckingService;
 import org.jgrades.lic.api.service.LicenceManagingService;
 import org.mockito.Mockito;
@@ -26,6 +27,11 @@ public class LicMockConfig extends WebMvcConfigurerAdapter {
     @Primary
     public IncomingFilesNameResolver incomingFilesNameResolver() {
         return Mockito.mock(IncomingFilesNameResolver.class);
+    }
+
+    @Bean
+    public DataSourceService dataSourceService() {
+        return Mockito.mock(DataSourceService.class);
     }
 
 

@@ -25,7 +25,10 @@ import java.util.List;
 import java.util.Properties;
 
 @Configuration
-@EnableJpaRepositories(basePackages = {"org.jgrades.lic.dao"})
+@EnableJpaRepositories(
+        basePackages = {"org.jgrades.lic.dao"},
+        entityManagerFactoryRef = "licEntityManagerFactory",
+        transactionManagerRef = "licTransactionManager")
 @PropertySources({
         @PropertySource("classpath:jg-lic.properties"),
         @PropertySource(value = "file:${jgrades.application.properties.file}", ignoreResourceNotFound = true)
@@ -53,7 +56,7 @@ public class LicConfig {
     }
 
     @Bean
-    DataSource dataSource() throws ClassNotFoundException, SQLException {
+    DataSource licDataSource() throws ClassNotFoundException, SQLException {
         Class.forName("org.h2.Driver");
         Server.createTcpServer("-tcpPort", "9092", "-tcpAllowOthers").start();
 
@@ -67,9 +70,9 @@ public class LicConfig {
     }
 
     @Bean
-    LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
+    LocalContainerEntityManagerFactoryBean licEntityManagerFactory(DataSource licDataSource) {
         LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
-        entityManagerFactoryBean.setDataSource(dataSource);
+        entityManagerFactoryBean.setDataSource(licDataSource);
         entityManagerFactoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
         entityManagerFactoryBean.setPackagesToScan("org.jgrades.lic.entities");
 
@@ -84,9 +87,9 @@ public class LicConfig {
     }
 
     @Bean
-    JpaTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
+    JpaTransactionManager licTransactionManager(EntityManagerFactory licEntityManagerFactory) {
         JpaTransactionManager transactionManager = new JpaTransactionManager();
-        transactionManager.setEntityManagerFactory(entityManagerFactory);
+        transactionManager.setEntityManagerFactory(licEntityManagerFactory);
         return transactionManager;
     }
 
@@ -97,7 +100,7 @@ public class LicConfig {
     }
 
     @Bean
-    DbCloser dbCloser(DataSource dataSource) {
-        return new DbCloser(dataSource);
+    DbCloser dbCloser(DataSource licDataSource) {
+        return new DbCloser(licDataSource);
     }
 }

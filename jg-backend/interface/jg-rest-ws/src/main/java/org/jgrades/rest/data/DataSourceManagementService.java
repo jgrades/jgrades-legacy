@@ -26,8 +26,8 @@ public class DataSourceManagementService {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<String> getDataSourceDetails(@RequestBody DataSourceDetails details) {
+    public ResponseEntity<DataSourceDetails> setDataSourceDetails(@RequestBody DataSourceDetails details) {
         dataSourceService.setDataSourceDetails(details);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(details, HttpStatus.OK);
     }
 }

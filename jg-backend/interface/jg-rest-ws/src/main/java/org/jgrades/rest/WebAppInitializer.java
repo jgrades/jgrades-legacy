@@ -24,7 +24,7 @@ public class WebAppInitializer implements WebApplicationInitializer {
         servletContext.setInitParameter("defaultHtmlEscape", "true");
 
         AnnotationConfigWebApplicationContext mvcContext = new AnnotationConfigWebApplicationContext();
-        mvcContext.register(RestConfig.class);
+        mvcContext.register(ApplicationPropertiesConfig.class, RestConfig.class);
 
         ServletRegistration.Dynamic appServlet = servletContext.addServlet("jgRestServlet", new DispatcherServlet(mvcContext));
         appServlet.setLoadOnStartup(1);
