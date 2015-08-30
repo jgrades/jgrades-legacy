@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
+import java.util.List;
 import java.util.Properties;
 
 @Configuration
@@ -48,6 +49,9 @@ public class DataConfig {
     @Value("${data.schema.orm.policy}")
     private String schemaOrmPolicy;
 
+    @Value("#{'${jgrades.entities.packages:org.jgrades.data.api.entities}'.split(',')}")
+    private List<String> packagesToScan;
+
 
     @Bean
     public static PropertySourcesPlaceholderConfigurer propertyConfig() {
@@ -74,7 +78,7 @@ public class DataConfig {
         LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
         entityManagerFactoryBean.setDataSource(dataSource);
         entityManagerFactoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
-        entityManagerFactoryBean.setPackagesToScan("org.jgrades.data.api.entities");
+        entityManagerFactoryBean.setPackagesToScan(packagesToScan.toArray(new String[]{}));
 
         Properties jpaProperties = new Properties();
         jpaProperties.put("hibernate.dialect", hibernateDialect);
