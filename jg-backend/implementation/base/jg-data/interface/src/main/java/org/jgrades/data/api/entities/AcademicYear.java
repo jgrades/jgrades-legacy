@@ -20,6 +20,8 @@ public class AcademicYear {
     @JoinColumn(name = "SCHOOL_ID", nullable = false)
     private School school;
 
+    private boolean active;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "academicYear")
     private List<Semester> semesters = Lists.newArrayList();
 }

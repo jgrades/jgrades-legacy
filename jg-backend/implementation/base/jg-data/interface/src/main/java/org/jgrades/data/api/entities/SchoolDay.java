@@ -3,6 +3,7 @@ package org.jgrades.data.api.entities;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.time.DayOfWeek;
 
 @Entity
 @Table(name = "JG_DATA_SCHOOL_DAY")
@@ -12,7 +13,8 @@ public class SchoolDay {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    @Enumerated(EnumType.STRING)
+    private DayOfWeek dayOfWeek;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "SCHOOL_ID", nullable = false)
