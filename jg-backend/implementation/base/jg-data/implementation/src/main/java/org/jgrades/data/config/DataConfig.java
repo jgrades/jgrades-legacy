@@ -2,6 +2,8 @@ package org.jgrades.data.config;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import org.apache.commons.configuration.ConfigurationException;
+import org.apache.commons.configuration.PropertiesConfiguration;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.*;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
@@ -13,6 +15,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Properties;
 
@@ -25,6 +29,9 @@ import java.util.Properties;
 @EnableTransactionManagement
 @ComponentScan("org.jgrades.data")
 public class DataConfig {
+    @Value("${jgrades.application.properties.file}")
+    private String appPropertiesFilePath;
+
     @Value("${data.db.driver.class.name:org.postgresql.Driver}")
     private String driverClassName;
 
@@ -95,5 +102,14 @@ public class DataConfig {
         JpaTransactionManager transactionManager = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(entityManagerFactory);
         return transactionManager;
+    }
+
+    @Bean
+    public org.apache.commons.configuration.Configuration appConfiguration() throws IOException, ConfigurationException {
+        File appPropertiesFile = new File(appPropertiesFilePath);
+        if (!appPropertiesFile.exists()) {
+            appPropertiesFile.createNewFile();
+        }
+        return new PropertiesConfiguration(appPropertiesFile);
     }
 }
