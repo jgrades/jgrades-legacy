@@ -6,11 +6,13 @@ import com.fasterxml.jackson.datatype.joda.JodaModule;
 import cz.jirutka.spring.exhandler.RestHandlerExceptionResolver;
 import cz.jirutka.spring.exhandler.interpolators.SpelMessageInterpolator;
 import cz.jirutka.spring.exhandler.support.HttpMessageConverterUtils;
+import org.jgrades.data.config.DataConfig;
 import org.jgrades.lic.api.exception.LicenceException;
 import org.jgrades.lic.api.exception.LicenceNotFoundException;
 import org.jgrades.lic.api.exception.UnreliableLicenceException;
 import org.jgrades.logging.service.LoggingService;
 import org.jgrades.logging.service.LoggingServiceImpl;
+import org.jgrades.property.ApplicationPropertiesConfig;
 import org.springframework.context.annotation.*;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.http.HttpStatus;
@@ -31,7 +33,7 @@ import java.util.List;
 
 @Configuration
 @ComponentScan("org.jgrades.rest")
-@Import(RestDocsConfig.class)
+@Import({ApplicationPropertiesConfig.class, RestDocsConfig.class, DataConfig.class})
 @PropertySources({
         @PropertySource("classpath:jg-rest.properties"),
         @PropertySource(value = "file:${jgrades.application.properties.file}", ignoreResourceNotFound = true)

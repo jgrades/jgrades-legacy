@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
@@ -38,13 +38,13 @@
                 <LOCAL.BACKUP.DIR>C:/jgrades/backup</LOCAL.BACKUP.DIR>
                 <SKIP.TESTS>false</SKIP.TESTS>
                 <SKIP.INTEGRATION.TESTS>false</SKIP.INTEGRATION.TESTS>
-                <DB.OPERATIONS.DEBUG>true</DB.OPERATIONS.DEBUG>
+                <DB.OPERATIONS.DEBUG>false</DB.OPERATIONS.DEBUG>
                 <DB.SCHEMA.ORM.POLICY>create-drop</DB.SCHEMA.ORM.POLICY>
                 <APPLICATION.PROPERTIES>C:/jgrades/internal/app.properties</APPLICATION.PROPERTIES>
                 <LOGGING.CONFIGURATION.FILE>C:/jgrades/logs/jg-logging.conf</LOGGING.CONFIGURATION.FILE>
                 <LOGGING.XML.FILE>C:/jgrades/internal/logback-details.xml</LOGGING.XML.FILE>
                 <DEFAULT.LOGGING.STRATEGY>LOG_FILE_PER_MODULE_AND_LEVEL</DEFAULT.LOGGING.STRATEGY>
-                <DEFAULT.LOGGING.LEVEL>DEBUG</DEFAULT.LOGGING.LEVEL>
+                <DEFAULT.LOGGING.LEVEL>INFO</DEFAULT.LOGGING.LEVEL>
                 <DEFAULT.LOGGING.MAX.FILE.SIZE>10MB</DEFAULT.LOGGING.MAX.FILE.SIZE>
                 <DEFAULT.LOGGING.MAX.DAYS>7</DEFAULT.LOGGING.MAX.DAYS>
                 <CONSOLE.LOGGING.LEVEL>OFF</CONSOLE.LOGGING.LEVEL>
