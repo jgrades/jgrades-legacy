@@ -12,7 +12,8 @@ import javax.persistence.*;
 @Data
 public class SchoolDayPeriod {
     @Id
-    private Long no;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column
     @Type(type = CustomType.JODA_LOCAL_TIME)

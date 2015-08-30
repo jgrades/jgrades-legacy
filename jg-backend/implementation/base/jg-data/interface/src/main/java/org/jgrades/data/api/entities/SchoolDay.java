@@ -10,8 +10,7 @@ import java.time.DayOfWeek;
 @Data
 public class SchoolDay {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer ordinalNumber;
 
     @Enumerated(EnumType.STRING)
     private DayOfWeek dayOfWeek;
@@ -19,4 +18,12 @@ public class SchoolDay {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "SCHOOL_ID", nullable = false)
     private School school;
+
+    public SchoolDay() {
+    }
+
+    public SchoolDay(Integer ordinalNumber, DayOfWeek dayOfWeek) {
+        this.ordinalNumber = ordinalNumber;
+        this.dayOfWeek = dayOfWeek;
+    }
 }
