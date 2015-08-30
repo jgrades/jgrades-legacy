@@ -2,7 +2,7 @@ package org.jgrades.data.api.entities;
 
 import lombok.Data;
 import org.hibernate.annotations.Type;
-import org.jgrades.data.api.roles.Roles;
+import org.jgrades.data.api.model.roles.Roles;
 import org.jgrades.data.api.utils.CustomType;
 import org.joda.time.DateTime;
 

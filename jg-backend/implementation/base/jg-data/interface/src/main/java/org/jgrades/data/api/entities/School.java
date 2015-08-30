@@ -2,6 +2,7 @@ package org.jgrades.data.api.entities;
 
 import com.google.common.collect.Lists;
 import lombok.Data;
+import org.jgrades.data.api.model.SchoolType;
 
 import javax.persistence.*;
 import java.util.List;

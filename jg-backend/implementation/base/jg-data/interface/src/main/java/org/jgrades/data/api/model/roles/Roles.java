@@ -1,4 +1,4 @@
-package org.jgrades.data.api.roles;
+package org.jgrades.data.api.model.roles;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;

@@ -1,4 +1,4 @@
-package org.jgrades.data.api.entities;
+package org.jgrades.data.api.model;
 
 public enum SchoolType {
     PUBLIC_PRIMARY_SCHOOL, PRIVATE_PRIMARY_SCHOOL,

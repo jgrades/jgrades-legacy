@@ -1,5 +1,7 @@
 package org.jgrades.data.api;
 
+import ch.qos.logback.classic.Level;
+import ch.qos.logback.classic.Logger;
 import com.google.common.collect.Lists;
 import com.openpojo.reflection.PojoClass;
 import com.openpojo.reflection.coverage.impl.Jacoco;
@@ -14,6 +16,7 @@ import com.openpojo.validation.test.impl.SetterTester;
 import org.jgrades.data.api.entities.*;
 import org.junit.Test;
 import org.meanbean.test.BeanTester;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -43,6 +46,9 @@ public class PojosTest {
     static {
         System.setProperty("org.apache.commons.logging.Log",
                 "org.apache.commons.logging.impl.NoOpLog");
+
+        Logger root = (Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
+        root.setLevel(Level.ERROR);
     }
 
     @Test

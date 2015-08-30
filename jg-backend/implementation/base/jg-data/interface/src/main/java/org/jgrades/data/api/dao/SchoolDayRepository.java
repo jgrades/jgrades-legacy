@@ -1,4 +1,4 @@
-package org.jgrades.data.dao;
+package org.jgrades.data.api.dao;
 
 import org.jgrades.data.api.entities.SchoolDay;
 import org.springframework.data.repository.CrudRepository;
