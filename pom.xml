@@ -49,7 +49,7 @@
                 <DEFAULT.LOGGING.MAX.DAYS>7</DEFAULT.LOGGING.MAX.DAYS>
                 <CONSOLE.LOGGING.LEVEL>OFF</CONSOLE.LOGGING.LEVEL>
                 <DB.DRIVER.CLASS.NAME>org.postgresql.Drive</DB.DRIVER.CLASS.NAME>
-                <DB.JDBC.URL>jdbc:postgresql://localhost:5432/jgrades-db</DB.JDBC.URL>
+                <DB.JDBC.URL>jdbc:postgresql://localhost:5432/jgradesdb</DB.JDBC.URL>
                 <DB.USERNAME>postgres</DB.USERNAME>
                 <DB.PASSWORD>postgres</DB.PASSWORD>
                 <DB.HIBERNATE.DIALECT>org.hibernate.dialect.PostgreSQLDialect</DB.HIBERNATE.DIALECT>
@@ -80,7 +80,7 @@
                 <DEFAULT.LOGGING.MAX.DAYS>90</DEFAULT.LOGGING.MAX.DAYS>
                 <CONSOLE.LOGGING.LEVEL>OFF</CONSOLE.LOGGING.LEVEL>
                 <DB.DRIVER.CLASS.NAME>org.postgresql.Drive</DB.DRIVER.CLASS.NAME>
-                <DB.JDBC.URL>jdbc:postgresql://localhost:5432/jgrades-db</DB.JDBC.URL>
+                <DB.JDBC.URL>jdbc:postgresql://localhost:5432/jgradesdb</DB.JDBC.URL>
                 <DB.USERNAME>postgres</DB.USERNAME>
                 <DB.PASSWORD></DB.PASSWORD>
                 <DB.HIBERNATE.DIALECT>org.hibernate.dialect.PostgreSQLDialect</DB.HIBERNATE.DIALECT>
