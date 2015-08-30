@@ -16,11 +16,11 @@ public class AcademicYear {
 
     private String name;
 
+    private boolean active;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "SCHOOL_ID", nullable = false)
     private School school;
-
-    private boolean active;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "academicYear")
     private List<Semester> semesters = Lists.newArrayList();

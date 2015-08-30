@@ -17,6 +17,8 @@ public class Semester {
 
     private String name;
 
+    private boolean active;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ACADEMIC_YEAR_ID", nullable = false)
     private AcademicYear academicYear;

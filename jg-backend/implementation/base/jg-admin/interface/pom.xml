@@ -20,5 +20,11 @@
             <artifactId>jg-data-api</artifactId>
             <version>${RELEASE.VERSION}</version>
         </dependency>
+
+        <!-- EXTERNAL DEPENDENCIES -->
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-jpa</artifactId>
+        </dependency>
     </dependencies>
 </project>
