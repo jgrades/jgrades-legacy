@@ -22,7 +22,7 @@
         </dependency>
         <dependency>
             <groupId>org.jgrades.app</groupId>
-            <artifactId>jg-data-impl</artifactId>
+            <artifactId>jg-data-api</artifactId>
             <version>${RELEASE.VERSION}</version>
         </dependency>
 

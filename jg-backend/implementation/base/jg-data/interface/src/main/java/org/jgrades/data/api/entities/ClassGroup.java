@@ -1,10 +1,13 @@
 package org.jgrades.data.api.entities;
 
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import lombok.Data;
+import org.apache.commons.collections4.CollectionUtils;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "JG_DATA_CLASS_GROUP")
@@ -28,14 +31,17 @@ public class ClassGroup {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "classGroup")
     private List<Division> divisions = Lists.newArrayList();
 
-    // TODO add methods to quickly setting/extracting members of ClassGroup
-//    @Transient
-//    public Set<Student> getMembers() {
-//        Division classGroupDivision = CollectionUtils.find(divisions, division -> Division.FULL_CLASSGROUP_DIVISION_NAME.equals(division.getName()));
-//        SubGroup subGroup = Iterables.getFirst(classGroupDivision.getSubGroups(), null);
-//    }
-//
-//    public void setMembers(Set<Student> students){
-//
-//    }
+    @Transient
+    public Set<Student> getMembers() {
+        return getFullClassSubGroup().getMembers();
+    }
+
+    public void setMembers(Set<Student> students){
+        getFullClassSubGroup().setMembers(students);
+    }
+
+    private SubGroup getFullClassSubGroup() {
+        Division classGroupDivision = CollectionUtils.find(divisions, division -> Division.FULL_CLASSGROUP_DIVISION_NAME.equals(division.getName()));
+        return Iterables.getFirst(classGroupDivision.getSubGroups(), null);
+    }
 }

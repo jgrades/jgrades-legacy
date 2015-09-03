@@ -3,6 +3,8 @@ package org.jgrades.data.api.entities;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "JG_DATA_SUBGROUP")
@@ -20,5 +22,9 @@ public class SubGroup {
     @JoinColumn(name = "DIVISION_ID", nullable = false)
     private Division division;
 
-    //TODO add many-to-many between SubGroup and Student
+    @ManyToMany(cascade = {CascadeType.ALL})
+    @JoinTable(name="JG_DATA_SUBGROUP_STUDENT",
+            joinColumns={@JoinColumn(name="SUBGROUP_ID")},
+            inverseJoinColumns={@JoinColumn(name="STUDENT_ID")})
+    private Set<Student> members = new HashSet<Student>();
 }
