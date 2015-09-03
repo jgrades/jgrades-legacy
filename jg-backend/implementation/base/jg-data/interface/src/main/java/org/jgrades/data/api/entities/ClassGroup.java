@@ -30,18 +30,7 @@ public class ClassGroup {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "classGroup")
     private List<Division> divisions = Lists.newArrayList();
-
+    
     @Transient
-    public Set<Student> getMembers() {
-        return getFullClassSubGroup().getMembers();
-    }
-
-    public void setMembers(Set<Student> students){
-        getFullClassSubGroup().setMembers(students);
-    }
-
-    private SubGroup getFullClassSubGroup() {
-        Division classGroupDivision = CollectionUtils.find(divisions, division -> Division.FULL_CLASSGROUP_DIVISION_NAME.equals(division.getName()));
-        return Iterables.getFirst(classGroupDivision.getSubGroups(), null);
-    }
+    private Set<Student> members;
 }
