@@ -19,11 +19,11 @@ public final class JgLoggerFactory {
         monitorStarter.start();
     }
 
-    public static JgLogger getLogger(Class clazz) {
-        return new JgLogger(clazz);
+    private JgLoggerFactory() {
     }
 
-    private JgLoggerFactory() {
+    public static JgLogger getLogger(Class clazz) {
+        return new JgLogger(clazz);
     }
 
 }
