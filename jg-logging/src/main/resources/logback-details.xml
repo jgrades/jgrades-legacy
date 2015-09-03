@@ -14,14 +14,16 @@
             <defaultValue>warm-up</defaultValue>
         </discriminator>
         <sift>
-            <appender class="ch.qos.logback.core.rolling.RollingFileAppender" name="RollingFileAppender-${module-name-placeholder}-trace">
+            <appender class="ch.qos.logback.core.rolling.RollingFileAppender"
+                      name="RollingFileAppender-${module-name-placeholder}-trace">
                 <filter class="ch.qos.logback.classic.filter.LevelFilter">
                     <level>TRACE</level>
                     <onMatch>ACCEPT</onMatch>
                     <onMismatch>DENY</onMismatch>
                 </filter>
                 <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-                    <fileNamePattern>./src/test/resources/jg_${module-name-placeholder}_trace_%d{yyyy-MM-dd}_%i.log</fileNamePattern>
+                    <fileNamePattern>./src/test/resources/jg_${module-name-placeholder}_trace_%d{yyyy-MM-dd}_%i.log
+                    </fileNamePattern>
                     <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                         <maxFileSize>100KB</maxFileSize>
                     </timeBasedFileNamingAndTriggeringPolicy>
@@ -41,14 +43,16 @@
             <defaultValue>warm-up</defaultValue>
         </discriminator>
         <sift>
-            <appender class="ch.qos.logback.core.rolling.RollingFileAppender" name="RollingFileAppender-${module-name-placeholder}-debug">
+            <appender class="ch.qos.logback.core.rolling.RollingFileAppender"
+                      name="RollingFileAppender-${module-name-placeholder}-debug">
                 <filter class="ch.qos.logback.classic.filter.LevelFilter">
                     <level>DEBUG</level>
                     <onMatch>ACCEPT</onMatch>
                     <onMismatch>DENY</onMismatch>
                 </filter>
                 <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-                    <fileNamePattern>./src/test/resources/jg_${module-name-placeholder}_debug_%d{yyyy-MM-dd}_%i.log</fileNamePattern>
+                    <fileNamePattern>./src/test/resources/jg_${module-name-placeholder}_debug_%d{yyyy-MM-dd}_%i.log
+                    </fileNamePattern>
                     <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                         <maxFileSize>100KB</maxFileSize>
                     </timeBasedFileNamingAndTriggeringPolicy>
@@ -68,14 +72,16 @@
             <defaultValue>warm-up</defaultValue>
         </discriminator>
         <sift>
-            <appender class="ch.qos.logback.core.rolling.RollingFileAppender" name="RollingFileAppender-${module-name-placeholder}-info">
+            <appender class="ch.qos.logback.core.rolling.RollingFileAppender"
+                      name="RollingFileAppender-${module-name-placeholder}-info">
                 <filter class="ch.qos.logback.classic.filter.LevelFilter">
                     <level>INFO</level>
                     <onMatch>ACCEPT</onMatch>
                     <onMismatch>DENY</onMismatch>
                 </filter>
                 <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-                    <fileNamePattern>./src/test/resources/jg_${module-name-placeholder}_info_%d{yyyy-MM-dd}_%i.log</fileNamePattern>
+                    <fileNamePattern>./src/test/resources/jg_${module-name-placeholder}_info_%d{yyyy-MM-dd}_%i.log
+                    </fileNamePattern>
                     <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                         <maxFileSize>100KB</maxFileSize>
                     </timeBasedFileNamingAndTriggeringPolicy>
@@ -95,14 +101,16 @@
             <defaultValue>warm-up</defaultValue>
         </discriminator>
         <sift>
-            <appender class="ch.qos.logback.core.rolling.RollingFileAppender" name="RollingFileAppender-${module-name-placeholder}-warn">
+            <appender class="ch.qos.logback.core.rolling.RollingFileAppender"
+                      name="RollingFileAppender-${module-name-placeholder}-warn">
                 <filter class="ch.qos.logback.classic.filter.LevelFilter">
                     <level>WARN</level>
                     <onMatch>ACCEPT</onMatch>
                     <onMismatch>DENY</onMismatch>
                 </filter>
                 <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-                    <fileNamePattern>./src/test/resources/jg_${module-name-placeholder}_warn_%d{yyyy-MM-dd}_%i.log</fileNamePattern>
+                    <fileNamePattern>./src/test/resources/jg_${module-name-placeholder}_warn_%d{yyyy-MM-dd}_%i.log
+                    </fileNamePattern>
                     <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                         <maxFileSize>100KB</maxFileSize>
                     </timeBasedFileNamingAndTriggeringPolicy>
@@ -122,14 +130,16 @@
             <defaultValue>warm-up</defaultValue>
         </discriminator>
         <sift>
-            <appender class="ch.qos.logback.core.rolling.RollingFileAppender" name="RollingFileAppender-${module-name-placeholder}-error">
+            <appender class="ch.qos.logback.core.rolling.RollingFileAppender"
+                      name="RollingFileAppender-${module-name-placeholder}-error">
                 <filter class="ch.qos.logback.classic.filter.LevelFilter">
                     <level>ERROR</level>
                     <onMatch>ACCEPT</onMatch>
                     <onMismatch>DENY</onMismatch>
                 </filter>
                 <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-                    <fileNamePattern>./src/test/resources/jg_${module-name-placeholder}_error_%d{yyyy-MM-dd}_%i.log</fileNamePattern>
+                    <fileNamePattern>./src/test/resources/jg_${module-name-placeholder}_error_%d{yyyy-MM-dd}_%i.log
+                    </fileNamePattern>
                     <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                         <maxFileSize>100KB</maxFileSize>
                     </timeBasedFileNamingAndTriggeringPolicy>

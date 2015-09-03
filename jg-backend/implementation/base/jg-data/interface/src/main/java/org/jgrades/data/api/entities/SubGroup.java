@@ -23,8 +23,8 @@ public class SubGroup {
     private Division division;
 
     @ManyToMany(cascade = {CascadeType.ALL})
-    @JoinTable(name="JG_DATA_SUBGROUP_STUDENT",
-            joinColumns={@JoinColumn(name="SUBGROUP_ID")},
-            inverseJoinColumns={@JoinColumn(name="STUDENT_ID")})
+    @JoinTable(name = "JG_DATA_SUBGROUP_STUDENT",
+            joinColumns = {@JoinColumn(name = "SUBGROUP_ID")},
+            inverseJoinColumns = {@JoinColumn(name = "STUDENT_ID")})
     private Set<Student> members = new HashSet<Student>();
 }

@@ -21,7 +21,7 @@ import java.io.IOException;
 public class LogbackXmlEditor {
     private static Document documentUnderEdit;
 
-    private Document getConfigDocument(){
+    private Document getConfigDocument() {
         try {
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
@@ -49,7 +49,7 @@ public class LogbackXmlEditor {
         return getNodes(".//maxHistory");
     }
 
-    public String getLevelNameFromAppenderName(Node fileNamePatternNode){
+    public String getLevelNameFromAppenderName(Node fileNamePatternNode) {
         String appenderName = ((Element) fileNamePatternNode.getParentNode().getParentNode()).getAttribute("name");
         return appenderName.substring(appenderName.lastIndexOf("-") + 1);
     }
@@ -58,8 +58,8 @@ public class LogbackXmlEditor {
         return getNodes(".//root/@level").item(0);
     }
 
-    private NodeList getNodes(String xpathExpression)  {
-        if(documentUnderEdit == null){
+    private NodeList getNodes(String xpathExpression) {
+        if (documentUnderEdit == null) {
             documentUnderEdit = getConfigDocument();
         }
         try {
@@ -68,7 +68,7 @@ public class LogbackXmlEditor {
             return null;
         }
     }
-    
+
     public void saveWithChanges() {
         try {
             TransformerFactory transformerFactory = TransformerFactory.newInstance();

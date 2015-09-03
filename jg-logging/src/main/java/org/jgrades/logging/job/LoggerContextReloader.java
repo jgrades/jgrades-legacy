@@ -16,18 +16,18 @@ public class LoggerContextReloader {
         configurator.setContext(context);
 
         File externalXmlFile = new File(InternalProperties.XML_FILE);
-        if(externalXmlFile.exists()){
+        if (externalXmlFile.exists()) {
             try {
                 configurator.doConfigure(externalXmlFile);
             } catch (JoranException e) {
                 setDefaultConfiguration(configurator);
             }
-        } else{
+        } else {
             setDefaultConfiguration(configurator);
         }
     }
 
-    private void setDefaultConfiguration(JoranConfigurator configurator){
+    private void setDefaultConfiguration(JoranConfigurator configurator) {
         try {
             configurator.doConfigure(InternalProperties.ONLY_CONSOLE_XML_FILE);
         } catch (JoranException e) {

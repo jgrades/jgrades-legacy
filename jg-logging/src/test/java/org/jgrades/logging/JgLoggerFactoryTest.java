@@ -1,7 +1,6 @@
 package org.jgrades.logging;
 
 import com.project.StrangerClass;
-import org.junit.Before;
 import org.junit.Test;
 import org.springframework.test.util.ReflectionTestUtils;
 

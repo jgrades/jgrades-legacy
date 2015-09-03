@@ -6,7 +6,6 @@ import org.jgrades.data.api.utils.CustomType;
 import org.joda.time.LocalDate;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 @Table(name = "JG_DATA_STUDENT")

@@ -1,13 +1,11 @@
 package org.jgrades.logging.model.updater;
 
 import org.jgrades.logging.utils.LogbackXmlEditor;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.test.util.ReflectionTestUtils;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 

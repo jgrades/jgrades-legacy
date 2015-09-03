@@ -12,7 +12,7 @@ public class XmlConfigurationUpdater {
     private LoggerContextReloader reloader = new LoggerContextReloader();
 
     public void update(LoggingConfiguration targetConfig) {
-        if(xmlEditor.isXmlExists()){
+        if (xmlEditor.isXmlExists()) {
             updateFileNames(targetConfig.getLoggingStrategy());
             updateLevel(targetConfig.getLevel());
             updateMaxFileSize(targetConfig.getMaxFileSize());

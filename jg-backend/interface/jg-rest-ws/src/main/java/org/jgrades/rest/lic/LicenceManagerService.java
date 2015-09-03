@@ -5,7 +5,7 @@ import org.jgrades.lic.api.exception.LicenceException;
 import org.jgrades.lic.api.model.Licence;
 import org.jgrades.lic.api.service.LicenceManagingService;
 import org.jgrades.logging.JgLogger;
-import org.jgrades.logging.JgLoggerFactory;;
+import org.jgrades.logging.JgLoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +14,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+
+;
 
 @RestController
 @RequestMapping(value = "/licence", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -62,9 +64,9 @@ public class LicenceManagerService {
         LOGGER.info("Saving received signature file to {}", signatureFilePath);
         FileUtils.writeByteArrayToFile(signatureFile, signature.getBytes());
 
-        try{
+        try {
             return licenceManagingService.installLicence(licenceFilePath, signatureFilePath);
-        } catch(LicenceException ex){
+        } catch (LicenceException ex) {
             LOGGER.error("Problem during installation licence: {} and signature: {}", licenceFilePath, signatureFilePath, ex);
             LOGGER.error("Due to exception during installation saved file will be removed: {} , {}", licenceFilePath, signatureFilePath);
             FileUtils.deleteQuietly(licenceFile);

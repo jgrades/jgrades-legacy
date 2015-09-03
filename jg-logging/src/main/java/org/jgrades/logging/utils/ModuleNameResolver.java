@@ -9,11 +9,11 @@ public final class ModuleNameResolver {
     }
 
     public static String resolve(String canonicalClassName) {
-        if(StringUtils.isEmpty(canonicalClassName)){
+        if (StringUtils.isEmpty(canonicalClassName)) {
             return EXTERNAL_LIB;
-        } else if(canonicalClassName.startsWith("org.jgrades")){
+        } else if (canonicalClassName.startsWith("org.jgrades")) {
             String moduleName = StringUtils.split(canonicalClassName, ".")[2];
-            if(StringUtils.isNotEmpty(moduleName)){
+            if (StringUtils.isNotEmpty(moduleName)) {
                 return moduleName;
             }
         }

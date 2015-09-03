@@ -85,9 +85,9 @@ public class LogConfigurationMonitorTest {
         verify(contextReloaderMock, times(expectedTimes)).reload();
 
         LoggingConfiguration cachedConfig = (LoggingConfiguration) ReflectionTestUtils.getField(logConfigurationMonitor, "cachedConfig");
-        if(processingShouldBeDone){
+        if (processingShouldBeDone) {
             assertThat(oldCacheConfig).isNotEqualTo(cachedConfig);
-        } else{
+        } else {
             assertThat(oldCacheConfig).isEqualTo(cachedConfig);
         }
     }
