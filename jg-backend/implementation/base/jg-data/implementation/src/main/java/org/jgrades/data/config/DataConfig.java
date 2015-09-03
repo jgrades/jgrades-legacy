@@ -59,7 +59,7 @@ public class DataConfig {
     @Value("${data.schema.orm.policy}")
     private String schemaOrmPolicy;
 
-    @Value("#{'${jgrades.entities.packages:org.jgrades.data.api.entities}'.split(',')}")
+    @Value("#{'${jgrades.entities.packages}'.split(',')}")
     private List<String> packagesToScan;
 
 

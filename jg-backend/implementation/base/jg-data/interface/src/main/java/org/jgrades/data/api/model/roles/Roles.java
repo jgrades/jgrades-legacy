@@ -6,21 +6,17 @@ import com.google.common.collect.Maps;
 import java.util.Map;
 
 public class Roles {
-    private Map<RoleName, RoleDetails> roleMap = Maps.newEnumMap(RoleName.class);
+    private Map<JgRole, RoleDetails> roleMap = Maps.newEnumMap(JgRole.class);
 
-    public void addRole(RoleName name, RoleDetails details) {
+    public void addRole(JgRole name, RoleDetails details) {
         roleMap.put(name, details);
     }
 
-    public void removeRole(RoleName name) {
+    public void removeRole(JgRole name) {
         roleMap.remove(name);
     }
 
-    public Map<RoleName, RoleDetails> getRoleMap() {
+    public Map<JgRole, RoleDetails> getRoleMap() {
         return ImmutableMap.copyOf(roleMap);
-    }
-
-    public enum RoleName {
-        ADMINISTRATOR, MANAGER, TEACHER, STUDENT, PARENT
     }
 }
