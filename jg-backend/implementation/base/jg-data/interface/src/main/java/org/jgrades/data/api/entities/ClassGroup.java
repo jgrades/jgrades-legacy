@@ -4,13 +4,14 @@ import com.google.common.collect.Lists;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name = "JG_DATA_CLASS_GROUP")
 @Data
-public class ClassGroup {
+public class ClassGroup implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

@@ -3,12 +3,13 @@ package org.jgrades.data.api.entities;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.DayOfWeek;
 
 @Entity
 @Table(name = "JG_DATA_SCHOOL_DAY")
 @Data
-public class SchoolDay {
+public class SchoolDay implements Serializable {
     @Id
     private Integer ordinalNumber;
 

@@ -5,10 +5,11 @@ import lombok.Data;
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "JG_DATA_MANAGER")
 @PrimaryKeyJoinColumn(name = "USER_ID")
 @Data
-public class Manager extends User {
+public class Manager extends User implements Serializable {
 }

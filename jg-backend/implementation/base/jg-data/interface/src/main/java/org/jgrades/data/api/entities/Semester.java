@@ -4,12 +4,13 @@ import com.google.common.collect.Lists;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @Table(name = "JG_DATA_SEMESTER")
 @Data
-public class Semester {
+public class Semester implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "SEMESTER_ID", unique = true, nullable = false)

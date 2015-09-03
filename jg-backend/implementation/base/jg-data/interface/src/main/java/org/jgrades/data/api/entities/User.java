@@ -7,19 +7,18 @@ import org.jgrades.data.api.utils.CustomType;
 import org.joda.time.DateTime;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "JG_DATA_USER")
 @Inheritance(strategy = InheritanceType.JOINED)
 @Data
-public class User {
+public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String login;
-
-    private String password;
 
     private String name;
 

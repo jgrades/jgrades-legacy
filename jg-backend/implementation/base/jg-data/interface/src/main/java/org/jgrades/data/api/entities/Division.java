@@ -4,12 +4,13 @@ import com.google.common.collect.Lists;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @Table(name = "JG_DATA_DIVISION")
 @Data
-public class Division {
+public class Division implements Serializable {
     public static final String FULL_CLASSGROUP_DIVISION_NAME = "_DEFAULT_DIVISION";
 
     @Id

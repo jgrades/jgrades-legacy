@@ -5,12 +5,13 @@ import lombok.Data;
 import org.jgrades.data.api.model.SchoolType;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @Table(name = "JG_DATA_SCHOOL")
 @Data
-public class School {
+public class School implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

@@ -6,11 +6,12 @@ import org.jgrades.data.api.utils.CustomType;
 import org.joda.time.LocalTime;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "JG_DATA_SCHOOL_DAY_PERIOD")
 @Data
-public class SchoolDayPeriod {
+public class SchoolDayPeriod implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

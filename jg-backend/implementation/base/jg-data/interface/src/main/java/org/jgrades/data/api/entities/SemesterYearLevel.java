@@ -7,6 +7,7 @@ import org.jgrades.data.api.utils.CustomType;
 import org.joda.time.DateTime;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
@@ -17,7 +18,7 @@ import java.util.List;
         @AssociationOverride(name = "pk.yearLevel",
                 joinColumns = @JoinColumn(name = "YEAR_LEVEL_ID"))})
 @Data
-public class SemesterYearLevel {
+public class SemesterYearLevel implements Serializable {
     @EmbeddedId
     private SemesterYearLevelId pk = new SemesterYearLevelId();
 

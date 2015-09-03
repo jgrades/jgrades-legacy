@@ -3,13 +3,14 @@ package org.jgrades.data.api.entities;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "JG_DATA_SUBGROUP")
 @Data
-public class SubGroup {
+public class SubGroup implements Serializable {
     public static final String FULL_CLASSGROUP_SUBGROUP_NAME = "_CLASSGROUP";
 
     @Id
