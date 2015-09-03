@@ -13,4 +13,10 @@
     <artifactId>jg-soap-ws</artifactId>
 
     <name>jGrades SOAP Web Services</name>
+
+    <dependencies>
+        <!-- INTERNAL DEPENDENCIES -->
+
+        <!-- EXTERNAL DEPENDENCIES -->
+    </dependencies>
 </project>

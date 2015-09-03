@@ -12,4 +12,10 @@
     <artifactId>jg-config-impl</artifactId>
 
     <name>jGrades Configuration Module Implementation</name>
+
+    <dependencies>
+        <!-- INTERNAL DEPENDENCIES -->
+
+        <!-- EXTERNAL DEPENDENCIES -->
+    </dependencies>
 </project>

@@ -1,9 +1,7 @@
 package org.jgrades.data.api.entities;
 
-import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import lombok.Data;
-import org.apache.commons.collections4.CollectionUtils;
 
 import javax.persistence.*;
 import java.util.List;
@@ -30,7 +28,7 @@ public class ClassGroup {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "classGroup")
     private List<Division> divisions = Lists.newArrayList();
-    
+
     @Transient
     private Set<Student> members;
 }

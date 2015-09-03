@@ -20,5 +20,7 @@
             <artifactId>jg-lic-api</artifactId>
             <version>${RELEASE.VERSION}</version>
         </dependency>
+
+        <!-- EXTERNAL DEPENDENCIES -->
     </dependencies>
 </project>

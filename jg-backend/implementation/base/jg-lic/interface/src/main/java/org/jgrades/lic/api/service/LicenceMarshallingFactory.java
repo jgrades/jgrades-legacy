@@ -10,6 +10,7 @@ import javax.xml.bind.helpers.DefaultValidationEventHandler;
 
 public final class LicenceMarshallingFactory {
     private static JAXBContext jaxbContext;
+
     static {
         try {
             jaxbContext = JAXBContext.newInstance(Licence.class);

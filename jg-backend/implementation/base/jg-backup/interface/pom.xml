@@ -12,4 +12,10 @@
     <artifactId>jg-backup-api</artifactId>
 
     <name>jGrades Back-up Module API</name>
+
+    <dependencies>
+        <!-- INTERNAL DEPENDENCIES -->
+
+        <!-- EXTERNAL DEPENDENCIES -->
+    </dependencies>
 </project>

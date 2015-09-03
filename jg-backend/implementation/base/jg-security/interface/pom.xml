@@ -13,4 +13,10 @@
 
     <name>jGrades Security Module API</name>
 
+    <dependencies>
+        <!-- INTERNAL DEPENDENCIES -->
+
+        <!-- EXTERNAL DEPENDENCIES -->
+    </dependencies>
+
 </project>

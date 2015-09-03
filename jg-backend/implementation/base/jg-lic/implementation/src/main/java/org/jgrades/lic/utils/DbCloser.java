@@ -25,7 +25,7 @@ public class DbCloser {
     }
 
     @PreDestroy
-    public void close(){
+    public void close() {
         try {
             LOGGER.info("Shutting down licensing database started");
             Connection con = ds.getConnection();

@@ -2,9 +2,6 @@ package org.jgrades.lic.api.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.joda.time.DateTime;
 
 import javax.xml.bind.annotation.*;
@@ -15,7 +12,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 @XmlType(propOrder = {"name", "version", "validFrom", "validTo"})
 @XmlJavaTypeAdapter(type = DateTime.class, value = LicenceDateTimeAdapter.class)
 @Data
-@EqualsAndHashCode(exclude={"validFrom", "validTo"})
+@EqualsAndHashCode(exclude = {"validFrom", "validTo"})
 public final class Product {
 
     @XmlElement(name = "name", required = true)

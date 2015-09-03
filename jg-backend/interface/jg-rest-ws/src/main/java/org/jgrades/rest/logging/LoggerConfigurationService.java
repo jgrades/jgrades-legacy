@@ -22,14 +22,14 @@ public class LoggerConfigurationService {
     private LoggingService loggingService;
 
     @RequestMapping(value = "/configuration/default", method = RequestMethod.GET)
-    public boolean isUsingDefaultConfiguration(){
+    public boolean isUsingDefaultConfiguration() {
         LOGGER.info("Checking is current configuration is default");
 
         return loggingService.isUsingDefaultConfiguration();
     }
 
     @RequestMapping(value = "/configuration", method = RequestMethod.GET)
-    public LoggingConfiguration getConfiguration(){
+    public LoggingConfiguration getConfiguration() {
         LOGGER.info("Get current logging configuration");
 
         return loggingService.getLoggingConfiguration();
