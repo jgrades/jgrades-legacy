@@ -10,6 +10,4 @@ public class StudentMassCreatingSettings {
     private ClassGroup targetClassGroup;
 
     private LoginGenerationStrategy<StudentCsvEntry> loginGenerationStrategy;
-
-    private PasswordGenerationStrategy passwordGenerationStrategy;
 }

@@ -17,4 +17,6 @@ public class PasswordPolicy implements Serializable {
     private Integer expirationDays;
 
     private Integer minimumLength;
+
+    private Integer maximumNumberOfFailedLogin;
 }

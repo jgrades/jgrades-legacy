@@ -22,4 +22,6 @@ public class PasswordData implements Serializable {
     @Column
     @Type(type = CustomType.JODA_LOCAL_TIME)
     private DateTime lastChange;
+
+    private Integer failedLoginAmount;
 }

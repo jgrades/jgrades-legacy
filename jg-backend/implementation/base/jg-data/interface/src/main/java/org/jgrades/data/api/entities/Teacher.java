@@ -1,6 +1,7 @@
 package org.jgrades.data.api.entities;
 
 import lombok.Data;
+import org.jgrades.data.api.model.roles.TeacherDetails;
 
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
@@ -11,5 +12,5 @@ import java.io.Serializable;
 @Table(name = "JG_DATA_TEACHER")
 @PrimaryKeyJoinColumn(name = "USER_ID")
 @Data
-public class Teacher extends User implements Serializable {
+public class Teacher extends User implements TeacherDetails, Serializable {
 }

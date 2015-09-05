@@ -35,9 +35,6 @@ public class DataConfig {
     @Value("${jgrades.application.properties.file}")
     private String appPropertiesFilePath;
 
-    @Value("${data.db.driver.class.name:org.postgresql.Driver}")
-    private String driverClassName;
-
     @Value("${data.db.jdbc.url}")
     private String jdbcUrl;
 
@@ -47,13 +44,10 @@ public class DataConfig {
     @Value("${data.db.password}")
     private String password;
 
-    @Value("${data.hibernate.dialect}")
-    private String hibernateDialect;
-
-    @Value("${data.show.sql}")
+    @Value("${data.show.sql:false}")
     private String showSql;
 
-    @Value("${data.format.sql}")
+    @Value("${data.format.sql:false}")
     private String formatSql;
 
     @Value("${data.schema.orm.policy}")
@@ -70,13 +64,8 @@ public class DataConfig {
 
     @Bean(destroyMethod = "close")
     DataSource mainDataSource() {
-        try {
-            Class.forName(driverClassName);
-        } catch (ClassNotFoundException e) {
-            driverClassName = "org.postgresql.Driver";
-        }
         HikariConfig dataSourceConfig = new HikariConfig();
-        dataSourceConfig.setDriverClassName(driverClassName);
+        dataSourceConfig.setDriverClassName("org.postgresql.Driver");
         dataSourceConfig.setJdbcUrl(jdbcUrl);
         dataSourceConfig.setUsername(username);
         dataSourceConfig.setPassword(password);
@@ -91,7 +80,7 @@ public class DataConfig {
         entityManagerFactoryBean.setPackagesToScan(packagesToScan.toArray(new String[]{}));
 
         Properties jpaProperties = new Properties();
-        jpaProperties.put("hibernate.dialect", hibernateDialect);
+        jpaProperties.put("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
         jpaProperties.put("hibernate.hbm2ddl.auto", schemaOrmPolicy);
         jpaProperties.put("hibernate.show_sql", showSql);
         jpaProperties.put("hibernate.format_sql", formatSql);
