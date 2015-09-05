@@ -62,7 +62,7 @@
             <id>prod</id>
             <properties>
                 <!-- IF YOU ARE CHANGE ANYTHING PLEASE UPDATE INTERNAL DOCUMENTATION IN GOOGLE DRIVE! !-->
-                <TOMCAT.INSTALLATION.DIR>/etc/tomcat8</TOMCAT.INSTALLATION.DIR>
+                <TOMCAT.INSTALLATION.DIR>/var/lib/tomcat8</TOMCAT.INSTALLATION.DIR>
                 <TOMCAT.LOGS.DIR>/var/log/tomcat8</TOMCAT.LOGS.DIR>
                 <JG.LOGS.DIR>/var/log/jgrades</JG.LOGS.DIR>
                 <JG.INTERNAL.DATA.DIR>/etc/opt/jgrades</JG.INTERNAL.DATA.DIR>
@@ -74,7 +74,7 @@
                 <APPLICATION.PROPERTIES>/etc/opt/jgrades/app.properties</APPLICATION.PROPERTIES>
                 <LOGGING.CONFIGURATION.FILE>/var/log/jgrades/jg-logging.conf</LOGGING.CONFIGURATION.FILE>
                 <LOGGING.XML.FILE>/etc/opt/jgrades/logback-details.xml</LOGGING.XML.FILE>
-                <DEFAULT.LOGGING.STRATEGY>LOG_FILE_PER_MODULE</DEFAULT.LOGGING.STRATEGY>
+                <DEFAULT.LOGGING.STRATEGY>LOG_FILE_PER_LEVEL</DEFAULT.LOGGING.STRATEGY>
                 <DEFAULT.LOGGING.LEVEL>INFO</DEFAULT.LOGGING.LEVEL>
                 <DEFAULT.LOGGING.MAX.FILE.SIZE>5MB</DEFAULT.LOGGING.MAX.FILE.SIZE>
                 <DEFAULT.LOGGING.MAX.DAYS>90</DEFAULT.LOGGING.MAX.DAYS>
@@ -82,7 +82,7 @@
                 <DB.DRIVER.CLASS.NAME>org.postgresql.Drive</DB.DRIVER.CLASS.NAME>
                 <DB.JDBC.URL>jdbc:postgresql://localhost:5432/jgradesdb</DB.JDBC.URL>
                 <DB.USERNAME>postgres</DB.USERNAME>
-                <DB.PASSWORD></DB.PASSWORD>
+                <DB.PASSWORD>postgres</DB.PASSWORD>
                 <DB.HIBERNATE.DIALECT>org.hibernate.dialect.PostgreSQLDialect</DB.HIBERNATE.DIALECT>
             </properties>
         </profile>
