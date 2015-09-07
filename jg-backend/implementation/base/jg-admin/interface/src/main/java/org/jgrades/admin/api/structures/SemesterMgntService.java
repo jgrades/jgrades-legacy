@@ -5,7 +5,7 @@ import org.jgrades.admin.api.common.PagingSelector;
 import org.jgrades.data.api.entities.AcademicYear;
 import org.jgrades.data.api.entities.Semester;
 
-public interface SemesterMgntService extends Manager<Semester, Long>, PagingSelector<Semester, Long> {
+public interface SemesterMgntService extends Manager<Semester>, PagingSelector<Semester, Long> {
     Semester createNewByMigration(Semester previousSemester, AcademicYear targetAcademicYear);
 
     Semester getActiveSemester();
