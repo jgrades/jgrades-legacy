@@ -52,6 +52,7 @@
         <spring.core.version>4.1.7.RELEASE</spring.core.version>
         <spring.data.jpa.version>1.8.1.RELEASE</spring.data.jpa.version>
         <spring.security.version>4.0.1.RELEASE</spring.security.version>
+        <spring.security.oauth2.version>2.0.7.RELEASE</spring.security.oauth2.version>
         <spring.rest.exception.handler.version>1.1.0</spring.rest.exception.handler.version>
 
         <!-- DATA ACCESS COMPONENTS -->
@@ -324,6 +325,11 @@
                         <artifactId>commons-logging</artifactId>
                     </exclusion>
                 </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.security.oauth</groupId>
+                <artifactId>spring-security-oauth2</artifactId>
+                <version>${spring.security.oauth2.version}</version>
             </dependency>
 
             <dependency>
