@@ -2,6 +2,7 @@ package org.jgrades.rest;
 
 import org.jgrades.data.config.DataConfig;
 import org.jgrades.lic.config.LicConfig;
+import org.jgrades.monitor.config.MonitorConfig;
 import org.jgrades.property.ApplicationPropertiesConfig;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
@@ -17,7 +18,7 @@ public class WebAppInitializer implements WebApplicationInitializer {
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException {
         AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
-        rootContext.register(ApplicationPropertiesConfig.class, LicConfig.class, DataConfig.class);
+        rootContext.register(ApplicationPropertiesConfig.class, MonitorConfig.class, LicConfig.class, DataConfig.class);
         rootContext.refresh();
 
         servletContext.addListener(new ContextLoaderListener(rootContext));

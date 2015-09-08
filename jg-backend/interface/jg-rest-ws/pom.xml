@@ -80,6 +80,11 @@
         </dependency>
         <dependency>
             <groupId>org.jgrades.app</groupId>
+            <artifactId>jg-monitor-impl</artifactId>
+            <version>${RELEASE.VERSION}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jgrades.app</groupId>
             <artifactId>jg-security-api</artifactId>
             <version>${RELEASE.VERSION}</version>
         </dependency>

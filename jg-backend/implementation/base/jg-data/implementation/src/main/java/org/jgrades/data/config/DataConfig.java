@@ -53,6 +53,9 @@ public class DataConfig {
     @Value("${data.schema.orm.policy}")
     private String schemaOrmPolicy;
 
+    @Value("${data.jdbc.driver}")
+    private String jdbcDriver;
+
     @Value("#{'${jgrades.entities.packages}'.split(',')}")
     private List<String> packagesToScan;
 
@@ -62,7 +65,7 @@ public class DataConfig {
         return new PropertySourcesPlaceholderConfigurer();
     }
 
-    @Bean(destroyMethod = "close")
+    @Bean(destroyMethod = "close", name = "mainDataSource")
     DataSource mainDataSource() {
         HikariConfig dataSourceConfig = new HikariConfig();
         dataSourceConfig.setDriverClassName("org.postgresql.Driver");

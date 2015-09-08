@@ -6,6 +6,7 @@ import org.jgrades.lic.api.model.Licence;
 import org.jgrades.lic.api.service.LicenceManagingService;
 import org.jgrades.logging.JgLogger;
 import org.jgrades.logging.JgLoggerFactory;
+import org.jgrades.monitor.api.aop.CheckSystemDependencies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -15,10 +16,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-;
-
 @RestController
 @RequestMapping(value = "/licence", produces = MediaType.APPLICATION_JSON_VALUE)
+@CheckSystemDependencies
 public class LicenceManagerService {
     private static final JgLogger LOGGER = JgLoggerFactory.getLogger(LicenceManagerService.class);
 

@@ -13,11 +13,28 @@
 
     <name>jGrades Monitoring Module Implementation</name>
 
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>**/*.properties</include>
+                </includes>
+            </resource>
+        </resources>
+    </build>
+
     <dependencies>
         <!-- INTERNAL DEPENDENCIES -->
         <dependency>
             <groupId>org.jgrades.app</groupId>
             <artifactId>jg-monitor-api</artifactId>
+            <version>${RELEASE.VERSION}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jgrades.app</groupId>
+            <artifactId>jg-data-api</artifactId>
             <version>${RELEASE.VERSION}</version>
         </dependency>
 

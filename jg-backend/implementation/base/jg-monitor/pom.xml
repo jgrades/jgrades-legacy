@@ -17,6 +17,6 @@
 
     <modules>
         <module>interface</module>
-        <module>imlementation</module>
+        <module>implementation</module>
     </modules>
 </project>

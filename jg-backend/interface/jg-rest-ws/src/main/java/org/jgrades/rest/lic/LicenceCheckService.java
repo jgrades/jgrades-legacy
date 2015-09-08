@@ -6,12 +6,14 @@ import org.jgrades.lic.api.service.LicenceCheckingService;
 import org.jgrades.lic.api.service.LicenceManagingService;
 import org.jgrades.logging.JgLogger;
 import org.jgrades.logging.JgLoggerFactory;
+import org.jgrades.monitor.api.aop.CheckSystemDependencies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "/licence/check", produces = MediaType.APPLICATION_JSON_VALUE)
+@CheckSystemDependencies
 public class LicenceCheckService {
     private static final JgLogger LOGGER = JgLoggerFactory.getLogger(LicenceCheckService.class);
 
