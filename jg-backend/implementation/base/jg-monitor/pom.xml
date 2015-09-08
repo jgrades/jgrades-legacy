@@ -2,27 +2,21 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-
     <parent>
+        <artifactId>base</artifactId>
         <groupId>org.jgrades.app</groupId>
-        <artifactId>implementation</artifactId>
         <version>0.4-DEV-SNAPSHOT</version>
     </parent>
+    <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>base</artifactId>
+    <artifactId>jg-monitor</artifactId>
 
     <packaging>pom</packaging>
 
-    <name>jGrades Base Features</name>
+    <name>jGrades Monitoring Module</name>
 
     <modules>
-        <module>jg-data</module>
-        <module>jg-security</module>
-        <module>jg-lic</module>
-        <module>jg-admin</module>
-        <module>jg-config</module>
-        <module>jg-backup</module>
-        <module>jg-monitor</module>
+        <module>interface</module>
+        <module>imlementation</module>
     </modules>
 </project>
