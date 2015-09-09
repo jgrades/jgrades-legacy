@@ -5,7 +5,7 @@ public enum SystemDependency {
     LIC_KEYSTORE("licKeystoreChecker", "Licensing data missing"),
     LIC_SECDATA("licSecDataChecker", "Licensing data missing"),
     LOGBACK_XML("logbackXmlChecker", "Logging data missing"),
-    DUMMY("dummyChecker", "dummy");
+    NONE("dummyChecker", "dummy");
 
     private final String checkerBeanName;
     private final String details;

@@ -4,6 +4,7 @@ import org.jgrades.data.api.model.DataSourceDetails;
 import org.jgrades.monitor.api.config.MonitorApiConfig;
 import org.jgrades.monitor.dependency.DataSourceChecker;
 import org.jgrades.monitor.dependency.DependencyChecker;
+import org.jgrades.monitor.dependency.DummyChecker;
 import org.jgrades.monitor.dependency.FileChecker;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.*;
@@ -66,6 +67,11 @@ public class MonitorConfig {
     @Bean(name = "logbackXmlChecker")
     public DependencyChecker logbackXmlChecker() {
         return new FileChecker(loggingXmlFilePath);
+    }
+
+    @Bean(name = "dummyChecker")
+    public DependencyChecker dummyChecker() {
+        return new DummyChecker();
     }
 
 

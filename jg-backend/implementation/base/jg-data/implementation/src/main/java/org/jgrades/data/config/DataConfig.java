@@ -72,6 +72,7 @@ public class DataConfig {
         dataSourceConfig.setJdbcUrl(jdbcUrl);
         dataSourceConfig.setUsername(username);
         dataSourceConfig.setPassword(password);
+        dataSourceConfig.setInitializationFailFast(false);
         return new HikariDataSource(dataSourceConfig);
     }
 

@@ -23,7 +23,7 @@ public class CompletenessAspect {
     private void anyMethod() {
     }
 
-    @Before("anyMethod() && @annotation(checkDependencies)")
+    @Before("anyMethod() && @within(checkDependencies)")
     public void checkDependencies(CheckSystemDependencies checkDependencies) throws SystemDependencyException {
         SystemDependency[] dependencies = ArrayUtils.removeElements(SystemDependency.values(), checkDependencies.ignored());
         systemDependencyService.check(new HashSet<>(Arrays.asList(dependencies)));
