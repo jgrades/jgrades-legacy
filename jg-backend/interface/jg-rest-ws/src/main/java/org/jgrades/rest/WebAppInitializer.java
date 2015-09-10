@@ -4,6 +4,8 @@ import org.jgrades.data.config.DataConfig;
 import org.jgrades.lic.config.LicConfig;
 import org.jgrades.monitor.config.MonitorConfig;
 import org.jgrades.property.ApplicationPropertiesConfig;
+import org.jgrades.rest.sec.config.SpringSecurityConfig;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
@@ -18,7 +20,7 @@ public class WebAppInitializer implements WebApplicationInitializer {
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException {
         AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
-        rootContext.register(ApplicationPropertiesConfig.class, MonitorConfig.class, LicConfig.class, DataConfig.class);
+        rootContext.register(ApplicationPropertiesConfig.class, MonitorConfig.class, LicConfig.class, DataConfig.class,SpringSecurityConfig.class);
         rootContext.refresh();
 
         servletContext.addListener(new ContextLoaderListener(rootContext));
@@ -32,4 +34,5 @@ public class WebAppInitializer implements WebApplicationInitializer {
         appServlet.addMapping("/");
         appServlet.setMultipartConfig(new MultipartConfigElement(mvcContext.getEnvironment().getProperty("rest.lic.path"), 1024 * 1024 * 5, 1024 * 1024 * 5 * 5, 1024 * 1024));
     }
+
 }

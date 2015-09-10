@@ -11,6 +11,7 @@ import org.jgrades.lic.api.exception.LicenceNotFoundException;
 import org.jgrades.lic.api.exception.UnreliableLicenceException;
 import org.jgrades.logging.service.LoggingService;
 import org.jgrades.logging.service.LoggingServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.*;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.http.HttpStatus;
@@ -19,8 +20,10 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.http.converter.support.AllEncompassingFormHttpMessageConverter;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.HandlerExceptionResolver;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 import org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver;
@@ -120,4 +123,5 @@ public class RestConfig extends WebMvcConfigurationSupport {
     public LoggingService loggingService() {
         return new LoggingServiceImpl();
     }
+
 }
