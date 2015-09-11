@@ -101,11 +101,15 @@ public class DataConfig {
     }
 
     @Bean
-    public org.apache.commons.configuration.Configuration appConfiguration() throws IOException, ConfigurationException {
-        File appPropertiesFile = new File(appPropertiesFilePath);
-        if (!appPropertiesFile.exists()) {
-            appPropertiesFile.createNewFile();
+    public org.apache.commons.configuration.Configuration appConfiguration() {
+        try {
+            File appPropertiesFile = new File(appPropertiesFilePath);
+            if (!appPropertiesFile.exists()) {
+                appPropertiesFile.createNewFile();
+            }
+            return new PropertiesConfiguration(appPropertiesFile);
+        } catch (IOException | ConfigurationException e) {
+            return new PropertiesConfiguration();
         }
-        return new PropertiesConfiguration(appPropertiesFile);
     }
 }
