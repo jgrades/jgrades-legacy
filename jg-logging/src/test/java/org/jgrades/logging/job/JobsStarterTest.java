@@ -10,14 +10,14 @@ import java.util.Collection;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class MonitorStarterTest {
+public class JobsStarterTest {
     @Test
     public void afterInvokingMethod_scheduleIsStarted() throws Exception {
         // given
-        MonitorStarter monitorStarter = new MonitorStarter();
+        JobsStarter jobsStarter = new JobsStarter();
 
         // when
-        monitorStarter.start();
+        jobsStarter.start();
 
         // then
         SchedulerFactory schedulerFactory = new StdSchedulerFactory();
@@ -26,6 +26,6 @@ public class MonitorStarterTest {
         assertThat(schedulers).hasSize(1);
         Scheduler scheduler = Iterables.getFirst(schedulers, null);
 
-        assertThat(scheduler.getTriggerGroupNames()).contains(MonitorStarter.JOB_GROUP_NAME);
+        assertThat(scheduler.getTriggerGroupNames()).contains(JobsStarter.JOB_GROUP_NAME);
     }
 }

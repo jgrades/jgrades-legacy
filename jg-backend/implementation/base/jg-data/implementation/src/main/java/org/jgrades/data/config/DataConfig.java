@@ -73,6 +73,9 @@ public class DataConfig {
         dataSourceConfig.setUsername(username);
         dataSourceConfig.setPassword(password);
         dataSourceConfig.setInitializationFailFast(false);
+        dataSourceConfig.setMinimumIdle(5);
+        dataSourceConfig.setMaximumPoolSize(10);
+        dataSourceConfig.setConnectionTimeout(15000);
         return new HikariDataSource(dataSourceConfig);
     }
 
