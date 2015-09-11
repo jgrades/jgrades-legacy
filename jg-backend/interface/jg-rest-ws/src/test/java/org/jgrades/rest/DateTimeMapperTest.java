@@ -1,5 +1,6 @@
 package org.jgrades.rest;
 
+import org.jgrades.property.ApplicationPropertiesConfig;
 import org.jgrades.rest.lic.LicMockConfig;
 import org.joda.time.DateTime;
 import org.junit.Before;
@@ -20,7 +21,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {LicMockConfig.class, RestConfig.class})
+@ContextConfiguration(classes = {ApplicationPropertiesConfig.class, LicMockConfig.class, RestConfig.class})
 @WebAppConfiguration
 @RequestMapping(value = "/test", produces = MediaType.APPLICATION_JSON_VALUE)
 public class DateTimeMapperTest {

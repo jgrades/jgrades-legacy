@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 
 
 @Service("userDetailsService")
-@Import({DataConfig.class})
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
@@ -33,7 +32,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             userDetails.setAccountNonExpired(false);
             userDetails.setAccountNonLocked(false);
             userDetails.setEnabled(false);
-            userDetails.setRoles(null);
+            userDetails.setAuthorities(null);
             userDetails.setPassword(null);
             userDetails.setUsername(null);
 

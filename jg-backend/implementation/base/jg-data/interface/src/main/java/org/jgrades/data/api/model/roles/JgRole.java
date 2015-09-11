@@ -1,35 +1,7 @@
 package org.jgrades.data.api.model.roles;
 
 public enum JgRole {
-    ADMINISTRATOR(5){
-        public String toString(){
-            return "ROLE_ADMINISTRATOR";
-        }
-    },
-
-    MANAGER(4){
-        public String toString(){
-            return "ROLE_MANAGER";
-        }
-    },
-
-    TEACHER(3){
-        public String toString(){
-            return "ROLE_TEACHER";
-        }
-    },
-
-    PARENT(2){
-        public String toString(){
-            return "ROLE_PARENT";
-        }
-    },
-
-    STUDENT(1){
-        public String toString(){
-            return "ROLE_STUDENT";
-        }
-    };
+    ADMINISTRATOR(5), MANAGER(4), TEACHER(3), PARENT(2), STUDENT(1);
 
     private final Integer priority;
 
@@ -39,5 +11,9 @@ public enum JgRole {
 
     public Integer getPriority() {
         return priority;
+    }
+
+    public String withRolePrefix() {
+        return "ROLE_" + this.name();
     }
 }

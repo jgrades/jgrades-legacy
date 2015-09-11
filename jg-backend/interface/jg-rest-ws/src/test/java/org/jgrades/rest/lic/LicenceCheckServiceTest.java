@@ -4,6 +4,7 @@ import org.jgrades.lic.api.exception.LicenceNotFoundException;
 import org.jgrades.lic.api.model.Licence;
 import org.jgrades.lic.api.service.LicenceCheckingService;
 import org.jgrades.lic.api.service.LicenceManagingService;
+import org.jgrades.property.ApplicationPropertiesConfig;
 import org.jgrades.rest.RestConfig;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,7 +25,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {LicMockConfig.class, RestConfig.class})
+@ContextConfiguration(classes = {ApplicationPropertiesConfig.class, LicMockConfig.class, RestConfig.class})
 @WebAppConfiguration
 public class LicenceCheckServiceTest {
     private MockMvc mockMvc;
