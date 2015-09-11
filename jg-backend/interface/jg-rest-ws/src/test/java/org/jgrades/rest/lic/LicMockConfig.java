@@ -1,5 +1,6 @@
 package org.jgrades.rest.lic;
 
+import org.apache.commons.configuration.PropertiesConfiguration;
 import org.jgrades.data.api.service.DataSourceService;
 import org.jgrades.lic.api.service.LicenceCheckingService;
 import org.jgrades.lic.api.service.LicenceManagingService;
@@ -35,4 +36,9 @@ public class LicMockConfig extends WebMvcConfigurerAdapter {
     }
 
 
+    @Bean
+    @Primary
+    public org.apache.commons.configuration.Configuration appConfiguration() {
+        return new PropertiesConfiguration();
+    }
 }
