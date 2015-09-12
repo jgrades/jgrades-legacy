@@ -50,8 +50,18 @@ public class LogbackXmlEditor {
     }
 
     public String getLevelNameFromAppenderName(Node fileNamePatternNode) {
-        String appenderName = ((Element) fileNamePatternNode.getParentNode().getParentNode()).getAttribute("name");
+        String appenderName = getAppenderName(fileNamePatternNode);
         return appenderName.substring(appenderName.lastIndexOf("-") + 1);
+    }
+
+    public String getLogTypeFromAppenderName(Node fileNamePatternNode) {
+        String appenderName = getAppenderName(fileNamePatternNode);
+        String appenderNameWithoutLevel = appenderName.substring(0, appenderName.lastIndexOf("-"));
+        return appenderNameWithoutLevel.substring(appenderNameWithoutLevel.lastIndexOf("-") + 1);
+    }
+
+    private String getAppenderName(Node fileNamePatternNode) {
+        return ((Element) fileNamePatternNode.getParentNode().getParentNode()).getAttribute("name");
     }
 
     public Node getLevelNode() {

@@ -16,7 +16,8 @@ public class PerModuleAndLevelUpdater implements XmlFileNameTagsUpdater {
         for (int i = 0; i < nodeList.getLength(); i++) {
             Node node = nodeList.item(i);
             String levelName = xmlEditor.getLevelNameFromAppenderName(node);
-            String newFileNamePattern = node.getTextContent().contains("external-lib") ?
+            String logType = xmlEditor.getLogTypeFromAppenderName(node);
+            String newFileNamePattern = logType.equals("external") ?
                     LOGS_DIRECTORY + "/jg_external-lib_" + levelName + "_%d{yyyy-MM-dd}_%i.log" :
                     LOGS_DIRECTORY + "/jg_${module-name-placeholder}_" + levelName + "_%d{yyyy-MM-dd}_%i.log";
             node.setTextContent(newFileNamePattern);

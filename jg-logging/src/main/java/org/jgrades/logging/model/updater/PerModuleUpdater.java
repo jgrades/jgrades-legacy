@@ -15,7 +15,8 @@ public class PerModuleUpdater implements XmlFileNameTagsUpdater {
         NodeList nodeList = xmlEditor.getFileNamePatternNodes();
         for (int i = 0; i < nodeList.getLength(); i++) {
             Node node = nodeList.item(i);
-            String newFileNamePattern = node.getTextContent().contains("external-lib") ?
+            String logType = xmlEditor.getLogTypeFromAppenderName(node);
+            String newFileNamePattern = logType.equals("external") ?
                     LOGS_DIRECTORY + "/jg_external-lib_%d{yyyy-MM-dd}_%i.log" :
                     LOGS_DIRECTORY + "/jg_${module-name-placeholder}_%d{yyyy-MM-dd}_%i.log";
             node.setTextContent(newFileNamePattern);

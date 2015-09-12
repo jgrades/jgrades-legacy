@@ -40,9 +40,9 @@ public class PerModuleAndLevelUpdaterTest {
         when(xmlEditorMock.getLevelNameFromAppenderName(eq(node1))).thenReturn("warn");
         when(xmlEditorMock.getLevelNameFromAppenderName(eq(node2))).thenReturn("error");
 
-        when(node0.getTextContent()).thenReturn("external-lib");
-        when(node1.getTextContent()).thenReturn("lic");
-        when(node2.getTextContent()).thenReturn("rest");
+        when(xmlEditorMock.getLogTypeFromAppenderName(eq(node0))).thenReturn("external");
+        when(xmlEditorMock.getLogTypeFromAppenderName(eq(node1))).thenReturn("internal");
+        when(xmlEditorMock.getLogTypeFromAppenderName(eq(node2))).thenReturn("internal");
 
         // when
         perModuleAndLevelUpdater.updateFileNameTags();
