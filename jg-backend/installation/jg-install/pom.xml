@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
@@ -41,6 +41,11 @@
                                     <artifactId>webapp-runner</artifactId>
                                     <version>8.0.24.0</version>
                                     <destFileName>webapp-runner.jar</destFileName>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.springframework</groupId>
+                                    <artifactId>spring-instrument-tomcat</artifactId>
+                                    <destFileName>spring-instrument-tomcat.jar</destFileName>
                                 </artifactItem>
                             </artifactItems>
                         </configuration>
