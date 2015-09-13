@@ -1,6 +1,5 @@
 package org.jgrades.logging.model;
 
-import ch.qos.logback.classic.Level;
 import com.google.common.collect.Lists;
 import com.openpojo.reflection.PojoClass;
 import com.openpojo.reflection.coverage.impl.Jacoco;
@@ -65,7 +64,7 @@ public class LoggingConfigurationTest {
     public void shouldHaveAllInformationsInToString() throws Exception {
         // given
         LoggingStrategy strategy = LoggingStrategy.LOG_FILE_PER_LEVEL;
-        Level level = Level.WARN;
+        JgLogLevel level = JgLogLevel.WARN;
         String maxFileSize = "100KB";
         Integer maxDays = 7;
 

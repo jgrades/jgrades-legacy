@@ -1,7 +1,7 @@
 package org.jgrades.logging.service;
 
-import ch.qos.logback.classic.Level;
 import org.jgrades.logging.dao.LoggingConfigurationDao;
+import org.jgrades.logging.model.JgLogLevel;
 import org.jgrades.logging.model.LoggingConfiguration;
 import org.jgrades.logging.model.LoggingStrategy;
 import org.jgrades.logging.utils.LogbackXmlEditor;
@@ -68,7 +68,7 @@ public class LoggingServiceImplTest {
     @Test
     public void shouldUsingDefaultConf_whenXmlDoesntExistsAndCurrentConfIsNotEqualToDefault() throws Exception {
         // given
-        LoggingConfiguration conf = new LoggingConfiguration(LoggingStrategy.LOG_FILE_PER_LEVEL, Level.INFO, "10KB", 7);
+        LoggingConfiguration conf = new LoggingConfiguration(LoggingStrategy.LOG_FILE_PER_LEVEL, JgLogLevel.INFO, "10KB", 7);
         LoggingConfiguration defaultConf = new LoggingConfiguration();
 
         when(xmlEditorMock.isXmlExists()).thenReturn(false);
@@ -100,7 +100,7 @@ public class LoggingServiceImplTest {
     @Test
     public void shouldNotUsingDefaultConf_whenXmlExistsAndCurrentConfIsNotEqualToDefault() throws Exception {
         // given
-        LoggingConfiguration conf = new LoggingConfiguration(LoggingStrategy.LOG_FILE_PER_LEVEL, Level.INFO, "10KB", 7);
+        LoggingConfiguration conf = new LoggingConfiguration(LoggingStrategy.LOG_FILE_PER_LEVEL, JgLogLevel.INFO, "10KB", 7);
         LoggingConfiguration defaultConf = new LoggingConfiguration();
 
         when(xmlEditorMock.isXmlExists()).thenReturn(true);
