@@ -1,36 +1,33 @@
-package org.jgrades.rest.sec.config;
+package org.jgrades.security.service;
 
 import org.jgrades.data.api.dao.UserRepository;
 import org.jgrades.data.api.entities.User;
 import org.jgrades.data.api.model.roles.JgRole;
 import org.jgrades.data.api.model.roles.Roles;
-import org.jgrades.data.config.DataConfig;
 import org.jgrades.logging.JgLogger;
 import org.jgrades.logging.JgLoggerFactory;
-import org.jgrades.rest.sec.model.UserDetailsImpl;
 import org.jgrades.security.api.dao.PasswordDataRepository;
 import org.jgrades.security.api.dao.PasswordPolicyRepository;
 import org.jgrades.security.api.entities.PasswordData;
+import org.jgrades.security.utils.UserDetailsImpl;
 import org.joda.time.DateTime;
+import org.joda.time.Duration;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Import;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-
-
 @Service("userDetailsService")
 public class UserDetailsServiceImpl implements UserDetailsService {
-
-    private final static JgLogger logger = JgLoggerFactory.getLogger(UserDetailsServiceImpl.class);
+    private final static JgLogger LOGGER = JgLoggerFactory.getLogger(UserDetailsServiceImpl.class);
 
     @Autowired
     private UserRepository userRepository;
 
     @Autowired
+    @Qualifier("passwordDataRepository")
     private PasswordDataRepository passwordDataRepository;
 
     @Autowired
@@ -40,37 +37,24 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
 
         User user = userRepository.findFirstByLogin(login);
-        UserDetailsImpl userDetails = new UserDetailsImpl();
+        UserDetailsImpl userDetails = new UserDetailsImpl(login, getUserPassword(user), null);
         if( user != null) {
-
-            userDetails.setUsername(login);
-            userDetails.setPassword(getUserPassword(user));
-            userDetails.setEnabled(user.isActive());
-            userDetails.setAccountNonLocked(true);
-            userDetails.setAccountNonExpired(true);
-            userDetails.setCredentialsNonExpired(isCredentialsNotExpired(user));
-
-            return userDetails;
+            userDetails = new UserDetailsImpl(
+                    login, getUserPassword(user), user.isActive(),
+                    true, isCredentialsNotExpired(user), true,
+                    null);
+        } else {
+            LOGGER.info(" Cannot find user with {} login", login);
         }
-        else {
-            logger.info(" Cannot find user with {} login",login);
-            return null;
-        }
-
+        return userDetails;
     }
 
     private boolean isCredentialsNotExpired(User user) {
-
         int expirationDaysForRole = getExpirationDays(getRoleWithHighestPriority(user.getRoles()));
+        DateTime lastPasswordChangeTime = passwordDataRepository.getPasswordDataWithUser(user).getLastChange();
 
-        long lastUserLogin = user.getLastVisit().getMillis();
-        long lastPasswordChange = getLastPasswordChangeTime(user);
-
-        return lastUserLogin - lastPasswordChange > expirationDaysForRole ? false : true;
-    }
-
-    private long getLastPasswordChangeTime(User user) {
-        return passwordDataRepository.getPasswordDataWithUser(user).getLastChange().getMillis();
+        Duration duration = new Duration(lastPasswordChangeTime, DateTime.now());
+        return duration.isShorterThan(Duration.standardDays(expirationDaysForRole));
     }
 
     private int getExpirationDays(JgRole roleWithShortestPasswordPolicy) {

@@ -1,4 +1,4 @@
-package org.jgrades.rest.sec.components;
+package org.jgrades.security.auth;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
