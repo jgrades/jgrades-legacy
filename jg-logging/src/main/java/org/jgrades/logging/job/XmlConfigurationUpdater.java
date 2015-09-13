@@ -14,7 +14,7 @@ public class XmlConfigurationUpdater {
     public void update(LoggingConfiguration targetConfig) {
         if (xmlEditor.isXmlExists()) {
             updateFileNames(targetConfig.getLoggingStrategy());
-            updateLevel(targetConfig.getLevel());
+            updateLevel(Level.toLevel(targetConfig.getLevel().toString()));
             updateMaxFileSize(targetConfig.getMaxFileSize());
             updateMaxDays(targetConfig.getMaxDays());
             xmlEditor.saveWithChanges();

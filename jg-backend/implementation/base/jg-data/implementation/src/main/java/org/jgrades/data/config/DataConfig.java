@@ -110,7 +110,9 @@ public class DataConfig {
             if (!appPropertiesFile.exists()) {
                 appPropertiesFile.createNewFile();
             }
-            return new PropertiesConfiguration(appPropertiesFile);
+            PropertiesConfiguration appConf = new PropertiesConfiguration(appPropertiesFile);
+            appConf.setAutoSave(true);
+            return appConf;
         } catch (IOException | ConfigurationException e) {
             return new PropertiesConfiguration();
         }

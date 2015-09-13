@@ -1,6 +1,6 @@
 package org.jgrades.logging.job;
 
-import ch.qos.logback.classic.Level;
+import org.jgrades.logging.model.JgLogLevel;
 import org.jgrades.logging.model.LoggingConfiguration;
 import org.jgrades.logging.model.LoggingStrategy;
 import org.jgrades.logging.utils.LogbackXmlEditor;
@@ -47,7 +47,7 @@ public class XmlConfigurationUpdaterTest {
         when(xmlEditorMock.isXmlExists()).thenReturn(true);
 
         LoggingConfiguration conf = new LoggingConfiguration();
-        conf.setLevel(Level.DEBUG);
+        conf.setLevel(JgLogLevel.DEBUG);
         conf.setLoggingStrategy(LoggingStrategy.LOG_FILE_PER_LEVEL);
         conf.setMaxDays(7);
         conf.setMaxFileSize("100KB");
