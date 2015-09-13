@@ -2,9 +2,11 @@ package org.jgrades.data.api.model.roles;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import lombok.Data;
 
 import java.util.Map;
 
+@Data
 public class Roles {
     private Map<JgRole, RoleDetails> roleMap = Maps.newEnumMap(JgRole.class);
 

@@ -23,4 +23,5 @@ public class UserDetailsImpl implements UserDetails {
     private boolean enabled;
 
     private Collection<? extends GrantedAuthority> authorities;
+
 }
