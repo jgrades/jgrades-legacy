@@ -27,7 +27,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     private UserRepository userRepository;
 
     @Autowired
-    @Qualifier("passwordDataRepository")
     private PasswordDataRepository passwordDataRepository;
 
     @Autowired
