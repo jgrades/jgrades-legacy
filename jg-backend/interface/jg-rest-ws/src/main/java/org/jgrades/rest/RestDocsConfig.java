@@ -1,6 +1,8 @@
 package org.jgrades.rest;
 
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
+import org.joda.time.LocalTime;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.PathSelectors;
@@ -21,6 +23,8 @@ public class RestDocsConfig {
                 .build()
                 .pathMapping("/")
                 .directModelSubstitute(DateTime.class, Long.class)
+                .directModelSubstitute(LocalDate.class, String.class)
+                .directModelSubstitute(LocalTime.class, String.class)
                 .enableUrlTemplating(true);
     }
 
