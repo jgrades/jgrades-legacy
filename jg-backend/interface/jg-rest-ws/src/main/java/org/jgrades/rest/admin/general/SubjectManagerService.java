@@ -1,4 +1,4 @@
-package org.jgrades.rest.admin;
+package org.jgrades.rest.admin.general;
 
 import org.jgrades.admin.api.general.SubjectsMgntService;
 import org.jgrades.data.api.entities.Subject;
@@ -25,7 +25,7 @@ public class SubjectManagerService {
     private SubjectsMgntService subjectService;
 
 
-    @RequestMapping(method = {RequestMethod.PUT, RequestMethod.POST}, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> insertOrUpdate(@RequestBody Subject subject) {
         subjectService.saveOrUpdate(subject);
         return new ResponseEntity<>(HttpStatus.OK);

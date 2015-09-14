@@ -1,6 +1,9 @@
 package org.jgrades.rest.lic;
 
 import org.apache.commons.configuration.PropertiesConfiguration;
+import org.jgrades.admin.api.accounts.UserManagerService;
+import org.jgrades.admin.api.accounts.UserSelectionService;
+import org.jgrades.admin.api.accounts.UserSpecifications;
 import org.jgrades.admin.api.general.*;
 import org.jgrades.data.api.dao.*;
 import org.jgrades.data.api.service.DataSourceService;
@@ -129,4 +132,29 @@ public class LicMockConfig extends WebMvcConfigurerAdapter {
     public SchoolDayPeriodRepository schoolDayPeriodRepository() {
         return Mockito.mock(SchoolDayPeriodRepository.class);
     }
+
+    @Bean
+    @Primary
+    public UserManagerService userManagerService() {
+        return Mockito.mock(UserManagerService.class);
+    }
+
+    @Bean
+    @Primary
+    public RoleUserRepository roleUserRepository() {
+        return Mockito.mock(RoleUserRepository.class);
+    }
+
+    @Bean
+    @Primary
+    public UserSelectionService userSelectionService() {
+        return Mockito.mock(UserSelectionService.class);
+    }
+
+    @Bean
+    @Primary
+    public UserSpecifications userSpecifications() {
+        return Mockito.mock(UserSpecifications.class);
+    }
+
 }

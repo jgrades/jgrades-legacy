@@ -37,7 +37,7 @@ public class PasswordPolicyManagerService {
         return passwordPolicyService.getPasswordPolicies();
     }
 
-    @RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> setForRole(@RequestBody PasswordPolicy policy) {
         passwordPolicyService.putPasswordPolicy(policy);
         return new ResponseEntity<>(HttpStatus.OK);

@@ -1,4 +1,4 @@
-package org.jgrades.rest.admin;
+package org.jgrades.rest.admin.general;
 
 import org.jgrades.admin.api.general.ClassroomMgntService;
 import org.jgrades.data.api.entities.Classroom;
@@ -27,7 +27,7 @@ public class ClassroomManagerService {
     @Autowired
     private GeneralManagerService generalManagerService;
 
-    @RequestMapping(method = {RequestMethod.PUT, RequestMethod.POST}, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> insertOrUpdate(@RequestBody Classroom classroom) {
         classroom.setSchool(generalManagerService.getGeneralData());
         classroomService.saveOrUpdate(classroom);

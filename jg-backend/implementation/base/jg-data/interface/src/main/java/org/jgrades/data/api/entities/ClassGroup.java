@@ -1,5 +1,6 @@
 package org.jgrades.data.api.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Lists;
 import lombok.Data;
 
@@ -16,6 +17,7 @@ public class ClassGroup implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumns({
             @JoinColumn(name = "SEMESTER_ID", referencedColumnName = "SEMESTER_ID"),
@@ -27,9 +29,11 @@ public class ClassGroup implements Serializable {
 
     private String description;
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "classGroup")
     private List<Division> divisions = Lists.newArrayList();
 
+    @JsonIgnore
     @Transient
     private Set<Student> members;
 }

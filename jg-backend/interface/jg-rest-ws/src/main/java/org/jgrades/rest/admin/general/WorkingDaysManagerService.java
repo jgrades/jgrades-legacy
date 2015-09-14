@@ -1,4 +1,4 @@
-package org.jgrades.rest.admin;
+package org.jgrades.rest.admin.general;
 
 import org.jgrades.admin.api.general.DaysMgntService;
 import org.jgrades.admin.api.model.WorkingDays;
@@ -30,7 +30,7 @@ public class WorkingDaysManagerService {
         return daysMgntService.getWorkingDays().getDays();
     }
 
-    @RequestMapping(method = {RequestMethod.PUT, RequestMethod.POST}, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> setWorkingDays(@RequestBody Set<DayOfWeek> days) {
         WorkingDays workingDays = new WorkingDays();
         days.forEach(workingDays::addDay);

@@ -1,4 +1,4 @@
-package org.jgrades.rest.admin;
+package org.jgrades.rest.admin.general;
 
 import org.jgrades.admin.api.general.GeneralDataService;
 import org.jgrades.data.api.entities.School;
@@ -27,7 +27,7 @@ public class GeneralManagerService {
         return generalDataService.getSchoolGeneralDetails();
     }
 
-    @RequestMapping(method = {RequestMethod.PUT, RequestMethod.POST}, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> insertOrUpdate(@RequestBody School generalData) {
         generalDataService.setSchoolGeneralDetails(generalData);
         return new ResponseEntity<>(HttpStatus.OK);

@@ -1,4 +1,4 @@
-package org.jgrades.rest.admin;
+package org.jgrades.rest.admin.general;
 
 import org.jgrades.admin.api.general.PeriodsMgntService;
 import org.jgrades.admin.api.model.PeriodsGeneratorSettings;
@@ -26,14 +26,14 @@ public class PeriodsManagerService {
     @Autowired
     private GeneralManagerService generalManagerService;
 
-    @RequestMapping(method = {RequestMethod.PUT, RequestMethod.POST}, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> insertOrUpdate(@RequestBody SchoolDayPeriod schoolDayPeriod) {
         schoolDayPeriod.setSchool(generalManagerService.getGeneralData());
         periodsService.saveOrUpdate(schoolDayPeriod);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/generator", method = {RequestMethod.PUT, RequestMethod.POST}, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/generator", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> insertWithGenerator(@RequestBody PeriodsGeneratorSettings generationSettings) {
         List<SchoolDayPeriod> periods = periodsService.generateManyWithGenerator(generationSettings);
         for (SchoolDayPeriod period : periods) {
