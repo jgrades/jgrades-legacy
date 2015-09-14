@@ -9,11 +9,11 @@ import org.jgrades.logging.JgLoggerFactory;
 import org.jgrades.security.api.dao.PasswordDataRepository;
 import org.jgrades.security.api.dao.PasswordPolicyRepository;
 import org.jgrades.security.api.entities.PasswordData;
+import org.jgrades.security.api.entities.PasswordPolicy;
 import org.jgrades.security.utils.UserDetailsImpl;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -50,14 +50,20 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     private boolean isCredentialsNotExpired(User user) {
         int expirationDaysForRole = getExpirationDays(getRoleWithHighestPriority(user.getRoles()));
-        DateTime lastPasswordChangeTime = passwordDataRepository.getPasswordDataWithUser(user).getLastChange();
+        if (expirationDaysForRole != 0) {
+            DateTime lastPasswordChangeTime = passwordDataRepository.getPasswordDataWithUser(user).getLastChange();
 
-        Duration duration = new Duration(lastPasswordChangeTime, DateTime.now());
-        return duration.isShorterThan(Duration.standardDays(expirationDaysForRole));
+            Duration duration = new Duration(lastPasswordChangeTime, DateTime.now());
+            return duration.isShorterThan(Duration.standardDays(expirationDaysForRole));
+        } else {
+            return true;
+        }
+
     }
 
     private int getExpirationDays(JgRole roleWithShortestPasswordPolicy) {
-        return passwordPolicyRepository.findOne(roleWithShortestPasswordPolicy).getExpirationDays();
+        PasswordPolicy passwordPolicy = passwordPolicyRepository.findOne(roleWithShortestPasswordPolicy);
+        return passwordPolicy == null ? 0 : passwordPolicy.getExpirationDays();
     }
 
     private JgRole getRoleWithHighestPriority(Roles roles) {

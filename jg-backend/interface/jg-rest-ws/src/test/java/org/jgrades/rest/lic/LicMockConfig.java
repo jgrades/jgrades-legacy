@@ -1,9 +1,12 @@
 package org.jgrades.rest.lic;
 
 import org.apache.commons.configuration.PropertiesConfiguration;
+import org.jgrades.data.api.dao.UserRepository;
 import org.jgrades.data.api.service.DataSourceService;
 import org.jgrades.lic.api.service.LicenceCheckingService;
 import org.jgrades.lic.api.service.LicenceManagingService;
+import org.jgrades.security.api.service.PasswordMgntService;
+import org.jgrades.security.api.service.PasswordPolicyService;
 import org.mockito.Mockito;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -46,5 +49,23 @@ public class LicMockConfig extends WebMvcConfigurerAdapter {
     @Primary
     public org.apache.commons.configuration.Configuration appConfiguration() {
         return new PropertiesConfiguration();
+    }
+
+    @Bean
+    @Primary
+    public PasswordMgntService passwordMgntService() {
+        return Mockito.mock(PasswordMgntService.class);
+    }
+
+    @Bean
+    @Primary
+    public PasswordPolicyService passwordPolicyService() {
+        return Mockito.mock(PasswordPolicyService.class);
+    }
+
+    @Bean
+    @Primary
+    public UserRepository userRepository() {
+        return Mockito.mock(UserRepository.class);
     }
 }
