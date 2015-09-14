@@ -1,5 +1,6 @@
 package org.jgrades.data.api.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Lists;
 import lombok.Data;
 import org.jgrades.data.api.model.SchoolType;
@@ -37,6 +38,7 @@ public class School implements Serializable {
 
     private String contactPhone;
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "school")
     private List<AcademicYear> academicYears = Lists.newArrayList();
 }

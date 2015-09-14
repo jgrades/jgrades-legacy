@@ -1,5 +1,6 @@
 package org.jgrades.data.api.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -17,7 +18,8 @@ public class Classroom implements Serializable {
 
     private String building;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "SCHOOL_ID", nullable = false)
-    private School school;
+    private School school = new School();
 }

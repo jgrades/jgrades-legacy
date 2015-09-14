@@ -1,7 +1,8 @@
 package org.jgrades.rest.lic;
 
 import org.apache.commons.configuration.PropertiesConfiguration;
-import org.jgrades.data.api.dao.UserRepository;
+import org.jgrades.admin.api.general.*;
+import org.jgrades.data.api.dao.*;
 import org.jgrades.data.api.service.DataSourceService;
 import org.jgrades.lic.api.service.LicenceCheckingService;
 import org.jgrades.lic.api.service.LicenceManagingService;
@@ -67,5 +68,65 @@ public class LicMockConfig extends WebMvcConfigurerAdapter {
     @Primary
     public UserRepository userRepository() {
         return Mockito.mock(UserRepository.class);
+    }
+
+    @Bean
+    @Primary
+    public ClassroomMgntService classroomMgntService() {
+        return Mockito.mock(ClassroomMgntService.class);
+    }
+
+    @Bean
+    @Primary
+    public ClassroomRepository classroomRepository() {
+        return Mockito.mock(ClassroomRepository.class);
+    }
+
+    @Bean
+    @Primary
+    public GeneralDataService generalDataService() {
+        return Mockito.mock(GeneralDataService.class);
+    }
+
+    @Bean
+    @Primary
+    public SchoolRepository schoolRepository() {
+        return Mockito.mock(SchoolRepository.class);
+    }
+
+    @Bean
+    @Primary
+    public SubjectsMgntService subjectsMgntService() {
+        return Mockito.mock(SubjectsMgntService.class);
+    }
+
+    @Bean
+    @Primary
+    public SubjectRepository subjectRepository() {
+        return Mockito.mock(SubjectRepository.class);
+    }
+
+    @Bean
+    @Primary
+    public DaysMgntService daysMgntService() {
+        return Mockito.mock(DaysMgntService.class);
+    }
+
+    @Bean
+    @Primary
+    public SchoolDayRepository schoolDayRepository() {
+        return Mockito.mock(SchoolDayRepository.class);
+    }
+
+    @Bean
+    @Primary
+    public PeriodsMgntService periodsMgntService() {
+        return Mockito.mock(PeriodsMgntService.class);
+    }
+
+    @Bean
+    @Primary
+    public SchoolDayPeriodRepository schoolDayPeriodRepository() {
+        return Mockito.mock(SchoolDayPeriodRepository.class);
     }
 }

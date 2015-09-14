@@ -19,13 +19,15 @@ public class PeriodsMgntServiceImpl implements PeriodsMgntService {
 
     @Override
     @Transactional
-    public void saveManyWithGenerator(PeriodsGeneratorSettings settings) {
+    public List<SchoolDayPeriod> generateManyWithGenerator(PeriodsGeneratorSettings settings) {
+        List<SchoolDayPeriod> generatedPeriods = Lists.newArrayList();
+
         LocalTime firstLessonStartTime = settings.getFirstLessonTime();
 
         SchoolDayPeriod firstPeriod = new SchoolDayPeriod();
         firstPeriod.setStartTime(firstLessonStartTime);
         firstPeriod.setEndTime(firstLessonStartTime.plusMinutes(settings.getLessonDurationMinutes()));
-        repository.save(firstPeriod);
+        generatedPeriods.add(firstPeriod);
 
         LocalTime endTime = firstPeriod.getEndTime();
         for (Integer breakDuration : settings.getBreakDurations()) {
@@ -34,8 +36,15 @@ public class PeriodsMgntServiceImpl implements PeriodsMgntService {
             endTime = startTime.plusMinutes(settings.getLessonDurationMinutes());
             period.setStartTime(startTime);
             period.setEndTime(endTime);
-            repository.save(period);
+            generatedPeriods.add(period);
         }
+        return generatedPeriods;
+    }
+
+    @Override
+    @Transactional
+    public void saveMany(List<SchoolDayPeriod> periods) {
+        repository.save(periods);
     }
 
     @Override

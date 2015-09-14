@@ -23,7 +23,7 @@ public class PasswordPolicyManagerService {
     @Autowired
     private PasswordPolicyService passwordPolicyService;
 
-    @RequestMapping(value = "{role}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/{role}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public
     @ResponseBody
     PasswordPolicy getForRole(@PathVariable JgRole role) {
