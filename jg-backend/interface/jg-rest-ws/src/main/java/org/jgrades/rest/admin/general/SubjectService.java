@@ -1,7 +1,10 @@
-package org.jgrades.rest.admin.accounts;
+package org.jgrades.rest.admin.general;
 
-import org.jgrades.admin.api.accounts.UserMgntService;
-import org.jgrades.data.api.entities.User;
+import org.jgrades.admin.api.general.SubjectsMgntService;
+import org.jgrades.data.api.entities.Subject;
+import org.jgrades.logging.JgLogger;
+import org.jgrades.logging.JgLoggerFactory;
+import org.jgrades.monitor.api.aop.CheckSystemDependencies;
 import org.jgrades.rest.PagingInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -12,45 +15,47 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-public abstract class AbstractUserService<U extends User> {
-    private final UserMgntService<U> userManagerService;
+@RestController
+@RequestMapping(value = "/subject", produces = MediaType.APPLICATION_JSON_VALUE)
+@CheckSystemDependencies
+public class SubjectService {
+    private static final JgLogger LOGGER = JgLoggerFactory.getLogger(SubjectService.class);
 
     @Autowired
-    protected AbstractUserService(UserMgntService<U> userManagerService) {
-        this.userManagerService = userManagerService;
-    }
+    private SubjectsMgntService subjectService;
+
 
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Object> insertOrUpdate(@RequestBody U user) {
-        userManagerService.saveOrUpdate(user);
+    public ResponseEntity<Object> insertOrUpdate(@RequestBody Subject subject) {
+        subjectService.saveOrUpdate(subject);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Object> remove(@PathVariable Long id) {
-        userManagerService.remove(userManagerService.getWithId(id));
+        subjectService.remove(subjectService.getWithId(id));
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET)
     public
     @ResponseBody
-    List<U> getAll() {
-        return userManagerService.getAll();
+    List<Subject> getAll() {
+        return subjectService.getAll();
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public
     @ResponseBody
-    U getWithId(@PathVariable Long id) {
-        return userManagerService.getWithId(id);
+    Subject getWithId(@PathVariable Long id) {
+        return subjectService.getWithId(id);
     }
 
     @RequestMapping(value = "/page/{number}/{size}", method = RequestMethod.GET)
     public
     @ResponseBody
-    Page<U> getPage(@PathVariable Integer number, @PathVariable Integer size) {
+    Page<Subject> getPage(@PathVariable Integer number, @PathVariable Integer size) {
         PagingInfo pagingInfo = new PagingInfo(number, size);
-        return userManagerService.getPage(pagingInfo.toPageable());
+        return subjectService.getPage(pagingInfo.toPageable());
     }
 }

@@ -1,6 +1,6 @@
 package org.jgrades.security.service;
 
-import org.jgrades.data.api.dao.UserRepository;
+import org.jgrades.data.api.dao.accounts.GenericUserRepository;
 import org.jgrades.data.api.entities.User;
 import org.jgrades.data.api.model.roles.JgRole;
 import org.jgrades.data.api.model.roles.Roles;
@@ -24,7 +24,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     private final static JgLogger LOGGER = JgLoggerFactory.getLogger(UserDetailsServiceImpl.class);
 
     @Autowired
-    private UserRepository userRepository;
+    private GenericUserRepository userRepository;
 
     @Autowired
     private PasswordDataRepository passwordDataRepository;

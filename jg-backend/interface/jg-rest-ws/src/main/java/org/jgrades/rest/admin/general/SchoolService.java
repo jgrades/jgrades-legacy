@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(value = "/general", produces = MediaType.APPLICATION_JSON_VALUE)
 @CheckSystemDependencies
-public class GeneralManagerService {
-    private static final JgLogger LOGGER = JgLoggerFactory.getLogger(GeneralManagerService.class);
+public class SchoolService {
+    private static final JgLogger LOGGER = JgLoggerFactory.getLogger(SchoolService.class);
 
     @Autowired
     private GeneralDataService generalDataService;

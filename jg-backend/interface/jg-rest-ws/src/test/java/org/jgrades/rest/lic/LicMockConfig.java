@@ -4,6 +4,7 @@ import org.apache.commons.configuration.PropertiesConfiguration;
 import org.jgrades.admin.api.accounts.*;
 import org.jgrades.admin.api.general.*;
 import org.jgrades.data.api.dao.*;
+import org.jgrades.data.api.dao.accounts.GenericUserRepository;
 import org.jgrades.data.api.service.DataSourceService;
 import org.jgrades.lic.api.service.LicenceCheckingService;
 import org.jgrades.lic.api.service.LicenceManagingService;
@@ -67,8 +68,8 @@ public class LicMockConfig extends WebMvcConfigurerAdapter {
 
     @Bean
     @Primary
-    public UserRepository userRepository() {
-        return Mockito.mock(UserRepository.class);
+    public GenericUserRepository userRepository() {
+        return Mockito.mock(GenericUserRepository.class);
     }
 
     @Bean
@@ -133,8 +134,8 @@ public class LicMockConfig extends WebMvcConfigurerAdapter {
 
     @Bean
     @Primary
-    public RoleUserRepository roleUserRepository() {
-        return Mockito.mock(RoleUserRepository.class);
+    public AbstaractUserRepository roleUserRepository() {
+        return Mockito.mock(AbstaractUserRepository.class);
     }
 
     @Bean

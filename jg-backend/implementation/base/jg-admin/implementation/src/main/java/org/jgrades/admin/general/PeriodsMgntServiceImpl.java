@@ -18,7 +18,7 @@ public class PeriodsMgntServiceImpl implements PeriodsMgntService {
     private SchoolDayPeriodRepository repository;
 
     @Override
-    @Transactional
+    @Transactional("mainTransactionManager")
     public List<SchoolDayPeriod> generateManyWithGenerator(PeriodsGeneratorSettings settings) {
         List<SchoolDayPeriod> generatedPeriods = Lists.newArrayList();
 
@@ -42,7 +42,7 @@ public class PeriodsMgntServiceImpl implements PeriodsMgntService {
     }
 
     @Override
-    @Transactional
+    @Transactional("mainTransactionManager")
     public void saveMany(List<SchoolDayPeriod> periods) {
         repository.save(periods);
     }

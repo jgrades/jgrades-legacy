@@ -2,7 +2,7 @@ package org.jgrades.admin.accounts;
 
 import com.google.common.collect.Lists;
 import org.jgrades.admin.api.accounts.UserMgntService;
-import org.jgrades.data.api.dao.RoleUserRepository;
+import org.jgrades.data.api.dao.AbstaractUserRepository;
 import org.jgrades.data.api.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public abstract class AbstractUserMgntServiceImpl<U extends User, R extends RoleUserRepository<U>> implements UserMgntService<U> {
+public abstract class AbstractUserMgntServiceImpl<U extends User, R extends AbstaractUserRepository<U>> implements UserMgntService<U> {
     private final R repository;
 
     @Autowired

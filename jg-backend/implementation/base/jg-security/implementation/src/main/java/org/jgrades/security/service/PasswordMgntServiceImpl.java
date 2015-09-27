@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class PasswordMgntServiceImpl implements PasswordMgntService {
@@ -19,18 +20,20 @@ public class PasswordMgntServiceImpl implements PasswordMgntService {
     private UserDetailsService userDetailsService;
 
     @Override
+    @Transactional("mainTransactionManager")
     public void setPassword(String password, User user) {
         PasswordData pswdData = passwordDataRepository.findOne(user.getId());
         if (pswdData == null) {
-            PasswordData passwordData = new PasswordData();
-            passwordData.setUserId(user.getId());
-            passwordData.setUser(user);
-            passwordData.setPassword(password);
-            passwordData.setLastChange(DateTime.now());
+            pswdData = new PasswordData();
+            pswdData.setId(user.getId());
+            pswdData.setUser(user);
+            pswdData.setPassword(password);
+            pswdData.setLastChange(DateTime.now());
 
-            passwordDataRepository.save(passwordData);
+            passwordDataRepository.save(pswdData);
         } else {
-            passwordDataRepository.getPasswordDataWithUser(user);
+            pswdData.setLastChange(DateTime.now());
+            passwordDataRepository.setPasswordForUser(password, user);
         }
     }
 

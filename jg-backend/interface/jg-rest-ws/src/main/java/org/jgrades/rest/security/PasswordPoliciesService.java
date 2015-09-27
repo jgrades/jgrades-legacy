@@ -17,8 +17,8 @@ import java.util.Set;
 @RestController
 @RequestMapping(value = "/password/policy")
 @CheckSystemDependencies
-public class PasswordPolicyManagerService {
-    private static final JgLogger LOGGER = JgLoggerFactory.getLogger(PasswordPolicyManagerService.class);
+public class PasswordPoliciesService {
+    private static final JgLogger LOGGER = JgLoggerFactory.getLogger(PasswordPoliciesService.class);
 
     @Autowired
     private PasswordPolicyService passwordPolicyService;

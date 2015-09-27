@@ -91,6 +91,7 @@ public class DataConfig {
         jpaProperties.put("hibernate.hbm2ddl.auto", schemaOrmPolicy);
         jpaProperties.put("hibernate.show_sql", showSql);
         jpaProperties.put("hibernate.format_sql", formatSql);
+        jpaProperties.put("hibernate.enable_lazy_load_no_trans", true);
         entityManagerFactoryBean.setJpaProperties(jpaProperties);
 
         return entityManagerFactoryBean;

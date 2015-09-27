@@ -17,18 +17,18 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/period", produces = MediaType.APPLICATION_JSON_VALUE)
 @CheckSystemDependencies
-public class PeriodsManagerService {
-    private static final JgLogger LOGGER = JgLoggerFactory.getLogger(PeriodsManagerService.class);
+public class PeriodsService {
+    private static final JgLogger LOGGER = JgLoggerFactory.getLogger(PeriodsService.class);
 
     @Autowired
     private PeriodsMgntService periodsService;
 
     @Autowired
-    private GeneralManagerService generalManagerService;
+    private SchoolService schoolService;
 
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> insertOrUpdate(@RequestBody SchoolDayPeriod schoolDayPeriod) {
-        schoolDayPeriod.setSchool(generalManagerService.getGeneralData());
+        schoolDayPeriod.setSchool(schoolService.getGeneralData());
         periodsService.saveOrUpdate(schoolDayPeriod);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -37,7 +37,7 @@ public class PeriodsManagerService {
     public ResponseEntity<Object> insertWithGenerator(@RequestBody PeriodsGeneratorSettings generationSettings) {
         List<SchoolDayPeriod> periods = periodsService.generateManyWithGenerator(generationSettings);
         for (SchoolDayPeriod period : periods) {
-            period.setSchool(generalManagerService.getGeneralData());
+            period.setSchool(schoolService.getGeneralData());
         }
         periodsService.saveMany(periods);
         return new ResponseEntity<>(HttpStatus.OK);

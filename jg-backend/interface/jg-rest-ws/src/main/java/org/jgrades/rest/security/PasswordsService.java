@@ -1,6 +1,6 @@
 package org.jgrades.rest.security;
 
-import org.jgrades.data.api.dao.UserRepository;
+import org.jgrades.data.api.dao.accounts.GenericUserRepository;
 import org.jgrades.logging.JgLogger;
 import org.jgrades.logging.JgLoggerFactory;
 import org.jgrades.monitor.api.aop.CheckSystemDependencies;
@@ -14,14 +14,14 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(value = "/password")
 @CheckSystemDependencies
-public class PasswordManagementService {
-    private static final JgLogger LOGGER = JgLoggerFactory.getLogger(PasswordManagementService.class);
+public class PasswordsService {
+    private static final JgLogger LOGGER = JgLoggerFactory.getLogger(PasswordsService.class);
 
     @Autowired
     private PasswordMgntService passwordMgntService;
 
     @Autowired
-    private UserRepository userRepository;
+    private GenericUserRepository userRepository;
 
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> setPassword(@RequestBody PasswordDTO passwordInfo) {

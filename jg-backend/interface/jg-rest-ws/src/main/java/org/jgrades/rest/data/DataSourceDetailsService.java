@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(value = "/datasource", produces = MediaType.APPLICATION_JSON_VALUE)
 @CheckSystemDependencies(ignored = SystemDependency.MAIN_DATA_SOURCE)
-public class DataSourceManagementService {
-    private static final JgLogger LOGGER = JgLoggerFactory.getLogger(DataSourceManagementService.class);
+public class DataSourceDetailsService {
+    private static final JgLogger LOGGER = JgLoggerFactory.getLogger(DataSourceDetailsService.class);
 
     @Autowired
     private DataSourceService dataSourceService;

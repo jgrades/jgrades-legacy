@@ -17,8 +17,8 @@ import java.util.Set;
 @RestController
 @RequestMapping(value = "/workingdays", produces = MediaType.APPLICATION_JSON_VALUE)
 @CheckSystemDependencies
-public class WorkingDaysManagerService {
-    private static final JgLogger LOGGER = JgLoggerFactory.getLogger(WorkingDaysManagerService.class);
+public class WorkingDaysService {
+    private static final JgLogger LOGGER = JgLoggerFactory.getLogger(WorkingDaysService.class);
 
     @Autowired
     private DaysMgntService daysMgntService;

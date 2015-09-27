@@ -6,5 +6,6 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface RoleUserRepository<U extends User> extends PagingAndSortingRepository<U, Long>, JpaSpecificationExecutor<U> {
+public interface AbstaractUserRepository<U extends User> extends PagingAndSortingRepository<U, Long>, JpaSpecificationExecutor<U> {
+    U findFirstByLogin(String login);
 }

@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(value = "/logging")
 @CheckSystemDependencies
-public class LoggerConfigurationService {
-    private static final JgLogger LOGGER = JgLoggerFactory.getLogger(LoggerConfigurationService.class);
+public class LoggerConfigService {
+    private static final JgLogger LOGGER = JgLoggerFactory.getLogger(LoggerConfigService.class);
 
     @Autowired
     private LoggingService loggingService;
