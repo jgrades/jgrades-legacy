@@ -54,10 +54,11 @@ public class ClassroomManagerService {
         return classroomService.getWithId(id);
     }
 
-    @RequestMapping(value = "/page", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/page/{pageNumber}/{pageSize}", method = RequestMethod.GET)
     public
     @ResponseBody
-    Page<Classroom> getPage(@RequestBody PagingInfo pagingInfo) {
+    Page<Classroom> getPage(@PathVariable Integer pageNumber, @PathVariable Integer pageSize) {
+        PagingInfo pagingInfo = new PagingInfo(pageNumber, pageSize);
         return classroomService.getPage(pagingInfo.toPageable());
     }
 }

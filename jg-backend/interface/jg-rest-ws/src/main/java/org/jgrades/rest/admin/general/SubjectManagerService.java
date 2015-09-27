@@ -51,10 +51,11 @@ public class SubjectManagerService {
         return subjectService.getWithId(id);
     }
 
-    @RequestMapping(value = "/page", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/page/{pageNumber}/{pageSize}", method = RequestMethod.GET)
     public
     @ResponseBody
-    Page<Subject> getPage(@RequestBody PagingInfo pagingInfo) {
+    Page<Subject> getPage(@PathVariable Integer pageNumber, @PathVariable Integer pageSize) {
+        PagingInfo pagingInfo = new PagingInfo(pageNumber, pageSize);
         return subjectService.getPage(pagingInfo.toPageable());
     }
 }

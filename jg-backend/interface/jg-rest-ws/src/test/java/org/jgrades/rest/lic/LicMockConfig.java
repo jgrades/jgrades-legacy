@@ -1,9 +1,7 @@
 package org.jgrades.rest.lic;
 
 import org.apache.commons.configuration.PropertiesConfiguration;
-import org.jgrades.admin.api.accounts.UserManagerService;
-import org.jgrades.admin.api.accounts.UserSelectionService;
-import org.jgrades.admin.api.accounts.UserSpecifications;
+import org.jgrades.admin.api.accounts.*;
 import org.jgrades.admin.api.general.*;
 import org.jgrades.data.api.dao.*;
 import org.jgrades.data.api.service.DataSourceService;
@@ -135,20 +133,8 @@ public class LicMockConfig extends WebMvcConfigurerAdapter {
 
     @Bean
     @Primary
-    public UserManagerService userManagerService() {
-        return Mockito.mock(UserManagerService.class);
-    }
-
-    @Bean
-    @Primary
     public RoleUserRepository roleUserRepository() {
         return Mockito.mock(RoleUserRepository.class);
-    }
-
-    @Bean
-    @Primary
-    public UserSelectionService userSelectionService() {
-        return Mockito.mock(UserSelectionService.class);
     }
 
     @Bean
@@ -157,4 +143,33 @@ public class LicMockConfig extends WebMvcConfigurerAdapter {
         return Mockito.mock(UserSpecifications.class);
     }
 
+    @Bean
+    @Primary
+    public AdministratorMgntService administratorMgntService() {
+        return Mockito.mock(AdministratorMgntService.class);
+    }
+
+    @Bean
+    @Primary
+    public ManagerMgntService managerMgntService() {
+        return Mockito.mock(ManagerMgntService.class);
+    }
+
+    @Bean
+    @Primary
+    public TeacherMgntService teacherMgntService() {
+        return Mockito.mock(TeacherMgntService.class);
+    }
+
+    @Bean
+    @Primary
+    public StudentMgntService studentMgntService() {
+        return Mockito.mock(StudentMgntService.class);
+    }
+
+    @Bean
+    @Primary
+    public ParentMgntService parentMgntService() {
+        return Mockito.mock(ParentMgntService.class);
+    }
 }

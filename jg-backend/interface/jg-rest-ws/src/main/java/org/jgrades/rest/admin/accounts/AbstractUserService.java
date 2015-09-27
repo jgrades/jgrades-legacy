@@ -1,7 +1,6 @@
 package org.jgrades.rest.admin.accounts;
 
-import org.jgrades.admin.api.accounts.UserManagerService;
-import org.jgrades.admin.api.accounts.UserSelectionService;
+import org.jgrades.admin.api.accounts.UserMgntService;
 import org.jgrades.data.api.entities.User;
 import org.jgrades.rest.PagingInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,12 +12,13 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-public abstract class AbstractUserManagementService<U extends User> {
-    @Autowired
-    private UserManagerService<U> userManagerService;
+public abstract class AbstractUserService<U extends User> {
+    private final UserMgntService<U> userManagerService;
 
     @Autowired
-    private UserSelectionService<U> userSelectionService;
+    protected AbstractUserService(UserMgntService<U> userManagerService) {
+        this.userManagerService = userManagerService;
+    }
 
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> insertOrUpdate(@RequestBody U user) {
@@ -46,10 +46,11 @@ public abstract class AbstractUserManagementService<U extends User> {
         return userManagerService.getWithId(id);
     }
 
-    @RequestMapping(value = "/page", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/page/{pageNumber}/{pageSize}", method = RequestMethod.GET)
     public
     @ResponseBody
-    Page<U> getPage(@RequestBody PagingInfo pagingInfo) {
+    Page<U> getPage(@PathVariable Integer pageNumber, @PathVariable Integer pageSize) {
+        PagingInfo pagingInfo = new PagingInfo(pageNumber, pageSize);
         return userManagerService.getPage(pagingInfo.toPageable());
     }
 }
