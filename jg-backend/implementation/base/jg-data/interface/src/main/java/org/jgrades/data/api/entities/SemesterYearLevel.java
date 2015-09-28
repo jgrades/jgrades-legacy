@@ -1,5 +1,6 @@
 package org.jgrades.data.api.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Lists;
 import lombok.Data;
 import org.hibernate.annotations.Type;
@@ -30,6 +31,7 @@ public class SemesterYearLevel implements Serializable {
     @Type(type = CustomType.JODA_DATE_TIME)
     private DateTime endDateTime;
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "semesterYearLevel")
     private List<ClassGroup> classGroups = Lists.newArrayList();
 

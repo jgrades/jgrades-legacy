@@ -1,5 +1,6 @@
 package org.jgrades.data.api.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Lists;
 import lombok.Data;
 
@@ -19,6 +20,7 @@ public class Division implements Serializable {
 
     private String name;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CLASS_GROUP_ID", nullable = false)
     private ClassGroup classGroup;

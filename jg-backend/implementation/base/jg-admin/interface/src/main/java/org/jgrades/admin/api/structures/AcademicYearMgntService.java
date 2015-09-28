@@ -7,5 +7,5 @@ import org.jgrades.data.api.entities.AcademicYear;
 public interface AcademicYearMgntService extends Manager<AcademicYear>, PagingSelector<AcademicYear, Long> {
     AcademicYear getActiveAcademicYear();
 
-    void setActiveAcademicYear(AcademicYear activeAcademicYear);
+    void setActiveAcademicYear(AcademicYear academicYear);
 }

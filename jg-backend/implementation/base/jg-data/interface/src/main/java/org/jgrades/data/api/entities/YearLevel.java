@@ -1,5 +1,6 @@
 package org.jgrades.data.api.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Lists;
 import lombok.Data;
 
@@ -18,6 +19,7 @@ public class YearLevel implements Serializable {
 
     private String name;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "pk.semester", cascade = CascadeType.ALL)
     private List<SemesterYearLevel> semesters = Lists.newArrayList();
 }

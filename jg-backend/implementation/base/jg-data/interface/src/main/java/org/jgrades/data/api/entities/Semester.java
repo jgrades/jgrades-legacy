@@ -1,5 +1,6 @@
 package org.jgrades.data.api.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Lists;
 import lombok.Data;
 
@@ -20,10 +21,12 @@ public class Semester implements Serializable {
 
     private boolean active;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ACADEMIC_YEAR_ID", nullable = false)
     private AcademicYear academicYear;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "pk.yearLevel", cascade = CascadeType.ALL)
     private List<SemesterYearLevel> yearLevels = Lists.newArrayList();
 }
