@@ -3,6 +3,7 @@ package org.jgrades.admin.general;
 import com.google.common.collect.Lists;
 import org.jgrades.admin.api.general.PeriodsMgntService;
 import org.jgrades.admin.api.model.PeriodsGeneratorSettings;
+import org.jgrades.admin.common.AbstractMgntService;
 import org.jgrades.data.api.dao.SchoolDayPeriodRepository;
 import org.jgrades.data.api.entities.SchoolDayPeriod;
 import org.joda.time.LocalTime;
@@ -13,9 +14,11 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-public class PeriodsMgntServiceImpl implements PeriodsMgntService {
+public class PeriodsMgntServiceImpl extends AbstractMgntService<SchoolDayPeriod, Long, SchoolDayPeriodRepository> implements PeriodsMgntService {
     @Autowired
-    private SchoolDayPeriodRepository repository;
+    public PeriodsMgntServiceImpl(SchoolDayPeriodRepository repository) {
+        super(repository);
+    }
 
     @Override
     @Transactional("mainTransactionManager")
@@ -45,30 +48,5 @@ public class PeriodsMgntServiceImpl implements PeriodsMgntService {
     @Transactional("mainTransactionManager")
     public void saveMany(List<SchoolDayPeriod> periods) {
         repository.save(periods);
-    }
-
-    @Override
-    public void saveOrUpdate(SchoolDayPeriod schoolDayPeriod) {
-        repository.save(schoolDayPeriod);
-    }
-
-    @Override
-    public void remove(SchoolDayPeriod schoolDayPeriod) {
-        repository.delete(schoolDayPeriod);
-    }
-
-    @Override
-    public void remove(List<SchoolDayPeriod> schoolDayPeriods) {
-        repository.delete(schoolDayPeriods);
-    }
-
-    @Override
-    public List<SchoolDayPeriod> getAll() {
-        return Lists.newArrayList(repository.findAll());
-    }
-
-    @Override
-    public SchoolDayPeriod getWithId(Long id) {
-        return repository.findOne(id);
     }
 }

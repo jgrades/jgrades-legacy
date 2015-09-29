@@ -6,60 +6,33 @@ import org.jgrades.data.api.entities.SchoolDayPeriod;
 import org.jgrades.logging.JgLogger;
 import org.jgrades.logging.JgLoggerFactory;
 import org.jgrades.monitor.api.aop.CheckSystemDependencies;
+import org.jgrades.rest.admin.common.AbstractRestCrudService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
 @RequestMapping(value = "/period", produces = MediaType.APPLICATION_JSON_VALUE)
 @CheckSystemDependencies
-public class PeriodsService {
+public class PeriodsService extends AbstractRestCrudService<SchoolDayPeriod, Long, PeriodsMgntService> {
     private static final JgLogger LOGGER = JgLoggerFactory.getLogger(PeriodsService.class);
 
     @Autowired
-    private PeriodsMgntService periodsService;
-
-    @Autowired
-    private SchoolService schoolService;
-
-    @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Object> insertOrUpdate(@RequestBody SchoolDayPeriod schoolDayPeriod) {
-        schoolDayPeriod.setSchool(schoolService.getGeneralData());
-        periodsService.saveOrUpdate(schoolDayPeriod);
-        return new ResponseEntity<>(HttpStatus.OK);
+    protected PeriodsService(PeriodsMgntService crudService) {
+        super(crudService);
     }
 
     @RequestMapping(value = "/generator", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> insertWithGenerator(@RequestBody PeriodsGeneratorSettings generationSettings) {
-        List<SchoolDayPeriod> periods = periodsService.generateManyWithGenerator(generationSettings);
-        for (SchoolDayPeriod period : periods) {
-            period.setSchool(schoolService.getGeneralData());
-        }
-        periodsService.saveMany(periods);
+        List<SchoolDayPeriod> periods = crudService.generateManyWithGenerator(generationSettings);
+        crudService.saveMany(periods);
         return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<Object> remove(@PathVariable Long id) {
-        periodsService.remove(periodsService.getWithId(id));
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @RequestMapping(method = RequestMethod.GET)
-    public
-    @ResponseBody
-    List<SchoolDayPeriod> getAll() {
-        return periodsService.getAll();
-    }
-
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public
-    @ResponseBody
-    SchoolDayPeriod getWithId(@PathVariable Long id) {
-        return periodsService.getWithId(id);
     }
 }

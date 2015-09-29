@@ -1,6 +1,5 @@
 package org.jgrades.data.api.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.hibernate.annotations.Type;
 import org.jgrades.data.api.utils.CustomType;
@@ -24,9 +23,4 @@ public class SchoolDayPeriod implements Serializable {
     @Column
     @Type(type = CustomType.JODA_LOCAL_TIME)
     private LocalTime endTime;
-
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "SCHOOL_ID", nullable = false)
-    private School school;
 }

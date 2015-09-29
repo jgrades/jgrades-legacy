@@ -1,25 +1,23 @@
 package org.jgrades.admin.structures;
 
-import com.google.common.collect.Lists;
 import org.jgrades.admin.api.structures.AcademicYearMgntService;
 import org.jgrades.admin.api.structures.SemesterMgntService;
+import org.jgrades.admin.common.AbstractPagingMgntService;
 import org.jgrades.data.api.dao.structures.SemesterRepository;
 import org.jgrades.data.api.entities.Semester;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
 @Service
-public class SemesterMgntServiceImpl implements SemesterMgntService {
-    @Autowired
-    private SemesterRepository repository;
-
+public class SemesterMgntServiceImpl extends AbstractPagingMgntService<Semester, Long, SemesterRepository> implements SemesterMgntService {
     @Autowired
     private AcademicYearMgntService academicYearMgntService;
+
+    @Autowired
+    public SemesterMgntServiceImpl(SemesterRepository repository) {
+        super(repository);
+    }
 
     @Override//TODO
     @Transactional("mainTransactionManager")
@@ -52,32 +50,7 @@ public class SemesterMgntServiceImpl implements SemesterMgntService {
         if (semester.isActive()) {
             setActiveSemester(semester);
         } else {
-            repository.save(semester);
+            super.saveOrUpdate(semester);
         }
-    }
-
-    @Override
-    public void remove(Semester semester) {
-        repository.delete(semester);
-    }
-
-    @Override
-    public void remove(List<Semester> semesters) {
-        repository.delete(semesters);
-    }
-
-    @Override
-    public Page<Semester> getPage(Pageable pageable) {
-        return repository.findAll(pageable);
-    }
-
-    @Override
-    public List<Semester> getAll() {
-        return Lists.newArrayList(repository.findAll());
-    }
-
-    @Override
-    public Semester getWithId(Long id) {
-        return repository.findOne(id);
     }
 }

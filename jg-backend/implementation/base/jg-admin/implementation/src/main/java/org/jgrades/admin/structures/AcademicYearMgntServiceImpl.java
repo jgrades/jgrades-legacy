@@ -1,21 +1,20 @@
 package org.jgrades.admin.structures;
 
-import com.google.common.collect.Lists;
 import org.jgrades.admin.api.structures.AcademicYearMgntService;
+import org.jgrades.admin.common.AbstractPagingMgntService;
 import org.jgrades.data.api.dao.structures.AcademicYearRepository;
 import org.jgrades.data.api.entities.AcademicYear;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
 @Service
-public class AcademicYearMgntServiceImpl implements AcademicYearMgntService {
+public class AcademicYearMgntServiceImpl extends AbstractPagingMgntService<AcademicYear, Long, AcademicYearRepository> implements AcademicYearMgntService {
+
     @Autowired
-    private AcademicYearRepository repository;
+    public AcademicYearMgntServiceImpl(AcademicYearRepository repository) {
+        super(repository);
+    }
 
     @Override
     public AcademicYear getActiveAcademicYear() {
@@ -40,32 +39,7 @@ public class AcademicYearMgntServiceImpl implements AcademicYearMgntService {
         if (academicYear.isActive()) {
             setActiveAcademicYear(academicYear);
         } else {
-            repository.save(academicYear);
+            super.saveOrUpdate(academicYear);
         }
-    }
-
-    @Override
-    public void remove(AcademicYear academicYear) {
-        repository.delete(academicYear);
-    }
-
-    @Override
-    public void remove(List<AcademicYear> academicYears) {
-        repository.delete(academicYears);
-    }
-
-    @Override
-    public Page<AcademicYear> getPage(Pageable pageable) {
-        return repository.findAll(pageable);
-    }
-
-    @Override
-    public List<AcademicYear> getAll() {
-        return Lists.newArrayList(repository.findAll());
-    }
-
-    @Override
-    public AcademicYear getWithId(Long id) {
-        return repository.findOne(id);
     }
 }
