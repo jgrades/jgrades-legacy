@@ -3,9 +3,7 @@ package org.jgrades.rest.lic;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.jgrades.admin.api.accounts.*;
 import org.jgrades.admin.api.general.*;
-import org.jgrades.admin.api.structures.AcademicYearMgntService;
-import org.jgrades.admin.api.structures.SemesterMgntService;
-import org.jgrades.admin.api.structures.YearLevelMgntService;
+import org.jgrades.admin.api.structures.*;
 import org.jgrades.data.api.dao.*;
 import org.jgrades.data.api.dao.accounts.GenericUserRepository;
 import org.jgrades.data.api.service.DataSourceService;
@@ -193,5 +191,23 @@ public class LicMockConfig extends WebMvcConfigurerAdapter {
     @Primary
     public YearLevelMgntService yearLevelMgntService() {
         return Mockito.mock(YearLevelMgntService.class);
+    }
+
+    @Bean
+    @Primary
+    public ClassGroupMgntService classGroupMgntService() {
+        return Mockito.mock(ClassGroupMgntService.class);
+    }
+
+    @Bean
+    @Primary
+    public DivisionMgntService divisionMgntService() {
+        return Mockito.mock(DivisionMgntService.class);
+    }
+
+    @Bean
+    @Primary
+    public SubGroupMgntService subGroupMgntService() {
+        return Mockito.mock(SubGroupMgntService.class);
     }
 }

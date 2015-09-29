@@ -1,5 +1,6 @@
 package org.jgrades.admin.structures;
 
+import com.google.common.collect.Lists;
 import org.jgrades.admin.api.structures.ClassGroupMgntService;
 import org.jgrades.data.api.dao.structures.ClassGroupRepository;
 import org.jgrades.data.api.entities.ClassGroup;
@@ -31,38 +32,38 @@ public class ClassGroupMgntServiceImpl implements ClassGroupMgntService {
         return null;
     }
 
-    @Override
+    @Override//TODO
     public void addStudent(ClassGroup classGroup, Student student) {
 
     }
 
     @Override
     public void saveOrUpdate(ClassGroup classGroup) {
-
+        repository.save(classGroup);
     }
 
     @Override
     public void remove(ClassGroup classGroup) {
-
+        repository.save(classGroup);
     }
 
     @Override
     public void remove(List<ClassGroup> classGroups) {
-
+        repository.save(classGroups);
     }
 
     @Override
     public Page<ClassGroup> getPage(Pageable pageable) {
-        return null;
+        return repository.findAll(pageable);
     }
 
     @Override
     public List<ClassGroup> getAll() {
-        return null;
+        return Lists.newArrayList(repository.findAll());
     }
 
     @Override
     public ClassGroup getWithId(Long id) {
-        return null;
+        return repository.findOne(id);
     }
 }

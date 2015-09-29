@@ -30,7 +30,6 @@ public class AcademicYearService {
 
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> insertOrUpdate(@RequestBody AcademicYear academicYear) {
-        academicYear.setSchool(schoolService.getGeneralData());
         academicYearMgntService.saveOrUpdate(academicYear);
         return new ResponseEntity<>(HttpStatus.OK);
     }
