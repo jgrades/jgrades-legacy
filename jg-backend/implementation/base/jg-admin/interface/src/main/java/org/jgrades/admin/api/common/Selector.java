@@ -6,4 +6,6 @@ public interface Selector<T, ID> {
     List<T> getAll();
 
     T getWithId(ID id);
+
+    List<T> getWithIds(List<ID> ids);
 }

@@ -78,7 +78,7 @@
         <jackson.core.version>2.6.0</jackson.core.version>
 
         <!-- DOCUMENTATION UTILS -->
-        <springfox.swagger.version>2.1.2</springfox.swagger.version>
+        <springfox.swagger.version>2.2.2</springfox.swagger.version>
     </properties>
 
     <repositories>

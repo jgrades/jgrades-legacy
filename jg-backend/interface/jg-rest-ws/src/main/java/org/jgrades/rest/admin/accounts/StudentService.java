@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/user/student", produces = MediaType.APPLICATION_JSON_VALUE)
 @CheckSystemDependencies
 public class StudentService extends AbstractUserService<Student> {
-    @Autowired
+    @Autowired(required = false)//TODO
     private MassAccountCreatorService massAccountCreatorService;
 
     @Autowired

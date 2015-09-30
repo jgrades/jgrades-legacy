@@ -21,17 +21,10 @@ public abstract class AbstractRestCrudService<T, ID, S extends CrudService<T, ID
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<Object> remove(@PathVariable ID id) {
-        crudService.remove(crudService.getWithId(id));
+    @RequestMapping(method = RequestMethod.DELETE)
+    public ResponseEntity<Object> remove(@RequestParam("id") List<ID> ids) {
+        crudService.removeIds(ids);
         return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @RequestMapping(method = RequestMethod.GET)
-    public
-    @ResponseBody
-    List<T> getAll() {
-        return crudService.getAll();
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
@@ -39,5 +32,12 @@ public abstract class AbstractRestCrudService<T, ID, S extends CrudService<T, ID
     @ResponseBody
     T getWithId(@PathVariable ID id) {
         return crudService.getWithId(id);
+    }
+
+    @RequestMapping(method = RequestMethod.GET)
+    public
+    @ResponseBody
+    List<T> getWithIds(@RequestParam(value = "id", required = false) List<ID> ids) {
+        return ids == null ? crudService.getAll() : crudService.getWithIds(ids);
     }
 }

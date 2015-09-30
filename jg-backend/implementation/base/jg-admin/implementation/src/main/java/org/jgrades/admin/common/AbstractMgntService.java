@@ -5,6 +5,7 @@ import org.jgrades.admin.api.common.CrudService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
 import java.util.List;
@@ -34,6 +35,17 @@ public abstract class AbstractMgntService<T, ID extends Serializable, R extends 
     }
 
     @Override
+    public void removeId(ID id) {
+        repository.delete(id);
+    }
+
+    @Override
+    @Transactional("mainTransactionManager")
+    public void removeIds(List<ID> ids) {
+        ids.forEach(repository::delete);
+    }
+
+    @Override
     public List<T> getAll() {
         return Lists.newArrayList(repository.findAll());
     }
@@ -41,5 +53,10 @@ public abstract class AbstractMgntService<T, ID extends Serializable, R extends 
     @Override
     public T getWithId(ID id) {
         return repository.findOne(id);
+    }
+
+    @Override
+    public List<T> getWithIds(List<ID> ids) {
+        return Lists.newArrayList(repository.findAll(ids));
     }
 }
