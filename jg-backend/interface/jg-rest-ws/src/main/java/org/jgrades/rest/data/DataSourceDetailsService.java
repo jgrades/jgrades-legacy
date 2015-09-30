@@ -33,4 +33,13 @@ public class DataSourceDetailsService {
         dataSourceService.setDataSourceDetails(details);
         return new ResponseEntity<>(details, HttpStatus.OK);
     }
+
+    @RequestMapping(value = "/test", method = RequestMethod.GET)
+    public
+    @ResponseBody
+    ResponseEntity<Boolean> testConnection() {
+        boolean connectionEstabished = dataSourceService.testConnection();
+        HttpStatus httpStatus = connectionEstabished ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR;
+        return new ResponseEntity<>(connectionEstabished, httpStatus);
+    }
 }
