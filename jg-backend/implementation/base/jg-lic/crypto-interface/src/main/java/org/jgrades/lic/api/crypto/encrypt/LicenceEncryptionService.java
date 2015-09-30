@@ -1,7 +1,7 @@
 package org.jgrades.lic.api.crypto.encrypt;
 
-import org.jgrades.lic.api.crypto.utils.KeyStoreContentExtractor;
 import org.jgrades.lic.api.model.Licence;
+import org.jgrades.security.utils.KeyStoreContentExtractor;
 
 import javax.crypto.NoSuchPaddingException;
 import javax.xml.bind.JAXBException;

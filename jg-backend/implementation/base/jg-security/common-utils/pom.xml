@@ -3,29 +3,21 @@
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>jg-lic</artifactId>
+        <artifactId>jg-security</artifactId>
         <groupId>org.jgrades.app</groupId>
         <version>0.4-DEV-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>jg-lic-crypto-api</artifactId>
+    <artifactId>jg-security-common-utils</artifactId>
 
-    <name>jGrades Licensing Module Cryptography API</name>
+    <name>jGrades Security Module Common Utils</name>
 
     <dependencies>
         <!-- INTERNAL DEPENDENCIES -->
-        <dependency>
-            <groupId>org.jgrades.app</groupId>
-            <artifactId>jg-lic-api</artifactId>
-            <version>${RELEASE.VERSION}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jgrades.app</groupId>
-            <artifactId>jg-security-common-utils</artifactId>
-            <version>${RELEASE.VERSION}</version>
-        </dependency>
 
         <!-- EXTERNAL DEPENDENCIES -->
     </dependencies>
+
+
 </project>

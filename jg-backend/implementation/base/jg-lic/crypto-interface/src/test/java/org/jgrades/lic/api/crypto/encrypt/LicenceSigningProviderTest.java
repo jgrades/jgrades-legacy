@@ -1,7 +1,7 @@
 package org.jgrades.lic.api.crypto.encrypt;
 
 import org.apache.commons.io.FileUtils;
-import org.jgrades.lic.api.crypto.utils.KeyStoreContentExtractor;
+import org.jgrades.security.utils.KeyStoreContentExtractor;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.core.io.ClassPathResource;

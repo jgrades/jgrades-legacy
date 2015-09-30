@@ -18,5 +18,6 @@
     <modules>
         <module>interface</module>
         <module>implementation</module>
+        <module>common-utils</module>
     </modules>
 </project>

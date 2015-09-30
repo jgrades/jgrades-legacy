@@ -1,4 +1,4 @@
-package org.jgrades.lic.api.crypto.utils;
+package org.jgrades.security.utils;
 
 import org.junit.Rule;
 import org.junit.Test;

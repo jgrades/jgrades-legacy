@@ -5,7 +5,7 @@ import org.apache.commons.io.FileUtils;
 import java.io.File;
 import java.io.IOException;
 
-import static org.jgrades.lic.api.crypto.utils.LicConstants.SIGNATURE_FILE_EXTENSION;
+import static org.jgrades.security.utils.CryptoDataConstants.SIGNATURE_FILE_EXTENSION;
 
 class LicenceSaver {
     private final File licenceFile;

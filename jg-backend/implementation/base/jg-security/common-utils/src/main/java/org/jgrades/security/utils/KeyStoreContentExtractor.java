@@ -1,4 +1,4 @@
-package org.jgrades.lic.api.crypto.utils;
+package org.jgrades.security.utils;
 
 import javax.crypto.spec.SecretKeySpec;
 import java.io.File;
@@ -8,7 +8,8 @@ import java.security.*;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 
-import static org.jgrades.lic.api.crypto.utils.LicConstants.*;
+import static org.jgrades.security.utils.CryptoDataConstants.*;
+
 
 public class KeyStoreContentExtractor {
     private final File keystore;

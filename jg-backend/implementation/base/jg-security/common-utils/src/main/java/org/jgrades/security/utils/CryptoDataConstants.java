@@ -1,6 +1,6 @@
-package org.jgrades.lic.api.crypto.utils;
+package org.jgrades.security.utils;
 
-public final class LicConstants {
+public final class CryptoDataConstants {
     public static final String KEYSTORE_TYPE = "JCEKS";
 
     public static final String ENCRYPTION_KEY_ALIAS = "jg-crypto";
@@ -11,6 +11,6 @@ public final class LicConstants {
 
     public static final String SIGNATURE_FILE_EXTENSION = ".sign";
 
-    private LicConstants() {
+    private CryptoDataConstants() {
     }
 }

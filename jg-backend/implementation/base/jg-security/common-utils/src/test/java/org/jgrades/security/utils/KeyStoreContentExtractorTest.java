@@ -1,4 +1,4 @@
-package org.jgrades.lic.api.crypto.utils;
+package org.jgrades.security.utils;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.Before;

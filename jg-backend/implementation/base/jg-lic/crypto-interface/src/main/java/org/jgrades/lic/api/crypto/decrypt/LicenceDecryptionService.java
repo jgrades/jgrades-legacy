@@ -1,7 +1,7 @@
 package org.jgrades.lic.api.crypto.decrypt;
 
-import org.jgrades.lic.api.crypto.utils.KeyStoreContentExtractor;
 import org.jgrades.lic.api.model.Licence;
+import org.jgrades.security.utils.KeyStoreContentExtractor;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.NoSuchPaddingException;

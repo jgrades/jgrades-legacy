@@ -1,14 +1,14 @@
 package org.jgrades.lic.api.crypto.decrypt;
 
 import org.apache.commons.io.FileUtils;
-import org.jgrades.lic.api.crypto.utils.KeyStoreContentExtractor;
+import org.jgrades.security.utils.KeyStoreContentExtractor;
 
 import java.io.File;
 import java.io.IOException;
 import java.security.*;
 import java.security.cert.X509Certificate;
 
-import static org.jgrades.lic.api.crypto.utils.LicConstants.SIGNATURE_PROVIDER_INTERFACE;
+import static org.jgrades.security.utils.CryptoDataConstants.SIGNATURE_PROVIDER_INTERFACE;
 
 class SignatureValidator {
     private final KeyStoreContentExtractor keyExtractor;
