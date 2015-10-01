@@ -33,6 +33,10 @@
                 <!-- IF YOU ARE CHANGE ANYTHING PLEASE UPDATE INTERNAL DOCUMENTATION IN GOOGLE DRIVE! !-->
                 <TOMCAT.INSTALLATION.DIR>C:/jgrades/tomcat8</TOMCAT.INSTALLATION.DIR>
                 <TOMCAT.LOGS.DIR>C:/jgrades/tomcat8/logs</TOMCAT.LOGS.DIR>
+                <TOMCAT.MANAGER.PATH>http://localhost:8080/manager</TOMCAT.MANAGER.PATH>
+                <TOMCAT.REST.APP.CONTEXT.PATH>/jg-rest</TOMCAT.REST.APP.CONTEXT.PATH>
+                <TOMCAT.MASTER.SCRIPT.USER>tomcat</TOMCAT.MASTER.SCRIPT.USER>
+                <TOMCAT.MASTER.SCRIPT.PASSWORD>tomcat</TOMCAT.MASTER.SCRIPT.PASSWORD>
                 <JG.LOGS.DIR>C:/jgrades/logs</JG.LOGS.DIR>
                 <JG.INTERNAL.DATA.DIR>C:/jgrades/internal</JG.INTERNAL.DATA.DIR>
                 <LOCAL.BACKUP.DIR>C:/jgrades/backup</LOCAL.BACKUP.DIR>
@@ -62,6 +66,10 @@
                 <!-- IF YOU ARE CHANGE ANYTHING PLEASE UPDATE INTERNAL DOCUMENTATION IN GOOGLE DRIVE! !-->
                 <TOMCAT.INSTALLATION.DIR>/var/lib/tomcat8</TOMCAT.INSTALLATION.DIR>
                 <TOMCAT.LOGS.DIR>/var/log/tomcat8</TOMCAT.LOGS.DIR>
+                <TOMCAT.MANAGER.PATH>http://localhost:8080/manager</TOMCAT.MANAGER.PATH>
+                <TOMCAT.REST.APP.CONTEXT.PATH>/jg-rest</TOMCAT.REST.APP.CONTEXT.PATH>
+                <TOMCAT.MASTER.SCRIPT.USER>tomcat</TOMCAT.MASTER.SCRIPT.USER>
+                <TOMCAT.MASTER.SCRIPT.PASSWORD>tomcat</TOMCAT.MASTER.SCRIPT.PASSWORD>
                 <JG.LOGS.DIR>/var/log/jgrades</JG.LOGS.DIR>
                 <JG.INTERNAL.DATA.DIR>/etc/opt/jgrades</JG.INTERNAL.DATA.DIR>
                 <LOCAL.BACKUP.DIR>/var/backups/jgrades</LOCAL.BACKUP.DIR>

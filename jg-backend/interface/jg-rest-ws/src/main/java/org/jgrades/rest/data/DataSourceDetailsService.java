@@ -6,11 +6,14 @@ import org.jgrades.logging.JgLogger;
 import org.jgrades.logging.JgLoggerFactory;
 import org.jgrades.monitor.api.aop.CheckSystemDependencies;
 import org.jgrades.monitor.api.model.SystemDependency;
+import org.jgrades.monitor.api.service.SystemStateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Timer;
 
 @RestController
 @RequestMapping(value = "/datasource", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -20,6 +23,9 @@ public class DataSourceDetailsService {
 
     @Autowired
     private DataSourceService dataSourceService;
+
+    @Autowired
+    private SystemStateService systemStateService;
 
     @RequestMapping(method = RequestMethod.GET)
     public
@@ -31,7 +37,18 @@ public class DataSourceDetailsService {
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<DataSourceDetails> setDataSourceDetails(@RequestBody DataSourceDetails details) {
         dataSourceService.setDataSourceDetails(details);
+        runRestartProcedureInFiveSeconds();
         return new ResponseEntity<>(details, HttpStatus.OK);
+    }
+
+    private void runRestartProcedureInFiveSeconds() {
+        new Timer().schedule(
+                new java.util.TimerTask() {
+                    @Override
+                    public void run() {
+                        systemStateService.restartApplication();
+                    }
+                }, 5000);
     }
 
     @RequestMapping(value = "/test", method = RequestMethod.GET)

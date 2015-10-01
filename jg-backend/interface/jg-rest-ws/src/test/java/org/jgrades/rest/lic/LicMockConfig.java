@@ -9,6 +9,7 @@ import org.jgrades.data.api.dao.accounts.GenericUserRepository;
 import org.jgrades.data.api.service.DataSourceService;
 import org.jgrades.lic.api.service.LicenceCheckingService;
 import org.jgrades.lic.api.service.LicenceManagingService;
+import org.jgrades.monitor.api.service.SystemStateService;
 import org.jgrades.security.api.service.PasswordMgntService;
 import org.jgrades.security.api.service.PasswordPolicyService;
 import org.mockito.Mockito;
@@ -209,5 +210,11 @@ public class LicMockConfig extends WebMvcConfigurerAdapter {
     @Primary
     public SubGroupMgntService subGroupMgntService() {
         return Mockito.mock(SubGroupMgntService.class);
+    }
+
+    @Bean
+    @Primary
+    public SystemStateService systemStateService() {
+        return Mockito.mock(SystemStateService.class);
     }
 }

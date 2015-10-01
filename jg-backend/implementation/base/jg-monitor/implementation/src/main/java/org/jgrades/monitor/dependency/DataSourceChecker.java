@@ -1,6 +1,5 @@
 package org.jgrades.monitor.dependency;
 
-import org.jgrades.data.api.model.DataSourceDetails;
 import org.jgrades.logging.JgLogger;
 import org.jgrades.logging.JgLoggerFactory;
 
@@ -10,10 +9,10 @@ import java.sql.SQLException;
 public class DataSourceChecker implements DependencyChecker {
     private static final JgLogger LOGGER = JgLoggerFactory.getLogger(DataSourceChecker.class);
 
-    private DataSourceDetails dsInfo;
+    private DataSourceDTO dsInfo;
     private String driverName;
 
-    public DataSourceChecker(DataSourceDetails dsInfo, String driverName) {
+    public DataSourceChecker(DataSourceDTO dsInfo, String driverName) {
         this.dsInfo = dsInfo;
         this.driverName = driverName;
     }

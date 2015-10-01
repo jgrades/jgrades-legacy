@@ -32,11 +32,6 @@
             <artifactId>jg-monitor-api</artifactId>
             <version>${RELEASE.VERSION}</version>
         </dependency>
-        <dependency>
-            <groupId>org.jgrades.app</groupId>
-            <artifactId>jg-data-api</artifactId>
-            <version>${RELEASE.VERSION}</version>
-        </dependency>
 
         <!-- EXTERNAL DEPENDENCIES -->
     </dependencies>

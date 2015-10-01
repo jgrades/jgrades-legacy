@@ -1,11 +1,7 @@
 package org.jgrades.monitor.config;
 
-import org.jgrades.data.api.model.DataSourceDetails;
 import org.jgrades.monitor.api.config.MonitorApiConfig;
-import org.jgrades.monitor.dependency.DataSourceChecker;
-import org.jgrades.monitor.dependency.DependencyChecker;
-import org.jgrades.monitor.dependency.DummyChecker;
-import org.jgrades.monitor.dependency.FileChecker;
+import org.jgrades.monitor.dependency.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.*;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
@@ -47,11 +43,11 @@ public class MonitorConfig {
 
     @Bean(name = "mainDataSourceChecker")
     public DependencyChecker mainDataSourceChecker() {
-        DataSourceDetails dsDetails = new DataSourceDetails();
-        dsDetails.setUrl(jdbcUrl);
-        dsDetails.setUsername(username);
-        dsDetails.setPassword(password);
-        return new DataSourceChecker(dsDetails, jdbcDriver);
+        DataSourceDTO dsDTO = new DataSourceDTO();
+        dsDTO.setUrl(jdbcUrl);
+        dsDTO.setUsername(username);
+        dsDTO.setPassword(password);
+        return new DataSourceChecker(dsDTO, jdbcDriver);
     }
 
     @Bean(name = "licKeystoreChecker")

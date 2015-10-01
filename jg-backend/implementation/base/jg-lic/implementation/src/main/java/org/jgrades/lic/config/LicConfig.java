@@ -57,7 +57,7 @@ public class LicConfig {
     DataSource licDataSource() throws ClassNotFoundException, SQLException {
         HikariConfig dataSourceConfig = new HikariConfig();
         dataSourceConfig.setDriverClassName("org.hsqldb.jdbcDriver");
-        dataSourceConfig.setJdbcUrl("jdbc:hsqldb:file:" + licDbPath);
+        dataSourceConfig.setJdbcUrl("jdbc:hsqldb:file:" + licDbPath + ";hsqldb.lock_file=false");
         dataSourceConfig.setUsername("sa");
         dataSourceConfig.setPassword("");
         return new HikariDataSource(dataSourceConfig);
