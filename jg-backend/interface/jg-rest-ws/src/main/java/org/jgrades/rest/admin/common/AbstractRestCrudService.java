@@ -1,6 +1,7 @@
 package org.jgrades.rest.admin.common;
 
 import org.jgrades.admin.api.common.CrudService;
+import org.jgrades.monitor.api.aop.CheckSystemDependencies;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CheckSystemDependencies
 public abstract class AbstractRestCrudService<T, ID, S extends CrudService<T, ID>> {
     protected final S crudService;
 

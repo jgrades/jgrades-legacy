@@ -2,6 +2,7 @@ package org.jgrades.rest.admin.common;
 
 import io.swagger.annotations.ApiParam;
 import org.jgrades.admin.api.common.CrudPagingService;
+import org.jgrades.monitor.api.aop.CheckSystemDependencies;
 import org.jgrades.rest.PagingInfo;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+@CheckSystemDependencies
 public abstract class AbstractRestCrudPagingService<T, ID, S extends CrudPagingService<T, ID>> extends AbstractRestCrudService<T, ID, S> {
     @Value("${rest.paging.default.limit}")
     protected Integer paginationLimit;
