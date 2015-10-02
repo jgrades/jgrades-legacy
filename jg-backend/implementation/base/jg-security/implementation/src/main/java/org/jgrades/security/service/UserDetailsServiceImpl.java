@@ -1,3 +1,13 @@
+/*
+ * Copyright (C) 2015 the original author or authors.
+ *
+ * This file is part of jGrades Application Project.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * You may obtain a copy of the License at
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ */
+
 package org.jgrades.security.service;
 
 import org.jgrades.data.api.dao.accounts.GenericUserRepository;
@@ -37,7 +47,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         User user = userRepository.findFirstByLogin(login);
         UserDetailsImpl userDetails = new UserDetailsImpl(login, getUserPassword(user), null);
-        if( user != null) {
+        if (user != null) {
             userDetails = new UserDetailsImpl(
                     login, getUserPassword(user), user.isActive(),
                     true, isCredentialsNotExpired(user), true,
@@ -70,11 +80,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return roles.getRoleMap().keySet().iterator().next();
     }
 
-    private String getUserPassword(User user){
+    private String getUserPassword(User user) {
         PasswordData passwordData = passwordDataRepository.getPasswordDataWithUser(user);
         return passwordData.getPassword();
     }
-
 
 
 }

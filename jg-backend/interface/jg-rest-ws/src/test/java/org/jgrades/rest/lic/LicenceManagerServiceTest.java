@@ -1,3 +1,13 @@
+/*
+ * Copyright (C) 2015 the original author or authors.
+ *
+ * This file is part of jGrades Application Project.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * You may obtain a copy of the License at
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ */
+
 package org.jgrades.rest.lic;
 
 import com.google.common.collect.Lists;
@@ -37,7 +47,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {ApplicationPropertiesConfig.class,LicMockConfig.class, RestConfig.class})
+@ContextConfiguration(classes = {ApplicationPropertiesConfig.class, LicMockConfig.class, RestConfig.class})
 @WebAppConfiguration
 public class LicenceManagerServiceTest {
     @Rule

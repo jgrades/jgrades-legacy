@@ -1,3 +1,13 @@
+/*
+ * Copyright (C) 2015 the original author or authors.
+ *
+ * This file is part of jGrades Application Project.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * You may obtain a copy of the License at
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ */
+
 package org.jgrades.lic.app.controller;
 
 import javafx.application.Platform;
@@ -166,7 +176,7 @@ public class JavafxApplicationIT {
         assertThat(((DatePicker) find("#licValidToDate")).isEditable()).isEqualTo(value);
         assertThat(((TextArea) find("#propertiesArea")).isEditable()).isEqualTo(value);
 
-        assertThat(((Button) find("#browseKeystoreButton")).isDisable()).isEqualTo(!value);
-        assertThat(((Button) find("#browseSecDatButton")).isDisable()).isEqualTo(!value);
+        assertThat(find("#browseKeystoreButton").isDisable()).isEqualTo(!value);
+        assertThat(find("#browseSecDatButton").isDisable()).isEqualTo(!value);
     }
 }
