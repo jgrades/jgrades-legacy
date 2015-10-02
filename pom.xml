@@ -52,7 +52,7 @@
                 <DEFAULT.LOGGING.MAX.FILE.SIZE>10MB</DEFAULT.LOGGING.MAX.FILE.SIZE>
                 <DEFAULT.LOGGING.MAX.DAYS>7</DEFAULT.LOGGING.MAX.DAYS>
                 <CONSOLE.LOGGING.LEVEL>OFF</CONSOLE.LOGGING.LEVEL>
-                <DB.JDBC.URL>jdbc:postgresql://localhost:5432/jgradesdb</DB.JDBC.URL>
+                <DB.JDBC.URL>localhost:5432/jgradesdb</DB.JDBC.URL>
                 <DB.USERNAME>postgres</DB.USERNAME>
                 <DB.PASSWORD>postgres</DB.PASSWORD>
             </properties>
@@ -85,7 +85,7 @@
                 <DEFAULT.LOGGING.MAX.FILE.SIZE>5MB</DEFAULT.LOGGING.MAX.FILE.SIZE>
                 <DEFAULT.LOGGING.MAX.DAYS>90</DEFAULT.LOGGING.MAX.DAYS>
                 <CONSOLE.LOGGING.LEVEL>OFF</CONSOLE.LOGGING.LEVEL>
-                <DB.JDBC.URL>jdbc:postgresql://localhost:5432/jgradesdb</DB.JDBC.URL>
+                <DB.JDBC.URL>localhost:5432/jgradesdb</DB.JDBC.URL>
                 <DB.USERNAME>postgres</DB.USERNAME>
                 <DB.PASSWORD>postgres</DB.PASSWORD>
             </properties>

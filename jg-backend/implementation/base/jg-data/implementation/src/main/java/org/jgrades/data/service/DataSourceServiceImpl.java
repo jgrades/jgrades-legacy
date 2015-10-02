@@ -58,7 +58,7 @@ public class DataSourceServiceImpl implements DataSourceService {
     public boolean testConnection() {
         try {
             DataSourceDetails dsDetails = getDataSourceDetails();
-            Connection connection = DriverManager.getConnection(dsDetails.getUrl(), dsDetails.getUsername(), dsDetails.getPassword());
+            Connection connection = DriverManager.getConnection(dsDetails.connectionUrl(), dsDetails.getUsername(), dsDetails.getPassword());
             return connection.isValid(Integer.parseInt(timeout));
         } catch (SQLException e) {
             LOGGER.error("Problem while testing connection to database", e);

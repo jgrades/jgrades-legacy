@@ -44,7 +44,7 @@ public class MonitorConfig {
     @Bean(name = "mainDataSourceChecker")
     public DependencyChecker mainDataSourceChecker() {
         DataSourceDTO dsDTO = new DataSourceDTO();
-        dsDTO.setUrl(jdbcUrl);
+        dsDTO.setUrl("jdbc:postgresql://" + jdbcUrl);
         dsDTO.setUsername(username);
         dsDTO.setPassword(password);
         return new DataSourceChecker(dsDTO, jdbcDriver);
