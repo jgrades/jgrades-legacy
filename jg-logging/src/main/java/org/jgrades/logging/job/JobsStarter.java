@@ -1,5 +1,6 @@
 package org.jgrades.logging.job;
 
+import com.google.common.collect.Sets;
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
 
@@ -15,6 +16,7 @@ public class JobsStarter {
 
     public static final String LOG_CLEANER_JOB_NAME = "oldLogFilesCleanerJob";
     public static final String LOG_CLEANER_JOB_TRIGGER_NAME = "oldLogFilesCleanerTrigger";
+    public static final String LOG_CLEANER_START_JOB_TRIGGER_NAME = "oldLogFilesCleanerTrigger_OnStartUp";
     public static final String LOG_CLEANER_JOB_CRON_EXP = "0 0 0 * * ?";
 
     public static final String JOB_GROUP_NAME = "jg-logging";
@@ -55,11 +57,14 @@ public class JobsStarter {
 
         Trigger logCleanerTrigger = newTrigger()
                 .withIdentity(LOG_CLEANER_JOB_TRIGGER_NAME, JOB_GROUP_NAME)
-                .startNow()
-                .withSchedule(
-                        cronSchedule(LOG_CLEANER_JOB_CRON_EXP))
+                .withSchedule(cronSchedule(LOG_CLEANER_JOB_CRON_EXP))
                 .build();
 
-        scheduler.scheduleJob(logCleanerJob, logCleanerTrigger);
+        Trigger logCleanerStartupTrigger = newTrigger()
+                .withIdentity(LOG_CLEANER_START_JOB_TRIGGER_NAME, JOB_GROUP_NAME)
+                .startNow()
+                .build();
+
+        scheduler.scheduleJob(logCleanerJob, Sets.newHashSet(logCleanerTrigger, logCleanerStartupTrigger), true);
     }
 }
