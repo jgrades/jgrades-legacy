@@ -34,23 +34,22 @@ public class LoggerConfigService {
     private LoggingService loggingService;
 
     @RequestMapping(value = "/configuration/default", method = RequestMethod.GET)
-    public boolean isUsingDefaultConfiguration() {
-        LOGGER.info("Checking is current configuration is default");
-
-        return loggingService.isUsingDefaultConfiguration();
+    public LoggingConfiguration getDefaultConfiguration() {
+        LoggingConfiguration defaultConfiguration = loggingService.getDefaultConfiguration();
+        LOGGER.info("Get default logging configuration; {}", defaultConfiguration);
+        return defaultConfiguration;
     }
 
     @RequestMapping(value = "/configuration", method = RequestMethod.GET)
     public LoggingConfiguration getConfiguration() {
-        LOGGER.info("Get current logging configuration");
-
-        return loggingService.getLoggingConfiguration();
+        LoggingConfiguration configuration = loggingService.getLoggingConfiguration();
+        LOGGER.info("Get current logging configuration: {}", configuration);
+        return configuration;
     }
 
     @RequestMapping(value = "/configuration", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> setNewConfiguration(@RequestBody LoggingConfiguration configuration) {
-        LOGGER.info("Set new default configuration");
-
+        LOGGER.info("Set new logging configuration: {}", configuration);
         loggingService.setLoggingConfiguration(configuration);
         return new ResponseEntity<>(HttpStatus.OK);
     }

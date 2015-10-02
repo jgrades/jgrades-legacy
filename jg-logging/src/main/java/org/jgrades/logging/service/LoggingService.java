@@ -17,5 +17,7 @@ public interface LoggingService {
 
     void setLoggingConfiguration(LoggingConfiguration loggingConfiguration);
 
+    LoggingConfiguration getDefaultConfiguration();
+
     boolean isUsingDefaultConfiguration();
 }

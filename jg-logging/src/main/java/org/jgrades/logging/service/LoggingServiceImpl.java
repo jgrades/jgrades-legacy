@@ -30,6 +30,11 @@ public class LoggingServiceImpl implements LoggingService {
     }
 
     @Override
+    public LoggingConfiguration getDefaultConfiguration() {
+        return dao.getDefaultConfiguration();
+    }
+
+    @Override
     public boolean isUsingDefaultConfiguration() {
         return !xmlEditor.isXmlExists() ? true : dao.getDefaultConfiguration().equals(dao.getCurrentConfiguration());
     }
