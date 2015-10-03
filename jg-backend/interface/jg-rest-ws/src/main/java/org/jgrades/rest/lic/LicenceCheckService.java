@@ -12,6 +12,7 @@ package org.jgrades.rest.lic;
 
 import io.swagger.annotations.ApiOperation;
 import org.jgrades.lic.api.model.Licence;
+import org.jgrades.lic.api.model.LicenceValidationResult;
 import org.jgrades.lic.api.service.LicenceCheckingService;
 import org.jgrades.lic.api.service.LicenceManagingService;
 import org.jgrades.logging.JgLogger;
@@ -37,7 +38,7 @@ public class LicenceCheckService {
     @ApiOperation(value = "Check is licence with given UID valid")
     public
     @ResponseBody
-    boolean check(@PathVariable Long uid) {
+    LicenceValidationResult check(@PathVariable Long uid) {
         LOGGER.info("Checking licence with uid {}", uid);
         Licence licence = licenceManagingService.get(uid);
         return licenceCheckingService.checkValid(licence);
@@ -46,7 +47,7 @@ public class LicenceCheckService {
     @RequestMapping(value = "/product/{productName}", method = RequestMethod.GET)
     public
     @ResponseBody
-    boolean checkForProduct(@PathVariable String productName) {
+    LicenceValidationResult checkForProduct(@PathVariable String productName) {
         LOGGER.info("Checking licence for product {}", productName);
         return licenceCheckingService.checkValidForProduct(productName);
     }

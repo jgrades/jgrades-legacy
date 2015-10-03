@@ -10,8 +10,10 @@
 
 package org.jgrades.rest.lic;
 
+import org.hamcrest.core.Is;
 import org.jgrades.lic.api.exception.LicenceNotFoundException;
 import org.jgrades.lic.api.model.Licence;
+import org.jgrades.lic.api.model.LicenceValidationResult;
 import org.jgrades.lic.api.service.LicenceCheckingService;
 import org.jgrades.lic.api.service.LicenceManagingService;
 import org.jgrades.property.ApplicationPropertiesConfig;
@@ -32,7 +34,8 @@ import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {ApplicationPropertiesConfig.class, LicMockConfig.class, RestConfig.class})
@@ -62,14 +65,15 @@ public class LicenceCheckServiceTest {
         // given
         Long uid = 1234L;
         Licence licence = new Licence();
+        LicenceValidationResult resultOk = new LicenceValidationResult();
 
         when(licenceManagingServiceMock.get(eq(uid))).thenReturn(licence);
-        when(licenceCheckingServiceMock.checkValid(eq(licence))).thenReturn(true);
+        when(licenceCheckingServiceMock.checkValid(eq(licence))).thenReturn(resultOk);
 
         // when
         mockMvc.perform(get("/licence/check/{uid}", uid))
                 .andExpect(status().isOk())
-                .andExpect(content().string(is("true")));
+                .andExpect(jsonPath("$.valid", Is.is(true)));
 
         // then
         verify(licenceManagingServiceMock, times(1)).get(uid);
@@ -81,14 +85,15 @@ public class LicenceCheckServiceTest {
         // given
         Long uid = 1234L;
         Licence licence = new Licence();
+        LicenceValidationResult resultNok = new LicenceValidationResult(false, "error message");
 
         when(licenceManagingServiceMock.get(eq(uid))).thenReturn(licence);
-        when(licenceCheckingServiceMock.checkValid(eq(licence))).thenReturn(false);
+        when(licenceCheckingServiceMock.checkValid(eq(licence))).thenReturn(resultNok);
 
         // when
         mockMvc.perform(get("/licence/check/{uid}", uid))
                 .andExpect(status().isOk())
-                .andExpect(content().string(is("false")));
+                .andExpect(jsonPath("$.valid", Is.is(false)));
 
         // then
         verify(licenceManagingServiceMock, times(1)).get(uid);
@@ -111,13 +116,13 @@ public class LicenceCheckServiceTest {
     public void shouldConfirmValidForProduct_whenLicenceForProductIsValid() throws Exception {
         // given
         String productName = "JG-BASE";
-
-        when(licenceCheckingServiceMock.checkValidForProduct(productName)).thenReturn(true);
+        LicenceValidationResult resultOk = new LicenceValidationResult();
+        when(licenceCheckingServiceMock.checkValidForProduct(productName)).thenReturn(resultOk);
 
         // when
         mockMvc.perform(get("/licence/check/product/{productName}", productName))
                 .andExpect(status().isOk())
-                .andExpect(content().string(is("true")));
+                .andExpect(jsonPath("$.valid", Is.is(true)));
 
         // then
         verify(licenceCheckingServiceMock, times(1)).checkValidForProduct(productName);
@@ -127,13 +132,13 @@ public class LicenceCheckServiceTest {
     public void shouldConfirmNotValidForProduct_whenLicenceForProductIsNotValid() throws Exception {
         // given
         String productName = "JG-BASE";
-
-        when(licenceCheckingServiceMock.checkValidForProduct(productName)).thenReturn(false);
+        LicenceValidationResult resultNok = new LicenceValidationResult(false, "error message");
+        when(licenceCheckingServiceMock.checkValidForProduct(productName)).thenReturn(resultNok);
 
         // when
         mockMvc.perform(get("/licence/check/product/{productName}", productName))
                 .andExpect(status().isOk())
-                .andExpect(content().string(is("false")));
+                .andExpect(jsonPath("$.valid", Is.is(false)));
 
         // then
         verify(licenceCheckingServiceMock, times(1)).checkValidForProduct(productName);

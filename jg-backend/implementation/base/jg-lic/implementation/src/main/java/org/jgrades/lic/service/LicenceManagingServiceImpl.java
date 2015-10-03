@@ -120,7 +120,7 @@ public class LicenceManagingServiceImpl implements LicenceManagingService {
         for (LicenceEntity entity : entitiesList) {
             licences.add(mapper.map(entity, Licence.class));
         }
-        LOGGER.trace("Returing all licences in system: {}", licences);
+        LOGGER.trace("Returning all licences in system: {}", licences);
         return licences;
     }
 }

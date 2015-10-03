@@ -46,7 +46,7 @@ public class LicenceCheckingServiceImplTest extends BaseTest {
         Licence licence = getValidLicenceWithoutProperties();
 
         // when
-        boolean isValid = checkingService.checkValid(licence);
+        boolean isValid = checkingService.checkValid(licence).isValid();
 
         // then
         assertThat(isValid).isTrue();
@@ -58,7 +58,7 @@ public class LicenceCheckingServiceImplTest extends BaseTest {
         Licence licence = getExpiredLicenceWithoutProperties();
 
         // when
-        boolean isValid = checkingService.checkValid(licence);
+        boolean isValid = checkingService.checkValid(licence).isValid();
 
         // then
         assertThat(isValid).isFalse();
@@ -70,7 +70,7 @@ public class LicenceCheckingServiceImplTest extends BaseTest {
         Licence licence = getValidLicenceWithStrangeMac();
 
         // when
-        boolean isValid = checkingService.checkValid(licence);
+        boolean isValid = checkingService.checkValid(licence).isValid();
 
         // then
         assertThat(isValid).isFalse();
@@ -82,7 +82,7 @@ public class LicenceCheckingServiceImplTest extends BaseTest {
         Licence licence = getValidLicenceWithAnotherVersion();
 
         // when
-        boolean isValid = checkingService.checkValid(licence);
+        boolean isValid = checkingService.checkValid(licence).isValid();
 
         // then
         assertThat(isValid).isFalse();
@@ -95,7 +95,7 @@ public class LicenceCheckingServiceImplTest extends BaseTest {
         licenceRepository.save(getLicenceEntity(productName, currentVersion, true));
 
         // when
-        boolean isValid = checkingService.checkValidForProduct(productName);
+        boolean isValid = checkingService.checkValidForProduct(productName).isValid();
 
         // then
         assertThat(isValid).isTrue();
@@ -109,7 +109,7 @@ public class LicenceCheckingServiceImplTest extends BaseTest {
         licenceRepository.save(getLicenceEntity(productName, currentVersion, true));
 
         // when
-        boolean isValid = checkingService.checkValidForProduct(productName);
+        boolean isValid = checkingService.checkValidForProduct(productName).isValid();
 
         // then
         assertThat(isValid).isTrue();
@@ -121,7 +121,7 @@ public class LicenceCheckingServiceImplTest extends BaseTest {
         String productName = "JG-PLANNER";
 
         // when
-        boolean isValid = checkingService.checkValidForProduct(productName);
+        boolean isValid = checkingService.checkValidForProduct(productName).isValid();
 
         // then
         assertThat(isValid).isFalse();
@@ -135,7 +135,7 @@ public class LicenceCheckingServiceImplTest extends BaseTest {
         licenceRepository.save(getLicenceEntity(productName, currentVersion, false));
 
         // when
-        boolean isValid = checkingService.checkValidForProduct("JG-BASE");
+        boolean isValid = checkingService.checkValidForProduct("JG-BASE").isValid();
 
         // then
         assertThat(isValid).isFalse();
@@ -149,7 +149,7 @@ public class LicenceCheckingServiceImplTest extends BaseTest {
         licenceRepository.save(getLicenceEntity(productName, currentVersion, false));
 
         // when
-        boolean isValid = checkingService.checkValidForProduct(productName);
+        boolean isValid = checkingService.checkValidForProduct(productName).isValid();
 
         // then
         assertThat(isValid).isFalse();

@@ -36,7 +36,7 @@ public class LoggerConfigService {
     @RequestMapping(value = "/configuration/default", method = RequestMethod.GET)
     public LoggingConfiguration getDefaultConfiguration() {
         LoggingConfiguration defaultConfiguration = loggingService.getDefaultConfiguration();
-        LOGGER.info("Get default logging configuration; {}", defaultConfiguration);
+        LOGGER.info("Get default logging configuration: {}", defaultConfiguration);
         return defaultConfiguration;
     }
 

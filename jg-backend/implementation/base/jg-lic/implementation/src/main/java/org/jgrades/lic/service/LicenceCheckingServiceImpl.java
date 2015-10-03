@@ -15,6 +15,7 @@ import org.dozer.Mapper;
 import org.jgrades.lic.api.exception.LicenceException;
 import org.jgrades.lic.api.exception.LicenceNotFoundException;
 import org.jgrades.lic.api.model.Licence;
+import org.jgrades.lic.api.model.LicenceValidationResult;
 import org.jgrades.lic.api.service.LicenceCheckingService;
 import org.jgrades.lic.dao.LicenceRepository;
 import org.jgrades.lic.entities.LicenceEntity;
@@ -51,22 +52,22 @@ public class LicenceCheckingServiceImpl implements LicenceCheckingService {
     }
 
     @Override
-    public boolean checkValid(Licence licence) throws LicenceException {
+    public LicenceValidationResult checkValid(Licence licence) throws LicenceException {
         LOGGER.debug("Start checking validation of licence {}", licence);
         validate(licence, notNullValue(), otherwiseThrowing(LicenceNotFoundException.class));
         for (ValidationRule rule : rules) {
             LOGGER.debug("Start checking rule of validation: {} for licence with uid {}", rule.getClass().getName(), licence.getUid());
             if (!rule.isValid(licence)) {
                 LOGGER.debug("Licence {} is not pass validation process with rule: {}", licence.getUid(), rule.getClass().getName());
-                return false;
+                return new LicenceValidationResult(false, "Licence is not pass validation process with rule: " + licence.getUid());
             }
         }
         LOGGER.debug("Licence with uid {} is valid", licence.getUid());
-        return true;
+        return new LicenceValidationResult();
     }
 
     @Override
-    public boolean checkValidForProduct(String productName) throws LicenceException {
+    public LicenceValidationResult checkValidForProduct(String productName) throws LicenceException {
         LOGGER.debug("Start checking licences for product {}", productName);
 
         List<LicenceEntity> licences = licenceRepository.findByProductName(productName);
@@ -74,12 +75,13 @@ public class LicenceCheckingServiceImpl implements LicenceCheckingService {
         for (LicenceEntity licenceEntity : licences) {
             LOGGER.debug("Licence with uid {} is for product {}", licenceEntity.getUid(), productName);
             Licence licence = mapper.map(licenceEntity, Licence.class);
-            if (checkValid(licence)) {
+            LicenceValidationResult validationResult = checkValid(licence);
+            if (validationResult.isValid()) {
                 LOGGER.debug("Valid licence for product {} found", productName);
-                return true;
+                return validationResult;
             }
         }
         LOGGER.debug("Licences for product {} not found or all are not valid", productName);
-        return false;
+        return new LicenceValidationResult(false, "Licence for product " + productName + " not found");
     }
 }

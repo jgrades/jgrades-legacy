@@ -39,7 +39,7 @@ public class LicenceSchedulerService {
         LOGGER.debug("Start scheduled validation of all licences in system");
         Iterable<LicenceEntity> licences = licenceRepository.findAll();
         licences.forEach(licenceEntity -> {
-            if (checkingService.checkValid(mapper.map(licenceEntity, Licence.class))) {
+            if (checkingService.checkValid(mapper.map(licenceEntity, Licence.class)).isValid()) {
                 LOGGER.debug("Licence with uid {} for product {} is valid", licenceEntity.getUid(), licenceEntity.getProduct().getName());
             } else {
                 LOGGER.error("Licence with uid {} for product {} is NOT valid", licenceEntity.getUid(), licenceEntity.getProduct().getName());
