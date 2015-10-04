@@ -10,5 +10,8 @@
 
 package org.jgrades.data.api.model.roles;
 
-public interface AdministratorDetails extends RoleDetails {
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.NONE)
+public class AdministratorDetails implements RoleDetails {
 }

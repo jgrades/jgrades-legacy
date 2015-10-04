@@ -44,24 +44,21 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-
         User user = userRepository.findFirstByLogin(login);
-        UserDetailsImpl userDetails = new UserDetailsImpl(login, getUserPassword(user), null);
-        if (user != null) {
-            userDetails = new UserDetailsImpl(
-                    login, getUserPassword(user), user.isActive(),
-                    true, isCredentialsNotExpired(user), true,
-                    null);
-        } else {
+        if (user == null) {
             LOGGER.info(" Cannot find user with {} login", login);
+            throw new UsernameNotFoundException("login: '" + login + "' not found");
         }
-        return userDetails;
+        return new UserDetailsImpl(
+                login, getUserPassword(user), user.isActive(),
+                true, isCredentialsNotExpired(user), true,
+                null);
     }
 
     private boolean isCredentialsNotExpired(User user) {
         int expirationDaysForRole = getExpirationDays(getRoleWithHighestPriority(user.getRoles()));
         if (expirationDaysForRole != 0) {
-            DateTime lastPasswordChangeTime = passwordDataRepository.getPasswordDataWithUser(user).getLastChange();
+            DateTime lastPasswordChangeTime = passwordDataRepository.getPasswordDataWithUser(user.getLogin()).getLastChange();
 
             Duration duration = new Duration(lastPasswordChangeTime, DateTime.now());
             return duration.isShorterThan(Duration.standardDays(expirationDaysForRole));
@@ -81,7 +78,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     private String getUserPassword(User user) {
-        PasswordData passwordData = passwordDataRepository.getPasswordDataWithUser(user);
+        PasswordData passwordData = passwordDataRepository.getPasswordDataWithUser(user.getLogin());
         return passwordData.getPassword();
     }
 

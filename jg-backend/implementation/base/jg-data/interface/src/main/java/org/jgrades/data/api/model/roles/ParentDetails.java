@@ -10,12 +10,14 @@
 
 package org.jgrades.data.api.model.roles;
 
+import lombok.Data;
 import org.jgrades.data.api.entities.Student;
 
-public interface ParentDetails extends RoleDetails {
-    String getContactPhone();
+@Data
+public class ParentDetails implements RoleDetails {
+    private String contactPhone;
 
-    String getAddress();
+    private String address;
 
-    Student getStudent();
+    private Student student;
 }

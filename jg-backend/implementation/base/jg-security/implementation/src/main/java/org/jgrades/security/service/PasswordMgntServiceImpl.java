@@ -49,7 +49,7 @@ public class PasswordMgntServiceImpl implements PasswordMgntService {
 
     @Override
     public String getPassword(User user) {
-        return passwordDataRepository.getPasswordDataWithUser(user).getPassword();
+        return passwordDataRepository.getPasswordDataWithUser(user.getLogin()).getPassword();
     }
 
     @Override

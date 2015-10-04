@@ -11,7 +11,6 @@
 package org.jgrades.data.api.entities;
 
 import lombok.Data;
-import org.jgrades.data.api.model.roles.ParentDetails;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -20,7 +19,7 @@ import java.io.Serializable;
 @Table(name = "JG_DATA_PARENT")
 @PrimaryKeyJoinColumn(name = "USER_ID")
 @Data
-public class Parent extends User implements ParentDetails, Serializable {
+public class Parent extends User implements Serializable {
     private String contactPhone;
 
     private String address;

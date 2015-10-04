@@ -23,6 +23,6 @@ public interface PasswordDataRepository extends CrudRepository<PasswordData, Lon
     @Query("update PasswordData pd set pd.password = ?1 where pd.user = ?2")
     void setPasswordForUser(String password, User user);
 
-    @Query("select pd from PasswordData pd where pd.user = ?1")
-    PasswordData getPasswordDataWithUser(User user);
+    @Query("select pd from PasswordData pd where pd.user.login = ?1")
+    PasswordData getPasswordDataWithUser(String login);
 }

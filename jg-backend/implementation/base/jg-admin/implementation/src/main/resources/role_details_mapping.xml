@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xmlns="http://dozer.sourceforge.net"
+          xsi:schemaLocation="http://dozer.sourceforge.net
+          http://dozer.sourceforge.net/schema/beanmapping.xsd">
+
+    <!--<configuration>-->
+    <!--<custom-converters>-->
+    <!--<converter type="org.jgrades.lic.utils.DateTimeMappingConverter">-->
+    <!--<class-a>org.joda.time.DateTime</class-a>-->
+    <!--<class-b>org.joda.time.DateTime</class-b>-->
+    <!--</converter>-->
+    <!--</custom-converters>-->
+    <!--</configuration>-->
+
+    <mapping>
+        <class-a>org.jgrades.data.api.entities.Administrator</class-a>
+        <class-b>org.jgrades.data.api.model.roles.AdministratorDetails</class-b>
+    </mapping>
+
+    <mapping>
+        <class-a>org.jgrades.data.api.entities.Manager</class-a>
+        <class-b>org.jgrades.data.api.model.roles.ManagerDetails</class-b>
+    </mapping>
+
+    <mapping>
+        <class-a>org.jgrades.data.api.entities.Teacher</class-a>
+        <class-b>org.jgrades.data.api.model.roles.TeacherDetails</class-b>
+    </mapping>
+
+    <mapping>
+        <class-a>org.jgrades.data.api.entities.Student</class-a>
+        <class-b>org.jgrades.data.api.model.roles.StudentDetails</class-b>
+    </mapping>
+
+    <mapping>
+        <class-a>org.jgrades.data.api.entities.Parent</class-a>
+        <class-b>org.jgrades.data.api.model.roles.ParentDetails</class-b>
+    </mapping>
+
+</mappings>

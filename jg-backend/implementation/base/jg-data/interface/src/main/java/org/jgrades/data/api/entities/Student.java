@@ -13,7 +13,6 @@ package org.jgrades.data.api.entities;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.Type;
-import org.jgrades.data.api.model.roles.StudentDetails;
 import org.jgrades.data.api.utils.CustomType;
 import org.joda.time.LocalDate;
 
@@ -25,7 +24,7 @@ import java.io.Serializable;
 @PrimaryKeyJoinColumn(name = "USER_ID")
 @Data
 @EqualsAndHashCode
-public class Student extends User implements StudentDetails, Serializable {
+public class Student extends User implements Serializable {
     private String contactPhone;
 
     @Column

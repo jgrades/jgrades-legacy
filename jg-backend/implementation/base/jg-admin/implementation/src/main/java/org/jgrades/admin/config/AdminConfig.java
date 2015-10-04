@@ -10,8 +10,13 @@
 
 package org.jgrades.admin.config;
 
+import com.google.common.collect.Lists;
+import org.dozer.DozerBeanMapper;
+import org.dozer.Mapper;
 import org.springframework.context.annotation.*;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+
+import java.util.List;
 
 @Configuration
 @PropertySources({
@@ -23,5 +28,11 @@ public class AdminConfig {
     @Bean
     public static PropertySourcesPlaceholderConfigurer propertyConfig() {
         return new PropertySourcesPlaceholderConfigurer();
+    }
+
+    @Bean
+    Mapper mapper() {
+        List<String> mappingFiles = Lists.newArrayList("role_details_mapping.xml");
+        return new DozerBeanMapper(mappingFiles);
     }
 }

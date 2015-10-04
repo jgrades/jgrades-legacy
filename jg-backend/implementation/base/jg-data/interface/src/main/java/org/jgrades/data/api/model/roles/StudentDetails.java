@@ -10,17 +10,19 @@
 
 package org.jgrades.data.api.model.roles;
 
+import lombok.Data;
 import org.jgrades.data.api.entities.Parent;
 import org.joda.time.LocalDate;
 
-public interface StudentDetails extends RoleDetails {
-    String getContactPhone();
+@Data
+public class StudentDetails implements RoleDetails {
+    private String contactPhone;
 
-    String getAddress();
+    private LocalDate dateOfBirth;
 
-    LocalDate getDateOfBirth();
+    private String nationalIdentificationNumber;
 
-    String getNationalIdentificationNumber();
+    private String address;
 
-    Parent getParent();
+    private Parent parent;
 }
