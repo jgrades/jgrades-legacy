@@ -10,7 +10,7 @@
 
 package org.jgrades.security.api.service;
 
-import org.jgrades.data.api.model.roles.JgRole;
+import org.jgrades.data.api.model.JgRole;
 import org.jgrades.security.api.entities.PasswordPolicy;
 
 import java.util.Set;

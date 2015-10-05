@@ -11,7 +11,7 @@
 package org.jgrades.security.api.entities;
 
 import lombok.Data;
-import org.jgrades.data.api.model.roles.JgRole;
+import org.jgrades.data.api.model.JgRole;
 
 import javax.persistence.*;
 import java.io.Serializable;

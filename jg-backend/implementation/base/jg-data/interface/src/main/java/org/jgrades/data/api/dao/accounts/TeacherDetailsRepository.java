@@ -10,10 +10,10 @@
 
 package org.jgrades.data.api.dao.accounts;
 
-import org.jgrades.data.api.dao.AbstaractUserRepository;
-import org.jgrades.data.api.entities.Teacher;
+import org.jgrades.data.api.entities.roles.TeacherDetails;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface TeacherRepository extends AbstaractUserRepository<Teacher> {
+public interface TeacherDetailsRepository extends CrudRepository<TeacherDetails, Long> {
 }

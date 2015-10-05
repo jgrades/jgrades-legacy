@@ -13,6 +13,7 @@ package org.jgrades.data.api.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Lists;
 import lombok.Data;
+import org.jgrades.data.api.entities.roles.StudentDetails;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -45,5 +46,5 @@ public class ClassGroup implements Serializable {
 
     @JsonIgnore
     @Transient
-    private Set<Student> members;
+    private Set<StudentDetails> members;
 }

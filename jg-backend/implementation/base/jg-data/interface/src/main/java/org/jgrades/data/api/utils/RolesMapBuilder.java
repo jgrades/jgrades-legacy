@@ -8,17 +8,14 @@
  *       http://www.apache.org/licenses/LICENSE-2.0
  */
 
-package org.jgrades.data.api.model.roles;
+package org.jgrades.data.api.utils;
 
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Maps;
-import lombok.Data;
+import org.jgrades.data.api.entities.roles.RoleDetails;
+import org.jgrades.data.api.model.JgRole;
+import org.jgrades.data.api.model.RolesMap;
 
-import java.util.Map;
-
-@Data
-public class Roles {
-    private Map<JgRole, RoleDetails> roleMap = Maps.newEnumMap(JgRole.class);
+public class RolesMapBuilder {
+    private RolesMap roleMap = new RolesMap();
 
     public void addRole(JgRole name, RoleDetails details) {
         roleMap.put(name, details);
@@ -28,7 +25,7 @@ public class Roles {
         roleMap.remove(name);
     }
 
-    public Map<JgRole, RoleDetails> getRoleMap() {
-        return ImmutableMap.copyOf(roleMap);
+    public RolesMap getRoleMap() {
+        return roleMap;
     }
 }

@@ -12,6 +12,7 @@ package org.jgrades.data.api.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import org.jgrades.data.api.entities.roles.StudentDetails;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -39,5 +40,5 @@ public class SubGroup implements Serializable {
     @JoinTable(name = "JG_DATA_SUBGROUP_STUDENT",
             joinColumns = {@JoinColumn(name = "SUBGROUP_ID")},
             inverseJoinColumns = {@JoinColumn(name = "STUDENT_ID")})
-    private Set<Student> members = new HashSet<Student>();
+    private Set<StudentDetails> members = new HashSet<>();
 }

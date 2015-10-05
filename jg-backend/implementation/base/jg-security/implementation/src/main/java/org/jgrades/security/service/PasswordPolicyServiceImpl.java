@@ -11,7 +11,7 @@
 package org.jgrades.security.service;
 
 import com.google.common.collect.Sets;
-import org.jgrades.data.api.model.roles.JgRole;
+import org.jgrades.data.api.model.JgRole;
 import org.jgrades.security.api.dao.PasswordPolicyRepository;
 import org.jgrades.security.api.entities.PasswordPolicy;
 import org.jgrades.security.api.service.PasswordPolicyService;

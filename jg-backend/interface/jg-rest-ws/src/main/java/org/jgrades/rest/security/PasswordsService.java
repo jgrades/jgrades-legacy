@@ -10,7 +10,7 @@
 
 package org.jgrades.rest.security;
 
-import org.jgrades.data.api.dao.accounts.GenericUserRepository;
+import org.jgrades.data.api.dao.accounts.UserRepository;
 import org.jgrades.logging.JgLogger;
 import org.jgrades.logging.JgLoggerFactory;
 import org.jgrades.monitor.api.aop.CheckSystemDependencies;
@@ -31,7 +31,7 @@ public class PasswordsService {
     private PasswordMgntService passwordMgntService;
 
     @Autowired
-    private GenericUserRepository userRepository;
+    private UserRepository userRepository;
 
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> setPassword(@RequestBody PasswordDTO passwordInfo) {

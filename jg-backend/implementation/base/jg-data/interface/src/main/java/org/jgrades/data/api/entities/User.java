@@ -10,18 +10,20 @@
 
 package org.jgrades.data.api.entities;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.Data;
 import org.hibernate.annotations.Type;
-import org.jgrades.data.api.model.roles.Roles;
+import org.jgrades.data.api.entities.roles.RoleDetails;
+import org.jgrades.data.api.model.JgRole;
 import org.jgrades.data.api.utils.CustomType;
 import org.joda.time.DateTime;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.EnumMap;
 
 @Entity
 @Table(name = "JG_DATA_USER")
-@Inheritance(strategy = InheritanceType.JOINED)
 @Data
 public class User implements Serializable {
     @Id
@@ -39,7 +41,8 @@ public class User implements Serializable {
     private boolean active;
 
     @Transient
-    private Roles roles = new Roles();
+    @JsonDeserialize(keyAs = JgRole.class, contentAs = RoleDetails.class)
+    private EnumMap<JgRole, RoleDetails> roles;
 
     @Column
     @Type(type = CustomType.JODA_DATE_TIME)

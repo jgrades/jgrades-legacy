@@ -10,7 +10,7 @@
 
 package org.jgrades.rest.security;
 
-import org.jgrades.data.api.model.roles.JgRole;
+import org.jgrades.data.api.model.JgRole;
 import org.jgrades.logging.JgLogger;
 import org.jgrades.logging.JgLoggerFactory;
 import org.jgrades.monitor.api.aop.CheckSystemDependencies;

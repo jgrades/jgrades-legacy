@@ -10,20 +10,21 @@
 
 package org.jgrades.rest.admin.accounts;
 
-import org.jgrades.admin.api.accounts.ManagerMgntService;
-import org.jgrades.data.api.entities.Manager;
+import org.jgrades.admin.api.accounts.UserMgntService;
+import org.jgrades.data.api.entities.User;
 import org.jgrades.monitor.api.aop.CheckSystemDependencies;
+import org.jgrades.rest.admin.common.AbstractRestCrudPagingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "/user/manager", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/user", produces = MediaType.APPLICATION_JSON_VALUE)
 @CheckSystemDependencies
-public class ManagerService extends AbstractUserService<Manager> {
+public class UserService extends AbstractRestCrudPagingService<User, Long, UserMgntService> {
     @Autowired
-    protected ManagerService(ManagerMgntService userManagerService) {
-        super(userManagerService);
+    protected UserService(UserMgntService crudService) {
+        super(crudService);
     }
 }

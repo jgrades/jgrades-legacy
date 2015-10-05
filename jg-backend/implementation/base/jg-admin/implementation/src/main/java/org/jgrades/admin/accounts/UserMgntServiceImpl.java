@@ -12,7 +12,7 @@ package org.jgrades.admin.accounts;
 
 import org.jgrades.admin.api.accounts.UserMgntService;
 import org.jgrades.admin.common.AbstractPagingMgntService;
-import org.jgrades.data.api.dao.AbstaractUserRepository;
+import org.jgrades.data.api.dao.accounts.UserRepository;
 import org.jgrades.data.api.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -25,56 +25,56 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public abstract class AbstractUserMgntServiceImpl<U extends User, R extends AbstaractUserRepository<U>> extends AbstractPagingMgntService<U, Long, R> implements UserMgntService<U> {
+public class UserMgntServiceImpl extends AbstractPagingMgntService<User, Long, UserRepository> implements UserMgntService {
     @Autowired
-    private UserModelEnrichment<U> userModelEnrichment;
+    private UserModelEnrichment userModelEnrichment;
 
     @Autowired
-    public AbstractUserMgntServiceImpl(R repository) {
+    public UserMgntServiceImpl(UserRepository repository) {
         super(repository);
     }
 
     @Override
-    public List<U> getAll() {
+    public List<User> getAll() {
         return super.getAll().stream()
-                .map(user -> userModelEnrichment.enrichWithRoles(user))
+                .map(userModelEnrichment::enrichWithRoles)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public U getWithId(Long id) {
+    public User getWithId(Long id) {
         return userModelEnrichment.enrichWithRoles(super.getWithId(id));
     }
 
     @Override
-    public List<U> getWithIds(List<Long> ids) {
+    public List<User> getWithIds(List<Long> ids) {
         return super.getWithIds(ids).stream()
-                .map(user -> userModelEnrichment.enrichWithRoles(user))
+                .map(userModelEnrichment::enrichWithRoles)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<U> get(Specification<U> specification) {
+    public List<User> get(Specification<User> specification) {
         return repository.findAll(specification).stream()
-                .map(user -> userModelEnrichment.enrichWithRoles(user))
+                .map(userModelEnrichment::enrichWithRoles)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public Page<U> getPage(Pageable pageable) {
-        Page<U> pageBeforeEnrichment = super.getPage(pageable);
-        List<U> newContent = pageBeforeEnrichment.getContent().stream()
-                .map(user -> userModelEnrichment.enrichWithRoles(user))
+    public Page<User> getPage(Pageable pageable) {
+        Page<User> pageBeforeEnrichment = super.getPage(pageable);
+        List<User> newContent = pageBeforeEnrichment.getContent().stream()
+                .map(userModelEnrichment::enrichWithRoles)
                 .collect(Collectors.toList());
-        return new PageImpl<U>(newContent, pageable, pageBeforeEnrichment.getTotalElements());
+        return new PageImpl<User>(newContent, pageable, pageBeforeEnrichment.getTotalElements());
     }
 
     @Override
-    public Page<U> getPage(Pageable pageable, Specification<U> specification) {
-        Page<U> pageBeforeEnrichment = repository.findAll(specification, pageable);
-        List<U> newContent = pageBeforeEnrichment.getContent().stream()
-                .map(user -> userModelEnrichment.enrichWithRoles(user))
+    public Page<User> getPage(Pageable pageable, Specification<User> specification) {
+        Page<User> pageBeforeEnrichment = repository.findAll(specification, pageable);
+        List<User> newContent = pageBeforeEnrichment.getContent().stream()
+                .map(userModelEnrichment::enrichWithRoles)
                 .collect(Collectors.toList());
-        return new PageImpl<U>(newContent, pageable, pageBeforeEnrichment.getTotalElements());
+        return new PageImpl<User>(newContent, pageable, pageBeforeEnrichment.getTotalElements());
     }
 }

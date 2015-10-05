@@ -15,7 +15,7 @@ import org.jgrades.admin.common.AbstractPagingMgntService;
 import org.jgrades.data.api.dao.structures.ClassGroupRepository;
 import org.jgrades.data.api.entities.ClassGroup;
 import org.jgrades.data.api.entities.Division;
-import org.jgrades.data.api.entities.Student;
+import org.jgrades.data.api.entities.roles.StudentDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,11 +38,11 @@ public class ClassGroupMgntServiceImpl extends AbstractPagingMgntService<ClassGr
 
     @Override
     @Transactional("mainTransactionManager")//TODO
-    public Set<Student> getStudents(ClassGroup classGroup) {
+    public Set<StudentDetails> getStudents(ClassGroup classGroup) {
         return null;
     }
 
     @Override//TODO
-    public void addStudent(ClassGroup classGroup, Student student) {
+    public void addStudent(ClassGroup classGroup, StudentDetails student) {
     }
 }

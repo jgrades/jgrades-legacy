@@ -8,23 +8,32 @@
  *       http://www.apache.org/licenses/LICENSE-2.0
  */
 
-package org.jgrades.data.api.entities;
+package org.jgrades.data.api.entities.roles;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.Type;
+import org.jgrades.data.api.entities.User;
+import org.jgrades.data.api.model.JgRole;
 import org.jgrades.data.api.utils.CustomType;
 import org.joda.time.LocalDate;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
-@Table(name = "JG_DATA_STUDENT")
-@PrimaryKeyJoinColumn(name = "USER_ID")
+@Table(name = "JG_DATA_STUDENT_DETAILS")
 @Data
-@EqualsAndHashCode
-public class Student extends User implements Serializable {
+public class StudentDetails implements RoleDetails {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
+    private Long id;
+
+    @OneToOne
+    @PrimaryKeyJoinColumn
+    @JsonIgnore
+    private User user;
+
     private String contactPhone;
 
     @Column
@@ -35,7 +44,12 @@ public class Student extends User implements Serializable {
 
     private String address;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "parent_id")
-    private Parent parent;
+    @OneToOne
+    @JoinColumn(name = "parent_user_id")
+    private ParentDetails parent;
+
+    @Override
+    public JgRole roleName() {
+        return JgRole.STUDENT;
+    }
 }

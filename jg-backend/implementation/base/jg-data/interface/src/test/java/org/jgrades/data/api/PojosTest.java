@@ -33,11 +33,11 @@ import java.util.List;
 public class PojosTest {
     private static final List<Class> POJOS = Lists.newArrayList(
             AcademicYear.class,
-            Administrator.class,
+            //Administrator.class,
             ClassGroup.class,
             Classroom.class,
             Division.class,
-            Manager.class,
+            // Manager.class,
             //Parent.class,
             School.class,
             SchoolDay.class,
@@ -48,7 +48,7 @@ public class PojosTest {
             //Student.class,
             SubGroup.class,
             Subject.class,
-            Teacher.class,
+            //Teacher.class,
             User.class,
             YearLevel.class
     );

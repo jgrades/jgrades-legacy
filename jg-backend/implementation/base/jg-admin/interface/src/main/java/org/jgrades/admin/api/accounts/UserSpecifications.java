@@ -11,26 +11,28 @@
 package org.jgrades.admin.api.accounts;
 
 import org.jgrades.data.api.entities.User;
-import org.jgrades.data.api.model.roles.Roles;
+import org.jgrades.data.api.model.JgRole;
 import org.joda.time.DateTime;
 import org.springframework.data.jpa.domain.Specification;
 
-public interface UserSpecifications<U extends User> {
-    Specification<U> withPhrase(String phrase);
+import java.util.Set;
 
-    Specification<U> withLogin(String login);
+public interface UserSpecifications {
+    Specification<User> withPhrase(String phrase);
 
-    Specification<U> withName(String name);
+    Specification<User> withLogin(String login);
 
-    Specification<U> withSurname(String surname);
+    Specification<User> withName(String name);
 
-    Specification<U> withEmail(String email);
+    Specification<User> withSurname(String surname);
 
-    Specification<U> onlyActive();
+    Specification<User> withEmail(String email);
 
-    Specification<U> onlyInactive();
+    Specification<User> onlyActive();
 
-    Specification<U> withRoles(Roles roles);
+    Specification<User> onlyInactive();
 
-    Specification<U> lastVisitBetween(DateTime dateTime1, DateTime dateTime2);
+    Specification<User> withRoles(Set<JgRole> roles);
+
+    Specification<User> lastVisitBetween(DateTime dateTime1, DateTime dateTime2);
 }

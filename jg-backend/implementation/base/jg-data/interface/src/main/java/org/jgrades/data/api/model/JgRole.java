@@ -8,7 +8,7 @@
  *       http://www.apache.org/licenses/LICENSE-2.0
  */
 
-package org.jgrades.data.api.model.roles;
+package org.jgrades.data.api.model;
 
 public enum JgRole {
     ADMINISTRATOR(5), MANAGER(4), TEACHER(3), PARENT(2), STUDENT(1);

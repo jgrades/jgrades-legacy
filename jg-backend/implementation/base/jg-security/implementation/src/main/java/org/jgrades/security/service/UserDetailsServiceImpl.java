@@ -10,10 +10,10 @@
 
 package org.jgrades.security.service;
 
-import org.jgrades.data.api.dao.accounts.GenericUserRepository;
+import org.jgrades.data.api.dao.accounts.UserRepository;
 import org.jgrades.data.api.entities.User;
-import org.jgrades.data.api.model.roles.JgRole;
-import org.jgrades.data.api.model.roles.Roles;
+import org.jgrades.data.api.entities.roles.RoleDetails;
+import org.jgrades.data.api.model.JgRole;
 import org.jgrades.logging.JgLogger;
 import org.jgrades.logging.JgLoggerFactory;
 import org.jgrades.security.api.dao.PasswordDataRepository;
@@ -29,12 +29,14 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
+
 @Service("userDetailsService")
 public class UserDetailsServiceImpl implements UserDetailsService {
     private final static JgLogger LOGGER = JgLoggerFactory.getLogger(UserDetailsServiceImpl.class);
 
     @Autowired
-    private GenericUserRepository userRepository;
+    private UserRepository userRepository;
 
     @Autowired
     private PasswordDataRepository passwordDataRepository;
@@ -73,8 +75,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return passwordPolicy == null ? 0 : passwordPolicy.getExpirationDays();
     }
 
-    private JgRole getRoleWithHighestPriority(Roles roles) {
-        return roles.getRoleMap().keySet().iterator().next();
+    private JgRole getRoleWithHighestPriority(Map<JgRole, RoleDetails> roles) {
+        return JgRole.ADMINISTRATOR;//TODO
     }
 
     private String getUserPassword(User user) {

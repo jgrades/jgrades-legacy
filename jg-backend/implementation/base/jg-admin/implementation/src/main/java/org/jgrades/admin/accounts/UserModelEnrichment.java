@@ -10,63 +10,64 @@
 
 package org.jgrades.admin.accounts;
 
+import com.google.common.collect.Maps;
 import org.dozer.Mapper;
 import org.jgrades.data.api.dao.accounts.*;
-import org.jgrades.data.api.entities.*;
-import org.jgrades.data.api.model.roles.*;
+import org.jgrades.data.api.entities.User;
+import org.jgrades.data.api.entities.roles.RoleDetails;
+import org.jgrades.data.api.model.JgRole;
+import org.jgrades.data.api.utils.RolesMapBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
+import java.util.Map;
+
 @Service
-public class UserModelEnrichment<U extends User> {
+public class UserModelEnrichment {
     @Autowired
     private Mapper mapper;
 
     @Autowired
-    private AdministratorRepository administratorRepository;
+    private AdministratorDetailsRepository administratorRepository;
 
     @Autowired
-    private ManagerRepository managerRepository;
+    private ManagerDetailsRepository managerRepository;
 
     @Autowired
-    private TeacherRepository teacherRepository;
+    private TeacherDetailsRepository teacherRepository;
 
     @Autowired
-    private StudentRepository studentRepository;
+    private StudentDetailsRepository studentRepository;
 
     @Autowired
-    private ParentRepository parentRepository;
+    private ParentDetailsRepository parentRepository;
 
-    //TODO refactoring
-    public U enrichWithRoles(U user) {
-        Roles roles = new Roles();
+    private Map<JgRole, CrudRepository<? extends RoleDetails, Long>> map;
 
-        Administrator administrator = administratorRepository.findOne(user.getId());
-        if (administrator != null) {
-            roles.addRole(JgRole.ADMINISTRATOR, mapper.map(administrator, AdministratorDetails.class));
+    @PostConstruct
+    private void fillMap() {
+        map = Maps.newEnumMap(JgRole.class);
+        map.put(JgRole.ADMINISTRATOR, administratorRepository);
+        map.put(JgRole.MANAGER, managerRepository);
+        map.put(JgRole.TEACHER, teacherRepository);
+        map.put(JgRole.STUDENT, studentRepository);
+        map.put(JgRole.PARENT, parentRepository);
+    }
+
+    public User enrichWithRoles(User user) {
+        RolesMapBuilder rolesMapBuilder = new RolesMapBuilder();
+
+        for (JgRole role : map.keySet()) {
+            CrudRepository<? extends RoleDetails, Long> repo = map.get(role);
+            RoleDetails roleDetails = repo.findOne(user.getId());
+            if (roleDetails != null) {
+                rolesMapBuilder.addRole(role, roleDetails);
+            }
         }
 
-        Manager manager = managerRepository.findOne(user.getId());
-        if (manager != null) {
-            roles.addRole(JgRole.MANAGER, mapper.map(manager, ManagerDetails.class));
-        }
-
-        Teacher teacher = teacherRepository.findOne(user.getId());
-        if (teacher != null) {
-            roles.addRole(JgRole.TEACHER, mapper.map(teacher, TeacherDetails.class));
-        }
-
-        Student student = studentRepository.findOne(user.getId());
-        if (student != null) {
-            roles.addRole(JgRole.STUDENT, mapper.map(student, StudentDetails.class));
-        }
-
-        Parent parent = parentRepository.findOne(user.getId());
-        if (parent != null) {
-            roles.addRole(JgRole.PARENT, mapper.map(parent, ParentDetails.class));
-        }
-
-        user.setRoles(roles);
+        user.setRoles(rolesMapBuilder.getRoleMap());
         return user;
     }
 }
