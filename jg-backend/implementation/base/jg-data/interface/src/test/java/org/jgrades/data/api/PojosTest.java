@@ -49,7 +49,7 @@ public class PojosTest {
             SubGroup.class,
             Subject.class,
             //Teacher.class,
-            User.class,
+            //User.class,
             YearLevel.class
     );
 
