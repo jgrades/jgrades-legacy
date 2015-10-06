@@ -11,11 +11,14 @@
 package org.jgrades.admin.accounts;
 
 import com.google.common.collect.Lists;
+import org.apache.commons.lang3.StringUtils;
 import org.jgrades.admin.api.accounts.UserSpecifications;
+import org.jgrades.admin.api.exception.SearchEngineException;
 import org.jgrades.data.api.entities.User;
 import org.jgrades.data.api.entities.roles.*;
 import org.jgrades.data.api.model.JgRole;
 import org.joda.time.DateTime;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.domain.Specifications;
 import org.springframework.stereotype.Component;
@@ -26,8 +29,12 @@ import java.util.Set;
 
 @Component
 public class UserSpecificationsImpl implements UserSpecifications {
+    @Value("${admin.minimum.search.text.length}")
+    protected Integer minimumTextLength;
+
     @Override
     public Specification<User> withPhrase(String phrase) {
+        checkIsNotTooShort(phrase);
         return Specifications.where(withLogin(phrase))
                 .or(withName(phrase))
                 .or(withSurname(phrase))
@@ -36,21 +43,25 @@ public class UserSpecificationsImpl implements UserSpecifications {
 
     @Override
     public Specification<User> withLogin(String login) {
+        checkIsNotTooShort(login);
         return (root, cq, cb) -> cb.like(root.<String>get("login"), login);
     }
 
     @Override
     public Specification<User> withName(String name) {
+        checkIsNotTooShort(name);
         return (root, cq, cb) -> cb.like(root.<String>get("name"), name);
     }
 
     @Override
     public Specification<User> withSurname(String surname) {
+        checkIsNotTooShort(surname);
         return (root, cq, cb) -> cb.like(root.<String>get("surname"), surname);
     }
 
     @Override
     public Specification<User> withEmail(String email) {
+        checkIsNotTooShort(email);
         return (root, cq, cb) -> cb.like(root.<String>get("email"), email);
     }
 
@@ -88,17 +99,23 @@ public class UserSpecificationsImpl implements UserSpecifications {
     }
 
     private Predicate getSearchPredicate(Root<User> root, CriteriaQuery<?> cq, CriteriaBuilder cb, Class clazz) {
-        Subquery administratorQuery = cq.subquery(clazz);
-        Root rootAdmin = administratorQuery.from(clazz);
-        administratorQuery.select(rootAdmin);
-        Predicate adminPredicate = cb.equal(rootAdmin.get("id"), root.get("id"));
-        administratorQuery.where(adminPredicate);
-        return cb.exists(administratorQuery);
+        Subquery subquery = cq.subquery(clazz);
+        Root subRoot = subquery.from(clazz);
+        subquery.select(subRoot);
+        Predicate predicate = cb.equal(subRoot.get("id"), root.get("id"));
+        subquery.where(predicate);
+        return cb.exists(subquery);
     }
 
 
     @Override
     public Specification<User> lastVisitBetween(DateTime dateTime1, DateTime dateTime2) {
         return (root, cq, cb) -> cb.between(root.get("lastVisit"), dateTime1, dateTime2);
+    }
+
+    private void checkIsNotTooShort(String string) {
+        if (StringUtils.isEmpty(string) || string.length() < minimumTextLength) {
+            throw new SearchEngineException("Value " + string + " is too short");
+        }
     }
 }
