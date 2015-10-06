@@ -12,6 +12,8 @@ package org.jgrades.data.api.entities.roles;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.ToString;
+import org.hibernate.annotations.GenericGenerator;
 import org.jgrades.data.api.entities.User;
 import org.jgrades.data.api.model.JgRole;
 
@@ -20,9 +22,12 @@ import javax.persistence.*;
 @Entity
 @Table(name = "JG_DATA_PARENT_DETAILS")
 @Data
+@ToString(exclude = "student")
 public class ParentDetails implements RoleDetails {
+    @GenericGenerator(name = "generator", strategy = "foreign",
+            parameters = @org.hibernate.annotations.Parameter(name = "property", value = "user"))
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "generator")
     @JsonIgnore
     private Long id;
 
@@ -37,6 +42,7 @@ public class ParentDetails implements RoleDetails {
 
     @OneToOne
     @JoinColumn(name = "student_user_id")
+    @JsonIgnore
     private StudentDetails student;
 
     @Override

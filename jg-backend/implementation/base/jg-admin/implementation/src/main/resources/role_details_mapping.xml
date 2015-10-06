@@ -14,28 +14,76 @@
     <!--</configuration>-->
 
     <mapping>
-        <class-a>org.jgrades.data.api.entities.Administrator</class-a>
+        <class-a>org.jgrades.data.api.entities.roles.AdministratorDetails</class-a>
         <class-b>org.jgrades.data.api.entities.roles.AdministratorDetails</class-b>
+        <field-exclude>
+            <a>id</a>
+            <b>id</b>
+        </field-exclude>
+        <field-exclude>
+            <a>user</a>
+            <b>user</b>
+        </field-exclude>
     </mapping>
 
     <mapping>
-        <class-a>org.jgrades.data.api.entities.Manager</class-a>
+        <class-a>org.jgrades.data.api.entities.roles.ManagerDetails</class-a>
         <class-b>org.jgrades.data.api.entities.roles.ManagerDetails</class-b>
+        <field-exclude>
+            <a>id</a>
+            <b>id</b>
+        </field-exclude>
+        <field-exclude>
+            <a>user</a>
+            <b>user</b>
+        </field-exclude>
     </mapping>
 
     <mapping>
-        <class-a>org.jgrades.data.api.entities.Teacher</class-a>
+        <class-a>org.jgrades.data.api.entities.roles.TeacherDetails</class-a>
         <class-b>org.jgrades.data.api.entities.roles.TeacherDetails</class-b>
+        <field-exclude>
+            <a>id</a>
+            <b>id</b>
+        </field-exclude>
+        <field-exclude>
+            <a>user</a>
+            <b>user</b>
+        </field-exclude>
     </mapping>
 
     <mapping>
-        <class-a>org.jgrades.data.api.entities.Student</class-a>
+        <class-a>org.jgrades.data.api.entities.roles.StudentDetails</class-a>
         <class-b>org.jgrades.data.api.entities.roles.StudentDetails</class-b>
+        <field-exclude>
+            <a>id</a>
+            <b>id</b>
+        </field-exclude>
+        <field-exclude>
+            <a>user</a>
+            <b>user</b>
+        </field-exclude>
+        <field-exclude>
+            <a>parent</a>
+            <b>parent</b>
+        </field-exclude>
     </mapping>
 
     <mapping>
-        <class-a>org.jgrades.data.api.entities.Parent</class-a>
+        <class-a>org.jgrades.data.api.entities.roles.ParentDetails</class-a>
         <class-b>org.jgrades.data.api.entities.roles.ParentDetails</class-b>
+        <field-exclude>
+            <a>id</a>
+            <b>id</b>
+        </field-exclude>
+        <field-exclude>
+            <a>user</a>
+            <b>user</b>
+        </field-exclude>
+        <field-exclude>
+            <a>student</a>
+            <b>student</b>
+        </field-exclude>
     </mapping>
 
 </mappings>

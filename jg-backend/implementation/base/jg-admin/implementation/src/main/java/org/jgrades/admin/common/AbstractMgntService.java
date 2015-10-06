@@ -46,7 +46,9 @@ public abstract class AbstractMgntService<T, ID extends Serializable, R extends 
 
     @Override
     public void removeId(ID id) {
-        repository.delete(id);
+        if (repository.exists(id)) {
+            repository.delete(id);
+        }
     }
 
     @Override

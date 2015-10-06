@@ -13,6 +13,10 @@ package org.jgrades.admin.api.accounts;
 import org.jgrades.admin.api.common.CrudPagingService;
 import org.jgrades.admin.api.common.PagingSpecificationSelector;
 import org.jgrades.data.api.entities.User;
+import org.jgrades.data.api.model.JgRole;
+
+import java.util.Set;
 
 public interface UserMgntService extends CrudPagingService<User, Long>, PagingSpecificationSelector<User, Long> {
+    Set<JgRole> getUserRoles(User user);
 }

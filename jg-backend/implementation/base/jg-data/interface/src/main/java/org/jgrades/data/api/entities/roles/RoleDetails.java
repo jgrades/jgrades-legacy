@@ -12,6 +12,7 @@ package org.jgrades.data.api.entities.roles;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import org.jgrades.data.api.entities.User;
 import org.jgrades.data.api.model.JgRole;
 
 @JsonTypeInfo(
@@ -27,4 +28,6 @@ import org.jgrades.data.api.model.JgRole;
 })
 public interface RoleDetails {
         JgRole roleName();
+
+        void setUser(User user);
 }

@@ -14,14 +14,17 @@ import org.jgrades.admin.api.accounts.UserMgntService;
 import org.jgrades.admin.common.AbstractPagingMgntService;
 import org.jgrades.data.api.dao.accounts.UserRepository;
 import org.jgrades.data.api.entities.User;
+import org.jgrades.data.api.model.JgRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,8 +33,42 @@ public class UserMgntServiceImpl extends AbstractPagingMgntService<User, Long, U
     private UserModelEnrichment userModelEnrichment;
 
     @Autowired
+    private UserRolesProcessor userRolesProcessor;
+
+    @Autowired
     public UserMgntServiceImpl(UserRepository repository) {
         super(repository);
+    }
+
+    @Override
+    @Transactional("mainTransactionManager")
+    public void saveOrUpdate(User user) {
+        user.setId(repository.save(user).getId());
+        userRolesProcessor.process(user);
+    }
+
+    @Override
+    public void remove(User user) {
+        remove(getWithId(user.getId()));
+    }
+
+    @Override
+    @Transactional("mainTransactionManager")
+    public void remove(List<User> users) {
+        users.forEach(this::remove);
+    }
+
+    @Override
+    @Transactional("mainTransactionManager")
+    public void removeIds(List<Long> ids) {
+        ids.forEach(this::removeId);
+    }
+
+    @Override
+    @Transactional("mainTransactionManager")
+    public void removeId(Long id) {
+        userRolesProcessor.remove(getWithId(id));
+        super.removeId(id);
     }
 
     @Override
@@ -76,5 +113,10 @@ public class UserMgntServiceImpl extends AbstractPagingMgntService<User, Long, U
                 .map(userModelEnrichment::enrichWithRoles)
                 .collect(Collectors.toList());
         return new PageImpl<User>(newContent, pageable, pageBeforeEnrichment.getTotalElements());
+    }
+
+    @Override
+    public Set<JgRole> getUserRoles(User user) {
+        return userModelEnrichment.getRoles(user);
     }
 }

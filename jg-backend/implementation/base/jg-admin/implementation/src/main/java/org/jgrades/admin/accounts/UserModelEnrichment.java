@@ -22,7 +22,9 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 @Service
 public class UserModelEnrichment {
@@ -57,6 +59,9 @@ public class UserModelEnrichment {
     }
 
     public User enrichWithRoles(User user) {
+        if (user == null) {
+            return null;
+        }
         RolesMapBuilder rolesMapBuilder = new RolesMapBuilder();
 
         for (JgRole role : map.keySet()) {
@@ -69,5 +74,17 @@ public class UserModelEnrichment {
 
         user.setRoles(rolesMapBuilder.getRoleMap());
         return user;
+    }
+
+    public Set<JgRole> getRoles(User user) {
+        Set<JgRole> userRoles = new HashSet<>();
+        for (JgRole role : map.keySet()) {
+            CrudRepository<? extends RoleDetails, Long> repo = map.get(role);
+            RoleDetails roleDetails = repo.findOne(user.getId());
+            if (roleDetails != null) {
+                userRoles.add(role);
+            }
+        }
+        return userRoles;
     }
 }
