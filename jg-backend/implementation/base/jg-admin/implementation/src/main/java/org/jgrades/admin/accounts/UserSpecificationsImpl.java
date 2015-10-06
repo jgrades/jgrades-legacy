@@ -10,40 +10,48 @@
 
 package org.jgrades.admin.accounts;
 
+import com.google.common.collect.Lists;
 import org.jgrades.admin.api.accounts.UserSpecifications;
 import org.jgrades.data.api.entities.User;
+import org.jgrades.data.api.entities.roles.*;
 import org.jgrades.data.api.model.JgRole;
 import org.joda.time.DateTime;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.jpa.domain.Specifications;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.criteria.*;
+import java.util.List;
 import java.util.Set;
 
 @Component
 public class UserSpecificationsImpl implements UserSpecifications {
     @Override
     public Specification<User> withPhrase(String phrase) {
-        return null;
+        return Specifications.where(withLogin(phrase))
+                .or(withName(phrase))
+                .or(withSurname(phrase))
+                .or(withEmail(phrase));
     }
 
     @Override
     public Specification<User> withLogin(String login) {
-        return (root, cq, cb) -> cb.equal(root.<String>get("login"), login);
+        return (root, cq, cb) -> cb.like(root.<String>get("login"), login);
     }
 
     @Override
     public Specification<User> withName(String name) {
-        return (root, cq, cb) -> cb.equal(root.<String>get("name"), name);
+        return (root, cq, cb) -> cb.like(root.<String>get("name"), name);
     }
 
     @Override
     public Specification<User> withSurname(String surname) {
-        return (root, cq, cb) -> cb.equal(root.<String>get("surname"), surname);
+        return (root, cq, cb) -> cb.like(root.<String>get("surname"), surname);
     }
 
     @Override
     public Specification<User> withEmail(String email) {
-        return (root, cq, cb) -> cb.equal(root.<String>get("email"), email);
+        return (root, cq, cb) -> cb.like(root.<String>get("email"), email);
     }
 
     @Override
@@ -57,8 +65,35 @@ public class UserSpecificationsImpl implements UserSpecifications {
     }
 
     @Override
-    public Specification<User> withRoles(Set<JgRole> set) {
-        return (root, cq, cb) -> null;
+    public Specification<User> withRoles(Set<JgRole> roleSet) {
+        return (root, cq, cb) -> {
+            List<Predicate> predicates = Lists.newArrayList();
+            if (roleSet.contains(JgRole.ADMINISTRATOR)) {
+                predicates.add(getSearchPredicate(root, cq, cb, AdministratorDetails.class));
+            }
+            if (roleSet.contains(JgRole.MANAGER)) {
+                predicates.add(getSearchPredicate(root, cq, cb, ManagerDetails.class));
+            }
+            if (roleSet.contains(JgRole.TEACHER)) {
+                predicates.add(getSearchPredicate(root, cq, cb, TeacherDetails.class));
+            }
+            if (roleSet.contains(JgRole.STUDENT)) {
+                predicates.add(getSearchPredicate(root, cq, cb, StudentDetails.class));
+            }
+            if (roleSet.contains(JgRole.PARENT)) {
+                predicates.add(getSearchPredicate(root, cq, cb, ParentDetails.class));
+            }
+            return cb.or(predicates.toArray(new Predicate[predicates.size()]));
+        };
+    }
+
+    private Predicate getSearchPredicate(Root<User> root, CriteriaQuery<?> cq, CriteriaBuilder cb, Class clazz) {
+        Subquery administratorQuery = cq.subquery(clazz);
+        Root rootAdmin = administratorQuery.from(clazz);
+        administratorQuery.select(rootAdmin);
+        Predicate adminPredicate = cb.equal(rootAdmin.get("id"), root.get("id"));
+        administratorQuery.where(adminPredicate);
+        return cb.exists(administratorQuery);
     }
 
 

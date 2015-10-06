@@ -23,6 +23,8 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "/user", produces = MediaType.APPLICATION_JSON_VALUE)
 @CheckSystemDependencies
@@ -35,23 +37,44 @@ public class UserService extends AbstractRestCrudPagingService<User, Long, UserM
         super(crudService);
     }
 
+    @RequestMapping(value = "/search", method = RequestMethod.GET)
+    public
+    @ResponseBody
+    List<User> getSearchResults(@RequestParam(value = "phrase", required = false) String phrase,
+                                @RequestParam(value = "login", required = false) String login,
+                                @RequestParam(value = "name", required = false) String name,
+                                @RequestParam(value = "surname", required = false) String surname,
+                                @RequestParam(value = "email", required = false) String email,
+                                @RequestParam(value = "roles", required = false) String roles,
+                                @RequestParam(value = "active", required = false) Boolean active,
+                                @RequestParam(value = "lastVisitFrom", required = false) DateTime lastVisitFrom,
+                                @RequestParam(value = "lastVisitTo", required = false) DateTime lastVisitTo) {
+        Specification<User> userSpecification = userSpecificationsBuilder
+                .withPhrase(phrase).withLogin(login).withName(name).withSurname(surname).withEmail(email)
+                .withRoles(roles).withActiveState(active).withLastVisitBetween(lastVisitFrom, lastVisitTo)
+                .build();
+        return crudService.get(userSpecification);
+    }
+
     @RequestMapping(value = "/search/paging", method = RequestMethod.GET)
     public
     @ResponseBody
-    Page<User> getPage(@RequestParam(value = "page", defaultValue = "0") @ApiParam(value = "Page number") Integer number,
+    Page<User> getSearchResultsPage(@RequestParam(value = "page", defaultValue = "0") @ApiParam(value = "Page number") Integer number,
                        @RequestParam(value = "limit", defaultValue = "-1") @ApiParam(value = "Limit on page") Integer size,
                        @RequestParam(value = "phrase", required = false) String phrase,
                        @RequestParam(value = "login", required = false) String login,
                        @RequestParam(value = "name", required = false) String name,
                        @RequestParam(value = "surname", required = false) String surname,
                        @RequestParam(value = "email", required = false) String email,
+                                    @RequestParam(value = "roles", required = false) String roles,
                        @RequestParam(value = "active", required = false) Boolean active,
                        @RequestParam(value = "lastVisitFrom", required = false) DateTime lastVisitFrom,
                        @RequestParam(value = "lastVisitTo", required = false) DateTime lastVisitTo) {
         PagingInfo pagingInfo = new PagingInfo(number, size == -1 ? paginationLimit : size);
         Specification<User> userSpecification = userSpecificationsBuilder
                 .withPhrase(phrase).withLogin(login).withName(name).withSurname(surname).withEmail(email)
-                .withActiveState(active).withLastVisitBetween(lastVisitFrom, lastVisitTo).build();
+                .withRoles(roles).withActiveState(active).withLastVisitBetween(lastVisitFrom, lastVisitTo)
+                .build();
         return crudService.getPage(pagingInfo.toPageable(), userSpecification);
     }
 }

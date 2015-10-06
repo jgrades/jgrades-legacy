@@ -30,6 +30,8 @@ public class UserSpecificationsBuilder {
 
     private Specification<User> phraseSpec;
 
+    private Specification<User> replacementForPhrase;
+
     private Specification<User> result;
 
     public UserSpecificationsBuilder withPhrase(String phrase) {
@@ -46,36 +48,36 @@ public class UserSpecificationsBuilder {
 
     public UserSpecificationsBuilder withLogin(String login) {
         if (StringUtils.isNotEmpty(login)) {
-            result = (result == null)
+            replacementForPhrase = (replacementForPhrase == null)
                     ? Specifications.where(specs.withLogin(login))
-                    : Specifications.where(result).and(specs.withLogin(login));
+                    : Specifications.where(replacementForPhrase).and(specs.withLogin(login));
         }
         return this;
     }
 
     public UserSpecificationsBuilder withName(String name) {
         if (StringUtils.isNotEmpty(name)) {
-            result = (result == null)
+            replacementForPhrase = (replacementForPhrase == null)
                     ? Specifications.where(specs.withName(name))
-                    : Specifications.where(result).and(specs.withName(name));
+                    : Specifications.where(replacementForPhrase).and(specs.withName(name));
         }
         return this;
     }
 
     public UserSpecificationsBuilder withSurname(String surname) {
         if (StringUtils.isNotEmpty(surname)) {
-            result = (result == null)
+            replacementForPhrase = (replacementForPhrase == null)
                     ? Specifications.where(specs.withSurname(surname))
-                    : Specifications.where(result).and(specs.withSurname(surname));
+                    : Specifications.where(replacementForPhrase).and(specs.withSurname(surname));
         }
         return this;
     }
 
     public UserSpecificationsBuilder withEmail(String email) {
         if (StringUtils.isNotEmpty(email)) {
-            result = (result == null)
+            replacementForPhrase = (replacementForPhrase == null)
                     ? Specifications.where(specs.withEmail(email))
-                    : Specifications.where(result).and(specs.withEmail(email));
+                    : Specifications.where(replacementForPhrase).and(specs.withEmail(email));
         }
         return this;
     }
@@ -128,7 +130,9 @@ public class UserSpecificationsBuilder {
 
     public Specification<User> build() {
         try {
-            return (phraseSpec != null) ? phraseSpec : result;
+            return (phraseSpec != null)
+                    ? Specifications.where(result).and(phraseSpec)
+                    : Specifications.where(result).and(replacementForPhrase);
         } finally {
             phraseSpec = null;
             result = null;
