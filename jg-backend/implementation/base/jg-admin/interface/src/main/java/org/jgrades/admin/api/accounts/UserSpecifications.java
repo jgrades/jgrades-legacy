@@ -32,7 +32,7 @@ public interface UserSpecifications {
 
     Specification<User> onlyInactive();
 
-    Specification<User> withRoles(Set<JgRole> roles);
+    Specification withRoles(Set<JgRole> roles);
 
     Specification<User> lastVisitBetween(DateTime dateTime1, DateTime dateTime2);
 }

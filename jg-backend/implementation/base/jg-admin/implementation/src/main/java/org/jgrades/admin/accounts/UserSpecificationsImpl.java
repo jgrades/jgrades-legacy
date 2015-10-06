@@ -12,13 +12,14 @@ package org.jgrades.admin.accounts;
 
 import org.jgrades.admin.api.accounts.UserSpecifications;
 import org.jgrades.data.api.entities.User;
+import org.jgrades.data.api.model.JgRole;
 import org.joda.time.DateTime;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
 import java.util.Set;
 
-@Component//TODO
+@Component
 public class UserSpecificationsImpl implements UserSpecifications {
     @Override
     public Specification<User> withPhrase(String phrase) {
@@ -56,13 +57,13 @@ public class UserSpecificationsImpl implements UserSpecifications {
     }
 
     @Override
-    public Specification withRoles(Set set) {
-        return null;
+    public Specification<User> withRoles(Set<JgRole> set) {
+        return (root, cq, cb) -> null;
     }
 
 
     @Override
     public Specification<User> lastVisitBetween(DateTime dateTime1, DateTime dateTime2) {
-        return null;
+        return (root, cq, cb) -> cb.between(root.get("lastVisit"), dateTime1, dateTime2);
     }
 }

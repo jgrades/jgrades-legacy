@@ -23,6 +23,7 @@ import org.jgrades.logging.service.LoggingService;
 import org.jgrades.logging.service.LoggingServiceImpl;
 import org.springframework.context.annotation.*;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.format.datetime.joda.JodaTimeFormatterRegistrar;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -129,6 +130,13 @@ public class RestConfig extends WebMvcConfigurationSupport {
     @Bean
     public LoggingService loggingService() {
         return new LoggingServiceImpl();
+    }
+
+    @Bean
+    public JodaTimeFormatterRegistrar jodaTimeFormatterRegistrar() {
+        JodaTimeFormatterRegistrar jodaTimeFormatterRegistrar = new JodaTimeFormatterRegistrar();
+        jodaTimeFormatterRegistrar.setUseIsoFormat(true);
+        return jodaTimeFormatterRegistrar;
     }
 
 }

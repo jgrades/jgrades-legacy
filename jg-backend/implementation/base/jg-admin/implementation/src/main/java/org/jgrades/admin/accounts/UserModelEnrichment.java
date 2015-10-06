@@ -19,14 +19,14 @@ import org.jgrades.data.api.model.JgRole;
 import org.jgrades.data.api.utils.RolesMapBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-@Service
+@Component
 public class UserModelEnrichment {
     @Autowired
     private Mapper mapper;
@@ -46,16 +46,16 @@ public class UserModelEnrichment {
     @Autowired
     private ParentDetailsRepository parentRepository;
 
-    private Map<JgRole, CrudRepository<? extends RoleDetails, Long>> map;
+    private Map<JgRole, CrudRepository<? extends RoleDetails, Long>> repos;
 
     @PostConstruct
     private void fillMap() {
-        map = Maps.newEnumMap(JgRole.class);
-        map.put(JgRole.ADMINISTRATOR, administratorRepository);
-        map.put(JgRole.MANAGER, managerRepository);
-        map.put(JgRole.TEACHER, teacherRepository);
-        map.put(JgRole.STUDENT, studentRepository);
-        map.put(JgRole.PARENT, parentRepository);
+        repos = Maps.newEnumMap(JgRole.class);
+        repos.put(JgRole.ADMINISTRATOR, administratorRepository);
+        repos.put(JgRole.MANAGER, managerRepository);
+        repos.put(JgRole.TEACHER, teacherRepository);
+        repos.put(JgRole.STUDENT, studentRepository);
+        repos.put(JgRole.PARENT, parentRepository);
     }
 
     public User enrichWithRoles(User user) {
@@ -64,8 +64,8 @@ public class UserModelEnrichment {
         }
         RolesMapBuilder rolesMapBuilder = new RolesMapBuilder();
 
-        for (JgRole role : map.keySet()) {
-            CrudRepository<? extends RoleDetails, Long> repo = map.get(role);
+        for (JgRole role : repos.keySet()) {
+            CrudRepository<? extends RoleDetails, Long> repo = repos.get(role);
             RoleDetails roleDetails = repo.findOne(user.getId());
             if (roleDetails != null) {
                 rolesMapBuilder.addRole(role, roleDetails);
@@ -78,8 +78,8 @@ public class UserModelEnrichment {
 
     public Set<JgRole> getRoles(User user) {
         Set<JgRole> userRoles = new HashSet<>();
-        for (JgRole role : map.keySet()) {
-            CrudRepository<? extends RoleDetails, Long> repo = map.get(role);
+        for (JgRole role : repos.keySet()) {
+            CrudRepository<? extends RoleDetails, Long> repo = repos.get(role);
             RoleDetails roleDetails = repo.findOne(user.getId());
             if (roleDetails != null) {
                 userRoles.add(role);

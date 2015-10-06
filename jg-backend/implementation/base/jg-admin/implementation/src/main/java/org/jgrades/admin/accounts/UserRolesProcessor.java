@@ -22,7 +22,7 @@ import org.jgrades.data.api.entities.roles.StudentDetails;
 import org.jgrades.data.api.model.JgRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
@@ -30,7 +30,7 @@ import java.util.EnumMap;
 import java.util.Map;
 import java.util.Set;
 
-@Service
+@Component
 public class UserRolesProcessor {//TODO refactored
     @Autowired
     private Mapper mapper;
