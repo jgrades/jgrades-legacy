@@ -12,6 +12,7 @@ package org.jgrades.data.api.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.ToString;
 import org.jgrades.data.api.entities.roles.StudentDetails;
 
 import javax.persistence.*;
@@ -22,6 +23,7 @@ import java.util.Set;
 @Entity
 @Table(name = "JG_DATA_SUBGROUP")
 @Data
+@ToString(exclude = "division")
 public class SubGroup implements Serializable {
     public static final String FULL_CLASSGROUP_SUBGROUP_NAME = "_CLASSGROUP";
 
@@ -33,9 +35,10 @@ public class SubGroup implements Serializable {
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "DIVISION_ID", nullable = false)
+    @JoinColumn(name = "DIVISION_ID", nullable = true)
     private Division division;
 
+    @JsonIgnore
     @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(name = "JG_DATA_SUBGROUP_STUDENT",
             joinColumns = {@JoinColumn(name = "SUBGROUP_ID")},

@@ -41,7 +41,7 @@ public class ClassGroup implements Serializable {
     private String description;
 
     @JsonIgnore
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "classGroup")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "classGroup")
     private List<Division> divisions = Lists.newArrayList();
 
     @JsonIgnore

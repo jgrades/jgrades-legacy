@@ -11,10 +11,13 @@
 package org.jgrades.admin.structures;
 
 import org.jgrades.admin.api.structures.ClassGroupMgntService;
+import org.jgrades.admin.api.structures.DivisionMgntService;
+import org.jgrades.admin.api.structures.SubGroupMgntService;
 import org.jgrades.admin.common.AbstractPagingMgntService;
 import org.jgrades.data.api.dao.structures.ClassGroupRepository;
 import org.jgrades.data.api.entities.ClassGroup;
 import org.jgrades.data.api.entities.Division;
+import org.jgrades.data.api.entities.SubGroup;
 import org.jgrades.data.api.entities.roles.StudentDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,8 +29,31 @@ import java.util.Set;
 @Service
 public class ClassGroupMgntServiceImpl extends AbstractPagingMgntService<ClassGroup, Long, ClassGroupRepository> implements ClassGroupMgntService {
     @Autowired
+    private DivisionMgntService divisionMgntService;
+
+    @Autowired
+    private SubGroupMgntService subGroupMgntService;
+
+    @Autowired
     public ClassGroupMgntServiceImpl(ClassGroupRepository repository) {
         super(repository);
+    }
+
+    @Override
+    @Transactional("mainTransactionManager")
+    public void saveOrUpdate(ClassGroup classGroup) {
+        ClassGroup persistClassGroup = repository.save(classGroup);
+
+        Division division = new Division();
+        division.setName(Division.FULL_CLASSGROUP_DIVISION_NAME);
+        division.setClassGroup(persistClassGroup);
+        divisionMgntService.saveOrUpdate(division);
+
+        SubGroup subGroup = new SubGroup();
+        subGroup.setName(SubGroup.FULL_CLASSGROUP_SUBGROUP_NAME);
+        division.getSubGroups().add(subGroup);
+
+        subGroupMgntService.saveOrUpdate(subGroup);
     }
 
     @Override

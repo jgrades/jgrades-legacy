@@ -13,6 +13,7 @@ package org.jgrades.data.api.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Lists;
 import lombok.Data;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -21,6 +22,7 @@ import java.util.List;
 @Entity
 @Table(name = "JG_DATA_DIVISION")
 @Data
+@ToString(exclude = "classGroup")
 public class Division implements Serializable {
     public static final String FULL_CLASSGROUP_DIVISION_NAME = "_DEFAULT_DIVISION";
 
@@ -35,6 +37,6 @@ public class Division implements Serializable {
     @JoinColumn(name = "CLASS_GROUP_ID", nullable = false)
     private ClassGroup classGroup;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "division")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "division")
     private List<SubGroup> subGroups = Lists.newArrayList();
 }
