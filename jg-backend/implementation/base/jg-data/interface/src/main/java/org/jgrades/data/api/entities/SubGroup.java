@@ -35,7 +35,7 @@ public class SubGroup implements Serializable {
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "DIVISION_ID", nullable = true)
+    @JoinColumn(name = "DIVISION_ID")
     private Division division;
 
     @JsonIgnore

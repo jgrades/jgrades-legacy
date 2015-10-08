@@ -42,18 +42,17 @@ public class ClassGroupMgntServiceImpl extends AbstractPagingMgntService<ClassGr
     @Override
     @Transactional("mainTransactionManager")
     public void saveOrUpdate(ClassGroup classGroup) {
-        ClassGroup persistClassGroup = repository.save(classGroup);
-
         Division division = new Division();
         division.setName(Division.FULL_CLASSGROUP_DIVISION_NAME);
-        division.setClassGroup(persistClassGroup);
-        divisionMgntService.saveOrUpdate(division);
+        division.setClassGroup(classGroup);
+        classGroup.getDivisions().add(division);
 
         SubGroup subGroup = new SubGroup();
         subGroup.setName(SubGroup.FULL_CLASSGROUP_SUBGROUP_NAME);
+        subGroup.setDivision(division);
         division.getSubGroups().add(subGroup);
 
-        subGroupMgntService.saveOrUpdate(subGroup);
+        super.saveOrUpdate(classGroup);
     }
 
     @Override
