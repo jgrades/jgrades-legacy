@@ -14,6 +14,6 @@ import org.springframework.data.jpa.domain.Specification;
 
 import java.util.List;
 
-public interface SpecificationSelector<T, ID> extends Selector<T, ID> {
+public interface SpecificationSelector<T, Id> extends Selector<T, Id> {
     List<T> get(Specification<T> specification);
 }

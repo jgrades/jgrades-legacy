@@ -13,6 +13,6 @@ package org.jgrades.admin.api.common;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-public interface PagingSelector<T, ID> extends Selector<T, ID> {
+public interface PagingSelector<T, Id> extends Selector<T, Id> {
     Page<T> getPage(Pageable pageable);
 }

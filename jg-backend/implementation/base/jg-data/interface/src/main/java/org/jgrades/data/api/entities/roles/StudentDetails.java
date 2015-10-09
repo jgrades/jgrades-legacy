@@ -11,7 +11,8 @@
 package org.jgrades.data.api.entities.roles;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
@@ -24,7 +25,8 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "JG_DATA_STUDENT_DETAILS")
-@Data
+@Getter
+@Setter
 @ToString(exclude="parent")
 public class StudentDetails implements RoleDetails {
     @GenericGenerator(name = "generator", strategy = "foreign",

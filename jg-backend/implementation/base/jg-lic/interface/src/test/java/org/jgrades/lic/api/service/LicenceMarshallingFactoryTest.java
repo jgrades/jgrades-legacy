@@ -11,7 +11,6 @@
 package org.jgrades.lic.api.service;
 
 import com.google.common.collect.Lists;
-import org.apache.commons.io.FileUtils;
 import org.jgrades.lic.api.model.Customer;
 import org.jgrades.lic.api.model.Licence;
 import org.jgrades.lic.api.model.LicenceProperty;
@@ -53,15 +52,18 @@ public class LicenceMarshallingFactoryTest {
     @Test
     public void shouldMarshall_whenCorrectLicence() throws Exception {
         // given
-        Licence licence = getCorrectLicence("customerName");
+        Licence licence = getCorrectLicence("school1");
         File expectedXmlFile = new File(getResourcePath(CORRECT_LICENCE_FILENAME));
         File workingFile = folder.newFile();
 
         // when
         jaxbMarshaller.marshal(licence, workingFile);
+        Licence unmarshalLicence = (Licence) jaxbUnmarshaller.unmarshal(workingFile);
+        Licence unmarshalExpectedLicence = (Licence) jaxbUnmarshaller.unmarshal(expectedXmlFile);
 
         // then
-        assertThat(FileUtils.contentEquals(workingFile, expectedXmlFile));
+        assertThat(licence).isEqualTo(unmarshalLicence);
+        assertThat(unmarshalLicence).isEqualTo(unmarshalExpectedLicence);
     }
 
     @Test
@@ -73,9 +75,12 @@ public class LicenceMarshallingFactoryTest {
 
         // when
         jaxbMarshaller.marshal(licence, workingFile);
+        Licence unmarshalLicence = (Licence) jaxbUnmarshaller.unmarshal(workingFile);
+        Licence unmarshalExpectedLicence = (Licence) jaxbUnmarshaller.unmarshal(expectedXmlFile);
 
         // then
-        assertThat(FileUtils.contentEquals(workingFile, expectedXmlFile));
+        assertThat(licence).isEqualTo(unmarshalLicence);
+        assertThat(unmarshalLicence).isEqualTo(unmarshalExpectedLicence);
     }
 
     @Test

@@ -31,8 +31,8 @@ public class OpenLicenceAction implements ApplicationAction {
 
     @Override
     public void printDescription() {
-        System.out.println("OPENING OF EXISTING LICENCE");
-        System.out.println("==========================");
+        System.out.println("OPENING OF EXISTING LICENCE"); //NOSONAR
+        System.out.println("=========================="); //NOSONAR
     }
 
     @Override
@@ -45,31 +45,31 @@ public class OpenLicenceAction implements ApplicationAction {
 
             Licence licence = licenceDecryptionService.decrypt(keystorePath, secDatPath, licencePath);
             prettyPrint(licence);
-            System.out.println(LICENCE_OPENED_SUCCESS_MESSAGE);
+            System.out.println(LICENCE_OPENED_SUCCESS_MESSAGE); //NOSONAR
 
             if (licenceDecryptionService.validSignature(keystorePath, secDatPath, licencePath, signaturePath)) {
-                System.out.println(SIGNATURE_VALID_SUCCESS_MESSAGE);
+                System.out.println(SIGNATURE_VALID_SUCCESS_MESSAGE); //NOSONAR
             } else {
-                System.out.println(SIGNATURE_NOT_VALID_WARNING_MESSAGE);
+                System.out.println(SIGNATURE_NOT_VALID_WARNING_MESSAGE); //NOSONAR
             }
         } catch (Exception e) {
-            System.err.println(GENERAL_ERROR_MESSAGE + e);
+            System.err.println(GENERAL_ERROR_MESSAGE + e); //NOSONAR
         }
     }
 
     private void prettyPrint(Licence licence) {
-        System.out.println("Licence UID: " + licence.getUid());
-        System.out.println("Customer ID: " + licence.getCustomer().getId());
-        System.out.println("Customer name: " + licence.getCustomer().getName());
-        System.out.println("Customer address: " + licence.getCustomer().getAddress());
-        System.out.println("Customer phone: " + licence.getCustomer().getPhone());
-        System.out.println("Product name: " + licence.getProduct().getName());
-        System.out.println("Product version: " + licence.getProduct().getVersion());
-        System.out.println("Licence valid from: " + getLicDateTimeFormatter().print(licence.getProduct().getValidFrom()));
-        System.out.println("Licence valid to: " + getLicDateTimeFormatter().print(licence.getProduct().getValidTo()));
-        System.out.println("Licence properties:");
+        System.out.println("Licence UID: " + licence.getUid()); //NOSONAR
+        System.out.println("Customer ID: " + licence.getCustomer().getId()); //NOSONAR
+        System.out.println("Customer name: " + licence.getCustomer().getName()); //NOSONAR
+        System.out.println("Customer address: " + licence.getCustomer().getAddress()); //NOSONAR
+        System.out.println("Customer phone: " + licence.getCustomer().getPhone()); //NOSONAR
+        System.out.println("Product name: " + licence.getProduct().getName()); //NOSONAR
+        System.out.println("Product version: " + licence.getProduct().getVersion()); //NOSONAR
+        System.out.println("Licence valid from: " + getLicDateTimeFormatter().print(licence.getProduct().getValidFrom())); //NOSONAR
+        System.out.println("Licence valid to: " + getLicDateTimeFormatter().print(licence.getProduct().getValidTo())); //NOSONAR
+        System.out.println("Licence properties:"); //NOSONAR
         for (LicenceProperty property : licence.getProperties()) {
-            System.out.println(property.getName() + " => " + property.getValue());
+            System.out.println(property.getName() + " => " + property.getValue()); //NOSONAR
         }
     }
 }

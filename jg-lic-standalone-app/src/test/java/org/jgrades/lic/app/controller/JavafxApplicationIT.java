@@ -54,7 +54,7 @@ public class JavafxApplicationIT {
     @BeforeClass
     public static void setAfter() throws Exception {
         FXTestUtils.launchApp(JavafxApplication.class);
-        Thread.sleep(5000);
+        Thread.sleep(5000); //NOSONAR
         controller = new GuiTest() {
             @Override
             protected Parent getRootNode() {

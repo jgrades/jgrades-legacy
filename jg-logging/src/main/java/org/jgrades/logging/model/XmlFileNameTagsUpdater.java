@@ -10,6 +10,8 @@
 
 package org.jgrades.logging.model;
 
-public interface XmlFileNameTagsUpdater {
+import java.io.Serializable;
+
+public interface XmlFileNameTagsUpdater extends Serializable {
     void updateFileNameTags();
 }

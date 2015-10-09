@@ -31,6 +31,10 @@ import java.io.IOException;
 public class LogbackXmlEditor {
     private static Document documentUnderEdit;
 
+    private synchronized static void forgetDocumentUnderEdit() {
+        documentUnderEdit = null;
+    }
+
     private Document getConfigDocument() {
         try {
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
@@ -96,7 +100,7 @@ public class LogbackXmlEditor {
             DOMSource source = new DOMSource(documentUnderEdit);
             StreamResult result = new StreamResult(new File(InternalProperties.XML_FILE));
             transformer.transform(source, result);
-            documentUnderEdit = null;
+            forgetDocumentUnderEdit();
         } catch (TransformerException e) {
             e.printStackTrace();
         }

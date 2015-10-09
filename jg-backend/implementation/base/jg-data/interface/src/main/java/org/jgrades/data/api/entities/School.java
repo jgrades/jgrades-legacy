@@ -10,7 +10,8 @@
 
 package org.jgrades.data.api.entities;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.jgrades.data.api.model.SchoolType;
 
 import javax.persistence.*;
@@ -18,7 +19,8 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "JG_DATA_SCHOOL")
-@Data
+@Getter
+@Setter
 public class School implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

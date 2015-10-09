@@ -29,7 +29,7 @@ public class DataSourceServiceImpl implements DataSourceService {
 
     private static final String JDBC_URL_PROPERTY_NAME = "data.db.jdbc.url";
     private static final String USERNAME_PROPERTY_NAME = "data.db.username";
-    private static final String PASSWORD_PROPERTY_NAME = "data.db.password";
+    private static final String PSWD_PROPERTY_NAME = "data.db.password";
 
     @Autowired
     public Configuration appConfiguration;
@@ -40,7 +40,7 @@ public class DataSourceServiceImpl implements DataSourceService {
     @Value("${" + USERNAME_PROPERTY_NAME + "}")
     private String defaultUsername;
 
-    @Value("${" + PASSWORD_PROPERTY_NAME + "}")
+    @Value("${" + PSWD_PROPERTY_NAME + "}")
     private String defaultPassword;
 
     @Value("${data.connection.timeout.seconds}")
@@ -52,7 +52,7 @@ public class DataSourceServiceImpl implements DataSourceService {
 
         details.setUrl(appConfiguration.getString(JDBC_URL_PROPERTY_NAME, defaultJdbcUrl));
         details.setUsername(appConfiguration.getString(USERNAME_PROPERTY_NAME, defaultUsername));
-        details.setPassword(appConfiguration.getString(PASSWORD_PROPERTY_NAME, defaultPassword));
+        details.setPassword(appConfiguration.getString(PSWD_PROPERTY_NAME, defaultPassword));
 
         return details;
     }
@@ -61,7 +61,7 @@ public class DataSourceServiceImpl implements DataSourceService {
     public void setDataSourceDetails(DataSourceDetails dataSourceDetails) {
         appConfiguration.setProperty(JDBC_URL_PROPERTY_NAME, dataSourceDetails.getUrl());
         appConfiguration.setProperty(USERNAME_PROPERTY_NAME, dataSourceDetails.getUsername());
-        appConfiguration.setProperty(PASSWORD_PROPERTY_NAME, dataSourceDetails.getPassword());
+        appConfiguration.setProperty(PSWD_PROPERTY_NAME, dataSourceDetails.getPassword());
     }
 
     @Override

@@ -18,6 +18,6 @@ public class ExitAction implements ApplicationAction {
 
     @Override
     public void start() {
-        System.exit(0);
+        System.exit(0); //NOSONAR
     }
 }

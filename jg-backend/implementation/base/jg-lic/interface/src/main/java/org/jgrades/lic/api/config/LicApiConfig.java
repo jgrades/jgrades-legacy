@@ -17,6 +17,6 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 @Configuration
 @EnableAspectJAutoProxy(proxyTargetClass = true)
 @ComponentScan("org.jgrades.lic")
-public class LicApiConfig {
+public class LicApiConfig { //NOSONAR (config is needed to enable proxy target class)
 
 }

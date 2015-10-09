@@ -12,10 +12,10 @@ package org.jgrades.admin.api.common;
 
 import java.util.List;
 
-public interface Selector<T, ID> {
+public interface Selector<T, Id> {
     List<T> getAll();
 
-    T getWithId(ID id);
+    T getWithId(Id id);
 
-    List<T> getWithIds(List<ID> ids);
+    List<T> getWithIds(List<Id> ids);
 }

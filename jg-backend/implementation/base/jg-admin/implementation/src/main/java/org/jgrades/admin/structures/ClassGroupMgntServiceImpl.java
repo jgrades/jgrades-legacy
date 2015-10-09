@@ -64,10 +64,11 @@ public class ClassGroupMgntServiceImpl extends AbstractPagingMgntService<ClassGr
     @Override
     @Transactional("mainTransactionManager")//TODO
     public Set<StudentDetails> getStudents(ClassGroup classGroup) {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override//TODO
     public void addStudent(ClassGroup classGroup, StudentDetails student) {
+        throw new UnsupportedOperationException();
     }
 }

@@ -24,6 +24,10 @@ public class LogConfigurationMonitor implements Job {
     private XmlConfigurationUpdater configurationUpdater = new XmlConfigurationUpdater();
     private LoggerContextReloader contextReloader = new LoggerContextReloader();
 
+    private synchronized static void updateCache(LoggingConfiguration targetConfig) {
+        cachedConfig = targetConfig;
+    }
+
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
         LoggingConfiguration targetConfig = configurationDao.getCurrentConfiguration();
@@ -34,7 +38,7 @@ public class LogConfigurationMonitor implements Job {
 
     private void processNewConfig(LoggingConfiguration targetConfig) {
         configurationUpdater.update(targetConfig);
-        cachedConfig = targetConfig;
+        updateCache(targetConfig);
         contextReloader.reload();
     }
 }

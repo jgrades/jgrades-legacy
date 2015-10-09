@@ -11,5 +11,5 @@
 package org.jgrades.admin.api.common;
 
 
-public interface CrudPagingService<T, ID> extends CrudService<T, ID>, PagingSelector<T, ID> {
+public interface CrudPagingService<T, Id> extends CrudService<T, Id>, PagingSelector<T, Id> {
 }

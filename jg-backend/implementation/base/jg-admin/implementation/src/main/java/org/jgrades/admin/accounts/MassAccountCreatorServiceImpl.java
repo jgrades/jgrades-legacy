@@ -22,6 +22,6 @@ public class MassAccountCreatorServiceImpl implements MassAccountCreatorService 
 
     @Override//TODO
     public void createStudents(Set<StudentCsvEntry> students, StudentMassCreatingSettings settings) {
-
+        throw new UnsupportedOperationException();
     }
 }

@@ -12,7 +12,8 @@ package org.jgrades.data.api.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Lists;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
@@ -21,7 +22,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "JG_DATA_DIVISION")
-@Data
+@Getter
+@Setter
 @ToString(exclude = "classGroup")
 public class Division implements Serializable {
     public static final String FULL_CLASSGROUP_DIVISION_NAME = "_DEFAULT_DIVISION";

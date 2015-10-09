@@ -10,7 +10,8 @@
 
 package org.jgrades.data.api.entities;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -18,7 +19,8 @@ import java.time.DayOfWeek;
 
 @Entity
 @Table(name = "JG_DATA_SCHOOL_DAY")
-@Data
+@Getter
+@Setter
 public class SchoolDay implements Serializable {
     @Id
     private Integer ordinalNumber;
@@ -30,7 +32,7 @@ public class SchoolDay implements Serializable {
     @JoinColumn(name = "SCHOOL_ID", nullable = false)
     private School school;
 
-    public SchoolDay() {
+    public SchoolDay() { //NOSONAR (JPA needs default constructor)
     }
 
     public SchoolDay(Integer ordinalNumber, DayOfWeek dayOfWeek) {

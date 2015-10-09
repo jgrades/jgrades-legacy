@@ -44,42 +44,46 @@ class MacRule implements ValidationRule {
         LOGGER.debug("Start checking MacRule for licence with uid {}", licence.getUid());
         List<LicenceProperty> properties = licence.getProperties();
         UnmodifiableIterator<LicenceProperty> macPropertyIterator = Iterators.filter(
-                properties.iterator(), licenceProperty -> {
-                    return licenceProperty.getName().equals(MAC_PROPERTY_NAME);
-                });
+                properties.iterator(), licenceProperty ->
+                        licenceProperty.getName().equals(MAC_PROPERTY_NAME)
+        );
         LicenceProperty property = null;
         if (macPropertyIterator.hasNext()) {
             property = macPropertyIterator.next();
         }
 
         if (Optional.ofNullable(property).isPresent()) {
-            LOGGER.debug("Mac property found for licence with uid {}", licence.getUid());
-            try {
-                prepareNetworkInterfacesIfNeeded();
-            } catch (SocketException e) {
-                LOGGER.error("Error during preparing network interfaces", e);
-                throw new ViolationOfLicenceConditionException(e);
-            }
-            String requestedMac = property.getValue();
-            LOGGER.debug("Requested MAC: {}", requestedMac);
-            for (NetworkInterface networkInterface : networkInterfaces) {
-                try {
-                    String currentMac = getCurrentMac(networkInterface);
-                    LOGGER.trace("Proceeded network interface: {}, with MAC: {}", networkInterface.getDisplayName(), currentMac);
-                    if (currentMac.equalsIgnoreCase(requestedMac)) {
-                        LOGGER.debug("MAC {} is matching to expected MAC", currentMac);
-                        return true;
-                    }
-                } catch (SocketException e) {
-                    LOGGER.debug("Error during extracting MAC for network interface {}", networkInterface.getDisplayName());
-                }
-            }
-            LOGGER.debug("There is no any network interfaces or all has not correctly MAC");
-            return false;
+            return performValidation(licence, property);
         } else {
             LOGGER.debug("Mac property not found for licence with uid {}", licence.getUid());
         }
         return true;
+    }
+
+    private boolean performValidation(Licence licence, LicenceProperty property) {
+        LOGGER.debug("Mac property found for licence with uid {}", licence.getUid());
+        try {
+            prepareNetworkInterfacesIfNeeded();
+        } catch (SocketException e) {
+            LOGGER.error("Error during preparing network interfaces", e);
+            throw new ViolationOfLicenceConditionException(e);
+        }
+        String requestedMac = property.getValue();
+        LOGGER.debug("Requested MAC: {}", requestedMac);
+        for (NetworkInterface networkInterface : networkInterfaces) {
+            try {
+                String currentMac = getCurrentMac(networkInterface);
+                LOGGER.trace("Proceeded network interface: {}, with MAC: {}", networkInterface.getDisplayName(), currentMac);
+                if (currentMac.equalsIgnoreCase(requestedMac)) {
+                    LOGGER.debug("MAC {} is matching to expected MAC", currentMac);
+                    return true;
+                }
+            } catch (SocketException e) {
+                LOGGER.debug("Error during extracting MAC for network interface {}", networkInterface.getDisplayName());
+            }
+        }
+        LOGGER.debug("There is no any network interfaces or all has not correctly MAC");
+        return false;
     }
 
     private void prepareNetworkInterfacesIfNeeded() throws SocketException {

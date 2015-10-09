@@ -15,7 +15,6 @@ import org.apache.commons.collections.IteratorUtils;
 import org.apache.commons.io.FileUtils;
 import org.dozer.Mapper;
 import org.jgrades.lic.api.crypto.decrypt.LicenceDecryptionService;
-import org.jgrades.lic.api.exception.LicenceException;
 import org.jgrades.lic.api.exception.LicenceNotFoundException;
 import org.jgrades.lic.api.exception.UnreliableLicenceException;
 import org.jgrades.lic.api.model.Licence;
@@ -61,7 +60,7 @@ public class LicenceManagingServiceImpl implements LicenceManagingService {
     private Mapper mapper;
 
     @Override
-    public Licence installLicence(String licencePath, String signaturePath) throws LicenceException {
+    public Licence installLicence(String licencePath, String signaturePath) {
         LOGGER.debug("Starting installation of licence: {} with signature: {}", licencePath, signaturePath);
         Licence licence = null;
         try {

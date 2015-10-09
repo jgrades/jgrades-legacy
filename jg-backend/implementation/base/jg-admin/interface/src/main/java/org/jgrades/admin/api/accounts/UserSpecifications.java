@@ -10,7 +10,6 @@
 
 package org.jgrades.admin.api.accounts;
 
-import org.jgrades.admin.api.exception.SearchEngineException;
 import org.jgrades.data.api.entities.User;
 import org.jgrades.data.api.model.JgRole;
 import org.joda.time.DateTime;
@@ -19,15 +18,15 @@ import org.springframework.data.jpa.domain.Specification;
 import java.util.Set;
 
 public interface UserSpecifications {
-    Specification<User> withPhrase(String phrase) throws SearchEngineException;
+    Specification<User> withPhrase(String phrase);
 
-    Specification<User> withLogin(String login) throws SearchEngineException;
+    Specification<User> withLogin(String login);
 
-    Specification<User> withName(String name) throws SearchEngineException;
+    Specification<User> withName(String name);
 
-    Specification<User> withSurname(String surname) throws SearchEngineException;
+    Specification<User> withSurname(String surname);
 
-    Specification<User> withEmail(String email) throws SearchEngineException;
+    Specification<User> withEmail(String email);
 
     Specification<User> onlyActive();
 

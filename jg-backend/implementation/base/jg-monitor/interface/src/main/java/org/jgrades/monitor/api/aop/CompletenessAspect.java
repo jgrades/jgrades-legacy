@@ -14,7 +14,6 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
-import org.jgrades.monitor.api.exception.SystemDependencyException;
 import org.jgrades.monitor.api.model.SystemDependency;
 import org.jgrades.monitor.api.service.SystemDependencyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,11 +29,11 @@ public class CompletenessAspect {
     private SystemDependencyService systemDependencyService;
 
     @Pointcut(value = "execution(* *(..))")
-    private void anyMethod() {
+    private void anyMethod() { //NOSONAR
     }
 
     @Before("anyMethod() && @within(checkDependencies)")
-    public void checkDependencies(CheckSystemDependencies checkDependencies) throws SystemDependencyException {
+    public void checkDependencies(CheckSystemDependencies checkDependencies) {
         SystemDependency[] dependencies = ArrayUtils.removeElements(SystemDependency.values(), checkDependencies.ignored());
         systemDependencyService.check(new HashSet<>(Arrays.asList(dependencies)));
     }

@@ -26,7 +26,11 @@ import java.io.IOException;
 
 import static org.jgrades.lic.app.utils.AppConstants.BROWSE_FILE_MOCK_WINDOW_FXML_PATH;
 
-public class FileChooserFactory {
+public final class FileChooserFactory {
+
+    private FileChooserFactory() {
+    }
+
     public static File showOpenDialog(String title, ActionEvent event) {
         if (JavafxApplication.isTestingModeEnabled()) {
             return new File(getPathFromMockedFileChooser());

@@ -20,10 +20,6 @@ public class RolesMap extends EnumMap<JgRole, RoleDetails> {
         super(keyType);
     }
 
-    public RolesMap(EnumMap<JgRole, ? extends RoleDetails> m) {
-        super(m);
-    }
-
     public RolesMap(Map<JgRole, ? extends RoleDetails> m) {
         super(m);
     }

@@ -19,7 +19,7 @@ import org.slf4j.Marker;
 public class JgLogger {
     private static final String MODULE_NAME_PLACEHOLDER = "module-name-placeholder";
 
-    private final Logger logger;
+    private final Logger logger; //NOSONAR
     private final String moduleName;
 
     public JgLogger(Class clazz) {

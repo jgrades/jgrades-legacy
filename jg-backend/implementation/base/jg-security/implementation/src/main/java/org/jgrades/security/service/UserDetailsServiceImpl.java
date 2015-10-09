@@ -11,10 +11,10 @@
 package org.jgrades.security.service;
 
 import com.google.common.collect.Sets;
+import org.apache.commons.lang3.StringUtils;
 import org.jgrades.admin.api.accounts.UserMgntService;
 import org.jgrades.data.api.dao.accounts.UserRepository;
 import org.jgrades.data.api.entities.User;
-import org.jgrades.data.api.entities.roles.RoleDetails;
 import org.jgrades.data.api.model.JgRole;
 import org.jgrades.logging.JgLogger;
 import org.jgrades.logging.JgLoggerFactory;
@@ -35,7 +35,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
-import java.util.Map;
 import java.util.Set;
 
 @Service("userDetailsService")
@@ -81,7 +80,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     private boolean isCredentialsNotExpired(User user) {
-        int expirationDaysForRole = getExpirationDays(getRoleWithHighestPriority(user.getRoles()));
+        Set<JgRole> userRoles = userMgntService.getUserRoles(user);
+        int expirationDaysForRole = getExpirationDays(getRoleWithHighestPriority(userRoles));
         if (expirationDaysForRole != 0) {
             DateTime lastPasswordChangeTime = passwordDataRepository.getPasswordDataWithUser(user.getLogin()).getLastChange();
             Duration duration = new Duration(lastPasswordChangeTime, DateTime.now());
@@ -96,9 +96,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return passwordPolicy == null ? 0 : passwordPolicy.getExpirationDays();
     }
 
-    private JgRole getRoleWithHighestPriority(Map<JgRole, RoleDetails> roles) {
+    private JgRole getRoleWithHighestPriority(Set<JgRole> roles) {
         JgRole highestRole = null;
-        for (JgRole role : roles.keySet()) {
+        for (JgRole role : roles) {
             if (highestRole == null) {
                 highestRole = role;
                 continue;
@@ -112,7 +112,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     private String getUserPassword(User user) {
         PasswordData passwordData = passwordDataRepository.getPasswordDataWithUser(user.getLogin());
-        return passwordData.getPassword();
+        return passwordData == null ? StringUtils.EMPTY : passwordData.getPassword();
     }
 
 

@@ -19,7 +19,11 @@ import javafx.scene.layout.Priority;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
-public class DialogFactory {
+public final class DialogFactory {
+
+    private DialogFactory() {
+    }
+
     public static void showInformationDialog(String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Information");

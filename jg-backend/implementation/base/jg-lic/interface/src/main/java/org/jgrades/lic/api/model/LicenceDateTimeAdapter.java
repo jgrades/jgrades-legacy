@@ -26,11 +26,13 @@ public class LicenceDateTimeAdapter extends XmlAdapter<String, DateTime> {
         return dateTimeFormatter;
     }
 
+    @Override
     public DateTime unmarshal(String v) {
         dateTimeFormatter.withLocale(Locale.ENGLISH);
         return DateTime.parse(v, dateTimeFormatter);
     }
 
+    @Override
     public String marshal(DateTime v) {
         dateTimeFormatter.withLocale(Locale.ENGLISH);
         return v.toString(dateTimeFormatter);

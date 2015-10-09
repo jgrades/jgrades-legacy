@@ -16,6 +16,6 @@ public class UnreliableLicenceException extends LicenceException {
     }
 
     public UnreliableLicenceException() {
-
+        super();
     }
 }

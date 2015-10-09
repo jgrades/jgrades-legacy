@@ -11,7 +11,8 @@
 package org.jgrades.data.api.entities;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.Type;
 import org.jgrades.data.api.entities.roles.RoleDetails;
 import org.jgrades.data.api.model.JgRole;
@@ -24,7 +25,8 @@ import java.util.EnumMap;
 
 @Entity
 @Table(name = "JG_DATA_USER")
-@Data
+@Getter
+@Setter
 public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

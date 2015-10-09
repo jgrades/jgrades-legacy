@@ -10,13 +10,12 @@
 
 package org.jgrades.lic.api.service;
 
-import org.jgrades.lic.api.exception.LicenceException;
 import org.jgrades.lic.api.model.Licence;
 
 import java.util.List;
 
 public interface LicenceManagingService {
-    Licence installLicence(String licencePath, String signaturePath) throws LicenceException;
+    Licence installLicence(String licencePath, String signaturePath);
 
     void uninstallLicence(Licence licence);
 

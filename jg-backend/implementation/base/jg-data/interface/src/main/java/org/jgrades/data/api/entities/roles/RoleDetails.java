@@ -15,6 +15,8 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import org.jgrades.data.api.entities.User;
 import org.jgrades.data.api.model.JgRole;
 
+import java.io.Serializable;
+
 @JsonTypeInfo(
         use = JsonTypeInfo.Id.NAME,
         include = JsonTypeInfo.As.EXTERNAL_PROPERTY,
@@ -26,7 +28,7 @@ import org.jgrades.data.api.model.JgRole;
         @JsonSubTypes.Type(value = StudentDetails.class, name = "STUDENT"),
         @JsonSubTypes.Type(value = ParentDetails.class, name = "PARENT"),
 })
-public interface RoleDetails {
+public interface RoleDetails extends Serializable {
         JgRole roleName();
 
         void setUser(User user);

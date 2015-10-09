@@ -61,8 +61,8 @@ public class SystemStateServiceImpl implements SystemStateService {
 
     private void setAuthProperty(URLConnection connection) {
         if (masterScriptUser != null && masterScriptPwd != null) {
-            String user_pass = masterScriptUser + ":" + masterScriptPwd;
-            String encoded = Base64.getEncoder().encodeToString(user_pass.getBytes());
+            String userPass = masterScriptUser + ":" + masterScriptPwd;
+            String encoded = Base64.getEncoder().encodeToString(userPass.getBytes());
             connection.setRequestProperty("Authorization", "Basic " + encoded);
         }
     }

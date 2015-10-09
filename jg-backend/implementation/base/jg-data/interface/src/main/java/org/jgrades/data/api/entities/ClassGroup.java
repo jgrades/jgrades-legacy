@@ -12,7 +12,8 @@ package org.jgrades.data.api.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Lists;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.jgrades.data.api.entities.roles.StudentDetails;
 
 import javax.persistence.*;
@@ -22,7 +23,8 @@ import java.util.Set;
 
 @Entity
 @Table(name = "JG_DATA_CLASS_GROUP")
-@Data
+@Getter
+@Setter
 public class ClassGroup implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

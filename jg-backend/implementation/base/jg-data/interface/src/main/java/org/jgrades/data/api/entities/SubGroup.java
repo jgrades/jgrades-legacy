@@ -11,7 +11,8 @@
 package org.jgrades.data.api.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 import org.jgrades.data.api.entities.roles.StudentDetails;
 
@@ -22,7 +23,8 @@ import java.util.Set;
 
 @Entity
 @Table(name = "JG_DATA_SUBGROUP")
-@Data
+@Getter
+@Setter
 @ToString(exclude = "division")
 public class SubGroup implements Serializable {
     public static final String FULL_CLASSGROUP_SUBGROUP_NAME = "_CLASSGROUP";

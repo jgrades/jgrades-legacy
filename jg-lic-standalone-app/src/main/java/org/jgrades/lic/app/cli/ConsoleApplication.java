@@ -23,11 +23,11 @@ public class ConsoleApplication implements LicenceApplication {
     private Scanner scanner = new Scanner(System.in, "UTF-8");
 
     protected void printPrompt() {
-        System.out.print(">: ");
+        System.out.print(">: ");  //NOSONAR
     }
 
     protected String getLine(String description) {
-        System.out.println(description + ":");
+        System.out.println(description + ":"); //NOSONAR
         printPrompt();
         return scanner.nextLine();
     }
@@ -43,10 +43,10 @@ public class ConsoleApplication implements LicenceApplication {
     }
 
     private ApplicationAction chooseAction() {
-        System.out.println("What would you like to do now?");
-        System.out.println("1 - Create new licence");
-        System.out.println("2 - Open (read-only) existing licence");
-        System.out.println("3 - Exit application");
+        System.out.println("What would you like to do now?"); //NOSONAR
+        System.out.println("1 - Create new licence"); //NOSONAR
+        System.out.println("2 - Open (read-only) existing licence"); //NOSONAR
+        System.out.println("3 - Exit application"); //NOSONAR
         printPrompt();
         try {
             int action = scanner.nextInt();
@@ -60,23 +60,23 @@ public class ConsoleApplication implements LicenceApplication {
                 throw new IllegalArgumentException();
             }
         } catch (NoSuchElementException e) {
-            System.out.println(INVALID_OPTION_MESSAGE);
+            System.out.println(INVALID_OPTION_MESSAGE); //NOSONAR
             scanner = new Scanner(System.in);
             return chooseAction();
         } catch (IllegalArgumentException e) {
-            System.out.println(UNKNOWN_OPTION_MESSAGE);
+            System.out.println(UNKNOWN_OPTION_MESSAGE); //NOSONAR
             return chooseAction();
         } finally {
             try {
                 scanner.nextLine();
             } catch (NoSuchElementException e) {
-                //not needed...
+                //NOSONAR (not needed...)
             }
         }
     }
 
     private void printGreetings() {
-        System.out.println(APPLICATION_HEADER);
-        System.out.println("============================================");
+        System.out.println(APPLICATION_HEADER); //NOSONAR
+        System.out.println("============================================"); //NOSONAR
     }
 }

@@ -12,7 +12,8 @@ package org.jgrades.data.api.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Lists;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.Type;
 import org.jgrades.data.api.utils.CustomType;
 import org.joda.time.DateTime;
@@ -28,7 +29,8 @@ import java.util.List;
                 joinColumns = @JoinColumn(name = "SEMESTER_ID")),
         @AssociationOverride(name = "pk.yearLevel",
                 joinColumns = @JoinColumn(name = "YEAR_LEVEL_ID"))})
-@Data
+@Getter
+@Setter
 public class SemesterYearLevel implements Serializable {
     @EmbeddedId
     private SemesterYearLevelId pk = new SemesterYearLevelId();

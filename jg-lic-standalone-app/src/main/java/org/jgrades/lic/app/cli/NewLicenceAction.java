@@ -30,8 +30,8 @@ public class NewLicenceAction implements ApplicationAction {
 
     @Override
     public void printDescription() {
-        System.out.println("GENERATION OF NEW LICENCE");
-        System.out.println("=========================");
+        System.out.println("GENERATION OF NEW LICENCE"); //NOSONAR
+        System.out.println("========================="); //NOSONAR
     }
 
     @Override
@@ -44,9 +44,9 @@ public class NewLicenceAction implements ApplicationAction {
 
             String licencePath = console.getLine("Enter path to save licence");
             licenceEncryptionService.encryptAndSign(licence, keystorePath, secDatPath, licencePath);
-            System.out.println(SUCCESS_MESSAGE);
+            System.out.println(SUCCESS_MESSAGE); //NOSONAR
         } catch (Exception e) {
-            System.err.println(GENERAL_ERROR_MESSAGE + e);
+            System.err.println(GENERAL_ERROR_MESSAGE + e); //NOSONAR
         }
     }
 
@@ -68,8 +68,8 @@ public class NewLicenceAction implements ApplicationAction {
 
     private String propertiesCreator() {
         StringBuilder stringBuilder = new StringBuilder();
-        System.out.println("Enter in line one property with given scheme: KEY=VALUE.");
-        System.out.println("When finish enter 'q'\n");
+        System.out.println("Enter in line one property with given scheme: KEY=VALUE."); //NOSONAR
+        System.out.println("When finish enter 'q'\n"); //NOSONAR
 
         String propertyLine = StringUtils.EMPTY;
         while (!"q".equals(propertyLine)) {

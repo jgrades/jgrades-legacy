@@ -40,7 +40,7 @@ public class UserService extends AbstractRestCrudPagingService<User, Long, UserM
     @RequestMapping(value = "/search", method = RequestMethod.GET)
     public
     @ResponseBody
-    List<User> getSearchResults(@RequestParam(value = "phrase", required = false) String phrase,
+    List<User> getSearchResults(@RequestParam(value = "phrase", required = false) String phrase, //NOSONAR
                                 @RequestParam(value = "login", required = false) String login,
                                 @RequestParam(value = "name", required = false) String name,
                                 @RequestParam(value = "surname", required = false) String surname,
@@ -59,7 +59,7 @@ public class UserService extends AbstractRestCrudPagingService<User, Long, UserM
     @RequestMapping(value = "/search/paging", method = RequestMethod.GET)
     public
     @ResponseBody
-    Page<User> getSearchResultsPage(@RequestParam(value = "page", defaultValue = "0") @ApiParam(value = "Page number") Integer number,
+    Page<User> getSearchResultsPage(@RequestParam(value = "page", defaultValue = "0") @ApiParam(value = "Page number") Integer number, //NOSONAR
                        @RequestParam(value = "limit", defaultValue = "-1") @ApiParam(value = "Limit on page") Integer size,
                        @RequestParam(value = "phrase", required = false) String phrase,
                        @RequestParam(value = "login", required = false) String login,

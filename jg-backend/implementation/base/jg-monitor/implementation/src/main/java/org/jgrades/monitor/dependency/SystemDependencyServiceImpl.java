@@ -29,7 +29,7 @@ public class SystemDependencyServiceImpl implements SystemDependencyService {
     private ApplicationContext appContext;
 
     @Override
-    public void check(Set<SystemDependency> systemDependencies) throws SystemDependencyException {
+    public void check(Set<SystemDependency> systemDependencies) {
         for (SystemDependency dependency : systemDependencies) {
             checkOne(dependency);
         }

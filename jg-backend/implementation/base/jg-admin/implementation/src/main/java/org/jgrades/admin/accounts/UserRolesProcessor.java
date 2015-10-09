@@ -10,11 +10,9 @@
 
 package org.jgrades.admin.accounts;
 
-import com.google.common.collect.Maps;
-import org.dozer.Mapper;
 import org.jgrades.admin.api.accounts.UserMgntService;
 import org.jgrades.admin.api.exception.UserRoleViolationException;
-import org.jgrades.data.api.dao.accounts.*;
+import org.jgrades.data.api.dao.accounts.UserRepository;
 import org.jgrades.data.api.entities.User;
 import org.jgrades.data.api.entities.roles.ParentDetails;
 import org.jgrades.data.api.entities.roles.RoleDetails;
@@ -25,48 +23,16 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.PostConstruct;
 import java.util.EnumMap;
-import java.util.Map;
 import java.util.Set;
 
 @Component
-public class UserRolesProcessor {//TODO refactored
-    @Autowired
-    private Mapper mapper;
-
-    @Autowired
-    private AdministratorDetailsRepository administratorRepository;
-
-    @Autowired
-    private ManagerDetailsRepository managerRepository;
-
-    @Autowired
-    private TeacherDetailsRepository teacherRepository;
-
-    @Autowired
-    private StudentDetailsRepository studentRepository;
-
-    @Autowired
-    private ParentDetailsRepository parentRepository;
-
+public class UserRolesProcessor extends AbstractUserDetailsRepositories {//TODO refactored
     @Autowired
     private UserRepository userRepository;
 
     @Autowired
     private UserMgntService userMgntService;
-
-    private Map<JgRole, CrudRepository<? extends RoleDetails, Long>> repos;
-
-    @PostConstruct
-    private void fillMap() {
-        repos = Maps.newEnumMap(JgRole.class);
-        repos.put(JgRole.ADMINISTRATOR, administratorRepository);
-        repos.put(JgRole.MANAGER, managerRepository);
-        repos.put(JgRole.TEACHER, teacherRepository);
-        repos.put(JgRole.STUDENT, studentRepository);
-        repos.put(JgRole.PARENT, parentRepository);
-    }
 
     @Transactional("mainTransactionManager")
     public void process(User user) {

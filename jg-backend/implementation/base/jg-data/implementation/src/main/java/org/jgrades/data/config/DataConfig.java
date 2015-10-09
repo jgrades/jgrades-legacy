@@ -14,6 +14,8 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
+import org.jgrades.logging.JgLogger;
+import org.jgrades.logging.JgLoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.*;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
@@ -42,6 +44,8 @@ import java.util.Properties;
 @EnableTransactionManagement
 @ComponentScan("org.jgrades.data")
 public class DataConfig {
+    private static final JgLogger LOGGER = JgLoggerFactory.getLogger(DataConfig.class);
+
     @Value("${jgrades.application.properties.file}")
     private String appPropertiesFilePath;
 
@@ -125,6 +129,7 @@ public class DataConfig {
             appConf.setAutoSave(true);
             return appConf;
         } catch (IOException | ConfigurationException e) {
+            LOGGER.warn("Exception during getting app properties file. Empty configuration will be returned", e);
             return new PropertiesConfiguration();
         }
     }
