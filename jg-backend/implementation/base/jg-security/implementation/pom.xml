@@ -20,6 +20,11 @@
             <artifactId>jg-security-api</artifactId>
             <version>${RELEASE.VERSION}</version>
         </dependency>
+        <dependency>
+            <groupId>org.jgrades.app</groupId>
+            <artifactId>jg-admin-api</artifactId>
+            <version>${RELEASE.VERSION}</version>
+        </dependency>
 
         <!-- EXTERNAL DEPENDENCIES -->
         <dependency>

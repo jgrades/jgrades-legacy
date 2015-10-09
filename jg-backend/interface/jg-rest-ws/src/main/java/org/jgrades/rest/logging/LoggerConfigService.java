@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(value = "/logging")
 @CheckSystemDependencies
-@PreAuthorize("hasRole('ROLE_ADMINISTRATOR')")
+@PreAuthorize("hasRole('ADMINISTRATOR')")
 public class LoggerConfigService {
     private static final JgLogger LOGGER = JgLoggerFactory.getLogger(LoggerConfigService.class);
 

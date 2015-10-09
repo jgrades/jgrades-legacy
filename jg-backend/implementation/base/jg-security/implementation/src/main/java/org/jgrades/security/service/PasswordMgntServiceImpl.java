@@ -10,6 +10,7 @@
 
 package org.jgrades.security.service;
 
+import org.jgrades.admin.api.accounts.UserMgntService;
 import org.jgrades.data.api.entities.User;
 import org.jgrades.security.api.dao.PasswordDataRepository;
 import org.jgrades.security.api.entities.PasswordData;
@@ -18,6 +19,7 @@ import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,21 +31,29 @@ public class PasswordMgntServiceImpl implements PasswordMgntService {
     @Autowired
     private UserDetailsService userDetailsService;
 
+    @Autowired
+    private UserMgntService userMgntService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Override
     @Transactional("mainTransactionManager")
     public void setPassword(String password, User user) {
         PasswordData pswdData = passwordDataRepository.findOne(user.getId());
+        String encodedPassword = passwordEncoder.encode(password);
         if (pswdData == null) {
-            pswdData = new PasswordData();
-            pswdData.setId(user.getId());
-            pswdData.setUser(user);
-            pswdData.setPassword(password);
-            pswdData.setLastChange(DateTime.now());
+            User refreshedUser = userMgntService.getWithId(user.getId());
 
+            pswdData = new PasswordData();
+            pswdData.setId(refreshedUser.getId());
+            pswdData.setUser(refreshedUser);
+            pswdData.setPassword(encodedPassword);
+            pswdData.setLastChange(DateTime.now());
             passwordDataRepository.save(pswdData);
         } else {
+            pswdData.setPassword(encodedPassword);
             pswdData.setLastChange(DateTime.now());
-            passwordDataRepository.setPasswordForUser(password, user);
         }
     }
 

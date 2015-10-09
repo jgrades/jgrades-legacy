@@ -125,6 +125,8 @@ public class RestConfig extends WebMvcConfigurationSupport {
 
         registry.addResourceHandler("/webjars/**")
                 .addResourceLocations("classpath:/META-INF/resources/webjars/");
+
+        registry.addResourceHandler("index.html").addResourceLocations("/index.html");
     }
 
     @Bean

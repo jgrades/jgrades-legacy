@@ -37,6 +37,6 @@ public class Division implements Serializable {
     @JoinColumn(name = "CLASS_GROUP_ID", nullable = false)
     private ClassGroup classGroup;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "division")
+    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL, CascadeType.REMOVE}, mappedBy = "division")
     private List<SubGroup> subGroups = Lists.newArrayList();
 }
