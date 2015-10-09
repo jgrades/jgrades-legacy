@@ -11,7 +11,7 @@
 package org.jgrades.security.config;
 
 import org.jgrades.security.auth.RESTAuthenticationFailureHandler;
-import org.jgrades.security.auth.RESTAuthenticationSuccesHandler;
+import org.jgrades.security.auth.RESTAuthenticationSuccessHandler;
 import org.jgrades.security.auth.RESTEntryPoint;
 import org.jgrades.security.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +37,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
         entityManagerFactoryRef = "mainEntityManagerFactory",
         transactionManagerRef = "mainTransactionManager")
 @PropertySources({
+        @PropertySource("classpath:jg-security.properties"),
         @PropertySource(value = "file:${jgrades.application.properties.file}", ignoreResourceNotFound = true)
 })
 @EnableTransactionManagement
@@ -83,7 +84,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public SimpleUrlAuthenticationSuccessHandler authenticationSuccessHandler() {
-        return new RESTAuthenticationSuccesHandler();
+        return new RESTAuthenticationSuccessHandler();
     }
 
     @Bean

@@ -74,8 +74,9 @@
         <controlsfx.version>8.40.9</controlsfx.version>
         <testfx.version>3.1.2</testfx.version>
 
-        <!-- JSON PARSER -->
+        <!-- DATA PARSERS -->
         <jackson.core.version>2.6.0</jackson.core.version>
+        <univocity.parsers.version>1.5.6</univocity.parsers.version>
 
         <!-- DOCUMENTATION UTILS -->
         <springfox.swagger.version>2.2.2</springfox.swagger.version>
@@ -416,7 +417,7 @@
                 <scope>test</scope>
             </dependency>
 
-            <!-- JSON PARSER -->
+            <!-- DATA PARSERS -->
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-core</artifactId>
@@ -436,6 +437,11 @@
                 <groupId>com.fasterxml.jackson.datatype</groupId>
                 <artifactId>jackson-datatype-joda</artifactId>
                 <version>${jackson.core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.univocity</groupId>
+                <artifactId>univocity-parsers</artifactId>
+                <version>${univocity.parsers.version}</version>
             </dependency>
 
             <!-- DOCUMENTATION UTILS -->
