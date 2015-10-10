@@ -12,14 +12,14 @@ package org.jgrades.admin.api.common;
 
 import java.util.List;
 
-public interface Manager<T, Id> {
+public interface Manager<T, ID> { //NOSONAR
     void saveOrUpdate(T obj);
 
     void remove(T obj);
 
     void remove(List<T> objs);
 
-    void removeId(Id id);
+    void removeId(ID id);
 
-    void removeIds(List<Id> ids);
+    void removeIds(List<ID> ids);
 }

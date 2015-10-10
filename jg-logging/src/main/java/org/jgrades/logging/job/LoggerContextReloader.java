@@ -13,12 +13,24 @@ package org.jgrades.logging.job;
 import ch.qos.logback.classic.LoggerContext;
 import ch.qos.logback.classic.joran.JoranConfigurator;
 import ch.qos.logback.core.joran.spi.JoranException;
+import org.jgrades.logging.JgLogger;
+import org.jgrades.logging.JgLoggerFactory;
 import org.jgrades.logging.utils.InternalProperties;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
 
 public class LoggerContextReloader {
+    private static final JgLogger LOGGER = JgLoggerFactory.getLogger(LoggerContextReloader.class);
+
+    private static void setDefaultConfiguration(JoranConfigurator configurator) {
+        try {
+            configurator.doConfigure(InternalProperties.ONLY_CONSOLE_XML_FILE);
+        } catch (JoranException e) {
+            LOGGER.error("Configuration logger with default properties from file {} failed", e);
+        }
+    }
+
     public void reload() {
         LoggerContext context = (LoggerContext) LoggerFactory.getILoggerFactory();
         context.reset();
@@ -30,18 +42,12 @@ public class LoggerContextReloader {
             try {
                 configurator.doConfigure(externalXmlFile);
             } catch (JoranException e) {
+                LOGGER.warn("Configuration logger with properties from file {} failed. " +
+                        "Default configuration will be used", e);
                 setDefaultConfiguration(configurator);
             }
         } else {
             setDefaultConfiguration(configurator);
-        }
-    }
-
-    private void setDefaultConfiguration(JoranConfigurator configurator) {
-        try {
-            configurator.doConfigure(InternalProperties.ONLY_CONSOLE_XML_FILE);
-        } catch (JoranException e) {
-            // not possible...
         }
     }
 }

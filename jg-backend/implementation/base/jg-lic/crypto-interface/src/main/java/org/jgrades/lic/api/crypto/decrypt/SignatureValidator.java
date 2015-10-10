@@ -11,6 +11,8 @@
 package org.jgrades.lic.api.crypto.decrypt;
 
 import org.apache.commons.io.FileUtils;
+import org.jgrades.logging.JgLogger;
+import org.jgrades.logging.JgLoggerFactory;
 import org.jgrades.security.utils.KeyStoreContentExtractor;
 
 import java.io.File;
@@ -21,6 +23,8 @@ import java.security.cert.X509Certificate;
 import static org.jgrades.security.utils.CryptoDataConstants.SIGNATURE_PROVIDER_INTERFACE;
 
 class SignatureValidator {
+    private static final JgLogger LOGGER = JgLoggerFactory.getLogger(SignatureValidator.class);
+
     private final KeyStoreContentExtractor keyExtractor;
 
     public SignatureValidator(KeyStoreContentExtractor keyExtractor) {
@@ -38,6 +42,7 @@ class SignatureValidator {
 
             return signature.verify(FileUtils.readFileToByteArray(signatureFile));
         } catch (SignatureException e) {
+            LOGGER.error("Signature {} validation failed", signatureFile.getAbsolutePath(), e);
             return false;
         }
     }

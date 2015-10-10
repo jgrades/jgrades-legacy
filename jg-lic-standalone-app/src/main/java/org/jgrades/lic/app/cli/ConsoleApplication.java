@@ -11,6 +11,8 @@
 package org.jgrades.lic.app.cli;
 
 import org.jgrades.lic.app.launch.LicenceApplication;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.NoSuchElementException;
 import java.util.Scanner;
@@ -19,8 +21,13 @@ public class ConsoleApplication implements LicenceApplication {
     public static final String APPLICATION_HEADER = "jGrades Licensing Manager Application 0.4";
     public static final String INVALID_OPTION_MESSAGE = "Invalid option. Try again.";
     public static final String UNKNOWN_OPTION_MESSAGE = "Unknown option. Try again.";
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(ConsoleApplication.class);
     private Scanner scanner = new Scanner(System.in, "UTF-8");
+
+    private static void printGreetings() {
+        System.out.println(APPLICATION_HEADER); //NOSONAR
+        System.out.println("============================================"); //NOSONAR
+    }
 
     protected void printPrompt() {
         System.out.print(">: ");  //NOSONAR
@@ -50,33 +57,31 @@ public class ConsoleApplication implements LicenceApplication {
         printPrompt();
         try {
             int action = scanner.nextInt();
-            if (action == 1) {
-                return new NewLicenceAction(this);
-            } else if (action == 2) {
-                return new OpenLicenceAction(this);
-            } else if (action == 3) {
-                return new ExitAction();
-            } else {
-                throw new IllegalArgumentException();
+            switch(action){
+                case 1:
+                    return new NewLicenceAction(this);
+                case 2:
+                    return new OpenLicenceAction(this);
+                case 3:
+                    return new ExitAction();
+                default:
+                    throw new IllegalArgumentException();
             }
         } catch (NoSuchElementException e) {
+            LOGGER.trace(INVALID_OPTION_MESSAGE, e);
             System.out.println(INVALID_OPTION_MESSAGE); //NOSONAR
             scanner = new Scanner(System.in);
             return chooseAction();
         } catch (IllegalArgumentException e) {
+            LOGGER.trace(UNKNOWN_OPTION_MESSAGE, e);
             System.out.println(UNKNOWN_OPTION_MESSAGE); //NOSONAR
             return chooseAction();
         } finally {
             try {
                 scanner.nextLine();
             } catch (NoSuchElementException e) {
-                //NOSONAR (not needed...)
+                LOGGER.trace("Getting nextline failed", e);
             }
         }
-    }
-
-    private void printGreetings() {
-        System.out.println(APPLICATION_HEADER); //NOSONAR
-        System.out.println("============================================"); //NOSONAR
     }
 }

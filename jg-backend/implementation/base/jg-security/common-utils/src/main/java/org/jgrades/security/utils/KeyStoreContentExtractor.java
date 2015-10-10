@@ -10,6 +10,9 @@
 
 package org.jgrades.security.utils;
 
+import org.jgrades.logging.JgLogger;
+import org.jgrades.logging.JgLoggerFactory;
+
 import javax.crypto.spec.SecretKeySpec;
 import java.io.File;
 import java.io.FileInputStream;
@@ -22,6 +25,8 @@ import static org.jgrades.security.utils.CryptoDataConstants.*;
 
 
 public class KeyStoreContentExtractor {
+    private static final JgLogger LOGGER = JgLoggerFactory.getLogger(KeyStoreContentExtractor.class);
+
     private final File keystore;
     private final SecDatFileContentExtractor secExtractor;
 
@@ -49,7 +54,7 @@ public class KeyStoreContentExtractor {
             return ks.getKey(alias, secDat);
         } catch (KeyStoreException | CertificateException | NoSuchAlgorithmException
                 | IOException | UnrecoverableKeyException e) {
-            e.printStackTrace();
+            LOGGER.error("Cannot get private key with alias {}", alias, e);
         }
         return null;
     }
@@ -61,7 +66,7 @@ public class KeyStoreContentExtractor {
             return (X509Certificate) ks.getCertificate(signatureKeyAlias);
         } catch (KeyStoreException | CertificateException |
                 NoSuchAlgorithmException | IOException e) {
-            e.printStackTrace();
+            LOGGER.error("Cannot get signature with alias {}", signatureKeyAlias, e);
         }
         return null;
     }

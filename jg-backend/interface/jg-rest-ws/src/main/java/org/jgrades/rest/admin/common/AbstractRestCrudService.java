@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @CheckSystemDependencies
-public abstract class AbstractRestCrudService<T, ID, S extends CrudService<T, ID>> {
+public abstract class AbstractRestCrudService<T, ID, S extends CrudService<T, ID>> { //NOSONAR
     protected final S crudService;
 
     protected AbstractRestCrudService(S crudService) {

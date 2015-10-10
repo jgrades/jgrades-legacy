@@ -10,6 +10,8 @@
 
 package org.jgrades.logging.utils;
 
+import org.jgrades.logging.JgLogger;
+import org.jgrades.logging.JgLoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -29,26 +31,40 @@ import java.io.File;
 import java.io.IOException;
 
 public class LogbackXmlEditor {
+    private static final JgLogger LOGGER = JgLoggerFactory.getLogger(LogbackXmlEditor.class);
+
     private static Document documentUnderEdit;
 
-    private synchronized static void forgetDocumentUnderEdit() {
+    private static synchronized void forgetDocumentUnderEdit() {
         documentUnderEdit = null;
     }
 
-    private Document getConfigDocument() {
+
+    private static synchronized void initDocument() {
+        if (documentUnderEdit == null) {
+            documentUnderEdit = getConfigDocument();
+        }
+    }
+
+    private static Document getConfigDocument() {
         try {
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
             return docBuilder.parse(InternalProperties.XML_FILE);
         } catch (ParserConfigurationException | SAXException | IOException e) {
+            LOGGER.error("Error during getting logback config file", e);
             return null;
         }
     }
 
-    private XPathExpression getXPathExpression(String xpathExpression) throws XPathExpressionException {
+    private static XPathExpression getXPathExpression(String xpathExpression) throws XPathExpressionException {
         XPathFactory xPathfactory = XPathFactory.newInstance();
         XPath xpath = xPathfactory.newXPath();
         return xpath.compile(xpathExpression);
+    }
+
+    private static String getAppenderName(Node fileNamePatternNode) {
+        return ((Element) fileNamePatternNode.getParentNode().getParentNode()).getAttribute("name");
     }
 
     public NodeList getFileNamePatternNodes() {
@@ -74,21 +90,16 @@ public class LogbackXmlEditor {
         return appenderNameWithoutLevel.substring(appenderNameWithoutLevel.lastIndexOf("-") + 1);
     }
 
-    private String getAppenderName(Node fileNamePatternNode) {
-        return ((Element) fileNamePatternNode.getParentNode().getParentNode()).getAttribute("name");
-    }
-
     public Node getLevelNode() {
         return getNodes(".//root/@level").item(0);
     }
 
     private NodeList getNodes(String xpathExpression) {
-        if (documentUnderEdit == null) {
-            documentUnderEdit = getConfigDocument();
-        }
+        initDocument();
         try {
             return (NodeList) getXPathExpression(xpathExpression).evaluate(documentUnderEdit, XPathConstants.NODESET);
         } catch (XPathExpressionException e) {
+            LOGGER.error("Evaluate XPath expression \"{}\" failed", xpathExpression, e);
             return null;
         }
     }
@@ -102,7 +113,7 @@ public class LogbackXmlEditor {
             transformer.transform(source, result);
             forgetDocumentUnderEdit();
         } catch (TransformerException e) {
-            e.printStackTrace();
+            LOGGER.error("Saving updated logback xml file failed", e);
         }
     }
 

@@ -28,12 +28,12 @@ public class JgLogger {
         setMdcModuleName();
     }
 
-    private void setMdcModuleName() {
-        MDC.put(MODULE_NAME_PLACEHOLDER, moduleName);
+    private static void removeMdcModuleName() {
+        MDC.remove(MODULE_NAME_PLACEHOLDER);
     }
 
-    private void removeMdcModuleName() {
-        MDC.remove(MODULE_NAME_PLACEHOLDER);
+    private void setMdcModuleName() {
+        MDC.put(MODULE_NAME_PLACEHOLDER, moduleName);
     }
 
     //------------------------------------ TRACE ----------------------------------//

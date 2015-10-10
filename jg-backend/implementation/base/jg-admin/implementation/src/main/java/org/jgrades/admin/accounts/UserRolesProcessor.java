@@ -34,6 +34,10 @@ public class UserRolesProcessor extends AbstractUserDetailsRepositories {//TODO 
     @Autowired
     private UserMgntService userMgntService;
 
+    private static boolean userHasAlreadyGivenRole(Long userId, CrudRepository repo) {
+        return repo.exists(userId);
+    }
+
     @Transactional("mainTransactionManager")
     public void process(User user) {
         EnumMap<JgRole, RoleDetails> userRoles = user.getRoles();
@@ -85,10 +89,6 @@ public class UserRolesProcessor extends AbstractUserDetailsRepositories {//TODO 
             }
             repo.delete(userId);
         }
-    }
-
-    private boolean userHasAlreadyGivenRole(Long userId, CrudRepository repo) {
-        return repo.exists(userId);
     }
 
     @Transactional("mainTransactionManager")

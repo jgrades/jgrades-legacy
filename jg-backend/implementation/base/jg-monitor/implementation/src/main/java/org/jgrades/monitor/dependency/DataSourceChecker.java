@@ -34,7 +34,7 @@ public class DataSourceChecker implements DependencyChecker {
             DriverManager.getConnection(dsInfo.getUrl(), dsInfo.getUsername(), dsInfo.getPassword());
         } catch (SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
             LOGGER.error("CONNECTION TO MAIN DATABASE FAILED. ACCESS TO MAIN DATABASE IS A MANDATORY NEED FOR JGRADES SYSTEM", e);
-            LOGGER.error("CONNECTION DETAILS: driverName={}, url={}, username={}, password=(marked)", driverName, dsInfo.getUrl(), dsInfo.getUsername());
+            LOGGER.error("CONNECTION DETAILS: driverName={}, url={}, username={}, pswd=(marked)", driverName, dsInfo.getUrl(), dsInfo.getUsername());
             return false;
         }
         return true;

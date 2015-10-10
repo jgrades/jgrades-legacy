@@ -21,6 +21,16 @@ public class XmlConfigurationUpdater {
     private LogbackXmlEditor xmlEditor = new LogbackXmlEditor();
     private LoggerContextReloader reloader = new LoggerContextReloader();
 
+    private static void updateFileNames(LoggingStrategy loggingStrategy) {
+        loggingStrategy.getUpdater().updateFileNameTags();
+    }
+
+    private static void updateNodesWithValue(NodeList nodeList, String newValue) {
+        for (int i = 0; i < nodeList.getLength(); i++) {
+            nodeList.item(i).setTextContent(newValue);
+        }
+    }
+
     public void update(LoggingConfiguration targetConfig) {
         if (xmlEditor.isXmlExists()) {
             updateFileNames(targetConfig.getLoggingStrategy());
@@ -30,10 +40,6 @@ public class XmlConfigurationUpdater {
             xmlEditor.saveWithChanges();
         }
         reloader.reload();
-    }
-
-    private void updateFileNames(LoggingStrategy loggingStrategy) {
-        loggingStrategy.getUpdater().updateFileNameTags();
     }
 
     private void updateLevel(Level level) {
@@ -49,11 +55,5 @@ public class XmlConfigurationUpdater {
     private void updateMaxDays(Integer maxDays) {
         NodeList nodeList = xmlEditor.getMaxDays();
         updateNodesWithValue(nodeList, maxDays.toString());
-    }
-
-    private void updateNodesWithValue(NodeList nodeList, String newValue) {
-        for (int i = 0; i < nodeList.getLength(); i++) {
-            nodeList.item(i).setTextContent(newValue);
-        }
     }
 }

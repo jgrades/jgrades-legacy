@@ -11,6 +11,8 @@
 package org.jgrades.logging.job;
 
 import com.google.common.collect.Sets;
+import org.jgrades.logging.JgLogger;
+import org.jgrades.logging.JgLoggerFactory;
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
 
@@ -23,13 +25,12 @@ public class JobsStarter {
     public static final String CONF_UPDATER_JOB_NAME = "extConfMonitorJob";
     public static final String CONF_UPDATER_JOB_TRIGGER_NAME = "extConfMonitorTrigger";
     public static final int CONF_UPDATER_JOB_INTERVAL_SECONDS = 5;
-
     public static final String LOG_CLEANER_JOB_NAME = "oldLogFilesCleanerJob";
     public static final String LOG_CLEANER_JOB_TRIGGER_NAME = "oldLogFilesCleanerTrigger";
     public static final String LOG_CLEANER_START_JOB_TRIGGER_NAME = "oldLogFilesCleanerTrigger_OnStartUp";
     public static final String LOG_CLEANER_JOB_CRON_EXP = "0 0 0 * * ?";
-
     public static final String JOB_GROUP_NAME = "jg-logging";
+    private static final JgLogger LOGGER = JgLoggerFactory.getLogger(JobsStarter.class);
 
     public void start() {
         try {
@@ -40,7 +41,7 @@ public class JobsStarter {
             scheduleConfUpdaterJob(scheduler);
             scheduleLogCleanerJob(scheduler);
         } catch (SchedulerException e) {
-            e.printStackTrace();
+            LOGGER.error("Problem during starting jobs for logging purposes", e);
         }
     }
 

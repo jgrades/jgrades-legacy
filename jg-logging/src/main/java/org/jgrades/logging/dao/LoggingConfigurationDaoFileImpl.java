@@ -15,6 +15,8 @@ import ch.qos.logback.classic.Logger;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
+import org.jgrades.logging.JgLogger;
+import org.jgrades.logging.JgLoggerFactory;
 import org.jgrades.logging.model.JgLogLevel;
 import org.jgrades.logging.model.LoggingConfiguration;
 import org.jgrades.logging.model.LoggingStrategy;
@@ -23,6 +25,8 @@ import org.slf4j.LoggerFactory;
 import static org.jgrades.logging.utils.InternalProperties.*;
 
 public class LoggingConfigurationDaoFileImpl implements LoggingConfigurationDao {
+    private static final JgLogger LOGGER = JgLoggerFactory.getLogger(LoggingConfigurationDaoFileImpl.class);
+
     private String externalConfigFilePath;
 
     public LoggingConfigurationDaoFileImpl() {
@@ -33,17 +37,27 @@ public class LoggingConfigurationDaoFileImpl implements LoggingConfigurationDao 
         this.externalConfigFilePath = externalConfigFilePath;
     }
 
-    private String extractExternalConfigFilePath() {
+    private static String extractExternalConfigFilePath() {
         return CONFIG_FILE;
     }
 
-    private Configuration internalConfiguration() {
+    private static Configuration internalConfiguration() {
         try {
             return new PropertiesConfiguration(INTERNAL_CONFIG_FILE_PATH);
         } catch (ConfigurationException e) {
-            // not possible...
+            LOGGER.error("Problem with getting internal logger config file", e);
         }
         return null;
+    }
+
+    private static LoggingConfiguration extractConfigurationProperties(Configuration externalConfig) {
+        String strategyName = externalConfig.getString(STRATEGY_PROPERTY_NAME);
+        String levelName = externalConfig.getString(LEVEL_PROPERTY_NAME);
+        String maxSizeValue = externalConfig.getString(MAX_FILE_SIZE_PROPERTY_NAME);
+        int maxDaysValue = externalConfig.getInt(MAX_DAYS_PROPERTY_NAME);
+
+        return new LoggingConfiguration(LoggingStrategy.valueOf(strategyName), JgLogLevel.valueOf(levelName),
+                maxSizeValue, maxDaysValue);
     }
 
     private Configuration externalConfiguration() throws ConfigurationException {
@@ -58,6 +72,7 @@ public class LoggingConfigurationDaoFileImpl implements LoggingConfigurationDao 
             Configuration externalConfig = externalConfiguration();
             return extractConfigurationProperties(externalConfig);
         } catch (ConfigurationException e) {
+            LOGGER.error("Problem with getting external logger config file. Using default configuration", e);
             return getDefaultConfiguration();
         }
     }
@@ -78,17 +93,8 @@ public class LoggingConfigurationDaoFileImpl implements LoggingConfigurationDao 
 
             ((Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME)).setLevel(Level.toLevel(configuration.getLevel().toString()));
         } catch (ConfigurationException e) {
+            LOGGER.error("Problem with seetting new configuration to external logger config file", e);
             return;
         }
-    }
-
-    private LoggingConfiguration extractConfigurationProperties(Configuration externalConfig) {
-        String strategyName = externalConfig.getString(STRATEGY_PROPERTY_NAME);
-        String levelName = externalConfig.getString(LEVEL_PROPERTY_NAME);
-        String maxSizeValue = externalConfig.getString(MAX_FILE_SIZE_PROPERTY_NAME);
-        int maxDaysValue = externalConfig.getInt(MAX_DAYS_PROPERTY_NAME);
-
-        return new LoggingConfiguration(LoggingStrategy.valueOf(strategyName), JgLogLevel.valueOf(levelName),
-                maxSizeValue, maxDaysValue);
     }
 }

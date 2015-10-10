@@ -20,6 +20,17 @@ import java.util.Optional;
 public class PropertiesTextAreaParser {
     private static final String ERROR_PARSING_MESSAGE = "Invalid property definition appears in line: ";
 
+    private static void processLine(List<LicenceProperty> result, String line) {
+        String[] property = line.split("=", 2);
+        if (property.length < 2) {
+            throw new IllegalArgumentException(ERROR_PARSING_MESSAGE + line);
+        }
+        LicenceProperty licenceProperty = new LicenceProperty();
+        licenceProperty.setName(property[0]);
+        licenceProperty.setValue(property[1]);
+        result.add(licenceProperty);
+    }
+
     public List<LicenceProperty> getProperties(String textAreaContent) {
         List<LicenceProperty> result = Lists.newArrayList();
 
@@ -36,17 +47,6 @@ public class PropertiesTextAreaParser {
         }
 
         return result;
-    }
-
-    private void processLine(List<LicenceProperty> result, String line) {
-        String[] property = line.split("=", 2);
-        if (property.length < 2) {
-            throw new IllegalArgumentException(ERROR_PARSING_MESSAGE + line);
-        }
-        LicenceProperty licenceProperty = new LicenceProperty();
-        licenceProperty.setName(property[0]);
-        licenceProperty.setValue(property[1]);
-        result.add(licenceProperty);
     }
 
     public String getPropertiesText(List<LicenceProperty> properties) {

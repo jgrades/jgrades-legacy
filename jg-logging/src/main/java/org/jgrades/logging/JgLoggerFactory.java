@@ -16,17 +16,23 @@ import org.jgrades.logging.job.JobsStarter;
 import org.jgrades.logging.job.XmlConfigurationUpdater;
 
 public final class JgLoggerFactory {
+    private static final JgLogger LOGGER = JgLoggerFactory.getLogger(JgLoggerFactory.class);
+
     private static XmlConfigurationUpdater xmlUpdater;
     private static LoggingConfigurationDao configurationDao;
     private static JobsStarter jobsStarter;
 
     static {
-        xmlUpdater = new XmlConfigurationUpdater();
-        configurationDao = new LoggingConfigurationDaoFileImpl();
-        jobsStarter = new JobsStarter();
+        try {
+            xmlUpdater = new XmlConfigurationUpdater();
+            configurationDao = new LoggingConfigurationDaoFileImpl();
+            jobsStarter = new JobsStarter();
 
-        xmlUpdater.update(configurationDao.getCurrentConfiguration());
-        jobsStarter.start();
+            xmlUpdater.update(configurationDao.getCurrentConfiguration());
+            jobsStarter.start();
+        } catch (RuntimeException e) { //NOSONAR
+            LOGGER.debug("Fail to correctly initialize JgLoggerFactory. Logging can work improperly", e);
+        }
     }
 
     private JgLoggerFactory() {

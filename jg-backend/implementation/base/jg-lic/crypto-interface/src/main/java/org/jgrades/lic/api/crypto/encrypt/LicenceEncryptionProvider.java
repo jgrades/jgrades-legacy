@@ -36,12 +36,7 @@ class LicenceEncryptionProvider {
         this.extractor = extractor;
     }
 
-    public byte[] encrypt(Licence licence) throws JAXBException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IOException {
-        byte[] licXmlBytes = transformToBytesArray(licence);
-        return encrypt(licXmlBytes);
-    }
-
-    private byte[] transformToBytesArray(Licence licence) throws JAXBException {
+    private static byte[] transformToBytesArray(Licence licence) throws JAXBException {
         Marshaller marshaller = LicenceMarshallingFactory.getMarshaller();
         ByteArrayOutputStream os = new ByteArrayOutputStream();
 
@@ -49,18 +44,23 @@ class LicenceEncryptionProvider {
         return os.toByteArray();
     }
 
-    private byte[] encrypt(byte[] licXmlBytes) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, IOException {
-        Cipher cipher = Cipher.getInstance(CIPHER_PROVIDER_INTERFACE);
-        SecretKeySpec privKey = extractor.getPrivateKeyForEncryptionAndDecryption();
-        cipher.init(Cipher.ENCRYPT_MODE, privKey);
-        return getEncryptedOutputStream(licXmlBytes, cipher).toByteArray();
-    }
-
-    private ByteArrayOutputStream getEncryptedOutputStream(byte[] licXmlBytes, Cipher cipher) throws IOException {
+    private static ByteArrayOutputStream getEncryptedOutputStream(byte[] licXmlBytes, Cipher cipher) throws IOException {
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         OutputStream cos = new CipherOutputStream(bos, cipher);
         IOUtils.write(licXmlBytes, cos);
         cos.close();
         return bos;
+    }
+
+    public byte[] encrypt(Licence licence) throws JAXBException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IOException {
+        byte[] licXmlBytes = transformToBytesArray(licence);
+        return encrypt(licXmlBytes);
+    }
+
+    private byte[] encrypt(byte[] licXmlBytes) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, IOException {
+        Cipher cipher = Cipher.getInstance(CIPHER_PROVIDER_INTERFACE);
+        SecretKeySpec privKey = extractor.getPrivateKeyForEncryptionAndDecryption();
+        cipher.init(Cipher.ENCRYPT_MODE, privKey);
+        return getEncryptedOutputStream(licXmlBytes, cipher).toByteArray();
     }
 }

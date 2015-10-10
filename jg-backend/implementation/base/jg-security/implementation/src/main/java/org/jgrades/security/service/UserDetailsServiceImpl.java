@@ -39,7 +39,7 @@ import java.util.Set;
 
 @Service("userDetailsService")
 public class UserDetailsServiceImpl implements UserDetailsService {
-    private final static JgLogger LOGGER = JgLoggerFactory.getLogger(UserDetailsServiceImpl.class);
+    private static final JgLogger LOGGER = JgLoggerFactory.getLogger(UserDetailsServiceImpl.class);
 
     @Autowired
     private UserRepository userRepository;
@@ -56,8 +56,22 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    private static JgRole getRoleWithHighestPriority(Set<JgRole> roles) {
+        JgRole highestRole = null;
+        for (JgRole role : roles) {
+            if (highestRole == null) {
+                highestRole = role;
+                continue;
+            }
+            if (role.getPriority() > highestRole.getPriority()) {
+                highestRole = role;
+            }
+        }
+        return highestRole;
+    }
+
     @Override
-    public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String login) {
         User user = userRepository.findFirstByLogin(login);
         if (user == null) {
             LOGGER.info("Cannot find user with {} login", login);
@@ -94,20 +108,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     private int getExpirationDays(JgRole roleWithShortestPasswordPolicy) {
         PasswordPolicy passwordPolicy = passwordPolicyRepository.findOne(roleWithShortestPasswordPolicy);
         return passwordPolicy == null ? 0 : passwordPolicy.getExpirationDays();
-    }
-
-    private JgRole getRoleWithHighestPriority(Set<JgRole> roles) {
-        JgRole highestRole = null;
-        for (JgRole role : roles) {
-            if (highestRole == null) {
-                highestRole = role;
-                continue;
-            }
-            if (role.getPriority() > highestRole.getPriority()) {
-                highestRole = role;
-            }
-        }
-        return highestRole;
     }
 
     private String getUserPassword(User user) {

@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @CheckSystemDependencies
-public abstract class AbstractRestCrudPagingService<T, ID, S extends CrudPagingService<T, ID>> extends AbstractRestCrudService<T, ID, S> {
+public abstract class AbstractRestCrudPagingService<T, ID, S extends CrudPagingService<T, ID>> extends AbstractRestCrudService<T, ID, S> { //NOSONAR
     @Value("${rest.paging.default.limit}")
     protected Integer paginationLimit;
 

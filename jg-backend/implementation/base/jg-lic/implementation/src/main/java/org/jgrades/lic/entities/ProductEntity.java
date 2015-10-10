@@ -16,12 +16,13 @@ import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "JG_LIC_PRODUCT")
 @Data
 @EqualsAndHashCode(exclude = {"id"})
-public class ProductEntity {
+public class ProductEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

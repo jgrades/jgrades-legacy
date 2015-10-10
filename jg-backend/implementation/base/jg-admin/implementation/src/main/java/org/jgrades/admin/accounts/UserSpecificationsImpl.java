@@ -32,6 +32,15 @@ public class UserSpecificationsImpl implements UserSpecifications {
     @Value("${admin.minimum.search.text.length}")
     protected Integer minimumTextLength;
 
+    private static Predicate getSearchPredicate(Root<User> root, CriteriaQuery<?> cq, CriteriaBuilder cb, Class clazz) {
+        Subquery subquery = cq.subquery(clazz);
+        Root subRoot = subquery.from(clazz);
+        subquery.select(subRoot);
+        Predicate predicate = cb.equal(subRoot.get("id"), root.get("id"));
+        subquery.where(predicate);
+        return cb.exists(subquery);
+    }
+
     @Override
     public Specification<User> withPhrase(String phrase) {
         checkIsNotTooShort(phrase);
@@ -97,16 +106,6 @@ public class UserSpecificationsImpl implements UserSpecifications {
             return cb.or(predicates.toArray(new Predicate[predicates.size()]));
         };
     }
-
-    private Predicate getSearchPredicate(Root<User> root, CriteriaQuery<?> cq, CriteriaBuilder cb, Class clazz) {
-        Subquery subquery = cq.subquery(clazz);
-        Root subRoot = subquery.from(clazz);
-        subquery.select(subRoot);
-        Predicate predicate = cb.equal(subRoot.get("id"), root.get("id"));
-        subquery.where(predicate);
-        return cb.exists(subquery);
-    }
-
 
     @Override
     public Specification<User> lastVisitBetween(DateTime dateTime1, DateTime dateTime2) {

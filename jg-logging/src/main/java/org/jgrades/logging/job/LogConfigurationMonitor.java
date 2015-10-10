@@ -24,7 +24,7 @@ public class LogConfigurationMonitor implements Job {
     private XmlConfigurationUpdater configurationUpdater = new XmlConfigurationUpdater();
     private LoggerContextReloader contextReloader = new LoggerContextReloader();
 
-    private synchronized static void updateCache(LoggingConfiguration targetConfig) {
+    private static synchronized void updateCache(LoggingConfiguration targetConfig) {
         cachedConfig = targetConfig;
     }
 

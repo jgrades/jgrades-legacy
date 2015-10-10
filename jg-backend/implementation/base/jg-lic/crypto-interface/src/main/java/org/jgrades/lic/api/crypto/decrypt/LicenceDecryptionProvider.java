@@ -14,6 +14,8 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.jgrades.lic.api.model.Licence;
 import org.jgrades.lic.api.service.LicenceMarshallingFactory;
+import org.jgrades.logging.JgLogger;
+import org.jgrades.logging.JgLoggerFactory;
 import org.jgrades.security.utils.KeyStoreContentExtractor;
 
 import javax.crypto.Cipher;
@@ -32,10 +34,31 @@ import java.security.NoSuchAlgorithmException;
 import static org.jgrades.security.utils.CryptoDataConstants.CIPHER_PROVIDER_INTERFACE;
 
 class LicenceDecryptionProvider {
+    private static final JgLogger LOGGER = JgLoggerFactory.getLogger(LicenceDecryptionProvider.class);
+
     private final KeyStoreContentExtractor extractor;
 
     public LicenceDecryptionProvider(KeyStoreContentExtractor extractor) {
         this.extractor = extractor;
+    }
+
+    private static ByteArrayOutputStream getDecryptedOutputStream(byte[] encryptedLicXmlBytes, Cipher cipher) throws IOException {
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        CipherOutputStream cos = new CipherOutputStream(bos, cipher);
+        IOUtils.write(encryptedLicXmlBytes, cos);
+        cos.close();
+        return bos;
+    }
+
+    private static Licence transformToObject(byte[] decryptedLicXmlBytes) {
+        Unmarshaller unmarshaller = LicenceMarshallingFactory.getUnmarshaller();
+        ByteArrayInputStream is = new ByteArrayInputStream(decryptedLicXmlBytes);
+        try {
+            return (Licence) unmarshaller.unmarshal(is);
+        } catch (JAXBException e) {
+            LOGGER.error("Unmarshalling raw data to licence format failed", e);
+        }
+        return null;
     }
 
     public Licence decrypt(File encryptedLicenceFile) throws IOException, NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException {
@@ -49,24 +72,5 @@ class LicenceDecryptionProvider {
         SecretKeySpec secretKeySpec = extractor.getPrivateKeyForEncryptionAndDecryption();
         cipher.init(Cipher.DECRYPT_MODE, secretKeySpec);
         return getDecryptedOutputStream(encryptedLicXmlBytes, cipher).toByteArray();
-    }
-
-    private ByteArrayOutputStream getDecryptedOutputStream(byte[] encryptedLicXmlBytes, Cipher cipher) throws IOException {
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        CipherOutputStream cos = new CipherOutputStream(bos, cipher);
-        IOUtils.write(encryptedLicXmlBytes, cos);
-        cos.close();
-        return bos;
-    }
-
-    private Licence transformToObject(byte[] decryptedLicXmlBytes) {
-        Unmarshaller unmarshaller = LicenceMarshallingFactory.getUnmarshaller();
-        ByteArrayInputStream is = new ByteArrayInputStream(decryptedLicXmlBytes);
-        try {
-            return (Licence) unmarshaller.unmarshal(is);
-        } catch (JAXBException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 }

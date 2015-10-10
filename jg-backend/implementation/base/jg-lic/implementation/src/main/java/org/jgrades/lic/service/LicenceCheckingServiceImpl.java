@@ -12,7 +12,6 @@ package org.jgrades.lic.service;
 
 import com.google.common.collect.ImmutableList;
 import org.dozer.Mapper;
-import org.jgrades.lic.api.exception.LicenceException;
 import org.jgrades.lic.api.exception.LicenceNotFoundException;
 import org.jgrades.lic.api.model.Licence;
 import org.jgrades.lic.api.model.LicenceValidationResult;
@@ -52,7 +51,7 @@ public class LicenceCheckingServiceImpl implements LicenceCheckingService {
     }
 
     @Override
-    public LicenceValidationResult checkValid(Licence licence) throws LicenceException {
+    public LicenceValidationResult checkValid(Licence licence) {
         LOGGER.debug("Start checking validation of licence {}", licence);
         validate(licence, notNullValue(), otherwiseThrowing(LicenceNotFoundException.class));
         for (ValidationRule rule : rules) {
@@ -67,7 +66,7 @@ public class LicenceCheckingServiceImpl implements LicenceCheckingService {
     }
 
     @Override
-    public LicenceValidationResult checkValidForProduct(String productName) throws LicenceException {
+    public LicenceValidationResult checkValidForProduct(String productName) {
         LOGGER.debug("Start checking licences for product {}", productName);
 
         List<LicenceEntity> licences = licenceRepository.findByProductName(productName);

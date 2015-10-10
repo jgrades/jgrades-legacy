@@ -11,6 +11,8 @@
 package org.jgrades.lic.api.service;
 
 import org.jgrades.lic.api.model.Licence;
+import org.jgrades.logging.JgLogger;
+import org.jgrades.logging.JgLoggerFactory;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -19,13 +21,15 @@ import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.helpers.DefaultValidationEventHandler;
 
 public final class LicenceMarshallingFactory {
+    private static final JgLogger LOGGER = JgLoggerFactory.getLogger(LicenceMarshallingFactory.class);
+
     private static JAXBContext jaxbContext;
 
     static {
         try {
             jaxbContext = JAXBContext.newInstance(Licence.class);
         } catch (JAXBException e) {
-            e.printStackTrace();//TODO: use logger in future
+            LOGGER.error("Preparing LicenceMarshallingFactory failed", e);
         }
     }
 
@@ -39,7 +43,7 @@ public final class LicenceMarshallingFactory {
             jaxbMarshaller.setProperty(Marshaller.JAXB_ENCODING, "UTF-8");
             jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
         } catch (JAXBException e) {
-            e.printStackTrace();//TODO: use logger in future
+            LOGGER.error("Preparing Licence marshaller failed", e);
         }
         return jaxbMarshaller;
     }
@@ -50,7 +54,7 @@ public final class LicenceMarshallingFactory {
             jaxbUnmarshaller = jaxbContext.createUnmarshaller();
             jaxbUnmarshaller.setEventHandler(new DefaultValidationEventHandler());
         } catch (JAXBException e) {
-            e.printStackTrace();//TODO: use logger in future
+            LOGGER.error("Preparing Licence unmarshaller failed", e);
         }
         return jaxbUnmarshaller;
     }

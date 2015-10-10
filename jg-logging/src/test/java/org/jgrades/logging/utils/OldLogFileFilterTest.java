@@ -63,4 +63,24 @@ public class OldLogFileFilterTest {
         assertThat(isTakenToRemoving2).isTrue();
         assertThat(isTakenToRemoving3).isTrue();
     }
+
+    @Test
+    public void shouldIgnoreFile_whenFileNameHasNotDateInProperFormat() throws Exception {
+        // given
+        Integer maxDays = 7;
+        LoggingConfiguration configuration = new LoggingConfiguration();
+        configuration.setMaxDays(maxDays);
+        when(loggingConfigurationDao.getCurrentConfiguration()).thenReturn(configuration);
+
+        LocalDate actualDate = LocalDate.now();
+        String wrongDateFormat = "dd.MM.yyyy";
+        String nokDate = actualDate.minusDays(maxDays).toString(wrongDateFormat);
+        String fileName = "jg_monitor_" + nokDate + "_0.log";
+
+        // when
+        boolean isTakenToRemoving = oldLogFileFilter.accept(temporaryFolder.newFolder(), fileName);
+
+        // then
+        assertThat(isTakenToRemoving).isFalse();
+    }
 }

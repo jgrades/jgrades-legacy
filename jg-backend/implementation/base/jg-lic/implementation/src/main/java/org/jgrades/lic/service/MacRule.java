@@ -79,7 +79,7 @@ class MacRule implements ValidationRule {
                     return true;
                 }
             } catch (SocketException e) {
-                LOGGER.debug("Error during extracting MAC for network interface {}", networkInterface.getDisplayName());
+                LOGGER.debug("Error during extracting MAC for network interface {}", networkInterface.getDisplayName(), e);
             }
         }
         LOGGER.debug("There is no any network interfaces or all has not correctly MAC");
