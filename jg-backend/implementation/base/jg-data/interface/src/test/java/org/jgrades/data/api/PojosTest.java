@@ -24,8 +24,11 @@ import com.openpojo.validation.rule.impl.SetterMustExistRule;
 import com.openpojo.validation.test.impl.GetterTester;
 import com.openpojo.validation.test.impl.SetterTester;
 import org.jgrades.data.api.entities.*;
+import org.jgrades.data.api.entities.roles.*;
 import org.junit.Test;
 import org.meanbean.test.BeanTester;
+import org.meanbean.test.Configuration;
+import org.meanbean.test.ConfigurationBuilder;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
@@ -33,23 +36,23 @@ import java.util.List;
 public class PojosTest {
     private static final List<Class> POJOS = Lists.newArrayList(
             AcademicYear.class,
-            //Administrator.class,
+            AdministratorDetails.class,
             ClassGroup.class,
             Classroom.class,
             Division.class,
-            // Manager.class,
-            //Parent.class,
+            ManagerDetails.class,
+            ParentDetails.class,
             School.class,
             SchoolDay.class,
             SchoolDayPeriod.class,
             Semester.class,
             SemesterYearLevel.class,
             SemesterYearLevelId.class,
-            //Student.class,
+            StudentDetails.class,
             SubGroup.class,
             Subject.class,
-            //Teacher.class,
-            //User.class,
+            TeacherDetails.class,
+            User.class,
             YearLevel.class
     );
 
@@ -87,8 +90,14 @@ public class PojosTest {
     public void testGettersAndSetters() throws Exception {
         BeanTester tester = new BeanTester();
         tester.setIterations(1);
+        ConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
+        configurationBuilder.ignoreProperty("user");
+        configurationBuilder.ignoreProperty("student");
+        configurationBuilder.ignoreProperty("parent");
+        configurationBuilder.ignoreProperty("roles");
+        Configuration config = configurationBuilder.build();
         for (Class clazz : POJOS) {
-            tester.testBean(clazz);
+            tester.testBean(clazz, config);
         }
     }
 }

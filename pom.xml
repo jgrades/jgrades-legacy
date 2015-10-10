@@ -8,8 +8,40 @@
     <artifactId>jgrades-all</artifactId>
     <version>0.4-DEV-SNAPSHOT</version>
 
+    <!-- .......................................... WARNING .......................................... -->
+    <!-- ............................................................................................. -->
+    <!-- PLEASE BUILD USING 'MVN CLEAN INSTALL' PROJECT IN JG-BOM SUBDIR BEFORE BUILDING THIS ARTIFACT -->
+    <!-- ............................................................................................. -->
+    <!-- ............................................................................................. -->
+
     <packaging>pom</packaging>
+
     <name>jGrades Application</name>
+    <description>Student Administration System project</description>
+    <url>https://github.com/jgrades/jgrades</url>
+
+    <licenses>
+        <license>
+            <name>Apache License 2.0</name>
+            <url>LICENSE</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <scm>
+        <connection>scm:git:git@github.com:jgrades/jgrades.git</connection>
+        <developerConnection>scm:git:git@github.com:jgrades/jgrades.git</developerConnection>
+        <url>https://github.com/jgrades/jgrades</url>
+        <tag>master</tag>
+    </scm>
+    <issueManagement>
+        <system>GitHub</system>
+        <url>https://github.com/jgrades/jgrades/issues</url>
+    </issueManagement>
+    <ciManagement>
+        <system>Jenkins</system>
+        <url>http://159.203.94.74:8080/</url>
+    </ciManagement>
 
     <properties>
         <RELEASE.VERSION>0.4-DEV-SNAPSHOT</RELEASE.VERSION>
