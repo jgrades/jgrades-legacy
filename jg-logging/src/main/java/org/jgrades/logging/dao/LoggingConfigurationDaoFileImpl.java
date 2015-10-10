@@ -72,7 +72,7 @@ public class LoggingConfigurationDaoFileImpl implements LoggingConfigurationDao 
             Configuration externalConfig = externalConfiguration();
             return extractConfigurationProperties(externalConfig);
         } catch (ConfigurationException e) {
-            LOGGER.error("Problem with getting external logger config file. Using default configuration", e);
+            LOGGER.warn("Problem with getting external logger config file. Using default configuration", e);
             return getDefaultConfiguration();
         }
     }

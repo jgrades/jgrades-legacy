@@ -28,7 +28,7 @@ public final class InternalProperties {
     static {
         try {
             configuration = new PropertiesConfiguration(INTERNAL_CONFIG_FILE_PATH);
-        } catch (ConfigurationException e) {
+        } catch (ConfigurationException e) { //NOSONAR
             //not possible...
         }
     }
