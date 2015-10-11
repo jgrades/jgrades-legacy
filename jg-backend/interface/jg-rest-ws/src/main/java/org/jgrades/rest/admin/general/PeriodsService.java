@@ -41,8 +41,14 @@ public class PeriodsService extends AbstractRestCrudService<SchoolDayPeriod, Lon
 
     @RequestMapping(value = "/generator", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> insertWithGenerator(@RequestBody PeriodsGeneratorSettings generationSettings) {
+        getLogger().trace("Saving periods using generator with settings: {}", generationSettings);
         List<SchoolDayPeriod> periods = crudService.generateManyWithGenerator(generationSettings);
         crudService.saveMany(periods);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @Override
+    protected JgLogger getLogger() {
+        return LOGGER; //NOSONAR
     }
 }

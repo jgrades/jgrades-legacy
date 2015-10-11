@@ -25,6 +25,8 @@ import org.jgrades.lic.api.crypto.encrypt.LicenceEncryptionService;
 import org.jgrades.lic.api.model.Licence;
 import org.jgrades.lic.app.utils.DialogFactory;
 import org.jgrades.lic.app.utils.FileChooserFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -34,7 +36,10 @@ import static org.jgrades.lic.app.utils.AppConstants.LICENCE_FORM_FXML_PATH;
 import static org.jgrades.lic.app.utils.AppConstants.OPENING_LIC_WINDOW_FXML_PATH;
 
 public class MainWindowController {
+    private static final Logger LOGGER = LoggerFactory.getLogger(MainWindowController.class);
+
     private ApplicationMode applicationMode;
+
     @FXML
     private BorderPane mainBorderPane;
     @FXML
@@ -101,7 +106,7 @@ public class MainWindowController {
     }
 
     @FXML
-    void newLicenceAction(ActionEvent event) {
+    void newLicenceAction(ActionEvent event) { //NOSONAR
         setApplicationMode(ApplicationMode.NEW_MODE);
         cleanData();
         licenceFormController.clearData();
@@ -112,7 +117,7 @@ public class MainWindowController {
     }
 
     @FXML
-    void openLicenceAction(ActionEvent event) {
+    void openLicenceAction(ActionEvent event) { //NOSONAR
         setApplicationMode(ApplicationMode.OPEN_MODE);
     }
 
@@ -126,7 +131,8 @@ public class MainWindowController {
             try {
                 root = loader.load();
             } catch (IOException e) {
-                e.printStackTrace();
+                LOGGER.error("Loading window for opening licence failed", e);
+                return;
             }
             Stage stage = new Stage();
             stage.setTitle("Open licence");

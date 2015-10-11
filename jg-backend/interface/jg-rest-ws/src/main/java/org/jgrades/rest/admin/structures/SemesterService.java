@@ -40,15 +40,21 @@ public class SemesterService extends AbstractRestCrudPagingService<Semester, Lon
     }
 
     @RequestMapping(value = "/active", method = RequestMethod.GET)
-    public
     @ResponseBody
-    Semester getActive() {
+    public Semester getActive() {
+        getLogger().trace("Getting active semester");
         return crudService.getActiveSemester();
     }
 
     @RequestMapping(value = "/active/{id}", method = RequestMethod.POST)
     public ResponseEntity<Object> setActive(@PathVariable Long id) {
+        getLogger().trace("Setting as active a semester with id {}", id);
         crudService.setActiveSemester(crudService.getWithId(id));
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @Override
+    protected JgLogger getLogger() {
+        return LOGGER; //NOSONAR
     }
 }

@@ -10,10 +10,14 @@
 
 package org.jgrades.admin.api.model;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.jgrades.data.api.entities.ClassGroup;
 
-@Data
+@Getter
+@Setter
+@ToString
 public class StudentMassCreatingSettings {
     private boolean activeAfterCreation;
 

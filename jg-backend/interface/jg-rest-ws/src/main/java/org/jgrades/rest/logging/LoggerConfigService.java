@@ -38,20 +38,20 @@ public class LoggerConfigService {
     @RequestMapping(value = "/configuration/default", method = RequestMethod.GET)
     public LoggingConfiguration getDefaultConfiguration() {
         LoggingConfiguration defaultConfiguration = loggingService.getDefaultConfiguration();
-        LOGGER.info("Get default logging configuration: {}", defaultConfiguration);
+        LOGGER.trace("Get default logging configuration: {}", defaultConfiguration);
         return defaultConfiguration;
     }
 
     @RequestMapping(value = "/configuration", method = RequestMethod.GET)
     public LoggingConfiguration getConfiguration() {
         LoggingConfiguration configuration = loggingService.getLoggingConfiguration();
-        LOGGER.info("Get current logging configuration: {}", configuration);
+        LOGGER.trace("Get current logging configuration: {}", configuration);
         return configuration;
     }
 
     @RequestMapping(value = "/configuration", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> setNewConfiguration(@RequestBody LoggingConfiguration configuration) {
-        LOGGER.info("Set new logging configuration: {}", configuration);
+        LOGGER.trace("Set new logging configuration: {}", configuration);
         loggingService.setLoggingConfiguration(configuration);
         return new ResponseEntity<>(HttpStatus.OK);
     }

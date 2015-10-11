@@ -39,9 +39,9 @@ class DateRule implements ValidationRule {
 
     private boolean checkExpiredDaysMode(Licence licence) {
         List<LicenceProperty> properties = licence.getProperties();
-        UnmodifiableIterator<LicenceProperty> expiredDaysProperty = Iterators.filter(properties.iterator(), licenceProperty -> {
-            return licenceProperty.getName().equals(EXPIRED_DAYS_PROPERTY_NAME);
-        });
+        UnmodifiableIterator<LicenceProperty> expiredDaysProperty =
+                Iterators.filter(properties.iterator(),
+                        licenceProperty -> licenceProperty.getName().equals(EXPIRED_DAYS_PROPERTY_NAME));
         LicenceProperty property = null;
         if (expiredDaysProperty.hasNext()) {
             property = expiredDaysProperty.next();

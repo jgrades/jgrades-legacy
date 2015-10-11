@@ -48,7 +48,7 @@ public final class DialogFactory {
 
         StringWriter sw = new StringWriter();
         PrintWriter pw = new PrintWriter(sw);
-        ex.printStackTrace(pw);
+        ex.printStackTrace(pw);//NOSONAR
         String exceptionText = sw.toString();
 
         Label label = new Label("The exception stacktrace was:");

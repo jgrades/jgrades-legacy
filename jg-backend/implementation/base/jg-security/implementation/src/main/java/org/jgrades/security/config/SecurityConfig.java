@@ -45,7 +45,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @ComponentScan("org.jgrades.security")
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception { //NOSONAR
         auth.userDetailsService(userDetailsService());
     }
 

@@ -31,4 +31,9 @@ public class ClassroomService extends AbstractRestCrudPagingService<Classroom, L
     protected ClassroomService(ClassroomMgntService crudService) {
         super(crudService);
     }
+
+    @Override
+    protected JgLogger getLogger() {
+        return LOGGER; //NOSONAR
+    }
 }

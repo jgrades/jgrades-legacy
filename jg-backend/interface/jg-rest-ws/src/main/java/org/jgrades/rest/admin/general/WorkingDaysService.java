@@ -34,14 +34,15 @@ public class WorkingDaysService {
     private DaysMgntService daysMgntService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public
     @ResponseBody
-    Set<DayOfWeek> getWorkingDays() {
+    public Set<DayOfWeek> getWorkingDays() {
+        LOGGER.trace("Getting school working days");
         return daysMgntService.getWorkingDays().getDays();
     }
 
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> setWorkingDays(@RequestBody Set<DayOfWeek> days) {
+        LOGGER.trace("Saving or overriding exising school working days with: {}", days);
         WorkingDays workingDays = new WorkingDays();
         days.forEach(workingDays::addDay);
         daysMgntService.setWorkingDays(workingDays);

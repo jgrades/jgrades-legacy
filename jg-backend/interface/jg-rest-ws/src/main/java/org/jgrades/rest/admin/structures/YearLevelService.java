@@ -32,4 +32,9 @@ public class YearLevelService extends AbstractRestCrudPagingService<YearLevel, L
     protected YearLevelService(YearLevelMgntService crudService) {
         super(crudService);
     }
+
+    @Override
+    protected JgLogger getLogger() {
+        return LOGGER; //NOSONAR
+    }
 }

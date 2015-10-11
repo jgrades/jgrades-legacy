@@ -31,4 +31,9 @@ public class ClassGroupService extends AbstractRestCrudPagingService<ClassGroup,
     protected ClassGroupService(ClassGroupMgntService crudService) {
         super(crudService);
     }
+
+    @Override
+    protected JgLogger getLogger() {
+        return LOGGER; //NOSONAR
+    }
 }

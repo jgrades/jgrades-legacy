@@ -111,21 +111,23 @@ public class UserSpecificationsBuilder {
         return this;
     }
 
-    public UserSpecificationsBuilder withLastVisitBetween(DateTime dateTime1, DateTime dateTime2) {
-        if (dateTime1 == null && dateTime2 == null) {
+    public UserSpecificationsBuilder withLastVisitBetween(DateTime dt1, DateTime dt2) {
+        if (dt1 == null && dt2 == null) {
             return this;
         }
 
-        if (dateTime1 == null) {
-            dateTime1 = new DateTime(0);
-        }
-        if (dateTime2 == null) {
-            dateTime2 = DateTime.now();
-        }
         result = (result == null)
-                ? Specifications.where(specs.lastVisitBetween(dateTime1, dateTime2))
-                : Specifications.where(result).and(specs.lastVisitBetween(dateTime1, dateTime2));
+                ? Specifications.where(specs.lastVisitBetween(startDateTime(dt1), endDateTime(dt2)))
+                : Specifications.where(result).and(specs.lastVisitBetween(startDateTime(dt1), endDateTime(dt2)));
         return this;
+    }
+
+    private DateTime startDateTime(DateTime dateTime) {
+        return dateTime == null ? new DateTime(0) : null;
+    }
+
+    private DateTime endDateTime(DateTime dateTime) {
+        return dateTime == null ? DateTime.now() : null;
     }
 
     public Specification<User> build() {

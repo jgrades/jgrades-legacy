@@ -31,4 +31,9 @@ public class DivisionService extends AbstractRestCrudPagingService<Division, Lon
     protected DivisionService(DivisionMgntService crudService) {
         super(crudService);
     }
+
+    @Override
+    protected JgLogger getLogger() {
+        return LOGGER; //NOSONAR
+    }
 }

@@ -31,4 +31,9 @@ public class SubGroupService extends AbstractRestCrudPagingService<SubGroup, Lon
     protected SubGroupService(SubGroupMgntService crudService) {
         super(crudService);
     }
+
+    @Override
+    protected JgLogger getLogger() {
+        return LOGGER; //NOSONAR
+    }
 }

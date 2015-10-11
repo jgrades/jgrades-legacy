@@ -36,18 +36,16 @@ public class LicenceCheckService {
 
     @RequestMapping(value = "/{uid}", method = RequestMethod.GET)
     @ApiOperation(value = "Check is licence with given UID valid")
-    public
     @ResponseBody
-    LicenceValidationResult check(@PathVariable Long uid) {
+    public LicenceValidationResult check(@PathVariable Long uid) {
         LOGGER.info("Checking licence with uid {}", uid);
         Licence licence = licenceManagingService.get(uid);
         return licenceCheckingService.checkValid(licence);
     }
 
     @RequestMapping(value = "/product/{productName}", method = RequestMethod.GET)
-    public
     @ResponseBody
-    LicenceValidationResult checkForProduct(@PathVariable String productName) {
+    public LicenceValidationResult checkForProduct(@PathVariable String productName) {
         LOGGER.info("Checking licence for product {}", productName);
         return licenceCheckingService.checkValidForProduct(productName);
     }

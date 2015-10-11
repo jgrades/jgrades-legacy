@@ -31,14 +31,15 @@ public class SchoolService {
     private GeneralDataService generalDataService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public
     @ResponseBody
-    School getGeneralData() {
+    public School getGeneralData() {
+        LOGGER.trace("Getting school general details");
         return generalDataService.getSchoolGeneralDetails();
     }
 
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> insertOrUpdate(@RequestBody School generalData) {
+        LOGGER.trace("Saving or overriding exising school general details with: {}", generalData);
         generalDataService.setSchoolGeneralDetails(generalData);
         return new ResponseEntity<>(HttpStatus.OK);
     }

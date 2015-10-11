@@ -17,7 +17,7 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
 @Configuration
 @PropertySource("classpath:jg-property.properties")
-public class ApplicationPropertiesConfig {
+public class ApplicationPropertiesConfig { //NOSONAR
     @Bean
     public static PropertySourcesPlaceholderConfigurer propertyConfig() {
         return new PropertySourcesPlaceholderConfigurer();

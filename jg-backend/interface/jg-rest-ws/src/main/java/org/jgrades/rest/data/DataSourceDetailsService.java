@@ -18,6 +18,7 @@ import org.jgrades.monitor.api.aop.CheckSystemDependencies;
 import org.jgrades.monitor.api.model.SystemDependency;
 import org.jgrades.monitor.api.service.SystemStateService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +32,9 @@ import java.util.Timer;
 public class DataSourceDetailsService {
     private static final JgLogger LOGGER = JgLoggerFactory.getLogger(DataSourceDetailsService.class);
 
+    @Value("${rest.wait.for.restart.miliseconds}")
+    private Integer restartDelay;
+
     @Autowired
     private DataSourceService dataSourceService;
 
@@ -38,33 +42,33 @@ public class DataSourceDetailsService {
     private SystemStateService systemStateService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public
     @ResponseBody
-    DataSourceDetails getDataSourceDetails() {
+    public DataSourceDetails getDataSourceDetails() {
+        LOGGER.trace("Getting data source details");
         return dataSourceService.getDataSourceDetails();
     }
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<DataSourceDetails> setDataSourceDetails(@RequestBody DataSourceDetails details) {
+        LOGGER.trace("Setting a data source details: {}", details);
         dataSourceService.setDataSourceDetails(details);
-        runRestartProcedureInFiveSeconds();
+        runRestartProcedureAfterDelay();
         return new ResponseEntity<>(details, HttpStatus.OK);
     }
 
-    private void runRestartProcedureInFiveSeconds() {
-        new Timer().schedule(
-                new java.util.TimerTask() {
+    private void runRestartProcedureAfterDelay() {
+        new Timer().schedule(new java.util.TimerTask() {
                     @Override
                     public void run() {
                         systemStateService.restartApplication();
                     }
-                }, 5000);
+        }, restartDelay);
     }
 
     @RequestMapping(value = "/test", method = RequestMethod.GET)
-    public
     @ResponseBody
-    ResponseEntity<Boolean> testConnection() {
+    public ResponseEntity<Boolean> testConnection() {
+        LOGGER.trace("Making test of connection to database");
         boolean connectionEstabished = dataSourceService.testConnection();
         HttpStatus httpStatus = connectionEstabished ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR;
         return new ResponseEntity<>(connectionEstabished, httpStatus);

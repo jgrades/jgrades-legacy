@@ -35,12 +35,14 @@ public class PasswordsService {
 
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> setPassword(@RequestBody PasswordDTO passwordInfo) {
+        LOGGER.trace("Setting password for user with id {}", passwordInfo.getUserId());
         passwordMgntService.setPassword(passwordInfo.getPassword(), userRepository.findOne(passwordInfo.getUserId()));
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @RequestMapping(value = "/expired/{id}", method = RequestMethod.GET)
     public boolean isPasswordExpired(@PathVariable Long id) {
+        LOGGER.trace("Checking is password expired for user with id {}", id);
         return passwordMgntService.isPasswordExpired(userRepository.findOne(id));
     }
 }

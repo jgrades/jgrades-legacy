@@ -11,6 +11,7 @@
 package org.jgrades.rest.admin.common;
 
 import org.jgrades.admin.api.common.CrudService;
+import org.jgrades.logging.JgLogger;
 import org.jgrades.monitor.api.aop.CheckSystemDependencies;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -29,27 +30,31 @@ public abstract class AbstractRestCrudService<T, ID, S extends CrudService<T, ID
 
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> insertOrUpdate(@RequestBody T entity) {
+        getLogger().trace("Saving or updating entity: {}", entity);
         crudService.saveOrUpdate(entity);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.DELETE)
     public ResponseEntity<Object> remove(@RequestParam("id") List<ID> ids) {
+        getLogger().debug("Removing entities with ids: {} invoked", ids);
         crudService.removeIds(ids);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public
     @ResponseBody
-    T getWithId(@PathVariable ID id) {
+    public T getWithId(@PathVariable ID id) {
+        getLogger().trace("Getting entity with id {}", id);
         return crudService.getWithId(id);
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public
     @ResponseBody
-    List<T> getWithIds(@RequestParam(value = "id", required = false) List<ID> ids) {
+    public List<T> getWithIds(@RequestParam(value = "id", required = false) List<ID> ids) {
+        getLogger().trace("Getting entities with ids: {}", ids);
         return ids == null ? crudService.getAll() : crudService.getWithIds(ids);
     }
+
+    protected abstract JgLogger getLogger();
 }

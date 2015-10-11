@@ -31,4 +31,9 @@ public class SubjectService extends AbstractRestCrudPagingService<Subject, Long,
     protected SubjectService(SubjectsMgntService crudService) {
         super(crudService);
     }
+
+    @Override
+    protected JgLogger getLogger() {
+        return LOGGER; //NOSONAR
+    }
 }

@@ -20,6 +20,8 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.jgrades.lic.app.controller.BrowseFileWindowController;
 import org.jgrades.lic.app.controller.JavafxApplication;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,6 +29,8 @@ import java.io.IOException;
 import static org.jgrades.lic.app.utils.AppConstants.BROWSE_FILE_MOCK_WINDOW_FXML_PATH;
 
 public final class FileChooserFactory {
+    private static final Logger LOGGER = LoggerFactory.getLogger(FileChooserFactory.class);
+
 
     private FileChooserFactory() {
     }
@@ -61,7 +65,8 @@ public final class FileChooserFactory {
         try {
             root = loader.load();
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error("Loading window for browsing files failed", e);
+            return null;
         }
         Stage stage = new Stage();
         stage.setScene(new Scene(root));

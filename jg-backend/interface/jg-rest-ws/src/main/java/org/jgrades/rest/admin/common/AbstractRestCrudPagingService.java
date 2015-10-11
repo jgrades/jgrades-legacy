@@ -31,9 +31,9 @@ public abstract class AbstractRestCrudPagingService<T, ID, S extends CrudPagingS
     }
 
     @RequestMapping(value = "/paging", method = RequestMethod.GET)
-    public
     @ResponseBody
-    Page<T> getPage(@RequestParam(value = "page", defaultValue = "0") @ApiParam(value = "Page number") Integer number, @RequestParam(value = "limit", defaultValue = "-1") @ApiParam(value = "Limit on page") Integer size) {
+    public Page<T> getPage(@RequestParam(value = "page", defaultValue = "0") @ApiParam(value = "Page number") Integer number, @RequestParam(value = "limit", defaultValue = "-1") @ApiParam(value = "Limit on page") Integer size) {
+        getLogger().trace("Getting page #{} of entities with limit {}", number, paginationLimit);
         PagingInfo pagingInfo = new PagingInfo(number, size == -1 ? paginationLimit : size);
         return crudService.getPage(pagingInfo.toPageable());
     }

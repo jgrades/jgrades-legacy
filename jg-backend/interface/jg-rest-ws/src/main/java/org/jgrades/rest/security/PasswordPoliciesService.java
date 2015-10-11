@@ -34,21 +34,22 @@ public class PasswordPoliciesService {
     private PasswordPolicyService passwordPolicyService;
 
     @RequestMapping(value = "/{role}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public
     @ResponseBody
-    PasswordPolicy getForRole(@PathVariable JgRole role) {
+    public PasswordPolicy getForRole(@PathVariable JgRole role) {
+        LOGGER.trace("Get password policy for role {}", role);
         return passwordPolicyService.getForRole(role);
     }
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public
     @ResponseBody
-    Set<PasswordPolicy> getAll() {
+    public Set<PasswordPolicy> getAll() {
+        LOGGER.trace("Getting password policies for all roles");
         return passwordPolicyService.getPasswordPolicies();
     }
 
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> setForRole(@RequestBody PasswordPolicy policy) {
+        LOGGER.trace("Setting new password policy: {}", policy);
         passwordPolicyService.putPasswordPolicy(policy);
         return new ResponseEntity<>(HttpStatus.OK);
     }

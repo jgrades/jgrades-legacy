@@ -19,7 +19,7 @@ public enum LoggingStrategy {
     LOG_FILE_PER_LEVEL(new PerLevelUpdater()),
     LOG_FILE_PER_MODULE_AND_LEVEL(new PerModuleAndLevelUpdater());
 
-    private transient final XmlFileNameTagsUpdater updater;
+    private final transient XmlFileNameTagsUpdater updater;
 
     LoggingStrategy(XmlFileNameTagsUpdater updater) {
         this.updater = updater;

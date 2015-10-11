@@ -10,12 +10,16 @@
 
 package org.jgrades.admin.api.model;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.joda.time.LocalTime;
 
 import java.util.List;
 
-@Data
+@Getter
+@Setter
+@ToString
 public class PeriodsGeneratorSettings {
     private LocalTime firstLessonTime;
 
