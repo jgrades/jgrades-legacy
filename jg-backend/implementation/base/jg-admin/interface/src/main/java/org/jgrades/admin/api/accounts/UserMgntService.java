@@ -19,4 +19,6 @@ import java.util.Set;
 
 public interface UserMgntService extends CrudPagingService<User, Long>, PagingSpecificationSelector<User, Long> {
     Set<JgRole> getUserRoles(User user);
+
+    User getWithLogin(String login);
 }

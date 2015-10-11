@@ -10,10 +10,16 @@
 
 package org.jgrades.admin.api.model;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import org.jgrades.data.api.entities.User;
+import org.jgrades.data.api.entities.roles.StudentDetails;
+import org.jgrades.data.api.model.JgRole;
+import org.jgrades.data.api.utils.RolesMapBuilder;
 import org.joda.time.LocalDate;
 
-@Data
+@Getter
+@Setter
 public class StudentCsvEntry {
     private String name;
 
@@ -24,4 +30,21 @@ public class StudentCsvEntry {
     private String nationalIdentificationNumber;
 
     private String address;
+
+    public User getStudentUser() {
+        User user = new User();
+        user.setName(name);
+        user.setSurname(surname);
+
+        StudentDetails studentDetails = new StudentDetails();
+        studentDetails.setDateOfBirth(dateOfBirth);
+        studentDetails.setNationalIdentificationNumber(nationalIdentificationNumber);
+        studentDetails.setAddress(address);
+
+        RolesMapBuilder rolesMapBuilder = new RolesMapBuilder();
+        rolesMapBuilder.addRole(JgRole.STUDENT, studentDetails);
+        user.setRoles(rolesMapBuilder.getRoleMap());
+
+        return user;
+    }
 }

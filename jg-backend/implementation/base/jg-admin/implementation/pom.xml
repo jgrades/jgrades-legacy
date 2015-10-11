@@ -25,6 +25,11 @@
             <artifactId>jg-data-api</artifactId>
             <version>${RELEASE.VERSION}</version>
         </dependency>
+        <dependency>
+            <groupId>org.jgrades.app</groupId>
+            <artifactId>jg-security-api</artifactId>
+            <version>${RELEASE.VERSION}</version>
+        </dependency>
 
         <!-- EXTERNAL DEPENDENCIES -->
         <dependency>
@@ -34,10 +39,6 @@
         <dependency>
             <groupId>net.sf.dozer</groupId>
             <artifactId>dozer</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.univocity</groupId>
-            <artifactId>univocity-parsers</artifactId>
         </dependency>
     </dependencies>
 </project>

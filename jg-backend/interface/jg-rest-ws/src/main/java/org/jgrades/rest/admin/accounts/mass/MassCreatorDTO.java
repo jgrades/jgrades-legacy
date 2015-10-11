@@ -8,9 +8,16 @@
  *       http://www.apache.org/licenses/LICENSE-2.0
  */
 
-package org.jgrades.rest.lic;
+package org.jgrades.rest.admin.accounts.mass;
 
-//TODO
-public class LicencingIT {
+import lombok.Getter;
+import lombok.Setter;
+import org.jgrades.admin.api.model.StudentMassCreatingSettings;
 
+@Getter
+@Setter
+public class MassCreatorDTO {
+    private String studentCsvData;
+
+    private StudentMassCreatingSettings settings;
 }

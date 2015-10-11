@@ -18,6 +18,4 @@ public class StudentMassCreatingSettings {
     private boolean activeAfterCreation;
 
     private ClassGroup targetClassGroup;
-
-    private LoginGenerationStrategy<StudentCsvEntry> loginGenerationStrategy;
 }

@@ -11,10 +11,15 @@
 package org.jgrades.rest.admin.accounts;
 
 import io.swagger.annotations.ApiParam;
+import org.jgrades.admin.api.accounts.MassAccountCreatorService;
 import org.jgrades.admin.api.accounts.UserMgntService;
+import org.jgrades.admin.api.model.MassAccountCreatorResultRecord;
+import org.jgrades.admin.api.model.StudentCsvEntry;
 import org.jgrades.data.api.entities.User;
 import org.jgrades.monitor.api.aop.CheckSystemDependencies;
 import org.jgrades.rest.PagingInfo;
+import org.jgrades.rest.admin.accounts.mass.MassCreatorDTO;
+import org.jgrades.rest.admin.accounts.mass.StudentDataCsvParser;
 import org.jgrades.rest.admin.common.AbstractRestCrudPagingService;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +29,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping(value = "/user", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -31,6 +37,12 @@ import java.util.List;
 public class UserService extends AbstractRestCrudPagingService<User, Long, UserMgntService> {
     @Autowired
     private UserSpecificationsBuilder userSpecificationsBuilder;
+
+    @Autowired
+    private MassAccountCreatorService massAccountCreatorService;
+
+    @Autowired
+    private StudentDataCsvParser csvParser;
 
     @Autowired
     protected UserService(UserMgntService crudService) {
@@ -77,4 +89,12 @@ public class UserService extends AbstractRestCrudPagingService<User, Long, UserM
                 .build();
         return crudService.getPage(pagingInfo.toPageable(), userSpecification);
     }
+
+    @RequestMapping(value = "/mass", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public Set<MassAccountCreatorResultRecord> massStudentsCreator(@RequestBody MassCreatorDTO massCreatorDTO) {
+        Set<StudentCsvEntry> studentsData = csvParser.parse(massCreatorDTO.getStudentCsvData());
+        return massAccountCreatorService.createStudents(studentsData, massCreatorDTO.getSettings());
+    }
+
 }

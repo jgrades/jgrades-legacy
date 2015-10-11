@@ -11,6 +11,7 @@
 package org.jgrades.rest.lic;
 
 import org.apache.commons.configuration.PropertiesConfiguration;
+import org.jgrades.admin.api.accounts.MassAccountCreatorService;
 import org.jgrades.admin.api.accounts.UserMgntService;
 import org.jgrades.admin.api.accounts.UserSpecifications;
 import org.jgrades.admin.api.general.*;
@@ -197,5 +198,11 @@ public class LicMockConfig extends WebMvcConfigurerAdapter {
     @Primary
     public SystemStateService systemStateService() {
         return Mockito.mock(SystemStateService.class);
+    }
+
+    @Bean
+    @Primary
+    public MassAccountCreatorService massAccountCreatorService() {
+        return Mockito.mock(MassAccountCreatorService.class);
     }
 }

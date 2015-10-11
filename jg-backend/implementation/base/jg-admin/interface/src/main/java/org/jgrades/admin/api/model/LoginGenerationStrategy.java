@@ -10,6 +10,8 @@
 
 package org.jgrades.admin.api.model;
 
-public interface LoginGenerationStrategy<T> {
-    String getLogin(T data);
+import org.jgrades.data.api.entities.User;
+
+public interface LoginGenerationStrategy {
+    String generateLogin(User user);
 }

@@ -119,4 +119,9 @@ public class UserMgntServiceImpl extends AbstractPagingMgntService<User, Long, U
     public Set<JgRole> getUserRoles(User user) {
         return userModelEnrichment.getRoles(user);
     }
+
+    @Override
+    public User getWithLogin(String login) {
+        return userModelEnrichment.enrichWithRoles(repository.findFirstByLogin(login));
+    }
 }
