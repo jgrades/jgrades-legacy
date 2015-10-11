@@ -26,6 +26,7 @@ import org.jgrades.security.utils.UserDetailsImpl;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -36,10 +37,14 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service("userDetailsService")
 public class UserDetailsServiceImpl implements UserDetailsService {
     private static final JgLogger LOGGER = JgLoggerFactory.getLogger(UserDetailsServiceImpl.class);
+
+    @Value("${security.default.password.expiration.days}")
+    private int defaultPasswordExpirationDays;
 
     @Autowired
     private UserRepository userRepository;
@@ -56,7 +61,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    private static JgRole getRoleWithHighestPriority(Set<JgRole> roles) {
+    @Autowired
+    private LockingManager lockingManager;
+
+    protected static JgRole getRoleWithHighestPriority(Set<JgRole> roles) {
         JgRole highestRole = null;
         for (JgRole role : roles) {
             if (highestRole == null) {
@@ -74,22 +82,25 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String login) {
         User user = userRepository.findFirstByLogin(login);
         if (user == null) {
-            LOGGER.info("Cannot find user with {} login", login);
+            LOGGER.info("Cannot find user with '{}' login", login);
             throw new UsernameNotFoundException("login: '" + login + "' not found");
         }
         return new UserDetailsImpl(
                 login, getUserPassword(user), user.isActive(),
-                true, isCredentialsNotExpired(user), true,
+                true, isCredentialsNotExpired(user), isNotLocked(user),
                 getAuthorities(user));
+    }
+
+    private boolean isNotLocked(User user) {
+        return !lockingManager.isLocked(user);
     }
 
     private Collection<? extends GrantedAuthority> getAuthorities(User user) {
         Set<GrantedAuthority> authorities = Sets.newHashSet();
         Set<JgRole> userRoles = userMgntService.getUserRoles(user);
-        for (JgRole userRole : userRoles) {
-            SimpleGrantedAuthority authority = new SimpleGrantedAuthority(userRole.withRolePrefix());
-            authorities.add(authority);
-        }
+        authorities.addAll(userRoles.stream()
+                .map(userRole -> new SimpleGrantedAuthority(userRole.withRolePrefix()))
+                .collect(Collectors.toList()));
         return authorities;
     }
 
@@ -107,13 +118,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     private int getExpirationDays(JgRole roleWithShortestPasswordPolicy) {
         PasswordPolicy passwordPolicy = passwordPolicyRepository.findOne(roleWithShortestPasswordPolicy);
-        return passwordPolicy == null ? 0 : passwordPolicy.getExpirationDays();
+        return passwordPolicy == null ? defaultPasswordExpirationDays : passwordPolicy.getExpirationDays();
     }
 
     private String getUserPassword(User user) {
         PasswordData passwordData = passwordDataRepository.getPasswordDataWithUser(user.getLogin());
         return passwordData == null ? StringUtils.EMPTY : passwordData.getPassword();
     }
-
 
 }

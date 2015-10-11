@@ -64,6 +64,7 @@ public class RestConfig extends WebMvcConfigurationSupport {
     }
 
     @Bean
+    @Primary
     public ObjectMapper jacksonObjectMapper() {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);

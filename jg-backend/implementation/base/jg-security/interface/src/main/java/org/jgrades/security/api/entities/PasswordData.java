@@ -37,5 +37,13 @@ public class PasswordData implements Serializable {
     @Type(type = CustomType.JODA_DATE_TIME)
     private DateTime lastChange;
 
-    private Integer failedLoginAmount;
+    @Column
+    @Type(type = CustomType.JODA_DATE_TIME)
+    private DateTime lockingDateTime;
+
+    private int failedLoginAmount;
+
+    public void increaseFailedLoginAmount() {
+        failedLoginAmount++;
+    }
 }

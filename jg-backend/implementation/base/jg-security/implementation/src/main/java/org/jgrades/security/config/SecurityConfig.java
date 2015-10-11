@@ -10,6 +10,8 @@
 
 package org.jgrades.security.config;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.jgrades.security.auth.RESTAuthenticationFailureHandler;
 import org.jgrades.security.auth.RESTAuthenticationSuccessHandler;
 import org.jgrades.security.auth.RESTEntryPoint;
@@ -101,5 +103,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public UserDetailsServiceImpl userDetailsService() {
         return new UserDetailsServiceImpl();
+    }
+
+    @Bean
+    public ObjectMapper jacksonObjectMapper() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        return objectMapper;
     }
 }
