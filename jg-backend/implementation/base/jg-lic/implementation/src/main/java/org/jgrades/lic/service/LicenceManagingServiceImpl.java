@@ -15,6 +15,7 @@ import org.apache.commons.collections.IteratorUtils;
 import org.apache.commons.io.FileUtils;
 import org.dozer.Mapper;
 import org.jgrades.lic.api.crypto.decrypt.LicenceDecryptionService;
+import org.jgrades.lic.api.crypto.exception.LicenceCryptographyException;
 import org.jgrades.lic.api.exception.LicenceNotFoundException;
 import org.jgrades.lic.api.exception.UnreliableLicenceException;
 import org.jgrades.lic.api.model.Licence;
@@ -27,11 +28,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import javax.crypto.NoSuchPaddingException;
 import java.io.File;
 import java.io.IOException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
 import java.security.SignatureException;
 import java.util.List;
 import java.util.Optional;
@@ -79,7 +77,7 @@ public class LicenceManagingServiceImpl implements LicenceManagingService {
                 LOGGER.debug("Signature doesn't match to the licence file");
                 throw new SignatureException();
             }
-        } catch (IOException | InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException | SignatureException e) {
+        } catch (IOException | LicenceCryptographyException | SignatureException e) {
             LOGGER.error("Exception during attempt to install licence: {} with signature: {}", licencePath, signaturePath, e);
             throw new UnreliableLicenceException(e);
         }

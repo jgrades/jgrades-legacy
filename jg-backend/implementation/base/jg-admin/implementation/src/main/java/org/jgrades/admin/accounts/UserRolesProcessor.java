@@ -19,6 +19,7 @@ import org.jgrades.data.api.entities.roles.RoleDetails;
 import org.jgrades.data.api.entities.roles.StudentDetails;
 import org.jgrades.data.api.model.JgRole;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +29,9 @@ import java.util.Set;
 
 @Component
 public class UserRolesProcessor extends AbstractUserDetailsRepositories {//TODO refactored
+    @Value("${admin.parent.login.suffix}")
+    protected String parentSuffix;
+
     @Autowired
     private UserRepository userRepository;
 
@@ -71,7 +75,7 @@ public class UserRolesProcessor extends AbstractUserDetailsRepositories {//TODO 
                 if (role == JgRole.STUDENT) {
                     ParentDetails parentDetails = new ParentDetails();
                     User parent = new User();
-                    parent.setLogin(user.getLogin() + "R");
+                    parent.setLogin(user.getLogin() + parentSuffix);
                     parentDetails.setUser(parent);
                     parentDetails.setStudent((StudentDetails) roleDetails);
                     userMgntService.saveOrUpdate(parent);

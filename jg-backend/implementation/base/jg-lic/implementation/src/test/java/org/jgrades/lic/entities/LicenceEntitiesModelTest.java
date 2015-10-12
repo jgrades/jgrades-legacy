@@ -10,6 +10,8 @@
 
 package org.jgrades.lic.entities;
 
+import ch.qos.logback.classic.Level;
+import ch.qos.logback.classic.Logger;
 import com.google.common.collect.Lists;
 import com.openpojo.reflection.PojoClass;
 import com.openpojo.reflection.coverage.impl.Jacoco;
@@ -22,10 +24,28 @@ import com.openpojo.validation.rule.impl.SetterMustExistRule;
 import com.openpojo.validation.test.impl.GetterTester;
 import com.openpojo.validation.test.impl.SetterTester;
 import org.junit.Test;
+import org.meanbean.test.BeanTester;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class LicenceEntitiesModelTest {
+    private static final List<Class> POJOS = Lists.newArrayList(
+            CustomerEntity.class,
+            LicenceEntity.class,
+            LicencePropertyEntity.class,
+            ProductEntity.class
+    );
+
+    static {
+        System.setProperty("org.apache.commons.logging.Log",
+                "org.apache.commons.logging.impl.NoOpLog");
+
+        Logger root = (Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
+        root.setLevel(Level.ERROR);
+    }
+
     @Test
     public void shouldSettersAndGettersBePresentForAllFields() {
         // given
@@ -50,6 +70,15 @@ public class LicenceEntitiesModelTest {
         // when then
         for (PojoClass pojoClass : entitiesClass) {
             pojoValidator.runValidation(pojoClass);
+        }
+    }
+
+    @Test
+    public void testGettersAndSetters() throws Exception {
+        BeanTester tester = new BeanTester();
+        tester.setIterations(1);
+        for (Class clazz : POJOS) {
+            tester.testBean(clazz);
         }
     }
 }

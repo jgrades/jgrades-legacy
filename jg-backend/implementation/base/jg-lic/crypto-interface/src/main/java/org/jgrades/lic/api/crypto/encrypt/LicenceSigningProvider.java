@@ -11,6 +11,7 @@
 package org.jgrades.lic.api.crypto.encrypt;
 
 
+import org.jgrades.lic.api.crypto.exception.LicenceCryptographyException;
 import org.jgrades.security.utils.KeyStoreContentExtractor;
 
 import java.security.InvalidKeyException;
@@ -28,13 +29,17 @@ class LicenceSigningProvider {
         this.extractor = extractor;
     }
 
-    public byte[] sign(byte[] encryptedLicXmlBytes) throws NoSuchAlgorithmException, InvalidKeyException, SignatureException {
-        if (!Optional.ofNullable(encryptedLicXmlBytes).isPresent()) {
-            throw new IllegalArgumentException();
+    public byte[] sign(byte[] encryptedLicXmlBytes) throws LicenceCryptographyException {
+        try {
+            if (!Optional.ofNullable(encryptedLicXmlBytes).isPresent()) {
+                throw new IllegalArgumentException();
+            }
+            Signature signature = Signature.getInstance(SIGNATURE_PROVIDER_INTERFACE);
+            signature.initSign(extractor.getPrivateKeyForSigning());
+            signature.update(encryptedLicXmlBytes);
+            return signature.sign();
+        } catch (NoSuchAlgorithmException | SignatureException | InvalidKeyException e) {
+            throw new LicenceCryptographyException(e);
         }
-        Signature signature = Signature.getInstance(SIGNATURE_PROVIDER_INTERFACE);
-        signature.initSign(extractor.getPrivateKeyForSigning());
-        signature.update(encryptedLicXmlBytes);
-        return signature.sign();
     }
 }

@@ -21,7 +21,8 @@ import java.io.Serializable;
 import java.util.List;
 
 @Service
-public abstract class AbstractMgntService<T, ID extends Serializable, R extends CrudRepository<T, ID>> implements CrudService<T, ID> {
+public abstract class AbstractMgntService<T, ID extends Serializable,
+        R extends CrudRepository<T, ID>> implements CrudService<T, ID> {//NOSONAR
     protected final R repository;
 
     @Autowired

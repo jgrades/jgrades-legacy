@@ -11,6 +11,7 @@
 package org.jgrades.lic.api.crypto.decrypt;
 
 import org.apache.commons.io.FileUtils;
+import org.jgrades.lic.api.crypto.exception.LicenceCryptographyException;
 import org.jgrades.logging.JgLogger;
 import org.jgrades.logging.JgLoggerFactory;
 import org.jgrades.security.utils.KeyStoreContentExtractor;
@@ -31,19 +32,22 @@ class SignatureValidator {
         this.keyExtractor = keyExtractor;
     }
 
-    public boolean signatureValidated(File encryptedLicenceFile, File signatureFile) throws IOException, NoSuchAlgorithmException, InvalidKeyException {
-        X509Certificate certificate = keyExtractor.getCertificateForVerification();
-        PublicKey publicKey = certificate.getPublicKey();
-
-        Signature signature = Signature.getInstance(SIGNATURE_PROVIDER_INTERFACE);
-        signature.initVerify(publicKey);
+    public boolean signatureValidated(File encryptedLicenceFile, File signatureFile) throws LicenceCryptographyException {
         try {
+            X509Certificate certificate = keyExtractor.getCertificateForVerification();
+            PublicKey publicKey = certificate.getPublicKey();
+
+            Signature signature = Signature.getInstance(SIGNATURE_PROVIDER_INTERFACE);
+            signature.initVerify(publicKey);
+
             signature.update(FileUtils.readFileToByteArray(encryptedLicenceFile));
 
             return signature.verify(FileUtils.readFileToByteArray(signatureFile));
         } catch (SignatureException e) {
             LOGGER.error("Signature {} validation failed", signatureFile.getAbsolutePath(), e);
             return false;
+        } catch (NoSuchAlgorithmException | InvalidKeyException | IOException e) {
+            throw new LicenceCryptographyException(e);
         }
     }
 }

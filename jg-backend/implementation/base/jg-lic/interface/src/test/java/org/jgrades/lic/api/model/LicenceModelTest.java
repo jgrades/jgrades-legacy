@@ -40,7 +40,8 @@ public class LicenceModelTest {
                 filterService.adapt(PojoClassFactory.getPojoClass(Customer.class)),
                 filterService.adapt(PojoClassFactory.getPojoClass(Licence.class)),
                 filterService.adapt(PojoClassFactory.getPojoClass(LicenceProperty.class)),
-                filterService.adapt(PojoClassFactory.getPojoClass(Product.class))
+                filterService.adapt(PojoClassFactory.getPojoClass(Product.class)),
+                filterService.adapt(PojoClassFactory.getPojoClass(LicenceValidationResult.class))
         );
 
         PojoValidator pojoValidator = new PojoValidator();

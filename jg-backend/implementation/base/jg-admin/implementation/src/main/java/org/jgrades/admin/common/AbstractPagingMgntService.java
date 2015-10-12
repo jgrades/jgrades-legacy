@@ -20,7 +20,10 @@ import org.springframework.stereotype.Service;
 import java.io.Serializable;
 
 @Service
-public abstract class AbstractPagingMgntService<T, ID extends Serializable, R extends PagingAndSortingRepository<T, ID>> extends AbstractMgntService<T, ID, R> implements CrudPagingService<T, ID> {
+public abstract class AbstractPagingMgntService<T, ID extends Serializable,
+        R extends PagingAndSortingRepository<T, ID>>
+        extends AbstractMgntService<T, ID, R>
+        implements CrudPagingService<T, ID> { //NOSONAR
     @Autowired
     public AbstractPagingMgntService(R repository) {
         super(repository);

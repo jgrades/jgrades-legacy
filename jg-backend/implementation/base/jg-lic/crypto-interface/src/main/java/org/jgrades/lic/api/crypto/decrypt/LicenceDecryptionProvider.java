@@ -12,6 +12,7 @@ package org.jgrades.lic.api.crypto.decrypt;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
+import org.jgrades.lic.api.crypto.exception.LicenceCryptographyException;
 import org.jgrades.lic.api.model.Licence;
 import org.jgrades.lic.api.service.LicenceMarshallingFactory;
 import org.jgrades.logging.JgLogger;
@@ -61,10 +62,15 @@ class LicenceDecryptionProvider {
         return null;
     }
 
-    public Licence decrypt(File encryptedLicenceFile) throws IOException, NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException {
-        byte[] encryptedLicXmlBytes = FileUtils.readFileToByteArray(encryptedLicenceFile);
-        byte[] decryptedLicXmlBytes = decrypt(encryptedLicXmlBytes);
-        return transformToObject(decryptedLicXmlBytes);
+    public Licence decrypt(File encryptedLicenceFile) throws LicenceCryptographyException {
+        try {
+            byte[] encryptedLicXmlBytes = FileUtils.readFileToByteArray(encryptedLicenceFile);
+            byte[] decryptedLicXmlBytes = decrypt(encryptedLicXmlBytes);
+            return transformToObject(decryptedLicXmlBytes);
+        } catch (IOException | InvalidKeyException |
+                NoSuchAlgorithmException | NoSuchPaddingException e) {
+            throw new LicenceCryptographyException(e);
+        }
     }
 
     private byte[] decrypt(byte[] encryptedLicXmlBytes) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, IOException {

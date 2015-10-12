@@ -8,8 +8,10 @@
  *       http://www.apache.org/licenses/LICENSE-2.0
  */
 
-package org.jgrades.logging.dao;
+package org.jgrades.lic.api.crypto.exception;
 
-public class LoggingConfigurationDaoFileImplTest {
+public class LicenceCryptographyException extends Exception {
+    public LicenceCryptographyException(Exception e) {
 
+    }
 }

@@ -39,7 +39,6 @@ public class LogbackXmlEditor {
         documentUnderEdit = null;
     }
 
-
     private static synchronized void initDocument() {
         if (documentUnderEdit == null) {
             documentUnderEdit = getConfigDocument();
@@ -67,6 +66,16 @@ public class LogbackXmlEditor {
         return ((Element) fileNamePatternNode.getParentNode().getParentNode()).getAttribute("name");
     }
 
+    private static NodeList getNodes(String xpathExpression) {
+        initDocument();
+        try {
+            return (NodeList) getXPathExpression(xpathExpression).evaluate(documentUnderEdit, XPathConstants.NODESET);
+        } catch (XPathExpressionException e) {
+            LOGGER.error("Evaluate XPath expression \"{}\" failed", xpathExpression, e);
+            return null;
+        }
+    }
+
     public NodeList getFileNamePatternNodes() {
         return getNodes(".//fileNamePattern");
     }
@@ -92,16 +101,6 @@ public class LogbackXmlEditor {
 
     public Node getLevelNode() {
         return getNodes(".//root/@level").item(0);
-    }
-
-    private NodeList getNodes(String xpathExpression) {
-        initDocument();
-        try {
-            return (NodeList) getXPathExpression(xpathExpression).evaluate(documentUnderEdit, XPathConstants.NODESET);
-        } catch (XPathExpressionException e) {
-            LOGGER.error("Evaluate XPath expression \"{}\" failed", xpathExpression, e);
-            return null;
-        }
     }
 
     public void saveWithChanges() {

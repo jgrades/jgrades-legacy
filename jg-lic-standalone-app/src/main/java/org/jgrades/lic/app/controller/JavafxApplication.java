@@ -32,11 +32,15 @@ public class JavafxApplication extends Application implements LicenceApplication
         return scene;
     }
 
+    private static void setScene(Scene scene) {
+        JavafxApplication.scene = scene;
+    }
+
     public static Stage getStage() {
         return stage;
     }
 
-    private void setStage(Stage primaryStage) {
+    private static void setStage(Stage primaryStage) {
         stage = primaryStage;
     }
 
@@ -46,7 +50,7 @@ public class JavafxApplication extends Application implements LicenceApplication
         FXMLLoader loader =
                 new FXMLLoader(this.getClass().getClassLoader().getResource(MAIN_WINDOW_FXML_PATH));
 
-        scene = new Scene(loader.load(), MAIN_WINDOW_WIDTH, MAIN_WINDOW_HEIGHT);
+        setScene(new Scene(loader.load(), MAIN_WINDOW_WIDTH, MAIN_WINDOW_HEIGHT));
         prepareMainWindow(primaryStage);
     }
 

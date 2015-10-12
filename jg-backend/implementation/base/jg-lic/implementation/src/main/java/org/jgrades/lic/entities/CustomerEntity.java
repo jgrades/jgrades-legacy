@@ -20,7 +20,6 @@ import java.io.Serializable;
 @Table(name = "JG_LIC_CUSTOMER")
 @Data
 @EqualsAndHashCode(exclude = {"id"})
-
 public class CustomerEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

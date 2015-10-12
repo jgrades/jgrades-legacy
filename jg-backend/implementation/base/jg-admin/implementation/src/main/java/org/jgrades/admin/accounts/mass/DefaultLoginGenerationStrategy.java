@@ -47,8 +47,8 @@ public class DefaultLoginGenerationStrategy implements LoginGenerationStrategy {
     private String checkAvailability(String proposeLogin) {
         int counter = 1;
         while (loginExists(proposeLogin)) {
-            proposeLogin = stripEnd(proposeLogin, NUMBERS);
-            proposeLogin += counter++;
+            proposeLogin = stripEnd(proposeLogin, NUMBERS); //NOSONAR
+            proposeLogin += Integer.toString(counter++);
         }
         return proposeLogin;
     }

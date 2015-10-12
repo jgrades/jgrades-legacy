@@ -11,6 +11,7 @@
 package org.jgrades.lic.api.crypto.encrypt;
 
 import org.apache.commons.io.IOUtils;
+import org.jgrades.lic.api.crypto.exception.LicenceCryptographyException;
 import org.jgrades.lic.api.model.Licence;
 import org.jgrades.lic.api.service.LicenceMarshallingFactory;
 import org.jgrades.security.utils.KeyStoreContentExtractor;
@@ -52,9 +53,15 @@ class LicenceEncryptionProvider {
         return bos;
     }
 
-    public byte[] encrypt(Licence licence) throws JAXBException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IOException {
-        byte[] licXmlBytes = transformToBytesArray(licence);
-        return encrypt(licXmlBytes);
+    public byte[] encrypt(Licence licence) throws LicenceCryptographyException {
+        try {
+            byte[] licXmlBytes = transformToBytesArray(licence);
+            return encrypt(licXmlBytes);
+        } catch (JAXBException | InvalidKeyException |
+                NoSuchAlgorithmException | NoSuchPaddingException |
+                IOException e) {
+            throw new LicenceCryptographyException(e);
+        }
     }
 
     private byte[] encrypt(byte[] licXmlBytes) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, IOException {

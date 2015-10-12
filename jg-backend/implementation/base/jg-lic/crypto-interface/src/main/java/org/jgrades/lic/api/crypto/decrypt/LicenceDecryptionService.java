@@ -10,20 +10,17 @@
 
 package org.jgrades.lic.api.crypto.decrypt;
 
+import org.jgrades.lic.api.crypto.exception.LicenceCryptographyException;
 import org.jgrades.lic.api.model.Licence;
 import org.jgrades.security.utils.KeyStoreContentExtractor;
 import org.springframework.stereotype.Component;
 
-import javax.crypto.NoSuchPaddingException;
 import java.io.File;
 import java.io.IOException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.security.SignatureException;
 
 @Component
 public class LicenceDecryptionService {
-    public Licence decrypt(String keystorePath, String secDatPath, String licencePath) throws IOException, NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException {
+    public Licence decrypt(String keystorePath, String secDatPath, String licencePath) throws LicenceCryptographyException, IOException {
         KeyStoreContentExtractor extractor =
                 new KeyStoreContentExtractor(new File(keystorePath), new File(secDatPath));
         LicenceDecryptionProvider decryptionProvider = new LicenceDecryptionProvider(extractor);
@@ -31,7 +28,7 @@ public class LicenceDecryptionService {
     }
 
     public boolean validSignature(String keystorePath, String secDatPath,
-                                  String licencePath, String signaturePath) throws IOException, NoSuchAlgorithmException, InvalidKeyException, SignatureException {
+                                  String licencePath, String signaturePath) throws LicenceCryptographyException, IOException {
         KeyStoreContentExtractor extractor =
                 new KeyStoreContentExtractor(new File(keystorePath), new File(secDatPath));
         SignatureValidator signatureValidator = new SignatureValidator(extractor);

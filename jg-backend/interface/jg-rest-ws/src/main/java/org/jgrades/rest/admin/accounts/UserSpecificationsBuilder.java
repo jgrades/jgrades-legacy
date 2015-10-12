@@ -34,6 +34,14 @@ public class UserSpecificationsBuilder {
 
     private Specification<User> result;
 
+    private static DateTime startDateTime(DateTime dateTime) {
+        return dateTime == null ? new DateTime(0) : dateTime;
+    }
+
+    private static DateTime endDateTime(DateTime dateTime) {
+        return dateTime == null ? DateTime.now() : dateTime;
+    }
+
     public UserSpecificationsBuilder withPhrase(String phrase) {
         if (StringUtils.isNotEmpty(phrase)) {
             phraseSpec = Specifications.where(specs.withPhrase(phrase));
@@ -120,14 +128,6 @@ public class UserSpecificationsBuilder {
                 ? Specifications.where(specs.lastVisitBetween(startDateTime(dt1), endDateTime(dt2)))
                 : Specifications.where(result).and(specs.lastVisitBetween(startDateTime(dt1), endDateTime(dt2)));
         return this;
-    }
-
-    private DateTime startDateTime(DateTime dateTime) {
-        return dateTime == null ? new DateTime(0) : null;
-    }
-
-    private DateTime endDateTime(DateTime dateTime) {
-        return dateTime == null ? DateTime.now() : null;
     }
 
     public Specification<User> build() {

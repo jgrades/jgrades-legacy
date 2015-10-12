@@ -10,6 +10,7 @@
 
 package org.jgrades.rest;
 
+import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
@@ -26,6 +27,18 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class RestDocsConfig {
 
+    private static ApiInfo apiInfo() {
+        return new ApiInfo(
+                "jGrades REST Web Services",
+                "Web services for backend operations in jGrades System",
+                "0.4-RELEASE",
+                StringUtils.EMPTY,
+                "jgrades.project@gmail.com",
+                "Apache Licence 2.0",
+                "http://www.apache.org/licenses/LICENSE-2.0.html"
+        );
+    }
+
     @Bean
     public Docket jGradesRestApi() {
         return new Docket(DocumentationType.SWAGGER_2)
@@ -39,18 +52,6 @@ public class RestDocsConfig {
                 .directModelSubstitute(LocalTime.class, String.class)
                 .enableUrlTemplating(false)
                 .apiInfo(apiInfo());
-    }
-
-    private ApiInfo apiInfo() {
-        return new ApiInfo(
-                "jGrades REST Web Services",
-                "Web services for backend operations in jGrades System",
-                "0.4-RELEASE",
-                "",
-                "jgrades.project@gmail.com",
-                "Apache Licence 2.0",
-                "http://www.apache.org/licenses/LICENSE-2.0.html"
-        );
     }
 
 }

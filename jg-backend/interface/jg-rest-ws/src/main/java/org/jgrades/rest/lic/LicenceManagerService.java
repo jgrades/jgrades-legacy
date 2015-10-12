@@ -38,6 +38,16 @@ public class LicenceManagerService {
     @Autowired
     private IncomingFilesNameResolver filesNameResolver;
 
+    private static void checkFilesExisting(MultipartFile licence, MultipartFile signature) {
+        if (licence.isEmpty()) {
+            LOGGER.warn("Licence file is empty");
+            throw new IllegalArgumentException("Empty licence file");
+        } else if (signature.isEmpty()) {
+            LOGGER.warn("Signature file is empty");
+            throw new IllegalArgumentException("Empty signature file");
+        }
+    }
+
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
     public List<Licence> getAll() {
@@ -79,16 +89,6 @@ public class LicenceManagerService {
             FileUtils.deleteQuietly(licenceFile);
             FileUtils.deleteQuietly(signatureFile);
             throw ex;
-        }
-    }
-
-    private void checkFilesExisting(MultipartFile licence, MultipartFile signature) {
-        if (licence.isEmpty()) {
-            LOGGER.warn("Licence file is empty");
-            throw new IllegalArgumentException("Empty licence file");
-        } else if (signature.isEmpty()) {
-            LOGGER.warn("Signature file is empty");
-            throw new IllegalArgumentException("Empty signature file");
         }
     }
 

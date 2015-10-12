@@ -15,15 +15,13 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.TextField;
 import org.jgrades.lic.api.crypto.decrypt.LicenceDecryptionService;
+import org.jgrades.lic.api.crypto.exception.LicenceCryptographyException;
 import org.jgrades.lic.api.model.Licence;
 import org.jgrades.lic.app.utils.DialogFactory;
 import org.jgrades.lic.app.utils.FileChooserFactory;
 
 import java.io.File;
 import java.io.IOException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.security.SignatureException;
 import java.util.Optional;
 
 public class OpeningLicenceWindowController {
@@ -96,7 +94,7 @@ public class OpeningLicenceWindowController {
             } else {
                 DialogFactory.showWarningDialog(SIGNATURE_IS_NOT_VALID);
             }
-        } catch (IOException | NoSuchAlgorithmException | SignatureException | InvalidKeyException e) {
+        } catch (IOException | LicenceCryptographyException e) {
             DialogFactory.showExceptionDialog(e);
         }
     }

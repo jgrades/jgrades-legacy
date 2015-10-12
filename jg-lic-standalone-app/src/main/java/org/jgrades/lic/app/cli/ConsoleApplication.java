@@ -49,7 +49,7 @@ public class ConsoleApplication implements LicenceApplication {
         }
     }
 
-    private ApplicationAction chooseAction() {
+    private ApplicationAction chooseAction() { //NOSONAR
         System.out.println("What would you like to do now?"); //NOSONAR
         System.out.println("1 - Create new licence"); //NOSONAR
         System.out.println("2 - Open (read-only) existing licence"); //NOSONAR

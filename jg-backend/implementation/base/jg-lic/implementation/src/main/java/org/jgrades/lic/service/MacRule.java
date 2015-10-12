@@ -33,6 +33,13 @@ class MacRule implements ValidationRule {
     private List<NetworkInterface> networkInterfaces;
 
     public MacRule() {
+        try {
+            networkInterfaces = Collections.list(NetworkInterface.getNetworkInterfaces());
+            LOGGER.trace("Network interfaces in system: {}", networkInterfaces);
+        } catch (SocketException e) {
+            LOGGER.error("Error during preparing network interfaces", e);
+            throw new ViolationOfLicenceConditionException(e);
+        }
     }
 
     public MacRule(List<NetworkInterface> networkInterfaces) {
@@ -62,12 +69,6 @@ class MacRule implements ValidationRule {
 
     private boolean performValidation(Licence licence, LicenceProperty property) {
         LOGGER.debug("Mac property found for licence with uid {}", licence.getUid());
-        try {
-            prepareNetworkInterfacesIfNeeded();
-        } catch (SocketException e) {
-            LOGGER.error("Error during preparing network interfaces", e);
-            throw new ViolationOfLicenceConditionException(e);
-        }
         String requestedMac = property.getValue();
         LOGGER.debug("Requested MAC: {}", requestedMac);
         for (NetworkInterface networkInterface : networkInterfaces) {
@@ -84,13 +85,6 @@ class MacRule implements ValidationRule {
         }
         LOGGER.debug("There is no any network interfaces or all has not correctly MAC");
         return false;
-    }
-
-    private void prepareNetworkInterfacesIfNeeded() throws SocketException {
-        if (networkInterfaces == null) {
-            networkInterfaces = Collections.list(NetworkInterface.getNetworkInterfaces());
-            LOGGER.trace("Network interfaces in system: {}", networkInterfaces);
-        }
     }
 
     protected String getCurrentMac(NetworkInterface networkInterface) throws SocketException {

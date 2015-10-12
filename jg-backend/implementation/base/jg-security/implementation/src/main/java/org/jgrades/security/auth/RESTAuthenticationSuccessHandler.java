@@ -52,7 +52,6 @@ public class RESTAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuc
     @Transactional("mainTransactionManager")
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         super.onAuthenticationSuccess(request, response, authentication);
-        String login = request.getParameter("username");
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         User user = userMgntService.getWithLogin(userDetails.getUsername());
         user.setLastVisit(DateTime.now());

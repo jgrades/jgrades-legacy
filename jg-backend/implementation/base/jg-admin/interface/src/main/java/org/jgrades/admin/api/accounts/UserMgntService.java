@@ -17,7 +17,8 @@ import org.jgrades.data.api.model.JgRole;
 
 import java.util.Set;
 
-public interface UserMgntService extends CrudPagingService<User, Long>, PagingSpecificationSelector<User, Long> {
+public interface UserMgntService extends CrudPagingService<User, Long>,
+        PagingSpecificationSelector<User, Long> {
     Set<JgRole> getUserRoles(User user);
 
     User getWithLogin(String login);
