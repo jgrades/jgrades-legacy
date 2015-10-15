@@ -46,11 +46,16 @@ public class DefaultLoginGenerationStrategy implements LoginGenerationStrategy {
 
     private String checkAvailability(String proposeLogin) {
         int counter = 1;
-        while (loginExists(proposeLogin)) {
-            proposeLogin = stripEnd(proposeLogin, NUMBERS); //NOSONAR
-            proposeLogin += Integer.toString(counter++);
+        return checkAvailabilityIfBusy(proposeLogin, counter);
+    }
+
+    private String checkAvailabilityIfBusy(String proposeLogin, int counter) {
+        if (loginExists(proposeLogin)) {
+            String newProposeLogin = stripEnd(proposeLogin, NUMBERS) + Integer.toString(counter++);
+            return checkAvailabilityIfBusy(newProposeLogin, counter);
+        } else {
+            return proposeLogin;
         }
-        return proposeLogin;
     }
 
     private boolean loginExists(String newLogin) {

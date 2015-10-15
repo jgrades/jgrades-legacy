@@ -14,9 +14,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
-import org.jgrades.data.api.entities.User;
 import org.jgrades.data.api.model.JgRole;
 import org.jgrades.data.api.utils.CustomType;
 import org.joda.time.LocalDate;
@@ -28,19 +26,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @ToString(exclude="parent")
-public class StudentDetails implements RoleDetails {
-    @GenericGenerator(name = "generator", strategy = "foreign",
-            parameters = @org.hibernate.annotations.Parameter(name = "property", value = "user"))
-    @Id
-    @GeneratedValue(generator = "generator")
-    @JsonIgnore
-    private Long id;
-
-    @OneToOne
-    @PrimaryKeyJoinColumn
-    @JsonIgnore
-    private User user;
-
+public class StudentDetails extends RoleDetails {
     private String contactPhone;
 
     @Column

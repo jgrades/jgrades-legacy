@@ -14,30 +14,19 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.annotations.GenericGenerator;
-import org.jgrades.data.api.entities.User;
 import org.jgrades.data.api.model.JgRole;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "JG_DATA_PARENT_DETAILS")
 @Getter
 @Setter
 @ToString(exclude = "student")
-public class ParentDetails implements RoleDetails {
-    @GenericGenerator(name = "generator", strategy = "foreign",
-            parameters = @org.hibernate.annotations.Parameter(name = "property", value = "user"))
-    @Id
-    @GeneratedValue(generator = "generator")
-    @JsonIgnore
-    private Long id;
-
-    @OneToOne
-    @PrimaryKeyJoinColumn
-    @JsonIgnore
-    private User user;
-
+public class ParentDetails extends RoleDetails {
     private String contactPhone;
 
     private String address;

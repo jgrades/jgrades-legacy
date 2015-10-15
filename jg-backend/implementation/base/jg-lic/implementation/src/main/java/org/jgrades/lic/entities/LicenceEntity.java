@@ -11,8 +11,9 @@
 package org.jgrades.lic.entities;
 
 import com.google.common.collect.Lists;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -20,7 +21,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "JG_LIC_LICENCE")
-@Data
+@Getter
+@Setter
 @EqualsAndHashCode(of = "uid")
 public class LicenceEntity implements Serializable {
     @Id

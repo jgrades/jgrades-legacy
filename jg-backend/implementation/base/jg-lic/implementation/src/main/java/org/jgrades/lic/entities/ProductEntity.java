@@ -10,8 +10,9 @@
 
 package org.jgrades.lic.entities;
 
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
 
@@ -20,7 +21,8 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "JG_LIC_PRODUCT")
-@Data
+@Getter
+@Setter
 @EqualsAndHashCode(exclude = {"id"})
 public class ProductEntity implements Serializable {
     @Id

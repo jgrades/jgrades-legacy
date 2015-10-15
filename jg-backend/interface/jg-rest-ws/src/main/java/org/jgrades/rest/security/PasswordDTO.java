@@ -10,9 +10,11 @@
 
 package org.jgrades.rest.security;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class PasswordDTO {
     private String password;
     private Long userId;

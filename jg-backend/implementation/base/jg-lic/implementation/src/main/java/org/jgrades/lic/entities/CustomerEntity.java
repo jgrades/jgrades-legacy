@@ -10,15 +10,17 @@
 
 package org.jgrades.lic.entities;
 
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
 @Table(name = "JG_LIC_CUSTOMER")
-@Data
+@Getter
+@Setter
 @EqualsAndHashCode(exclude = {"id"})
 public class CustomerEntity implements Serializable {
     @Id

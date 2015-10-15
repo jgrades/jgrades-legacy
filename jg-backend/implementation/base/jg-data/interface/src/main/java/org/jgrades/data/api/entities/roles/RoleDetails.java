@@ -10,11 +10,16 @@
 
 package org.jgrades.data.api.entities.roles;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 import org.jgrades.data.api.entities.User;
 import org.jgrades.data.api.model.JgRole;
 
+import javax.persistence.*;
 import java.io.Serializable;
 
 @JsonTypeInfo(
@@ -28,8 +33,21 @@ import java.io.Serializable;
         @JsonSubTypes.Type(value = StudentDetails.class, name = "STUDENT"),
         @JsonSubTypes.Type(value = ParentDetails.class, name = "PARENT"),
 })
-public interface RoleDetails extends Serializable {
-        JgRole roleName();
+@MappedSuperclass
+@Getter
+@Setter
+public abstract class RoleDetails implements Serializable {
+        @GenericGenerator(name = "generator", strategy = "foreign",
+                parameters = @org.hibernate.annotations.Parameter(name = "property", value = "user"))
+        @Id
+        @GeneratedValue(generator = "generator")
+        @JsonIgnore
+        private Long id;
 
-        void setUser(User user);
+        @OneToOne
+        @PrimaryKeyJoinColumn
+        @JsonIgnore
+        private User user;
+
+        abstract JgRole roleName();
 }

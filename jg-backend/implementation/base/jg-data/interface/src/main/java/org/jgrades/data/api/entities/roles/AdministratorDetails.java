@@ -11,14 +11,12 @@
 package org.jgrades.data.api.entities.roles;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.GenericGenerator;
-import org.jgrades.data.api.entities.User;
 import org.jgrades.data.api.model.JgRole;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 
 @Entity
@@ -26,19 +24,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.NONE)
-public class AdministratorDetails implements RoleDetails {
-    @GenericGenerator(name = "generator", strategy = "foreign",
-            parameters = @org.hibernate.annotations.Parameter(name = "property", value = "user"))
-    @Id
-    @GeneratedValue(generator = "generator")
-    @JsonIgnore
-    private Long id;
-
-    @OneToOne
-    @PrimaryKeyJoinColumn
-    @JsonIgnore
-    private User user;
-
+public class AdministratorDetails extends RoleDetails {
     @Override
     public JgRole roleName() {
         return JgRole.ADMINISTRATOR;

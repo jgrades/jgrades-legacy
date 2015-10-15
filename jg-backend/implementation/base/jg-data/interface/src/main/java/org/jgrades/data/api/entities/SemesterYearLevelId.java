@@ -10,14 +10,16 @@
 
 package org.jgrades.data.api.entities;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.Embeddable;
 import javax.persistence.ManyToOne;
 import java.io.Serializable;
 
 @Embeddable
-@Data
+@Getter
+@Setter
 public class SemesterYearLevelId implements Serializable {
     @ManyToOne
     private Semester semester;
