@@ -126,11 +126,10 @@
 
     <modules>
         <!-- BOM NEEDS TO BE BUILD AS FIRST SEPARATELY -->
-        <module>jg-properties</module>
+        <module>jg-common</module>
         <module>jg-logging</module>
         <module>jg-backend</module>
-        <module>jg-web-app</module>
-        <module>jg-extensions</module>
+        <module>jg-frontend</module>
         <module>jg-lic-standalone-app</module>
     </modules>
 

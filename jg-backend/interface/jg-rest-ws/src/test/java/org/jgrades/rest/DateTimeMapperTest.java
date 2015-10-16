@@ -10,7 +10,7 @@
 
 package org.jgrades.rest;
 
-import org.jgrades.property.ApplicationPropertiesConfig;
+import org.jgrades.common.ApplicationPropertiesConfig;
 import org.jgrades.rest.lic.LicMockConfig;
 import org.joda.time.DateTime;
 import org.junit.Before;

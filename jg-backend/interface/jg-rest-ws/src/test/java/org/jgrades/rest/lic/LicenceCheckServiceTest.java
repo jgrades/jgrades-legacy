@@ -11,12 +11,12 @@
 package org.jgrades.rest.lic;
 
 import org.hamcrest.core.Is;
+import org.jgrades.common.ApplicationPropertiesConfig;
 import org.jgrades.lic.api.exception.LicenceNotFoundException;
 import org.jgrades.lic.api.model.Licence;
 import org.jgrades.lic.api.model.LicenceValidationResult;
 import org.jgrades.lic.api.service.LicenceCheckingService;
 import org.jgrades.lic.api.service.LicenceManagingService;
-import org.jgrades.property.ApplicationPropertiesConfig;
 import org.jgrades.rest.RestConfig;
 import org.junit.Before;
 import org.junit.Test;

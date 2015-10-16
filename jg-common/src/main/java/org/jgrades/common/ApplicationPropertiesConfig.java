@@ -8,7 +8,7 @@
  *       http://www.apache.org/licenses/LICENSE-2.0
  */
 
-package org.jgrades.property;
+package org.jgrades.common;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,7 +16,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
 @Configuration
-@PropertySource("classpath:jg-property.properties")
+@PropertySource("classpath:jg-common.properties")
 public class ApplicationPropertiesConfig { //NOSONAR
     @Bean
     public static PropertySourcesPlaceholderConfigurer propertyConfig() {

@@ -11,10 +11,10 @@
 package org.jgrades.rest;
 
 import org.jgrades.admin.config.AdminConfig;
+import org.jgrades.common.ApplicationPropertiesConfig;
 import org.jgrades.data.config.DataConfig;
 import org.jgrades.lic.config.LicConfig;
 import org.jgrades.monitor.config.MonitorConfig;
-import org.jgrades.property.ApplicationPropertiesConfig;
 import org.jgrades.security.config.SecurityConfig;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;

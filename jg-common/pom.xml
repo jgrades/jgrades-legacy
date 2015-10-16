@@ -9,9 +9,9 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>jg-properties</artifactId>
+    <artifactId>jg-common</artifactId>
 
-    <name>jGrades Internal Properties Configuration Module</name>
+    <name>jGrades Common Properties Module</name>
 
     <build>
         <resources>
