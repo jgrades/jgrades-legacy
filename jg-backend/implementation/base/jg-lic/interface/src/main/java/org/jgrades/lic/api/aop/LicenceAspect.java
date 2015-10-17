@@ -32,4 +32,10 @@ class LicenceAspect {
         String productName = checkLicence.value();
         licenceCheckingService.checkValidForProduct(productName);
     }
+
+    @Before("anyMethod() && @within(checkLicence)")
+    public void checkLicenceForProductFOrMethod(CheckLicence checkLicence) {
+        String productName = checkLicence.value();
+        licenceCheckingService.checkValidForProduct(productName);
+    }
 }

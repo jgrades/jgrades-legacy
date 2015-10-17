@@ -18,6 +18,5 @@
 
     <modules>
         <module>jg-install</module>
-        <module>jg-update</module>
     </modules>
 </project>
