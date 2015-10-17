@@ -75,7 +75,7 @@
                 <SKIP.TESTS>false</SKIP.TESTS>
                 <SKIP.INTEGRATION.TESTS>false</SKIP.INTEGRATION.TESTS>
                 <DB.OPERATIONS.DEBUG>false</DB.OPERATIONS.DEBUG>
-                <DB.SCHEMA.ORM.POLICY>create-drop</DB.SCHEMA.ORM.POLICY>
+                <DB.SCHEMA.ORM.POLICY>update</DB.SCHEMA.ORM.POLICY>
                 <APPLICATION.PROPERTIES>C:/jgrades/internal/app.properties</APPLICATION.PROPERTIES>
                 <LOGGING.CONFIGURATION.FILE>C:/jgrades/logs/jg-logging.conf</LOGGING.CONFIGURATION.FILE>
                 <LOGGING.XML.FILE>C:/jgrades/internal/logback-details.xml</LOGGING.XML.FILE>

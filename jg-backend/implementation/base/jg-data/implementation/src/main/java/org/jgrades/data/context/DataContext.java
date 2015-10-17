@@ -70,6 +70,18 @@ public class DataContext {
     @Value("${data.jdbc.driver}")
     private String jdbcDriver;
 
+    @Value("${data.jdbc.url.prefix}")
+    private String jdbcUrlPrefix;
+
+    @Value("${data.pool.minimum.idle}")
+    private Integer connPoolMinimumIdle;
+
+    @Value("${data.pool.maximum.size}")
+    private Integer connPoolMaximumSize;
+
+    @Value("${data.connection.timeout.miliseconds}")
+    private Long connTimeoutMs;
+
     @Value("#{'${jgrades.entities.packages}'.split(',')}")
     private List<String> packagesToScan;
 
@@ -83,13 +95,13 @@ public class DataContext {
     DataSource mainDataSource() {
         HikariConfig dataSourceConfig = new HikariConfig();
         dataSourceConfig.setDriverClassName("org.postgresql.Driver");
-        dataSourceConfig.setJdbcUrl("jdbc:postgresql://" + jdbcUrl);
+        dataSourceConfig.setJdbcUrl(jdbcUrlPrefix + jdbcUrl);
         dataSourceConfig.setUsername(username);
         dataSourceConfig.setPassword(password);
         dataSourceConfig.setInitializationFailFast(false);
-        dataSourceConfig.setMinimumIdle(5);
-        dataSourceConfig.setMaximumPoolSize(10);
-        dataSourceConfig.setConnectionTimeout(15000);
+        dataSourceConfig.setMinimumIdle(connPoolMinimumIdle);
+        dataSourceConfig.setMaximumPoolSize(connPoolMaximumSize);
+        dataSourceConfig.setConnectionTimeout(connTimeoutMs);
         return new HikariDataSource(dataSourceConfig);
     }
 

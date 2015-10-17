@@ -15,6 +15,11 @@
 
     <dependencies>
         <!-- INTERNAL DEPENDENCIES -->
+        <dependency>
+            <groupId>org.jgrades.app</groupId>
+            <artifactId>jg-data-api</artifactId>
+            <version>${RELEASE.VERSION}</version>
+        </dependency>
 
         <!-- EXTERNAL DEPENDENCIES -->
     </dependencies>

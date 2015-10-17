@@ -11,6 +11,7 @@
 package org.jgrades.rest;
 
 import org.jgrades.admin.context.AdminContext;
+import org.jgrades.backup.context.BackupContext;
 import org.jgrades.common.CommonContext;
 import org.jgrades.configuration.context.ConfigurationContext;
 import org.jgrades.data.context.DataContext;
@@ -29,8 +30,8 @@ public class WebAppInitializer implements WebApplicationInitializer {
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException {
         AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
-        rootContext.register(CommonContext.class, MonitorContext.class, LicContext.class,
-                DataContext.class, SecurityContext.class, AdminContext.class, ConfigurationContext.class);
+        rootContext.register(CommonContext.class, MonitorContext.class, LicContext.class, DataContext.class,
+                BackupContext.class, SecurityContext.class, AdminContext.class, ConfigurationContext.class);
         rootContext.refresh();
 
         servletContext.addListener(new ContextLoaderListener(rootContext));

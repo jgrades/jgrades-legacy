@@ -99,6 +99,11 @@
             <artifactId>jg-configuration-impl</artifactId>
             <version>${RELEASE.VERSION}</version>
         </dependency>
+        <dependency>
+            <groupId>org.jgrades.app</groupId>
+            <artifactId>jg-backup-impl</artifactId>
+            <version>${RELEASE.VERSION}</version>
+        </dependency>
 
         <!-- EXTERNAL DEPENDENCIES -->
         <dependency>
