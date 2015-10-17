@@ -12,7 +12,8 @@ package org.jgrades.lic.api.aop;
 
 import org.jgrades.lic.api.LicServiceMockConfig;
 import org.jgrades.lic.api.context.LicApiContext;
-import org.jgrades.lic.api.exception.LicenceExpiredException;
+import org.jgrades.lic.api.exception.LicenceNotFoundException;
+import org.jgrades.lic.api.model.LicenceValidationResult;
 import org.jgrades.lic.api.service.LicenceCheckingService;
 import org.junit.Before;
 import org.junit.Test;
@@ -43,6 +44,10 @@ public class LicenceAspectTest {
 
     @Test
     public void shouldCheckLicenceForBase_whenMethodRequiredBaseLicenceActivated() throws Exception {
+        // given
+        when(licenceService.checkValidForProduct(BASE_PRODUCT_NAME))
+                .thenReturn(new LicenceValidationResult());
+
         // when
         fakeService.operationRequiredBaseLicence();
 
@@ -52,6 +57,10 @@ public class LicenceAspectTest {
 
     @Test
     public void shouldCheckLicenceForBase_forEachInvoking() throws Exception {
+        // given
+        when(licenceService.checkValidForProduct(BASE_PRODUCT_NAME))
+                .thenReturn(new LicenceValidationResult());
+
         // when
         fakeService.operationRequiredBaseLicence();
         fakeService.operationRequiredBaseLicence();
@@ -76,6 +85,10 @@ public class LicenceAspectTest {
 
     @Test
     public void shouldCheckCustomProductLicence_whenMethodRequiredThisLicenceActivated() throws Exception {
+        // given
+        when(licenceService.checkValidForProduct(EXAMPLE_CUSTOM_PRODUCT_NAME))
+                .thenReturn(new LicenceValidationResult());
+
         // when
         fakeService.operationRequiredCustomComponentName();
 
@@ -92,15 +105,16 @@ public class LicenceAspectTest {
         verifyZeroInteractions(licenceService);
     }
 
-    @Test(expected = LicenceExpiredException.class)
+    @Test(expected = LicenceNotFoundException.class)
     public void shouldThrowException_whenLicenceServiceThrowException() throws Exception {
         // given
-        when(licenceService.checkValidForProduct(BASE_PRODUCT_NAME)).thenThrow(LicenceExpiredException.class);
+        when(licenceService.checkValidForProduct(BASE_PRODUCT_NAME))
+                .thenReturn(new LicenceValidationResult(false, "Licence expired"));
 
         // when
         fakeService.operationRequiredBaseLicence();
 
         // then
-        // should throw LicenceExpiredException
+        // should throw LicenceNotFoundException
     }
 }

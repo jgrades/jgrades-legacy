@@ -13,6 +13,8 @@ package org.jgrades.lic.api.aop;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
+import org.jgrades.lic.api.exception.LicenceNotFoundException;
+import org.jgrades.lic.api.model.LicenceValidationResult;
 import org.jgrades.lic.api.service.LicenceCheckingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -24,18 +26,26 @@ class LicenceAspect {
     private LicenceCheckingService licenceCheckingService;
 
     @Pointcut(value = "execution(* *(..))")
-    private void anyMethod() { //NOSONAR
+    private void anyMethod() {
+        //empty method for aspectj purposes
     }
 
     @Before("anyMethod() && @annotation(checkLicence)")
-    public void checkLicenceForProduct(CheckLicence checkLicence) {
-        String productName = checkLicence.value();
-        licenceCheckingService.checkValidForProduct(productName);
+    public void checkLicenceForProductForClassAnnotated(CheckLicence checkLicence) {
+        checkLicenceForProduct(checkLicence);
     }
 
     @Before("anyMethod() && @within(checkLicence)")
-    public void checkLicenceForProductFOrMethod(CheckLicence checkLicence) {
+    public void checkLicenceForProductForMethodAnnotated(CheckLicence checkLicence) {
+        checkLicenceForProduct(checkLicence);
+    }
+
+    private void checkLicenceForProduct(CheckLicence checkLicence) {
         String productName = checkLicence.value();
-        licenceCheckingService.checkValidForProduct(productName);
+        LicenceValidationResult validationResult = licenceCheckingService.checkValidForProduct(productName);
+        if (!validationResult.isValid()) {
+            throw new LicenceNotFoundException("This invocation of API needs valid licence for product: " +
+                    productName + ", but it failed. Reason: " + validationResult.getErrorMessage());
+        }
     }
 }
