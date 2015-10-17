@@ -19,7 +19,9 @@ import java.util.List;
 public interface BackupManagerService {
     void makeNow();
 
-    Backup getAll();
+    Backup getWithId(Long id);
+
+    List<Backup> getAll();
 
     void refreshBackupDirectory();
 
