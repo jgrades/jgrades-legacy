@@ -8,13 +8,10 @@
  *       http://www.apache.org/licenses/LICENSE-2.0
  */
 
-package org.jgrades.lic.api.aop;
+package org.jgrades.configuration.api.service;
 
-import java.lang.annotation.*;
+import org.jgrades.configuration.api.model.UserData;
 
-@Inherited
-@Retention(RetentionPolicy.RUNTIME)
-@Target(value = {ElementType.METHOD, ElementType.CONSTRUCTOR, ElementType.TYPE})
-public @interface CheckLicence {
-    String value() default "JG-BASE";
+public interface UserPreferencesService {
+    void setUserData(UserData userData);
 }

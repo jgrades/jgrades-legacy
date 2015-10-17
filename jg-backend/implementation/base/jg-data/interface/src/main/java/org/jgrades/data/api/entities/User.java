@@ -16,6 +16,7 @@ import lombok.Setter;
 import org.hibernate.annotations.Type;
 import org.jgrades.data.api.entities.roles.RoleDetails;
 import org.jgrades.data.api.model.JgRole;
+import org.jgrades.data.api.model.UserSetting;
 import org.jgrades.data.api.utils.CustomType;
 import org.joda.time.DateTime;
 
@@ -38,6 +39,7 @@ public class User implements Serializable {
 
     private String surname;
 
+    @UserSetting
     private String email;
 
     private boolean active;

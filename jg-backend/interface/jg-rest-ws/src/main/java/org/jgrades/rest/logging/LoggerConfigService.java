@@ -10,6 +10,7 @@
 
 package org.jgrades.rest.logging;
 
+import org.jgrades.lic.api.aop.CheckLicence;
 import org.jgrades.logging.JgLogger;
 import org.jgrades.logging.JgLoggerFactory;
 import org.jgrades.logging.model.LoggingConfiguration;
@@ -28,6 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(value = "/logging")
 @CheckSystemDependencies
+@CheckLicence
 @PreAuthorize("hasRole('ADMINISTRATOR')")
 public class LoggerConfigService {
     private static final JgLogger LOGGER = JgLoggerFactory.getLogger(LoggerConfigService.class);

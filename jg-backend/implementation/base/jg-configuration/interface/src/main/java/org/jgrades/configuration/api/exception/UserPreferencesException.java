@@ -8,13 +8,14 @@
  *       http://www.apache.org/licenses/LICENSE-2.0
  */
 
-package org.jgrades.lic.api.aop;
+package org.jgrades.configuration.api.exception;
 
-import java.lang.annotation.*;
+public class UserPreferencesException extends RuntimeException {
+    public UserPreferencesException(String s) {
+        super(s);
+    }
 
-@Inherited
-@Retention(RetentionPolicy.RUNTIME)
-@Target(value = {ElementType.METHOD, ElementType.CONSTRUCTOR, ElementType.TYPE})
-public @interface CheckLicence {
-    String value() default "JG-BASE";
+    public UserPreferencesException(String s, Exception e) {
+        super(s, e);
+    }
 }

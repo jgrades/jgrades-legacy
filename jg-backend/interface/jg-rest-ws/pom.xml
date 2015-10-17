@@ -94,6 +94,11 @@
             <artifactId>jg-security-impl</artifactId>
             <version>${RELEASE.VERSION}</version>
         </dependency>
+        <dependency>
+            <groupId>org.jgrades.app</groupId>
+            <artifactId>jg-configuration-impl</artifactId>
+            <version>${RELEASE.VERSION}</version>
+        </dependency>
 
         <!-- EXTERNAL DEPENDENCIES -->
         <dependency>

@@ -16,6 +16,7 @@ import org.jgrades.admin.api.accounts.UserMgntService;
 import org.jgrades.admin.api.accounts.UserSpecifications;
 import org.jgrades.admin.api.general.*;
 import org.jgrades.admin.api.structures.*;
+import org.jgrades.configuration.api.service.UserPreferencesService;
 import org.jgrades.data.api.dao.*;
 import org.jgrades.data.api.dao.accounts.UserRepository;
 import org.jgrades.data.api.service.DataSourceService;
@@ -204,5 +205,11 @@ public class LicMockConfig extends WebMvcConfigurerAdapter {
     @Primary
     public MassAccountCreatorService massAccountCreatorService() {
         return Mockito.mock(MassAccountCreatorService.class);
+    }
+
+    @Bean
+    @Primary
+    public UserPreferencesService userPreferencesService() {
+        return Mockito.mock(UserPreferencesService.class);
     }
 }

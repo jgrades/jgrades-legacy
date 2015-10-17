@@ -15,6 +15,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.jgrades.data.api.model.JgRole;
+import org.jgrades.data.api.model.UserSetting;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -27,8 +28,10 @@ import javax.persistence.Table;
 @Setter
 @ToString(exclude = "student")
 public class ParentDetails extends RoleDetails {
+    @UserSetting
     private String contactPhone;
 
+    @UserSetting
     private String address;
 
     @OneToOne

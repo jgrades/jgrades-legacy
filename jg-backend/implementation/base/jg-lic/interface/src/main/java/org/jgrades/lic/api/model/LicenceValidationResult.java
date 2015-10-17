@@ -11,9 +11,11 @@
 package org.jgrades.lic.api.model;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 public class LicenceValidationResult {
     private boolean valid;

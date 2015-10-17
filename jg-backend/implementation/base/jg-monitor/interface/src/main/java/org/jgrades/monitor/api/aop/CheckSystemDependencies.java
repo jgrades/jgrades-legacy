@@ -10,7 +10,6 @@
 
 package org.jgrades.monitor.api.aop;
 
-
 import org.jgrades.monitor.api.model.SystemDependency;
 
 import java.lang.annotation.*;

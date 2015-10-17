@@ -21,7 +21,7 @@
         <module>jg-security</module>
         <module>jg-lic</module>
         <module>jg-admin</module>
-        <module>jg-config</module>
+        <module>jg-configuration</module>
         <module>jg-backup</module>
         <module>jg-monitor</module>
     </modules>

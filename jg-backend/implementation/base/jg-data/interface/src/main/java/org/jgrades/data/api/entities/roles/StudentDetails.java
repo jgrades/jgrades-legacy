@@ -16,6 +16,7 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.Type;
 import org.jgrades.data.api.model.JgRole;
+import org.jgrades.data.api.model.UserSetting;
 import org.jgrades.data.api.utils.CustomType;
 import org.joda.time.LocalDate;
 
@@ -27,6 +28,7 @@ import javax.persistence.*;
 @Setter
 @ToString(exclude="parent")
 public class StudentDetails extends RoleDetails {
+    @UserSetting
     private String contactPhone;
 
     @Column
@@ -35,6 +37,7 @@ public class StudentDetails extends RoleDetails {
 
     private String nationalIdentificationNumber;
 
+    @UserSetting
     private String address;
 
     @OneToOne

@@ -8,13 +8,14 @@
  *       http://www.apache.org/licenses/LICENSE-2.0
  */
 
-package org.jgrades.lic.api.aop;
+package org.jgrades.data.api.model;
 
-import java.lang.annotation.*;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-@Inherited
 @Retention(RetentionPolicy.RUNTIME)
-@Target(value = {ElementType.METHOD, ElementType.CONSTRUCTOR, ElementType.TYPE})
-public @interface CheckLicence {
-    String value() default "JG-BASE";
+@Target(ElementType.FIELD)
+public @interface UserSetting {
 }

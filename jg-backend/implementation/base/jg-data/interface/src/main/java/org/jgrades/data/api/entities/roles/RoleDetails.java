@@ -24,7 +24,7 @@ import java.io.Serializable;
 
 @JsonTypeInfo(
         use = JsonTypeInfo.Id.NAME,
-        include = JsonTypeInfo.As.EXTERNAL_PROPERTY,
+        include = JsonTypeInfo.As.PROPERTY,
         property = "role")
 @JsonSubTypes({
         @JsonSubTypes.Type(value = AdministratorDetails.class, name = "ADMINISTRATOR"),
