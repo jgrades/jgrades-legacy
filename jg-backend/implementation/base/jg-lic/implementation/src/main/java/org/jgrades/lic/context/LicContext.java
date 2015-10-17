@@ -8,14 +8,14 @@
  *       http://www.apache.org/licenses/LICENSE-2.0
  */
 
-package org.jgrades.lic.config;
+package org.jgrades.lic.context;
 
 import com.google.common.collect.Lists;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.dozer.DozerBeanMapper;
 import org.dozer.Mapper;
-import org.jgrades.lic.api.config.LicApiConfig;
+import org.jgrades.lic.api.context.LicApiContext;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.*;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
@@ -43,9 +43,9 @@ import java.util.Properties;
 })
 @EnableTransactionManagement
 @EnableScheduling
-@Import(LicApiConfig.class)
+@Import(LicApiContext.class)
 @ComponentScan("org.jgrades.lic")
-public class LicConfig {
+public class LicContext {
     @Value("${lic.db.path}")
     private String licDbPath;
 

@@ -8,7 +8,7 @@
  *       http://www.apache.org/licenses/LICENSE-2.0
  */
 
-package org.jgrades.security.config;
+package org.jgrades.security.context;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -45,7 +45,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @ComponentScan("org.jgrades.security")
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityContext extends WebSecurityConfigurerAdapter {
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception { //NOSONAR
         auth.userDetailsService(userDetailsService());

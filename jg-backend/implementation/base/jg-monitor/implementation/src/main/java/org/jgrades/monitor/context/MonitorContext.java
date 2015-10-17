@@ -8,9 +8,9 @@
  *       http://www.apache.org/licenses/LICENSE-2.0
  */
 
-package org.jgrades.monitor.config;
+package org.jgrades.monitor.context;
 
-import org.jgrades.monitor.api.config.MonitorApiConfig;
+import org.jgrades.monitor.api.context.MonitorApiContext;
 import org.jgrades.monitor.dependency.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.*;
@@ -22,9 +22,9 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
         @PropertySource(value = "classpath:jg-data.properties", ignoreResourceNotFound = true),
         @PropertySource(value = "file:${jgrades.application.properties.file}", ignoreResourceNotFound = true)
 })
-@Import(MonitorApiConfig.class)
+@Import(MonitorApiContext.class)
 @ComponentScan("org.jgrades.monitor")
-public class MonitorConfig {
+public class MonitorContext {
     @Value("${data.db.jdbc.url}")
     private String jdbcUrl;
 

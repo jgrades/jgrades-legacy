@@ -42,12 +42,12 @@ import java.util.List;
 
 @Configuration
 @ComponentScan("org.jgrades.rest")
-@Import({RestDocsConfig.class})
+@Import({RestDocsContext.class})
 @PropertySources({
         @PropertySource("classpath:jg-rest.properties"),
         @PropertySource(value = "file:${jgrades.application.properties.file}", ignoreResourceNotFound = true)
 })
-public class RestConfig extends WebMvcConfigurationSupport {
+public class RestContext extends WebMvcConfigurationSupport {
 
     @Bean
     public static PropertySourcesPlaceholderConfigurer propertyConfig() {

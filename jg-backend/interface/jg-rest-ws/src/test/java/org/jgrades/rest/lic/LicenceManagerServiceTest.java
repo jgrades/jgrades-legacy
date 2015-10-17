@@ -13,14 +13,14 @@ package org.jgrades.rest.lic;
 import com.google.common.collect.Lists;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.jgrades.common.ApplicationPropertiesConfig;
+import org.jgrades.common.CommonContext;
 import org.jgrades.lic.api.exception.LicenceNotFoundException;
 import org.jgrades.lic.api.exception.UnreliableLicenceException;
 import org.jgrades.lic.api.model.Customer;
 import org.jgrades.lic.api.model.Licence;
 import org.jgrades.lic.api.model.Product;
 import org.jgrades.lic.api.service.LicenceManagingService;
-import org.jgrades.rest.RestConfig;
+import org.jgrades.rest.RestContext;
 import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Rule;
@@ -47,7 +47,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {ApplicationPropertiesConfig.class, LicMockConfig.class, RestConfig.class})
+@ContextConfiguration(classes = {CommonContext.class, LicMockConfig.class, RestContext.class})
 @WebAppConfiguration
 public class LicenceManagerServiceTest {
     @Rule
@@ -65,7 +65,7 @@ public class LicenceManagerServiceTest {
     @Before
     public void setup() {
         mockMvc = MockMvcBuilders.standaloneSetup(licenceManagerService)
-                .setHandlerExceptionResolvers(new RestConfig().restExceptionResolver())
+                .setHandlerExceptionResolvers(new RestContext().restExceptionResolver())
                 .build();
         Mockito.reset(licenceManagingServiceMock, incomingFilesNameResolverMock);
     }

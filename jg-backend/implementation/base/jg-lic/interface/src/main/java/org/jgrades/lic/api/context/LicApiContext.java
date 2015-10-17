@@ -8,7 +8,7 @@
  *       http://www.apache.org/licenses/LICENSE-2.0
  */
 
-package org.jgrades.monitor.api.config;
+package org.jgrades.lic.api.context;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -16,6 +16,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 @Configuration
 @EnableAspectJAutoProxy(proxyTargetClass = true)
-@ComponentScan("org.jgrades.monitor.api")
-public class MonitorApiConfig { //NOSONAR
+@ComponentScan("org.jgrades.lic")
+public class LicApiContext { //NOSONAR (config is needed to enable proxy target class)
+
 }

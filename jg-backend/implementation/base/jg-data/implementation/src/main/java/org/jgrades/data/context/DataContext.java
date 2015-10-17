@@ -8,7 +8,7 @@
  *       http://www.apache.org/licenses/LICENSE-2.0
  */
 
-package org.jgrades.data.config;
+package org.jgrades.data.context;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
@@ -43,8 +43,8 @@ import java.util.Properties;
 })
 @EnableTransactionManagement
 @ComponentScan("org.jgrades.data")
-public class DataConfig {
-    private static final JgLogger LOGGER = JgLoggerFactory.getLogger(DataConfig.class);
+public class DataContext {
+    private static final JgLogger LOGGER = JgLoggerFactory.getLogger(DataContext.class);
 
     @Value("${jgrades.application.properties.file}")
     private String appPropertiesFilePath;

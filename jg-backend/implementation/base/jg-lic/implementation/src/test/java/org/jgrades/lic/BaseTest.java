@@ -10,7 +10,7 @@
 
 package org.jgrades.lic;
 
-import org.jgrades.lic.config.LicConfig;
+import org.jgrades.lic.context.LicContext;
 import org.junit.runner.RunWith;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -23,7 +23,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 public abstract class BaseTest {
 
     @Configuration
-    @Import({TestAppPropertiesConfig.class, LicConfig.class})
+    @Import({TestAppPropertiesConfig.class, LicContext.class})
     static class ContextConfiguration {
 
     }

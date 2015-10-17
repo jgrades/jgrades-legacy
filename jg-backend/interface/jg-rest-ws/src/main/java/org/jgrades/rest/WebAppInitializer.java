@@ -10,13 +10,13 @@
 
 package org.jgrades.rest;
 
-import org.jgrades.admin.config.AdminConfig;
-import org.jgrades.common.ApplicationPropertiesConfig;
-import org.jgrades.configuration.config.ConfigurationConfig;
-import org.jgrades.data.config.DataConfig;
-import org.jgrades.lic.config.LicConfig;
-import org.jgrades.monitor.config.MonitorConfig;
-import org.jgrades.security.config.SecurityConfig;
+import org.jgrades.admin.context.AdminContext;
+import org.jgrades.common.CommonContext;
+import org.jgrades.configuration.context.ConfigurationContext;
+import org.jgrades.data.context.DataContext;
+import org.jgrades.lic.context.LicContext;
+import org.jgrades.monitor.context.MonitorContext;
+import org.jgrades.security.context.SecurityContext;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
@@ -29,15 +29,15 @@ public class WebAppInitializer implements WebApplicationInitializer {
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException {
         AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
-        rootContext.register(ApplicationPropertiesConfig.class, MonitorConfig.class, LicConfig.class,
-                DataConfig.class, SecurityConfig.class, AdminConfig.class, ConfigurationConfig.class);
+        rootContext.register(CommonContext.class, MonitorContext.class, LicContext.class,
+                DataContext.class, SecurityContext.class, AdminContext.class, ConfigurationContext.class);
         rootContext.refresh();
 
         servletContext.addListener(new ContextLoaderListener(rootContext));
         servletContext.setInitParameter("defaultHtmlEscape", "true");
 
         AnnotationConfigWebApplicationContext mvcContext = new AnnotationConfigWebApplicationContext();
-        mvcContext.register(ApplicationPropertiesConfig.class, RestConfig.class);
+        mvcContext.register(CommonContext.class, RestContext.class);
 
         ServletRegistration.Dynamic appServlet = servletContext.addServlet("jgRestServlet", new DispatcherServlet(mvcContext));
         appServlet.setLoadOnStartup(1);
