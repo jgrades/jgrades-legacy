@@ -20,13 +20,14 @@ import org.jgrades.data.api.utils.CustomType;
 import org.joda.time.DateTime;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @Table(name = "JG_BACKUP_BACKUP")
 @Getter
 @Setter
-public class Backup {
+public class Backup implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

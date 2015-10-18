@@ -42,7 +42,7 @@ public class User implements Serializable {
     @UserSetting
     private String email;
 
-    private boolean active;
+    private boolean active = true;
 
     @Transient
     @JsonDeserialize(keyAs = JgRole.class, contentAs = RoleDetails.class)

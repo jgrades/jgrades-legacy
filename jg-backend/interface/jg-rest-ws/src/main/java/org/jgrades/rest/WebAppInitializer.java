@@ -13,7 +13,7 @@ package org.jgrades.rest;
 import org.jgrades.admin.context.AdminContext;
 import org.jgrades.backup.context.BackupContext;
 import org.jgrades.common.CommonContext;
-import org.jgrades.configuration.context.ConfigurationContext;
+import org.jgrades.config.context.ConfigurationContext;
 import org.jgrades.data.context.DataContext;
 import org.jgrades.lic.context.LicContext;
 import org.jgrades.monitor.context.MonitorContext;

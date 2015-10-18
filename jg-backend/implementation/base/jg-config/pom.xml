@@ -6,23 +6,18 @@
 
     <parent>
         <groupId>org.jgrades.app</groupId>
-        <artifactId>implementation</artifactId>
+        <artifactId>base</artifactId>
         <version>0.4-DEV-SNAPSHOT</version>
     </parent>
 
-    <artifactId>base</artifactId>
+    <artifactId>jg-config</artifactId>
 
     <packaging>pom</packaging>
 
-    <name>jGrades Base Features</name>
+    <name>jGrades Configuration Module</name>
 
     <modules>
-        <module>jg-data</module>
-        <module>jg-security</module>
-        <module>jg-lic</module>
-        <module>jg-admin</module>
-        <module>jg-config</module>
-        <module>jg-backup</module>
-        <module>jg-monitor</module>
+        <module>interface</module>
+        <module>implementation</module>
     </modules>
 </project>

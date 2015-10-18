@@ -61,6 +61,7 @@ public class MassAccountCreatorServiceImpl implements MassAccountCreatorService 
 
         StudentDetails studentDetails = (StudentDetails) persistStudent.getRoles().get(JgRole.STUDENT);
         User persistParent = studentDetails.getParent().getUser();
+        persistParent.setActive(settings.isActiveAfterCreation());
         String parentPassword = passwordGenerator.getPassword();
         passwordMgntService.setPassword(parentPassword, persistParent);
 
