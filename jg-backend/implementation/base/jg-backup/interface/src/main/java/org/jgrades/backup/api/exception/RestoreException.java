@@ -11,4 +11,11 @@
 package org.jgrades.backup.api.exception;
 
 public class RestoreException extends BackupException {
+    public RestoreException(String s) {
+        super(s);
+    }
+
+    public RestoreException(String s, Exception e) {
+        super(s, e);
+    }
 }

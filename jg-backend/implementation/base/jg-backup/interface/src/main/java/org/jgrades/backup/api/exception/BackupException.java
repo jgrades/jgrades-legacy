@@ -11,4 +11,11 @@
 package org.jgrades.backup.api.exception;
 
 public class BackupException extends RuntimeException {
+    public BackupException(String s) {
+        super(s);
+    }
+
+    public BackupException(String s, Exception e) {
+        super(s, e);
+    }
 }

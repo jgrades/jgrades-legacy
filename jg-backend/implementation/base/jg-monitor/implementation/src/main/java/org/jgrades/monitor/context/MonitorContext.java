@@ -37,6 +37,9 @@ public class MonitorContext {
     @Value("${data.jdbc.driver}")
     private String jdbcDriver;
 
+    @Value("${data.jdbc.url.prefix}")
+    private String jdbcUrlPrefix;
+
     @Value("${lic.keystore.path}")
     private String licKeystorePath;
 
@@ -54,7 +57,7 @@ public class MonitorContext {
     @Bean(name = "mainDataSourceChecker")
     public DependencyChecker mainDataSourceChecker() {
         DataSourceDTO dsDTO = new DataSourceDTO();
-        dsDTO.setUrl("jdbc:postgresql://" + jdbcUrl);
+        dsDTO.setUrl(jdbcUrlPrefix + jdbcUrl);
         dsDTO.setUsername(username);
         dsDTO.setPassword(password);
         return new DataSourceChecker(dsDTO, jdbcDriver);

@@ -19,6 +19,8 @@ import org.jgrades.backup.api.service.BackupManagerService;
 import org.jgrades.backup.creator.BackupDispatcher;
 import org.jgrades.backup.manager.DirectoryRefreshRunner;
 import org.jgrades.backup.restore.RestoringPerformer;
+import org.jgrades.logging.JgLogger;
+import org.jgrades.logging.JgLoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +28,8 @@ import java.util.List;
 
 @Service
 public class BackupManagerServiceImpl implements BackupManagerService {
+    private static final JgLogger LOGGER = JgLoggerFactory.getLogger(BackupManagerServiceImpl.class);
+
     @Autowired
     private BackupRepository repository;
 
