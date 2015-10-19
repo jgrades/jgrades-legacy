@@ -23,10 +23,7 @@ import org.jgrades.logging.JgLogger;
 import org.jgrades.logging.JgLoggerFactory;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
-import org.quartz.DisallowConcurrentExecution;
-import org.quartz.Job;
-import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
+import org.quartz.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
@@ -88,6 +85,12 @@ public class StartBackupJob implements Job {
         }
         backupRepository.save(backup);
         backupEventRepository.save(event);
+
+        try {
+            context.getScheduler().getContext().put("backup", backup);
+        } catch (SchedulerException e) {
+            e.printStackTrace();
+        }
     }
 
     private void setFailureDetails(Backup backup, BackupEvent event) {
