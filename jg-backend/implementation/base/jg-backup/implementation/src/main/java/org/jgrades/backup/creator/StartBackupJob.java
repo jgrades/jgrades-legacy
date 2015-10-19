@@ -87,7 +87,9 @@ public class StartBackupJob implements Job {
         backupEventRepository.save(event);
 
         try {
-            context.getScheduler().getContext().put("backup", backup);
+            SchedulerContext schedulerContext = context.getScheduler().getContext();
+            schedulerContext.put("backup", backup);
+            schedulerContext.put("backupWarningFlag", false);
         } catch (SchedulerException e) {
             e.printStackTrace();
         }

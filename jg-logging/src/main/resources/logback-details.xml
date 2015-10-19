@@ -5,7 +5,7 @@
             <level>${CONSOLE.LOGGING.LEVEL}</level>
         </filter>
         <encoder>
-            <pattern>[%d{dd-MM-yyyy HH:mm:ss.SSS}] [%thread] %-5level --&gt; [%c] %m%n</pattern>
+            <pattern>[%d{dd-MM-yyyy HH:mm:ss.SSS}] [%thread] %-5level --&gt; [%c] %m%n%n</pattern>
         </encoder>
     </appender>
     <appender class="ch.qos.logback.classic.sift.SiftingAppender" name="FILESYSTEM-trace">
@@ -32,7 +32,7 @@
                 <cleanHistoryOnStart>true</cleanHistoryOnStart>
                 <encoder>
                     <charset>UTF-8</charset>
-                    <pattern>[%d{dd-MM-yyyy HH:mm:ss.SSS}] [%thread] %-5level --&gt; [%c] %m%n</pattern>
+                    <pattern>[%d{dd-MM-yyyy HH:mm:ss.SSS}] [%thread] %-5level --&gt; [%c] %m%n%n</pattern>
                 </encoder>
             </appender>
         </sift>
@@ -61,7 +61,7 @@
                 <cleanHistoryOnStart>true</cleanHistoryOnStart>
                 <encoder>
                     <charset>UTF-8</charset>
-                    <pattern>[%d{dd-MM-yyyy HH:mm:ss.SSS}] [%thread] %-5level --&gt; [%c] %m%n</pattern>
+                    <pattern>[%d{dd-MM-yyyy HH:mm:ss.SSS}] [%thread] %-5level --&gt; [%c] %m%n%n</pattern>
                 </encoder>
             </appender>
         </sift>
@@ -90,7 +90,7 @@
                 <cleanHistoryOnStart>true</cleanHistoryOnStart>
                 <encoder>
                     <charset>UTF-8</charset>
-                    <pattern>[%d{dd-MM-yyyy HH:mm:ss.SSS}] [%thread] %-5level --&gt; [%c] %m%n</pattern>
+                    <pattern>[%d{dd-MM-yyyy HH:mm:ss.SSS}] [%thread] %-5level --&gt; [%c] %m%n%n</pattern>
                 </encoder>
             </appender>
         </sift>
@@ -119,7 +119,7 @@
                 <cleanHistoryOnStart>true</cleanHistoryOnStart>
                 <encoder>
                     <charset>UTF-8</charset>
-                    <pattern>[%d{dd-MM-yyyy HH:mm:ss.SSS}] [%thread] %-5level --&gt; [%c] %m%n</pattern>
+                    <pattern>[%d{dd-MM-yyyy HH:mm:ss.SSS}] [%thread] %-5level --&gt; [%c] %m%n%n</pattern>
                 </encoder>
             </appender>
         </sift>
@@ -148,7 +148,7 @@
                 <cleanHistoryOnStart>true</cleanHistoryOnStart>
                 <encoder>
                     <charset>UTF-8</charset>
-                    <pattern>[%d{dd-MM-yyyy HH:mm:ss.SSS}] [%thread] %-5level --&gt; [%c] %m%n</pattern>
+                    <pattern>[%d{dd-MM-yyyy HH:mm:ss.SSS}] [%thread] %-5level --&gt; [%c] %m%n%n</pattern>
                 </encoder>
             </appender>
         </sift>
@@ -175,7 +175,7 @@
                 <cleanHistoryOnStart>true</cleanHistoryOnStart>
                 <encoder>
                     <charset>UTF-8</charset>
-                    <pattern>[%d{dd-MM-yyyy HH:mm:ss.SSS}] [%thread] %-5level --&gt; [%c] %m%n</pattern>
+                    <pattern>[%d{dd-MM-yyyy HH:mm:ss.SSS}] [%thread] %-5level --&gt; [%c] %m%n%n</pattern>
                 </encoder>
             </appender>
         </sift>
@@ -202,7 +202,7 @@
                 <cleanHistoryOnStart>true</cleanHistoryOnStart>
                 <encoder>
                     <charset>UTF-8</charset>
-                    <pattern>[%d{dd-MM-yyyy HH:mm:ss.SSS}] [%thread] %-5level --&gt; [%c] %m%n</pattern>
+                    <pattern>[%d{dd-MM-yyyy HH:mm:ss.SSS}] [%thread] %-5level --&gt; [%c] %m%n%n</pattern>
                 </encoder>
             </appender>
         </sift>
@@ -229,7 +229,7 @@
                 <cleanHistoryOnStart>true</cleanHistoryOnStart>
                 <encoder>
                     <charset>UTF-8</charset>
-                    <pattern>[%d{dd-MM-yyyy HH:mm:ss.SSS}] [%thread] %-5level --&gt; [%c] %m%n</pattern>
+                    <pattern>[%d{dd-MM-yyyy HH:mm:ss.SSS}] [%thread] %-5level --&gt; [%c] %m%n%n</pattern>
                 </encoder>
             </appender>
         </sift>
@@ -256,7 +256,7 @@
                 <cleanHistoryOnStart>true</cleanHistoryOnStart>
                 <encoder>
                     <charset>UTF-8</charset>
-                    <pattern>[%d{dd-MM-yyyy HH:mm:ss.SSS}] [%thread] %-5level --&gt; [%c] %m%n</pattern>
+                    <pattern>[%d{dd-MM-yyyy HH:mm:ss.SSS}] [%thread] %-5level --&gt; [%c] %m%n%n</pattern>
                 </encoder>
             </appender>
         </sift>
@@ -283,7 +283,7 @@
                 <cleanHistoryOnStart>true</cleanHistoryOnStart>
                 <encoder>
                     <charset>UTF-8</charset>
-                    <pattern>[%d{dd-MM-yyyy HH:mm:ss.SSS}] [%thread] %-5level --&gt; [%c] %m%n</pattern>
+                    <pattern>[%d{dd-MM-yyyy HH:mm:ss.SSS}] [%thread] %-5level --&gt; [%c] %m%n%n</pattern>
                 </encoder>
             </appender>
         </sift>

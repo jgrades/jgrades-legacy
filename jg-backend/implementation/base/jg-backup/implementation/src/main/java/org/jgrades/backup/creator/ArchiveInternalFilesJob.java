@@ -11,7 +11,6 @@
 package org.jgrades.backup.creator;
 
 import org.jgrades.backup.api.dao.BackupEventRepository;
-import org.jgrades.backup.api.dao.BackupRepository;
 import org.jgrades.backup.api.entities.Backup;
 import org.jgrades.backup.api.entities.BackupEvent;
 import org.jgrades.backup.api.model.BackupEventSeverity;
@@ -20,10 +19,7 @@ import org.jgrades.backup.api.model.BackupOperation;
 import org.jgrades.logging.JgLogger;
 import org.jgrades.logging.JgLoggerFactory;
 import org.joda.time.DateTime;
-import org.quartz.DisallowConcurrentExecution;
-import org.quartz.Job;
-import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
+import org.quartz.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
@@ -41,17 +37,16 @@ public class ArchiveInternalFilesJob implements Job {
     private String logsFilesDirectory;
 
     @Autowired
-    private BackupRepository backupRepository;
-
-    @Autowired
     private BackupEventRepository backupEventRepository;
 
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
         SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
         Backup backup = null;
+        SchedulerContext schedulerContext = null;
         try {
-            backup = (Backup) context.getScheduler().getContext().get("backup");
+            schedulerContext = context.getScheduler().getContext();
+            backup = (Backup) schedulerContext.get("backup");
 
             ZipUtil zipUtil = new ZipUtil();
             saveOkEvent(backup, "Backup of internal files started");
@@ -61,9 +56,9 @@ public class ArchiveInternalFilesJob implements Job {
             zipUtil.zipFiles(logsFilesDirectory, backup.getPath() + File.separator + "jg-logs-" + backup.getName() + ".zip");
             saveOkEvent(backup, "Backup of log files finished correctly");
         } catch (Exception e) {
-            LOGGER.error("Error during creating Backup of internal files", e);
-            setFailureDetails(backup);
-            throw new JobExecutionException(e);
+            LOGGER.error("Error during creating Backup of internal files. Process will be continued", e);
+            schedulerContext.put("backupWarningFlag", true);
+            setWarnDetails(backup);
         }
     }
 
@@ -78,8 +73,16 @@ public class ArchiveInternalFilesJob implements Job {
         backupEventRepository.save(event);
     }
 
-    private void setFailureDetails(Backup backup) {
-        //todo
+    private void setWarnDetails(Backup backup) {
+        BackupEvent event = new BackupEvent();
+        event.setEventType(BackupEventType.ONGOING);
+        event.setSeverity(BackupEventSeverity.WARNING);
+        event.setOperation(BackupOperation.BACKUPING);
+        event.setTimestamp(DateTime.now());
+        event.setBackup(backup);
+        event.setMessage("Error during creating Backup of internal/logs files. Process will be continued. " +
+                "For more details please check application logs");
+        backupEventRepository.save(event);
     }
 
 

@@ -10,15 +10,23 @@
 
 package org.jgrades.backup.context;
 
+import org.jgrades.security.utils.DecryptionProvider;
+import org.jgrades.security.utils.EncryptionProvider;
+import org.jgrades.security.utils.KeyStoreContentExtractor;
+import org.jgrades.security.utils.SignatureProvider;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.SchedulerFactory;
 import org.quartz.impl.StdSchedulerFactory;
 import org.quartz.listeners.JobChainingJobListener;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.*;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+
+import java.io.File;
+import java.io.IOException;
 
 import static org.quartz.JobKey.jobKey;
 
@@ -34,6 +42,12 @@ import static org.quartz.JobKey.jobKey;
 @EnableTransactionManagement
 @ComponentScan("org.jgrades.backup")
 public class BackupContext {
+    @Value("${backup.keystore.path}")
+    private String keystorePath;
+
+    @Value("${backup.sec.data.path}")
+    private String secDataPath;
+
     @Bean
     public static PropertySourcesPlaceholderConfigurer propertyConfig() {
         return new PropertySourcesPlaceholderConfigurer();
@@ -56,5 +70,25 @@ public class BackupContext {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Bean
+    public KeyStoreContentExtractor keyStoreContentExtractor() throws IOException {
+        return new KeyStoreContentExtractor(new File(keystorePath), new File(secDataPath));
+    }
+
+    @Bean
+    public EncryptionProvider encryptionProvider() throws IOException {
+        return new EncryptionProvider(keyStoreContentExtractor());
+    }
+
+    @Bean
+    public DecryptionProvider decryptionProvider() throws IOException {
+        return new DecryptionProvider(keyStoreContentExtractor());
+    }
+
+    @Bean
+    public SignatureProvider signatureProvider() throws IOException {
+        return new SignatureProvider(keyStoreContentExtractor());
     }
 }
