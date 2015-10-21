@@ -8,7 +8,7 @@
  *       http://www.apache.org/licenses/LICENSE-2.0
  */
 
-package org.jgrades.rest.admin.common;
+package org.jgrades.rest.common;
 
 import io.swagger.annotations.ApiParam;
 import org.jgrades.data.api.service.crud.CrudPagingService;

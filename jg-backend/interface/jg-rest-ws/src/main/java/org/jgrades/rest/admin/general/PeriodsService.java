@@ -16,7 +16,7 @@ import org.jgrades.data.api.entities.SchoolDayPeriod;
 import org.jgrades.logging.JgLogger;
 import org.jgrades.logging.JgLoggerFactory;
 import org.jgrades.monitor.api.aop.CheckSystemDependencies;
-import org.jgrades.rest.admin.common.AbstractRestCrudService;
+import org.jgrades.rest.common.AbstractRestCrudService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

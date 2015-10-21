@@ -2,23 +2,16 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-
     <parent>
+        <artifactId>interface</artifactId>
         <groupId>org.jgrades.app</groupId>
-        <artifactId>jg-backend</artifactId>
         <version>0.4-DEV-SNAPSHOT</version>
     </parent>
+    <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>interface</artifactId>
+    <artifactId>jg-rest-ws-client</artifactId>
 
-    <packaging>pom</packaging>
+    <name>jGrades REST Web Services Client</name>
 
-    <name>jGrades External Interfaces for Back-end</name>
 
-    <modules>
-        <module>jg-rest-ws-api</module>
-        <module>jg-rest-ws</module>
-        <module>jg-rest-ws-client</module>
-    </modules>
 </project>

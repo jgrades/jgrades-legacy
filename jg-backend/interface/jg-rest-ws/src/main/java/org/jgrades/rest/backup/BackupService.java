@@ -16,7 +16,7 @@ import org.jgrades.backup.api.model.RestoreSettings;
 import org.jgrades.backup.api.service.BackupManagerService;
 import org.jgrades.logging.JgLogger;
 import org.jgrades.logging.JgLoggerFactory;
-import org.jgrades.rest.admin.common.AbstractRestCrudPagingService;
+import org.jgrades.rest.common.AbstractRestCrudPagingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

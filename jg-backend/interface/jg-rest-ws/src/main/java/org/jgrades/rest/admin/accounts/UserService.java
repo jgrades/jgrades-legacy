@@ -22,7 +22,7 @@ import org.jgrades.monitor.api.aop.CheckSystemDependencies;
 import org.jgrades.rest.PagingInfo;
 import org.jgrades.rest.admin.accounts.mass.MassCreatorDTO;
 import org.jgrades.rest.admin.accounts.mass.StudentDataCsvParser;
-import org.jgrades.rest.admin.common.AbstractRestCrudPagingService;
+import org.jgrades.rest.common.AbstractRestCrudPagingService;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

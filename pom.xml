@@ -8,12 +8,6 @@
     <artifactId>jgrades-all</artifactId>
     <version>0.4-DEV-SNAPSHOT</version>
 
-    <!-- .......................................... WARNING .......................................... -->
-    <!-- ............................................................................................. -->
-    <!-- PLEASE BUILD USING 'MVN CLEAN INSTALL' PROJECT IN JG-BOM SUBDIR BEFORE BUILDING THIS ARTIFACT -->
-    <!-- ............................................................................................. -->
-    <!-- ............................................................................................. -->
-
     <packaging>pom</packaging>
 
     <name>jGrades Application</name>
@@ -125,7 +119,7 @@
     </profiles>
 
     <modules>
-        <!-- BOM NEEDS TO BE BUILD AS FIRST SEPARATELY -->
+        <module>jg-bom</module>
         <module>jg-common</module>
         <module>jg-logging</module>
         <module>jg-backend</module>

@@ -6,15 +6,13 @@
 
     <groupId>org.jgrades</groupId>
     <artifactId>jg-bom</artifactId>
-    <version>${bom.version}</version>
+    <version>0.4-DEV-SNAPSHOT</version>
 
     <packaging>pom</packaging>
 
     <name>jGrades Bill of Materials</name>
 
     <properties>
-        <bom.version>0.4-DEV-SNAPSHOT</bom.version>
-
         <!-- COMMONS LIBS -->
         <guava.version>18.0</guava.version>
         <commons.lang3.version>3.4</commons.lang3.version>
