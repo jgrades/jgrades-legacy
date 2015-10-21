@@ -27,7 +27,7 @@ import java.util.Set;
 @Setter
 @ToString(exclude = "division")
 public class SubGroup implements Serializable {
-    public static final String FULL_CLASSGROUP_SUBGROUP_NAME = "_CLASSGROUP";
+    public static final String FULL_CLASSGROUP_SUBGROUP_NAME = "_MAIN_SUBGROUP";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

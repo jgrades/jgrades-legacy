@@ -12,7 +12,7 @@ package org.jgrades.admin.api.structures;
 
 import org.jgrades.data.api.entities.ClassGroup;
 import org.jgrades.data.api.entities.Division;
-import org.jgrades.data.api.entities.roles.StudentDetails;
+import org.jgrades.data.api.entities.User;
 import org.jgrades.data.api.service.crud.CrudPagingService;
 
 import java.util.List;
@@ -21,7 +21,7 @@ import java.util.Set;
 public interface ClassGroupMgntService extends CrudPagingService<ClassGroup, Long> {
     List<Division> getDivisions(ClassGroup classGroup);
 
-    Set<StudentDetails> getStudents(ClassGroup classGroup);
+    Set<User> getStudents(ClassGroup classGroup);
 
-    void addStudent(ClassGroup classGroup, StudentDetails student);
+    void setStudents(ClassGroup classGroup, Set<User> students);
 }

@@ -11,6 +11,7 @@
 package org.jgrades.data.api.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.collect.Lists;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,7 +27,7 @@ import java.util.List;
 @Setter
 @ToString(exclude = "classGroup")
 public class Division implements Serializable {
-    public static final String FULL_CLASSGROUP_DIVISION_NAME = "_DEFAULT_DIVISION";
+    public static final String FULL_CLASSGROUP_DIVISION_NAME = "_MAIN_DIVISION";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,7 +39,11 @@ public class Division implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CLASS_GROUP_ID", nullable = false)
     private ClassGroup classGroup;
-
     @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL, CascadeType.REMOVE}, mappedBy = "division")
     private List<SubGroup> subGroups = Lists.newArrayList();
+
+    @JsonProperty
+    public void setClassGroup(ClassGroup classGroup) {
+        this.classGroup = classGroup;
+    }
 }

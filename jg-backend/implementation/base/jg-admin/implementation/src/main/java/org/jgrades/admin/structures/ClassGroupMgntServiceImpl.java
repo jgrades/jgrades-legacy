@@ -17,7 +17,7 @@ import org.jgrades.data.api.dao.structures.ClassGroupRepository;
 import org.jgrades.data.api.entities.ClassGroup;
 import org.jgrades.data.api.entities.Division;
 import org.jgrades.data.api.entities.SubGroup;
-import org.jgrades.data.api.entities.roles.StudentDetails;
+import org.jgrades.data.api.entities.User;
 import org.jgrades.data.api.service.crud.AbstractPagingMgntService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -62,13 +62,12 @@ public class ClassGroupMgntServiceImpl extends AbstractPagingMgntService<ClassGr
     }
 
     @Override
-    @Transactional("mainTransactionManager")//TODO
-    public Set<StudentDetails> getStudents(ClassGroup classGroup) {
+    public Set<User> getStudents(ClassGroup classGroup) {
         throw new UnsupportedOperationException();
     }
 
-    @Override//TODO
-    public void addStudent(ClassGroup classGroup, StudentDetails student) {
+    @Override
+    public void setStudents(ClassGroup classGroup, Set<User> students) {
         throw new UnsupportedOperationException();
     }
 }
