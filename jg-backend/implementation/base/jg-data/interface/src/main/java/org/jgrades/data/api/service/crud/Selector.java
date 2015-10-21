@@ -8,12 +8,14 @@
  *       http://www.apache.org/licenses/LICENSE-2.0
  */
 
-package org.jgrades.admin.api.common;
-
-import org.springframework.data.jpa.domain.Specification;
+package org.jgrades.data.api.service.crud;
 
 import java.util.List;
 
-public interface SpecificationSelector<T, ID> extends Selector<T, ID> { //NOSONAR
-    List<T> get(Specification<T> specification);
+public interface Selector<T, ID> { //NOSONAR
+    List<T> getAll();
+
+    T getWithId(ID id);
+
+    List<T> getWithIds(List<ID> ids);
 }

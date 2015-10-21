@@ -10,8 +10,8 @@
 
 package org.jgrades.admin.api.structures;
 
-import org.jgrades.admin.api.common.CrudPagingService;
 import org.jgrades.data.api.entities.AcademicYear;
+import org.jgrades.data.api.service.crud.CrudPagingService;
 
 public interface AcademicYearMgntService extends CrudPagingService<AcademicYear, Long> {
     AcademicYear getActiveAcademicYear();

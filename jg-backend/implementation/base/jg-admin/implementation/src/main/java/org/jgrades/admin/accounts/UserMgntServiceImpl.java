@@ -11,10 +11,10 @@
 package org.jgrades.admin.accounts;
 
 import org.jgrades.admin.api.accounts.UserMgntService;
-import org.jgrades.admin.common.AbstractPagingMgntService;
 import org.jgrades.data.api.dao.accounts.UserRepository;
 import org.jgrades.data.api.entities.User;
 import org.jgrades.data.api.model.JgRole;
+import org.jgrades.data.api.service.crud.AbstractPagingMgntService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;

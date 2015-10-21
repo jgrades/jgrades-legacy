@@ -10,7 +10,7 @@
 
 package org.jgrades.rest.admin.common;
 
-import org.jgrades.admin.api.common.CrudService;
+import org.jgrades.data.api.service.crud.CrudService;
 import org.jgrades.logging.JgLogger;
 import org.jgrades.monitor.api.aop.CheckSystemDependencies;
 import org.springframework.http.HttpStatus;

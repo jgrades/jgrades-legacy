@@ -20,21 +20,21 @@ import org.jgrades.backup.api.service.BackupManagerService;
 import org.jgrades.backup.creator.BackupDispatcher;
 import org.jgrades.backup.manager.DirectoryRefreshRunner;
 import org.jgrades.backup.restore.RestoringPerformer;
+import org.jgrades.data.api.service.crud.AbstractPagingMgntService;
 import org.jgrades.logging.JgLogger;
 import org.jgrades.logging.JgLoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
 @Service
-public class BackupManagerServiceImpl implements BackupManagerService {
+public class BackupManagerServiceImpl extends AbstractPagingMgntService<Backup, Long, BackupRepository>
+        implements BackupManagerService {
     private static final JgLogger LOGGER = JgLoggerFactory.getLogger(BackupManagerServiceImpl.class);
-
-    @Autowired
-    private BackupRepository repository;
 
     @Autowired
     private BackupDispatcher dispatcher;
@@ -45,19 +45,14 @@ public class BackupManagerServiceImpl implements BackupManagerService {
     @Autowired
     private DirectoryRefreshRunner directoryRefreshRunner;
 
+    @Autowired
+    public BackupManagerServiceImpl(BackupRepository repository) {
+        super(repository);
+    }
+
     @Override
     public void makeNow() {
         dispatcher.reqestNew();
-    }
-
-    @Override
-    public Backup getWithId(Long id) {
-        return repository.findOne(id);
-    }
-
-    @Override
-    public List<Backup> getAll() {
-        return Lists.newArrayList(repository.findAll());
     }
 
     @Override
@@ -71,10 +66,36 @@ public class BackupManagerServiceImpl implements BackupManagerService {
     }
 
     @Override
-    public void delete(Backup backup) {
+    public void remove(Backup backup) {
+        removeBackupFromDisk(backup.getId());
+        super.remove(backup);
+    }
+
+    @Override
+    public void remove(List<Backup> backups) {
+        for (Backup backup : backups) {
+            removeBackupFromDisk(backup.getId());
+        }
+        super.remove(backups);
+    }
+
+    @Override
+    public void removeId(Long id) {
+        removeBackupFromDisk(id);
+        super.removeId(id);
+    }
+
+    @Override
+    @Transactional("mainTransactionManager")
+    public void removeIds(List<Long> ids) {
+        ids.forEach(this::removeBackupFromDisk);
+        super.removeIds(ids);
+    }
+
+    private void removeBackupFromDisk(Long id) {
+        Backup backup = repository.findOne(id);
         try {
             FileUtils.deleteDirectory(new File(backup.getPath()));
-            repository.delete(backup);
         } catch (IOException e) {
             LOGGER.warn("Unable to remove backup directory: {}", backup.getPath(), e);
         }

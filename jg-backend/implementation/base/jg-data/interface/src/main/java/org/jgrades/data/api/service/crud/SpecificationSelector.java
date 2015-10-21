@@ -8,11 +8,12 @@
  *       http://www.apache.org/licenses/LICENSE-2.0
  */
 
-package org.jgrades.admin.api.common;
+package org.jgrades.data.api.service.crud;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 
-public interface PagingSelector<T, ID> extends Selector<T, ID> { //NOSONAR
-    Page<T> getPage(Pageable pageable);
+import java.util.List;
+
+public interface SpecificationSelector<T, ID> extends Selector<T, ID> { //NOSONAR
+    List<T> get(Specification<T> specification);
 }

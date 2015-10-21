@@ -8,10 +8,9 @@
  *       http://www.apache.org/licenses/LICENSE-2.0
  */
 
-package org.jgrades.admin.common;
+package org.jgrades.data.api.service.crud;
 
 import com.google.common.collect.Lists;
-import org.jgrades.admin.api.common.CrudService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;

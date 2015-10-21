@@ -8,7 +8,7 @@
  *       http://www.apache.org/licenses/LICENSE-2.0
  */
 
-package org.jgrades.admin.api.common;
+package org.jgrades.data.api.service.crud;
 
 public interface CrudService<T, ID> extends Manager<T, ID>, Selector<T, ID> { //NOSONAR
 }

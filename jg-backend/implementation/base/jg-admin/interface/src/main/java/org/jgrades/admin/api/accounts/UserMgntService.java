@@ -10,10 +10,10 @@
 
 package org.jgrades.admin.api.accounts;
 
-import org.jgrades.admin.api.common.CrudPagingService;
-import org.jgrades.admin.api.common.PagingSpecificationSelector;
 import org.jgrades.data.api.entities.User;
 import org.jgrades.data.api.model.JgRole;
+import org.jgrades.data.api.service.crud.CrudPagingService;
+import org.jgrades.data.api.service.crud.PagingSpecificationSelector;
 
 import java.util.Set;
 

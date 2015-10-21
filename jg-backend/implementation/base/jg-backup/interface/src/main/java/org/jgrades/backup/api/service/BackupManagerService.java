@@ -13,21 +13,21 @@ package org.jgrades.backup.api.service;
 import org.jgrades.backup.api.entities.Backup;
 import org.jgrades.backup.api.entities.BackupEvent;
 import org.jgrades.backup.api.model.RestoreSettings;
+import org.jgrades.data.api.service.crud.CrudPagingService;
 
 import java.util.List;
 
-public interface BackupManagerService {
+public interface BackupManagerService extends CrudPagingService<Backup, Long> {
+    @Deprecated
+    default void saveOrUpdate(Backup backup) {
+        throw new IllegalStateException("You should use makeNow method for creating new backup");
+    }
+
     void makeNow();
-
-    Backup getWithId(Long id);
-
-    List<Backup> getAll();
 
     void refreshBackupDirectory();
 
     void restore(Backup backup, RestoreSettings restoreSettings);
-
-    void delete(Backup backup);
 
     void interruptMaking(Backup backup);
 

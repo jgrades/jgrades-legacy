@@ -40,7 +40,7 @@ public class AcademicYearService extends AbstractRestCrudPagingService<AcademicY
         return crudService.getActiveAcademicYear();
     }
 
-    @RequestMapping(value = "/active/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "/{id}/active", method = RequestMethod.POST)
     public ResponseEntity<Object> setActive(@PathVariable Long id) {
         getLogger().trace("Setting as active an academic year with id {}", id);
         crudService.setActiveAcademicYear(crudService.getWithId(id));

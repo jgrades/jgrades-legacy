@@ -8,18 +8,8 @@
  *       http://www.apache.org/licenses/LICENSE-2.0
  */
 
-package org.jgrades.admin.api.common;
+package org.jgrades.data.api.service.crud;
 
-import java.util.List;
 
-public interface Manager<T, ID> { //NOSONAR
-    void saveOrUpdate(T obj);
-
-    void remove(T obj);
-
-    void remove(List<T> objs);
-
-    void removeId(ID id);
-
-    void removeIds(List<ID> ids);
+public interface CrudPagingService<T, ID> extends CrudService<T, ID>, PagingSelector<T, ID> { //NOSONAR
 }

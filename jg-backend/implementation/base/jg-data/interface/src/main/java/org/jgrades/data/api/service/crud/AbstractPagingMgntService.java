@@ -8,9 +8,8 @@
  *       http://www.apache.org/licenses/LICENSE-2.0
  */
 
-package org.jgrades.admin.common;
+package org.jgrades.data.api.service.crud;
 
-import org.jgrades.admin.api.common.CrudPagingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

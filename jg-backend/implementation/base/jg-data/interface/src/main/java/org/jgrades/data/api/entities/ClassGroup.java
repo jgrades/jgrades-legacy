@@ -30,13 +30,13 @@ public class ClassGroup implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumns({
-            @JoinColumn(name = "SEMESTER_ID", referencedColumnName = "SEMESTER_ID"),
-            @JoinColumn(name = "YEAR_LEVEL_ID", referencedColumnName = "YEAR_LEVEL_ID")
-    })
-    private SemesterYearLevel semesterYearLevel;
+    @JoinColumn(name = "SEMESTER_ID", nullable = false)
+    private Semester semester;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "YEAR_LEVEL_ID", nullable = false)
+    private YearLevel yearLevel;
 
     private String name;
 

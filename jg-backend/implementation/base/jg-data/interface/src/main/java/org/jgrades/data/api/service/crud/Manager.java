@@ -8,14 +8,18 @@
  *       http://www.apache.org/licenses/LICENSE-2.0
  */
 
-package org.jgrades.admin.api.common;
+package org.jgrades.data.api.service.crud;
 
 import java.util.List;
 
-public interface Selector<T, ID> { //NOSONAR
-    List<T> getAll();
+public interface Manager<T, ID> { //NOSONAR
+    void saveOrUpdate(T obj);
 
-    T getWithId(ID id);
+    void remove(T obj);
 
-    List<T> getWithIds(List<ID> ids);
+    void remove(List<T> objs);
+
+    void removeId(ID id);
+
+    void removeIds(List<ID> ids);
 }

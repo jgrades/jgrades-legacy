@@ -10,8 +10,8 @@
 
 package org.jgrades.admin.api.structures;
 
-import org.jgrades.admin.api.common.CrudPagingService;
 import org.jgrades.data.api.entities.Division;
+import org.jgrades.data.api.service.crud.CrudPagingService;
 
 public interface DivisionMgntService extends CrudPagingService<Division, Long> {
 }

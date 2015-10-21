@@ -11,9 +11,9 @@
 package org.jgrades.admin.structures;
 
 import org.jgrades.admin.api.structures.DivisionMgntService;
-import org.jgrades.admin.common.AbstractPagingMgntService;
 import org.jgrades.data.api.dao.structures.DivisionRepository;
 import org.jgrades.data.api.entities.Division;
+import org.jgrades.data.api.service.crud.AbstractPagingMgntService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

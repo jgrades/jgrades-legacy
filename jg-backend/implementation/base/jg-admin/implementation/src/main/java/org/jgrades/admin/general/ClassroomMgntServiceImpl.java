@@ -11,9 +11,9 @@
 package org.jgrades.admin.general;
 
 import org.jgrades.admin.api.general.ClassroomMgntService;
-import org.jgrades.admin.common.AbstractPagingMgntService;
 import org.jgrades.data.api.dao.ClassroomRepository;
 import org.jgrades.data.api.entities.Classroom;
+import org.jgrades.data.api.service.crud.AbstractPagingMgntService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

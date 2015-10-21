@@ -10,9 +10,9 @@
 
 package org.jgrades.admin.api.general;
 
-import org.jgrades.admin.api.common.CrudService;
 import org.jgrades.admin.api.model.PeriodsGeneratorSettings;
 import org.jgrades.data.api.entities.SchoolDayPeriod;
+import org.jgrades.data.api.service.crud.CrudService;
 
 import java.util.List;
 

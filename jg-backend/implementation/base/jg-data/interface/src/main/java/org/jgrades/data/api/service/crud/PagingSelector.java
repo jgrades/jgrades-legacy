@@ -8,10 +8,11 @@
  *       http://www.apache.org/licenses/LICENSE-2.0
  */
 
-package org.jgrades.admin.api.structures;
+package org.jgrades.data.api.service.crud;
 
-import org.jgrades.data.api.entities.SubGroup;
-import org.jgrades.data.api.service.crud.CrudPagingService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
-public interface SubGroupMgntService extends CrudPagingService<SubGroup, Long> {
+public interface PagingSelector<T, ID> extends Selector<T, ID> { //NOSONAR
+    Page<T> getPage(Pageable pageable);
 }

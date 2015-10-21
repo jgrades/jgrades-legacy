@@ -46,8 +46,6 @@ public class PojosTest {
             SchoolDay.class,
             SchoolDayPeriod.class,
             Semester.class,
-            SemesterYearLevel.class,
-            SemesterYearLevelId.class,
             StudentDetails.class,
             SubGroup.class,
             Subject.class,

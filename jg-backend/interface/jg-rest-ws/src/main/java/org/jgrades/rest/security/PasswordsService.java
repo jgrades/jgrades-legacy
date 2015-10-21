@@ -11,15 +11,20 @@
 package org.jgrades.rest.security;
 
 import org.jgrades.data.api.dao.accounts.UserRepository;
+import org.jgrades.data.api.model.JgRole;
 import org.jgrades.logging.JgLogger;
 import org.jgrades.logging.JgLoggerFactory;
 import org.jgrades.monitor.api.aop.CheckSystemDependencies;
+import org.jgrades.security.api.entities.PasswordPolicy;
 import org.jgrades.security.api.service.PasswordMgntService;
+import org.jgrades.security.api.service.PasswordPolicyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Set;
 
 @RestController
 @RequestMapping(value = "/password")
@@ -31,6 +36,9 @@ public class PasswordsService {
     private PasswordMgntService passwordMgntService;
 
     @Autowired
+    private PasswordPolicyService passwordPolicyService;
+
+    @Autowired
     private UserRepository userRepository;
 
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -40,9 +48,24 @@ public class PasswordsService {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/expired/{id}", method = RequestMethod.GET)
-    public boolean isPasswordExpired(@PathVariable Long id) {
-        LOGGER.trace("Checking is password expired for user with id {}", id);
-        return passwordMgntService.isPasswordExpired(userRepository.findOne(id));
+    @RequestMapping(value = "/policy/{role}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public PasswordPolicy getForRole(@PathVariable JgRole role) {
+        LOGGER.trace("Get password policy for role {}", role);
+        return passwordPolicyService.getForRole(role);
+    }
+
+    @RequestMapping(value = "/policy", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public Set<PasswordPolicy> getAll() {
+        LOGGER.trace("Getting password policies for all roles");
+        return passwordPolicyService.getPasswordPolicies();
+    }
+
+    @RequestMapping(value = "/policy", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Object> setForRole(@RequestBody PasswordPolicy policy) {
+        LOGGER.trace("Setting new password policy: {}", policy);
+        passwordPolicyService.putPasswordPolicy(policy);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

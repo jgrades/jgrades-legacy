@@ -10,10 +10,10 @@
 
 package org.jgrades.admin.api.structures;
 
-import org.jgrades.admin.api.common.CrudPagingService;
 import org.jgrades.data.api.entities.ClassGroup;
 import org.jgrades.data.api.entities.Division;
 import org.jgrades.data.api.entities.roles.StudentDetails;
+import org.jgrades.data.api.service.crud.CrudPagingService;
 
 import java.util.List;
 import java.util.Set;

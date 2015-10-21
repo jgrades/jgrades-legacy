@@ -11,7 +11,7 @@
 package org.jgrades.rest.admin.common;
 
 import io.swagger.annotations.ApiParam;
-import org.jgrades.admin.api.common.CrudPagingService;
+import org.jgrades.data.api.service.crud.CrudPagingService;
 import org.jgrades.monitor.api.aop.CheckSystemDependencies;
 import org.jgrades.rest.PagingInfo;
 import org.springframework.beans.factory.annotation.Value;

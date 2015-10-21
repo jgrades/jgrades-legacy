@@ -11,9 +11,9 @@
 package org.jgrades.backup.api.dao;
 
 import org.jgrades.backup.api.entities.Backup;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface BackupRepository extends CrudRepository<Backup, Long> {
+public interface BackupRepository extends PagingAndSortingRepository<Backup, Long> {
 }

@@ -10,8 +10,8 @@
 
 package org.jgrades.admin.api.general;
 
-import org.jgrades.admin.api.common.CrudPagingService;
 import org.jgrades.data.api.entities.Subject;
+import org.jgrades.data.api.service.crud.CrudPagingService;
 
 public interface SubjectsMgntService extends CrudPagingService<Subject, Long> {
 

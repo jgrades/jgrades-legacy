@@ -11,9 +11,9 @@
 package org.jgrades.admin.structures;
 
 import org.jgrades.admin.api.structures.AcademicYearMgntService;
-import org.jgrades.admin.common.AbstractPagingMgntService;
 import org.jgrades.data.api.dao.structures.AcademicYearRepository;
 import org.jgrades.data.api.entities.AcademicYear;
+import org.jgrades.data.api.service.crud.AbstractPagingMgntService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

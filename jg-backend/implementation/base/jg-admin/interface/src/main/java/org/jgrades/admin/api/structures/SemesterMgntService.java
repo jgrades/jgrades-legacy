@@ -10,8 +10,8 @@
 
 package org.jgrades.admin.api.structures;
 
-import org.jgrades.admin.api.common.CrudPagingService;
 import org.jgrades.data.api.entities.Semester;
+import org.jgrades.data.api.service.crud.CrudPagingService;
 
 public interface SemesterMgntService extends CrudPagingService<Semester, Long> {
     Semester createNewByMigration(Semester previousSemester, String newSemesterName);
