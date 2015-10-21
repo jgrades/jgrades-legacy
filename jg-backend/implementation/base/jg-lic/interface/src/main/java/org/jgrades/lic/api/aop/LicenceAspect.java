@@ -26,7 +26,7 @@ class LicenceAspect {
     private LicenceCheckingService licenceCheckingService;
 
     @Pointcut(value = "execution(* *(..))")
-    private void anyMethod() {
+    private void anyMethod() { //NOSONAR
         //empty method for aspectj purposes
     }
 

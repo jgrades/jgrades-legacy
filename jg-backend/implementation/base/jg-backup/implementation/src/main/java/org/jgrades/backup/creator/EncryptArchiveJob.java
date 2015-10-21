@@ -49,52 +49,80 @@ public class EncryptArchiveJob implements Job {
     @Autowired
     private BackupEventRepository backupEventRepository;
 
+    private Backup backup;
+
+    private SchedulerContext schedulerContext;
+
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
-        SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
-        Backup backup = null;
-        SchedulerContext schedulerContext = null;
+        init(context);
+        BackupEvent event = getNewEvent("Backup encryption of internal files");
         try {
-            schedulerContext = context.getScheduler().getContext();
-            backup = (Backup) schedulerContext.get("backup");
-
-            saveOkEvent(backup, "Encryption of backup of internal files started");
-            File internalZip = new File(internalFilesDirectory + File.separator + "internal.bak.tmp");
-            byte[] encryptBytes = encryptionProvider.encrypt(FileUtils.readFileToByteArray(internalZip));
-            File encryptInternalZip = new File(backup.getPath() + File.separator + "jg-internal-" + backup.getName() + ".bak");
-            FileUtils.writeByteArrayToFile(encryptInternalZip, encryptBytes);
-            FileUtils.deleteQuietly(internalZip);
-            byte[] signature = signatureProvider.sign(encryptBytes);
-            File encryptInternalZipSignature = new File(encryptInternalZip.getAbsolutePath() + ".sign");
-            FileUtils.writeByteArrayToFile(encryptInternalZipSignature, signature);
-            saveOkEvent(backup, "Encryption of backup of internal files finished correctly");
-        } catch (IOException | SchedulerException e) {
+            byte[] encryptBytes = encryptInternalZip();
+            File encryptedInternalZip = saveEncryptedZip(encryptBytes);
+            saveSignatureOfZip(encryptedInternalZip);
+            updateEventType(event, BackupEventType.FINISHED);
+        } catch (Exception e) {
             LOGGER.error("Error during creating Backup of internal files. Process will be continued", e);
             schedulerContext.put("backupWarningFlag", true);
-            setWarnDetails(backup);
+            setWarnDetails(event);
         }
     }
 
-    private void saveOkEvent(Backup backup, String message) {
+    private void init(JobExecutionContext context) throws JobExecutionException {
+        SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
+        try {
+            schedulerContext = context.getScheduler().getContext();
+            backup = (Backup) schedulerContext.get("backup");
+        } catch (SchedulerException e) {
+            LOGGER.error("Error during initialize EncryptArchiveJob. Process stopped", e);
+            throw new JobExecutionException(e);
+        }
+    }
+
+
+    private byte[] encryptInternalZip() throws IOException {
+        File internalZip = new File(internalFilesDirectory + File.separator + "internal.bak.tmp");
+        byte[] encryptBytes = encryptionProvider.encrypt(FileUtils.readFileToByteArray(internalZip));
+        FileUtils.deleteQuietly(internalZip);
+        return encryptBytes;
+    }
+
+    private File saveEncryptedZip(byte[] encryptBytes) throws IOException {
+        String encryptedZipName = backup.getPath() + File.separator + "jg-internal-" + backup.getName() + ".bak";
+        File encryptInternalZip = new File(encryptedZipName);
+        FileUtils.writeByteArrayToFile(encryptInternalZip, encryptBytes);
+        return encryptInternalZip;
+    }
+
+    private void saveSignatureOfZip(File encryptInternalZip) throws IOException {
+        byte[] signature = signatureProvider.sign(FileUtils.readFileToByteArray(encryptInternalZip));
+        File encryptInternalZipSignature = new File(encryptInternalZip.getAbsolutePath() + ".sign");
+        FileUtils.writeByteArrayToFile(encryptInternalZipSignature, signature);
+    }
+
+    private BackupEvent getNewEvent(String message) {
         BackupEvent event = new BackupEvent();
         event.setEventType(BackupEventType.ONGOING);
         event.setSeverity(BackupEventSeverity.INFO);
         event.setOperation(BackupOperation.BACKUPING);
-        event.setTimestamp(DateTime.now());
+        event.setStartTime(DateTime.now());
         event.setBackup(backup);
         event.setMessage(message);
         backupEventRepository.save(event);
+        return event;
     }
 
-    private void setWarnDetails(Backup backup) {
-        BackupEvent event = new BackupEvent();
-        event.setEventType(BackupEventType.ONGOING);
+    private void updateEventType(BackupEvent event, BackupEventType backupEventType) {
+        event.setEventType(backupEventType);
+        event.setEndTime(DateTime.now());
+        backupEventRepository.save(event);
+    }
+
+    private void setWarnDetails(BackupEvent event) {
+        event.setEventType(BackupEventType.FINISHED);
         event.setSeverity(BackupEventSeverity.WARNING);
-        event.setOperation(BackupOperation.BACKUPING);
-        event.setTimestamp(DateTime.now());
-        event.setBackup(backup);
-        event.setMessage("Error during encryption backup of internal files. Process will be continued. " +
-                "For more details please check application logs");
+        event.setEndTime(DateTime.now());
         backupEventRepository.save(event);
     }
 }

@@ -54,22 +54,17 @@ public class BackupContext {
     }
 
     @Bean(name = "backupScheduler")
-    public Scheduler backupScheduler() {
+    public Scheduler backupScheduler() throws SchedulerException {
         SchedulerFactory schedulerFactory = new StdSchedulerFactory();
-        try {
-            Scheduler scheduler = schedulerFactory.getScheduler();
-            JobChainingJobListener jobChain = new JobChainingJobListener("ChainingJobListener");
-            jobChain.addJobChainLink(jobKey("StartBackupJob"), jobKey("ArchiveInternalFilesJob"));
-            jobChain.addJobChainLink(jobKey("ArchiveInternalFilesJob"), jobKey("EncryptArchiveJob"));
-            jobChain.addJobChainLink(jobKey("EncryptArchiveJob"), jobKey("DatabaseBackupJob"));
-            jobChain.addJobChainLink(jobKey("DatabaseBackupJob"), jobKey("FinishBackupJob"));
-            scheduler.getListenerManager().addJobListener(jobChain);
-            scheduler.start();
-            return scheduler;
-        } catch (SchedulerException e) {
-            e.printStackTrace();
-        }
-        return null;
+        Scheduler scheduler = schedulerFactory.getScheduler();
+        JobChainingJobListener jobChain = new JobChainingJobListener("ChainingJobListener");
+        jobChain.addJobChainLink(jobKey("StartBackupJob"), jobKey("ArchiveInternalFilesJob"));
+        jobChain.addJobChainLink(jobKey("ArchiveInternalFilesJob"), jobKey("EncryptArchiveJob"));
+        jobChain.addJobChainLink(jobKey("EncryptArchiveJob"), jobKey("DatabaseBackupJob"));
+        jobChain.addJobChainLink(jobKey("DatabaseBackupJob"), jobKey("FinishBackupJob"));
+        scheduler.getListenerManager().addJobListener(jobChain);
+        scheduler.start();
+        return scheduler;
     }
 
     @Bean

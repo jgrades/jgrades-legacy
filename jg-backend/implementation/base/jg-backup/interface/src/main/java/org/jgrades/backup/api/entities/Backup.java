@@ -41,6 +41,7 @@ public class Backup implements Serializable {
     @Type(type = CustomType.JODA_DATE_TIME)
     private DateTime scheduledDateTime;
 
+    @JsonIgnore
     private String path;
 
     @JsonIgnore

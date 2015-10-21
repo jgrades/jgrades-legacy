@@ -11,6 +11,8 @@
 package org.jgrades.security.utils;
 
 import org.apache.commons.io.FileUtils;
+import org.jgrades.logging.JgLogger;
+import org.jgrades.logging.JgLoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,13 +23,15 @@ import java.util.Optional;
 import static org.jgrades.security.utils.CryptoDataConstants.SIGNATURE_PROVIDER_INTERFACE;
 
 public class SignatureProvider {
+    private static final JgLogger LOGGER = JgLoggerFactory.getLogger(SignatureProvider.class);
+
     private final KeyStoreContentExtractor extractor;
 
     public SignatureProvider(KeyStoreContentExtractor extractor) {
         this.extractor = extractor;
     }
 
-    public byte[] sign(byte[] bytes) throws CryptographyException {
+    public byte[] sign(byte[] bytes) {
         try {
             if (!Optional.ofNullable(bytes).isPresent()) {
                 throw new IllegalArgumentException();
@@ -53,6 +57,7 @@ public class SignatureProvider {
 
             return signature.verify(FileUtils.readFileToByteArray(signatureFile));
         } catch (SignatureException e) {
+            LOGGER.debug("Signature verification failed", e);
             return false;
         } catch (NoSuchAlgorithmException | InvalidKeyException | IOException e) {
             throw new CryptographyException(e);

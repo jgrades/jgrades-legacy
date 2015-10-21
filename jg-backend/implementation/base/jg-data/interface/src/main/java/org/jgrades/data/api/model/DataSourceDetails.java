@@ -15,9 +15,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 @Getter
 @Setter
 public class DataSourceDetails {
+    private static Pattern PATTERN = Pattern.compile("(.+):(\\d+)\\/(.+)");
+
     private String url;
 
     private String username;
@@ -37,5 +42,23 @@ public class DataSourceDetails {
 
     public String connectionUrl() {
         return "jdbc:postgresql://" + getUrl();
+    }
+
+    public String host() {
+        Matcher matcher = PATTERN.matcher(url);
+        matcher.find();
+        return matcher.group(1);
+    }
+
+    public String port() {
+        Matcher matcher = PATTERN.matcher(url);
+        matcher.find();
+        return matcher.group(2);
+    }
+
+    public String databaseName() {
+        Matcher matcher = PATTERN.matcher(url);
+        matcher.find();
+        return matcher.group(3);
     }
 }

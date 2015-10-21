@@ -39,51 +39,74 @@ public class ArchiveInternalFilesJob implements Job {
     @Autowired
     private BackupEventRepository backupEventRepository;
 
+    private Backup backup;
+
+    private SchedulerContext schedulerContext;
+
+    private ZipUtils zipUtils = new ZipUtils();
+
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
+        init(context);
+        backupInternalFiles();
+        backupLogFiles();
+    }
+
+    private void init(JobExecutionContext context) throws JobExecutionException {
         SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
-        Backup backup = null;
-        SchedulerContext schedulerContext = null;
         try {
             schedulerContext = context.getScheduler().getContext();
             backup = (Backup) schedulerContext.get("backup");
-
-            ZipUtil zipUtil = new ZipUtil();
-            saveOkEvent(backup, "Backup of internal files started");
-            zipUtil.zipFiles(internalFilesDirectory, internalFilesDirectory + File.separator + "internal.bak.tmp");
-            saveOkEvent(backup, "Backup of internal files finished correctly");
-            saveOkEvent(backup, "Backup of log files started");
-            zipUtil.zipFiles(logsFilesDirectory, backup.getPath() + File.separator + "jg-logs-" + backup.getName() + ".zip");
-            saveOkEvent(backup, "Backup of log files finished correctly");
-        } catch (Exception e) {
-            LOGGER.error("Error during creating Backup of internal files. Process will be continued", e);
-            schedulerContext.put("backupWarningFlag", true);
-            setWarnDetails(backup);
+        } catch (SchedulerException e) {
+            LOGGER.error("Error during initialize ArchiveInternalFilesJob. Process stopped", e);
+            throw new JobExecutionException(e);
         }
     }
 
-    private void saveOkEvent(Backup backup, String message) {
+    private void backupInternalFiles() {
+        String internalFilesZipName = internalFilesDirectory + File.separator + "internal.bak.tmp";
+        backupAndZip("Backup of internal files", internalFilesDirectory, internalFilesZipName);
+    }
+
+    private void backupLogFiles() {
+        String logsFilesZipName = backup.getPath() + File.separator + "jg-logs-" + backup.getName() + ".zip";
+        backupAndZip("Backup of log files", logsFilesDirectory, logsFilesZipName);
+    }
+
+    private void backupAndZip(String operation, String destDirectory, String destZipFile) {
+        BackupEvent event = getNewEvent(operation);
+        try {
+            zipUtils.zipFiles(destDirectory, destZipFile);
+            updateEventType(event, BackupEventType.FINISHED);
+        } catch (Exception e) {
+            LOGGER.error("Error during operation: {}. Process will be continued", operation, e);
+            schedulerContext.put("backupWarningFlag", true);
+            setWarnDetails(event);
+        }
+    }
+
+    private BackupEvent getNewEvent(String message) {
         BackupEvent event = new BackupEvent();
         event.setEventType(BackupEventType.ONGOING);
         event.setSeverity(BackupEventSeverity.INFO);
         event.setOperation(BackupOperation.BACKUPING);
-        event.setTimestamp(DateTime.now());
+        event.setStartTime(DateTime.now());
         event.setBackup(backup);
         event.setMessage(message);
         backupEventRepository.save(event);
+        return event;
     }
 
-    private void setWarnDetails(Backup backup) {
-        BackupEvent event = new BackupEvent();
-        event.setEventType(BackupEventType.ONGOING);
-        event.setSeverity(BackupEventSeverity.WARNING);
-        event.setOperation(BackupOperation.BACKUPING);
-        event.setTimestamp(DateTime.now());
-        event.setBackup(backup);
-        event.setMessage("Error during creating Backup of internal/logs files. Process will be continued. " +
-                "For more details please check application logs");
+    private void updateEventType(BackupEvent event, BackupEventType backupEventType) {
+        event.setEventType(backupEventType);
+        event.setEndTime(DateTime.now());
         backupEventRepository.save(event);
     }
 
-
+    private void setWarnDetails(BackupEvent event) {
+        event.setEventType(BackupEventType.FINISHED);
+        event.setSeverity(BackupEventSeverity.WARNING);
+        event.setEndTime(DateTime.now());
+        backupEventRepository.save(event);
+    }
 }

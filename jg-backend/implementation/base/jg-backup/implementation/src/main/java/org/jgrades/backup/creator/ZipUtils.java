@@ -10,23 +10,21 @@
 
 package org.jgrades.backup.creator;
 
+import org.apache.commons.compress.compressors.CompressorException;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-public class ZipUtil {
+public class ZipUtils {
 
-    public boolean zipFiles(String srcFolder, String destZipFile) {
-        boolean result = false;
+    public void zipFiles(String srcFolder, String destZipFile) throws CompressorException {
         try {
             zipFolder(srcFolder, destZipFile);
-            result = true;
         } catch (Exception e) {
-            System.out.println("Some Errors happned during the zip process");
-        } finally {
-            return result;
+            throw new CompressorException("Zipping files failed", e);
         }
     }
 
@@ -46,7 +44,7 @@ public class ZipUtil {
             return;
         }
 
-        if (flag == true) {
+        if (flag) {
             zip.putNextEntry(new ZipEntry(path + "/" + folder.getName() + "/"));
         } else {
             if (folder.isDirectory()) {
@@ -59,6 +57,7 @@ public class ZipUtil {
                 while ((len = in.read(buf)) > 0) {
                     zip.write(buf, 0, len);
                 }
+                in.close();
             }
         }
     }

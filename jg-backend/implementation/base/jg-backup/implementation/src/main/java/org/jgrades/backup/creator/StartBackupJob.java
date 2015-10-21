@@ -62,36 +62,59 @@ public class StartBackupJob implements Job {
         String backupName = getBackupName(scheduledDateTime);
         File backupInstanceDir = new File(backupDirectory + File.separator + backupName);
 
+        Backup backup = saveBackupMetadataToDb(scheduledDateTime, backupName, backupInstanceDir);
+        BackupEvent event = saveBackupEventMetadataToDb(backup);
+
+        tryToCreateBackupFolder(backupInstanceDir, backup, event);
+
+        insertBackupToSchedulerContext(context, backup);
+    }
+
+    private Backup saveBackupMetadataToDb(DateTime scheduledDateTime, String backupName, File backupInstanceDir) {
         Backup backup = new Backup();
         backup.setName(backupName);
         backup.setScheduledDateTime(scheduledDateTime);
         backup.setStatus(BackupStatus.ONGOING);
         backup.setPath(backupInstanceDir.getAbsolutePath());
+        backupRepository.save(backup);
+        return backup;
+    }
 
+    private BackupEvent saveBackupEventMetadataToDb(Backup backup) {
         BackupEvent event = new BackupEvent();
-        event.setEventType(BackupEventType.STARTED);
+        event.setEventType(BackupEventType.ONGOING);
         event.setSeverity(BackupEventSeverity.INFO);
         event.setOperation(BackupOperation.BACKUPING);
-        event.setTimestamp(DateTime.now());
+        event.setStartTime(DateTime.now());
         event.setBackup(backup);
         event.setMessage("Creating directory for backup content");
+        backupEventRepository.save(event);
+        return event;
+    }
 
+    private void tryToCreateBackupFolder(File backupInstanceDir, Backup backup, BackupEvent event)
+            throws JobExecutionException {
         try {
             FileUtils.forceMkdir(backupInstanceDir);
+            event.setEventType(BackupEventType.FINISHED);
+            event.setEndTime(DateTime.now());
+            backupEventRepository.save(event);
         } catch (IOException e) {
             LOGGER.error("Cannot create directory for backup: {}", backupInstanceDir, e);
             setFailureDetails(backup, event);
             throw new JobExecutionException(e);
         }
-        backupRepository.save(backup);
-        backupEventRepository.save(event);
+    }
 
+    private void insertBackupToSchedulerContext(JobExecutionContext context, Backup backup)
+            throws JobExecutionException {
         try {
             SchedulerContext schedulerContext = context.getScheduler().getContext();
             schedulerContext.put("backup", backup);
             schedulerContext.put("backupWarningFlag", false);
         } catch (SchedulerException e) {
-            e.printStackTrace();
+            LOGGER.error("Cannot put values to schedulerContext", e);
+            throw new JobExecutionException(e);
         }
     }
 
@@ -99,6 +122,7 @@ public class StartBackupJob implements Job {
         backup.setStatus(BackupStatus.DONE_WITH_ERROR);
         event.setSeverity(BackupEventSeverity.ERROR);
         event.setMessage("Cannot create directory for backup");
+        event.setEndTime(DateTime.now());
         backupRepository.save(backup);
         backupEventRepository.save(event);
     }

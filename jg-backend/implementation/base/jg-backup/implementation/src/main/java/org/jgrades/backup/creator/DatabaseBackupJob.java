@@ -26,6 +26,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import java.io.File;
+import java.io.IOException;
+import java.net.ConnectException;
 
 @DisallowConcurrentExecution
 public class DatabaseBackupJob implements Job {
@@ -37,65 +39,75 @@ public class DatabaseBackupJob implements Job {
     @Autowired
     private DataSourceService dataSourceService;
 
+    @Autowired
+    private DatabaseBackupCreator databaseBackupCreator;
+
+    private Backup backup;
+
+    private SchedulerContext schedulerContext;
+
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
-        SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
-
-        Backup backup = null;
-        SchedulerContext schedulerContext = null;
+        init(context);
+        BackupEvent event = getNewEvent("Backup database");
         try {
-            schedulerContext = context.getScheduler().getContext();
-            backup = (Backup) schedulerContext.get("backup");
+            tryToConnectWithDb();
 
-            if (!dataSourceService.testConnection()) {
+            runDbBackup();
 
-            }
-
-            DataSourceDetails dataSourceDetails = dataSourceService.getDataSourceDetails();
-
-            File databaseDump = new File(backup.getPath() + File.separator + "jg-db-" + backup.getName() + ".zip");
-
-            String[] cmd = {
-                    "pg_dump",
-                    "--host", "localhost",
-                    "--port", "5432",
-                    "--username", "postgres",
-                    "--dbname", "jgradesdb",
-                    "--password", "postgres",
-                    "--format", "t",
-                    "--verbose",
-                    databaseDump.getAbsolutePath()
-            };
-
-            Runtime r = Runtime.getRuntime();
-            r.exec(cmd);
+            updateEventType(event, BackupEventType.FINISHED);
         } catch (Exception e) {
             LOGGER.error("Error during creating backup of database. Process will be continued", e);
             schedulerContext.put("backupWarningFlag", true);
-            setWarnDetails(backup);
+            setWarnDetails(event);
         }
     }
 
-    private void saveOkEvent(Backup backup, String message) {
+    private void init(JobExecutionContext context) throws JobExecutionException {
+        SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
+        try {
+            schedulerContext = context.getScheduler().getContext();
+            backup = (Backup) schedulerContext.get("backup");
+        } catch (SchedulerException e) {
+            LOGGER.error("Error during initialize DatabaseBackupJob. Process stopped", e);
+            throw new JobExecutionException(e);
+        }
+    }
+
+    private void tryToConnectWithDb() throws ConnectException {
+        if (!dataSourceService.testConnection()) {
+            throw new ConnectException("Test of connection to database failed");
+        }
+    }
+
+    private void runDbBackup() throws IOException {
+        DataSourceDetails dataSourceDetails = dataSourceService.getDataSourceDetails();
+        String dbDumpPath = backup.getPath() + File.separator + "jg-db-" + backup.getName() + ".tar";
+        databaseBackupCreator.runDbBackup(dataSourceDetails, dbDumpPath);
+    }
+
+    private BackupEvent getNewEvent(String message) {
         BackupEvent event = new BackupEvent();
         event.setEventType(BackupEventType.ONGOING);
         event.setSeverity(BackupEventSeverity.INFO);
         event.setOperation(BackupOperation.BACKUPING);
-        event.setTimestamp(DateTime.now());
+        event.setStartTime(DateTime.now());
         event.setBackup(backup);
         event.setMessage(message);
         backupEventRepository.save(event);
+        return event;
     }
 
-    private void setWarnDetails(Backup backup) {
-        BackupEvent event = new BackupEvent();
-        event.setEventType(BackupEventType.ONGOING);
+    private void updateEventType(BackupEvent event, BackupEventType backupEventType) {
+        event.setEventType(backupEventType);
+        event.setEndTime(DateTime.now());
+        backupEventRepository.save(event);
+    }
+
+    private void setWarnDetails(BackupEvent event) {
+        event.setEventType(BackupEventType.FINISHED);
         event.setSeverity(BackupEventSeverity.WARNING);
-        event.setOperation(BackupOperation.BACKUPING);
-        event.setTimestamp(DateTime.now());
-        event.setBackup(backup);
-        event.setMessage("Error during creating Backup of internal/logs files. Process will be continued. " +
-                "For more details please check application logs");
+        event.setEndTime(DateTime.now());
         backupEventRepository.save(event);
     }
 }

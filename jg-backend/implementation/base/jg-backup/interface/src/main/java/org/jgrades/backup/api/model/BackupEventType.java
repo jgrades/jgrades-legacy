@@ -11,5 +11,5 @@
 package org.jgrades.backup.api.model;
 
 public enum BackupEventType {
-    STARTED, ONGOING, FINISHED, INTERRUPTED
+    ONGOING, FINISHED, INTERRUPTED
 }

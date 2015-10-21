@@ -43,7 +43,11 @@ public class BackupEvent implements Serializable {
 
     @Column
     @Type(type = CustomType.JODA_DATE_TIME)
-    private DateTime timestamp;
+    private DateTime startTime;
+
+    @Column
+    @Type(type = CustomType.JODA_DATE_TIME)
+    private DateTime endTime;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)

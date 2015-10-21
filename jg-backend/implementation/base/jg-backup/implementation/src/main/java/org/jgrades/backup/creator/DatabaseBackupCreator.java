@@ -8,16 +8,12 @@
  *       http://www.apache.org/licenses/LICENSE-2.0
  */
 
-package org.jgrades.config.api.model;
+package org.jgrades.backup.creator;
 
-import lombok.Getter;
-import lombok.Setter;
-import org.jgrades.data.api.entities.User;
+import org.jgrades.data.api.model.DataSourceDetails;
 
-@Getter
-@Setter
-public class UserData {
-    private User user;
+import java.io.IOException;
 
-    private String password;
+public interface DatabaseBackupCreator {
+    void runDbBackup(DataSourceDetails dataSourceDetails, String dbDumpPath) throws IOException;
 }

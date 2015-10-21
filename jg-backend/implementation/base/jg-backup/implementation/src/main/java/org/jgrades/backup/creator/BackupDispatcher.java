@@ -10,17 +10,20 @@
 
 package org.jgrades.backup.creator;
 
+import org.jgrades.backup.api.dao.BackupRepository;
 import org.jgrades.backup.api.entities.Backup;
+import org.jgrades.backup.api.entities.BackupEvent;
 import org.jgrades.backup.api.exception.BackupException;
+import org.jgrades.backup.api.model.BackupEventType;
+import org.jgrades.backup.api.model.BackupStatus;
 import org.jgrades.logging.JgLogger;
 import org.jgrades.logging.JgLoggerFactory;
-import org.quartz.JobDetail;
-import org.quartz.JobKey;
-import org.quartz.Scheduler;
-import org.quartz.SchedulerException;
+import org.quartz.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 import static org.quartz.JobBuilder.newJob;
 
@@ -31,6 +34,9 @@ public class BackupDispatcher {
     @Autowired
     @Qualifier("backupScheduler")
     private Scheduler scheduler;
+
+    @Autowired
+    private BackupRepository backupRepository;
 
     public void reqestNew() {
         try {
@@ -69,6 +75,33 @@ public class BackupDispatcher {
     }
 
     public void interrupt(Backup backup) {
-        throw new UnsupportedOperationException();
+        if (backup.getStatus() != BackupStatus.ONGOING) {
+            throw new BackupException("You cannot interrupt backup which has not ongoing status");
+        }
+        try {
+            interruptJobs();
+            updateStatuses(backup);
+        } catch (SchedulerException e) {
+            LOGGER.error("Error during interrupting backup {}", backup, e);
+            throw new BackupException("Error during interrupting backup", e);
+        }
+    }
+
+    private void interruptJobs() throws SchedulerException {
+        List<JobExecutionContext> executingJobs = scheduler.getCurrentlyExecutingJobs();
+        for (JobExecutionContext context : executingJobs) {
+            scheduler.interrupt(context.getFireInstanceId());
+        }
+    }
+
+    private void updateStatuses(Backup backup) {
+        Backup persistBackup = backupRepository.findOne(backup.getId());
+        for (BackupEvent event : persistBackup.getEvents()) {
+            if (event.getEventType() == BackupEventType.ONGOING) {
+                event.setEventType(BackupEventType.INTERRUPTED);
+            }
+        }
+        persistBackup.setStatus(BackupStatus.INTERRUPT);
+        backupRepository.save(persistBackup);
     }
 }

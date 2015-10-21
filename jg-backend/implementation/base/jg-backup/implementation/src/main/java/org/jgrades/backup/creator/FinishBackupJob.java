@@ -10,16 +10,16 @@
 
 package org.jgrades.backup.creator;
 
-import org.jgrades.backup.api.dao.BackupEventRepository;
 import org.jgrades.backup.api.dao.BackupRepository;
+import org.jgrades.backup.api.entities.Backup;
 import org.jgrades.logging.JgLogger;
 import org.jgrades.logging.JgLoggerFactory;
-import org.quartz.DisallowConcurrentExecution;
-import org.quartz.Job;
-import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
+import org.quartz.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
+
+import static org.jgrades.backup.api.model.BackupStatus.DONE;
+import static org.jgrades.backup.api.model.BackupStatus.DONE_WITH_WARNING;
 
 @DisallowConcurrentExecution
 public class FinishBackupJob implements Job {
@@ -28,11 +28,27 @@ public class FinishBackupJob implements Job {
     @Autowired
     private BackupRepository backupRepository;
 
-    @Autowired
-    private BackupEventRepository backupEventRepository;
+    private Backup backup;
+
+    private SchedulerContext schedulerContext;
 
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
+        init(context);
+
+        boolean backupResult = (boolean) schedulerContext.get("backupWarningFlag");
+        backup.setStatus(backupResult ? DONE_WITH_WARNING : DONE);
+        backupRepository.save(backup);
+    }
+
+    private void init(JobExecutionContext context) throws JobExecutionException {
         SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
+        try {
+            schedulerContext = context.getScheduler().getContext();
+            backup = (Backup) schedulerContext.get("backup");
+        } catch (SchedulerException e) {
+            LOGGER.error("Error during initialize FinishBackupJob. Process stopped", e);
+            throw new JobExecutionException(e);
+        }
     }
 }

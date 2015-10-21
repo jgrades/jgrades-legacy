@@ -11,6 +11,7 @@
 package org.jgrades.backup.service;
 
 import com.google.common.collect.Lists;
+import org.apache.commons.io.FileUtils;
 import org.jgrades.backup.api.dao.BackupRepository;
 import org.jgrades.backup.api.entities.Backup;
 import org.jgrades.backup.api.entities.BackupEvent;
@@ -24,6 +25,8 @@ import org.jgrades.logging.JgLoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -69,7 +72,12 @@ public class BackupManagerServiceImpl implements BackupManagerService {
 
     @Override
     public void delete(Backup backup) {
-        repository.delete(backup);
+        try {
+            FileUtils.deleteDirectory(new File(backup.getPath()));
+            repository.delete(backup);
+        } catch (IOException e) {
+            LOGGER.warn("Unable to remove backup directory: {}", backup.getPath(), e);
+        }
     }
 
     @Override
