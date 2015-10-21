@@ -12,7 +12,7 @@ package org.jgrades.rest.admin.structures;
 
 import org.jgrades.admin.api.structures.ClassGroupMgntService;
 import org.jgrades.data.api.entities.ClassGroup;
-import org.jgrades.data.api.entities.User;
+import org.jgrades.data.api.entities.roles.StudentDetails;
 import org.jgrades.logging.JgLogger;
 import org.jgrades.logging.JgLoggerFactory;
 import org.jgrades.monitor.api.aop.CheckSystemDependencies;
@@ -23,6 +23,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -37,7 +38,7 @@ public class ClassGroupService extends AbstractRestCrudPagingService<ClassGroup,
     }
 
     @RequestMapping(value = "/{id}/students", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Object> setStudents(@PathVariable Long id, @RequestBody Set<User> students) {
+    public ResponseEntity<Object> setStudents(@PathVariable Long id, @RequestBody Set<StudentDetails> students) {
         getLogger().trace("Setting students to class group with id {}. Students are: {}", id, students);
         crudService.setStudents(crudService.getWithId(id), students);
         return new ResponseEntity<>(HttpStatus.OK);
@@ -45,9 +46,16 @@ public class ClassGroupService extends AbstractRestCrudPagingService<ClassGroup,
 
     @RequestMapping(value = "/{id}/students", method = RequestMethod.GET)
     @ResponseBody
-    public Set<User> getStudents(@PathVariable Long id) {
+    public Set<StudentDetails> getStudents(@PathVariable Long id) {
         getLogger().trace("Getting students of class group with id {}", id);
         return crudService.getStudents(crudService.getWithId(id));
+    }
+
+    @RequestMapping(value = "/active", method = RequestMethod.GET)
+    @ResponseBody
+    public List<ClassGroup> getFromActiveSemester() {
+        getLogger().trace("Getting class groups from active semester");
+        return crudService.getFromActiveSemester();
     }
 
     @Override

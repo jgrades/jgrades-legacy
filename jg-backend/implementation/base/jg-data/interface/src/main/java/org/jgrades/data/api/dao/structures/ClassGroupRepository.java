@@ -11,9 +11,14 @@
 package org.jgrades.data.api.dao.structures;
 
 import org.jgrades.data.api.entities.ClassGroup;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface ClassGroupRepository extends PagingAndSortingRepository<ClassGroup, Long> {
+    @Query("select c from ClassGroup c where c.semester.active = true")
+    List<ClassGroup> findInActiveSemester();
 }
