@@ -10,7 +10,6 @@
 
 package org.jgrades.data.api.entities.roles;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.Getter;
@@ -41,12 +40,10 @@ public abstract class RoleDetails implements Serializable {
                 parameters = @org.hibernate.annotations.Parameter(name = "property", value = "user"))
         @Id
         @GeneratedValue(generator = "generator")
-        @JsonIgnore
         private Long id;
 
         @OneToOne
         @PrimaryKeyJoinColumn
-        @JsonIgnore
         private User user;
 
         abstract JgRole roleName();

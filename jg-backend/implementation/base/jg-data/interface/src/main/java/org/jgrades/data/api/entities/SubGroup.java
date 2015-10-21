@@ -40,7 +40,6 @@ public class SubGroup implements Serializable {
     @JoinColumn(name = "DIVISION_ID")
     private Division division;
 
-    @JsonIgnore
     @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(name = "JG_DATA_SUBGROUP_STUDENT",
             joinColumns = {@JoinColumn(name = "SUBGROUP_ID")},
