@@ -19,7 +19,7 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
         @PropertySource(value = "file:${jgrades.application.properties.file}", ignoreResourceNotFound = true)
 })
 @ComponentScan("org.jgrades.config")
-public class ConfigurationContext {
+public class ConfigurationContext { //NOSONAR
     @Bean
     public static PropertySourcesPlaceholderConfigurer propertyConfig() {
         return new PropertySourcesPlaceholderConfigurer();

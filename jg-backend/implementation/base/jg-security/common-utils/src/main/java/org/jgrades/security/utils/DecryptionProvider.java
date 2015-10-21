@@ -38,12 +38,12 @@ public class DecryptionProvider {
         return bos;
     }
 
-    private byte[] decrypt(byte[] encryptedLicXmlBytes) {
+    public byte[] decrypt(byte[] encryptedBytes) {
         try {
             Cipher cipher = Cipher.getInstance(CIPHER_PROVIDER_INTERFACE);
             SecretKeySpec secretKeySpec = extractor.getPrivateKeyForEncryptionAndDecryption();
             cipher.init(Cipher.DECRYPT_MODE, secretKeySpec);
-            return getDecryptedOutputStream(encryptedLicXmlBytes, cipher).toByteArray();
+            return getDecryptedOutputStream(encryptedBytes, cipher).toByteArray();
         } catch (NoSuchAlgorithmException | NoSuchPaddingException |
                 InvalidKeyException | IOException e) {
             throw new CryptographyException(e);

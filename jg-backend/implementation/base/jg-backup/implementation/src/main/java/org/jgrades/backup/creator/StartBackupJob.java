@@ -54,6 +54,18 @@ public class StartBackupJob implements Job {
         return DateTimeFormat.forPattern("yyyy-MM-dd'T'HH_mm_ss").print(scheduledDateTime);
     }
 
+    private static void insertBackupToSchedulerContext(JobExecutionContext context, Backup backup)
+            throws JobExecutionException {
+        try {
+            SchedulerContext schedulerContext = context.getScheduler().getContext();
+            schedulerContext.put("backup", backup);
+            schedulerContext.put("backupWarningFlag", false);
+        } catch (SchedulerException e) {
+            LOGGER.error("Cannot put values to schedulerContext", e);
+            throw new JobExecutionException(e);
+        }
+    }
+
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
         SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
@@ -102,18 +114,6 @@ public class StartBackupJob implements Job {
         } catch (IOException e) {
             LOGGER.error("Cannot create directory for backup: {}", backupInstanceDir, e);
             setFailureDetails(backup, event);
-            throw new JobExecutionException(e);
-        }
-    }
-
-    private void insertBackupToSchedulerContext(JobExecutionContext context, Backup backup)
-            throws JobExecutionException {
-        try {
-            SchedulerContext schedulerContext = context.getScheduler().getContext();
-            schedulerContext.put("backup", backup);
-            schedulerContext.put("backupWarningFlag", false);
-        } catch (SchedulerException e) {
-            LOGGER.error("Cannot put values to schedulerContext", e);
             throw new JobExecutionException(e);
         }
     }

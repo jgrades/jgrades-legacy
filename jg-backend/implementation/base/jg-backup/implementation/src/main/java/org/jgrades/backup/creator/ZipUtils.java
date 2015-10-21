@@ -11,10 +11,12 @@
 package org.jgrades.backup.creator;
 
 import org.apache.commons.compress.compressors.CompressorException;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -28,17 +30,15 @@ public class ZipUtils {
         }
     }
 
-    private void zipFolder(String srcFolder, String destZipFile) throws Exception {
-        ZipOutputStream zip = null;
-        FileOutputStream fileWriter = null;
-        fileWriter = new FileOutputStream(destZipFile);
-        zip = new ZipOutputStream(fileWriter);
-        addFolderToZip("", srcFolder, zip);
+    private void zipFolder(String srcFolder, String destZipFile) throws IOException {
+        FileOutputStream fileWriter = new FileOutputStream(destZipFile);
+        ZipOutputStream zip = new ZipOutputStream(fileWriter);
+        addFolderToZip(StringUtils.EMPTY, srcFolder, zip);
         zip.flush();
         zip.close();
     }
 
-    private void addFileToZip(String path, String srcFile, ZipOutputStream zip, boolean flag) throws Exception {
+    private void addFileToZip(String path, String srcFile, ZipOutputStream zip, boolean flag) throws IOException {
         File folder = new File(srcFile);
         if (folder.getName().endsWith(".bak.tmp")) {
             return;
@@ -62,13 +62,13 @@ public class ZipUtils {
         }
     }
 
-    private void addFolderToZip(String path, String srcFolder, ZipOutputStream zip) throws Exception {
+    private void addFolderToZip(String path, String srcFolder, ZipOutputStream zip) throws IOException {
         File folder = new File(srcFolder);
         if (folder.list().length == 0) {
             addFileToZip(path, srcFolder, zip, true);
         } else {
             for (String fileName : folder.list()) {
-                if (path.equals("")) {
+                if (StringUtils.EMPTY.equals(path)) {
                     addFileToZip(folder.getName(), srcFolder + "/" + fileName, zip, false);
                 } else {
                     addFileToZip(path + "/" + folder.getName(), srcFolder + "/" + fileName, zip, false);

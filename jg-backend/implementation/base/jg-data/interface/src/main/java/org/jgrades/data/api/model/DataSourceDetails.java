@@ -21,7 +21,7 @@ import java.util.regex.Pattern;
 @Getter
 @Setter
 public class DataSourceDetails {
-    private static Pattern PATTERN = Pattern.compile("(.+):(\\d+)\\/(.+)");
+    private static final Pattern URL_PATTERN = Pattern.compile("(.+):(\\d+)\\/(.+)");
 
     private String url;
 
@@ -45,19 +45,19 @@ public class DataSourceDetails {
     }
 
     public String host() {
-        Matcher matcher = PATTERN.matcher(url);
+        Matcher matcher = URL_PATTERN.matcher(url);
         matcher.find();
         return matcher.group(1);
     }
 
     public String port() {
-        Matcher matcher = PATTERN.matcher(url);
+        Matcher matcher = URL_PATTERN.matcher(url);
         matcher.find();
         return matcher.group(2);
     }
 
     public String databaseName() {
-        Matcher matcher = PATTERN.matcher(url);
+        Matcher matcher = URL_PATTERN.matcher(url);
         matcher.find();
         return matcher.group(3);
     }

@@ -20,7 +20,7 @@ import java.util.Map;
 
 @Component
 public class PostgresBackupCreator implements DatabaseBackupCreator {
-    public static final String PGPASSWORD_ENV_KEY = "PGPASSWORD";
+    public static final String PGPSWD_ENV_KEY = "PGPASSWORD";
 
     @Override
     public void runDbBackup(DataSourceDetails dataSourceDetails, String dbDumpPath) throws IOException {
@@ -33,7 +33,7 @@ public class PostgresBackupCreator implements DatabaseBackupCreator {
 
         ProcessBuilder processBuilder = new ProcessBuilder(commands);
         Map<String, String> environment = processBuilder.environment();
-        environment.put(PGPASSWORD_ENV_KEY, dataSourceDetails.getPassword());
+        environment.put(PGPSWD_ENV_KEY, dataSourceDetails.getPassword());
 
         processBuilder.redirectErrorStream(true);
         processBuilder.inheritIO();
