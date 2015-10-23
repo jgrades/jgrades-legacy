@@ -13,5 +13,14 @@
 
     <name>jGrades REST Web Services Client</name>
 
+    <dependencies>
+        <!-- INTERNAL DEPENDENCIES -->
+        <dependency>
+            <groupId>org.jgrades.app</groupId>
+            <artifactId>jg-rest-ws-api</artifactId>
+            <version>${RELEASE.VERSION}</version>
+        </dependency>
 
+        <!-- EXTERNAL DEPENDENCIES -->
+    </dependencies>
 </project>

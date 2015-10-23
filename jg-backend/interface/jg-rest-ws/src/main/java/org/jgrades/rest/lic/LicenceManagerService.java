@@ -17,6 +17,7 @@ import org.jgrades.lic.api.service.LicenceManagingService;
 import org.jgrades.logging.JgLogger;
 import org.jgrades.logging.JgLoggerFactory;
 import org.jgrades.monitor.api.aop.CheckSystemDependencies;
+import org.jgrades.rest.api.lic.ILicenceManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +30,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/licence", produces = MediaType.APPLICATION_JSON_VALUE)
 @CheckSystemDependencies
-public class LicenceManagerService {
+public class LicenceManagerService implements ILicenceManagerService {
     private static final JgLogger LOGGER = JgLoggerFactory.getLogger(LicenceManagerService.class);
 
     @Autowired
@@ -48,23 +49,23 @@ public class LicenceManagerService {
         }
     }
 
+    @Override
     @RequestMapping(method = RequestMethod.GET)
-    @ResponseBody
     public List<Licence> getAll() {
         return licenceManagingService.getAll();
     }
 
+    @Override
     @RequestMapping(value = "/{uid}", method = RequestMethod.GET)
-    @ResponseBody
     public Licence get(@PathVariable Long uid) {
         LOGGER.info("Getting licence with uid {}", uid);
         return licenceManagingService.get(uid);
     }
 
+    @Override
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    @ResponseBody
     public Licence uploadAndInstall(@RequestParam("licence") MultipartFile licence,
-                             @RequestParam("signature") MultipartFile signature) throws IOException {
+                                    @RequestParam("signature") MultipartFile signature) throws IOException {
         LOGGER.info("Licence installation service invoked");
         checkFilesExisting(licence, signature);
 
@@ -92,12 +93,11 @@ public class LicenceManagerService {
         }
     }
 
+    @Override
     @RequestMapping(value = "/{uid}", method = RequestMethod.DELETE)
-    @ResponseBody
-    public boolean uninstall(@PathVariable Long uid) {
+    public void uninstall(@PathVariable Long uid) {
         LOGGER.info("Starting of removing a licence with uid {}", uid);
         Licence licenceToRemove = licenceManagingService.get(uid);
         licenceManagingService.uninstallLicence(licenceToRemove);
-        return true;
     }
 }

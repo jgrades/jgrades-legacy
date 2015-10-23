@@ -71,6 +71,11 @@
         <!-- INTERNAL DEPENDENCIES -->
         <dependency>
             <groupId>org.jgrades.app</groupId>
+            <artifactId>jg-rest-ws-api</artifactId>
+            <version>${RELEASE.VERSION}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jgrades.app</groupId>
             <artifactId>jg-lic-impl</artifactId>
             <version>${RELEASE.VERSION}</version>
         </dependency>

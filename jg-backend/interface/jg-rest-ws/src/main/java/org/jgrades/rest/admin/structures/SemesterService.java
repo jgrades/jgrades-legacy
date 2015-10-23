@@ -17,10 +17,11 @@ import org.jgrades.logging.JgLoggerFactory;
 import org.jgrades.monitor.api.aop.CheckSystemDependencies;
 import org.jgrades.rest.common.AbstractRestCrudPagingService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(value = "/semester", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -34,23 +35,20 @@ public class SemesterService extends AbstractRestCrudPagingService<Semester, Lon
     }
 
     @RequestMapping(value = "/migrate/{id}/{newSemesterName}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Object> migrate(@PathVariable Long id, @PathVariable String newSemesterName) {
+    public void migrate(@PathVariable Long id, @PathVariable String newSemesterName) {
         crudService.createNewByMigration(crudService.getWithId(id), newSemesterName);
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @RequestMapping(value = "/active", method = RequestMethod.GET)
-    @ResponseBody
     public Semester getActive() {
         getLogger().trace("Getting active semester");
         return crudService.getActiveSemester();
     }
 
     @RequestMapping(value = "/{id}/active", method = RequestMethod.POST)
-    public ResponseEntity<Object> setActive(@PathVariable Long id) {
+    public void setActive(@PathVariable Long id) {
         getLogger().trace("Setting as active a semester with id {}", id);
         crudService.setActiveSemester(crudService.getWithId(id));
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @Override

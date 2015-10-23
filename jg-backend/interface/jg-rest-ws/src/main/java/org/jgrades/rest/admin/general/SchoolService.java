@@ -15,32 +15,34 @@ import org.jgrades.data.api.entities.School;
 import org.jgrades.logging.JgLogger;
 import org.jgrades.logging.JgLoggerFactory;
 import org.jgrades.monitor.api.aop.CheckSystemDependencies;
+import org.jgrades.rest.api.admin.general.ISchoolService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(value = "/general", produces = MediaType.APPLICATION_JSON_VALUE)
 @CheckSystemDependencies
-public class SchoolService {
+public class SchoolService implements ISchoolService {
     private static final JgLogger LOGGER = JgLoggerFactory.getLogger(SchoolService.class);
 
     @Autowired
     private GeneralDataService generalDataService;
 
+    @Override
     @RequestMapping(method = RequestMethod.GET)
-    @ResponseBody
     public School getGeneralData() {
         LOGGER.trace("Getting school general details");
         return generalDataService.getSchoolGeneralDetails();
     }
 
+    @Override
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Object> insertOrUpdate(@RequestBody School generalData) {
+    public void insertOrUpdate(@RequestBody School generalData) {
         LOGGER.trace("Saving or overriding exising school general details with: {}", generalData);
         generalDataService.setSchoolGeneralDetails(generalData);
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

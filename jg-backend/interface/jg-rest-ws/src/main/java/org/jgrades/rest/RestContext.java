@@ -47,6 +47,7 @@ import java.util.List;
         @PropertySource("classpath:jg-rest.properties"),
         @PropertySource(value = "file:${jgrades.application.properties.file}", ignoreResourceNotFound = true)
 })
+@EnableAspectJAutoProxy(proxyTargetClass = true)
 public class RestContext extends WebMvcConfigurationSupport {
 
     @Bean

@@ -15,6 +15,7 @@ import org.jgrades.data.api.entities.Subject;
 import org.jgrades.logging.JgLogger;
 import org.jgrades.logging.JgLoggerFactory;
 import org.jgrades.monitor.api.aop.CheckSystemDependencies;
+import org.jgrades.rest.api.admin.general.ISubjectService;
 import org.jgrades.rest.common.AbstractRestCrudPagingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -24,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(value = "/subject", produces = MediaType.APPLICATION_JSON_VALUE)
 @CheckSystemDependencies
-public class SubjectService extends AbstractRestCrudPagingService<Subject, Long, SubjectsMgntService> {
+public class SubjectService extends AbstractRestCrudPagingService<Subject, Long, SubjectsMgntService> implements ISubjectService {
     private static final JgLogger LOGGER = JgLoggerFactory.getLogger(SubjectService.class);
 
     @Autowired

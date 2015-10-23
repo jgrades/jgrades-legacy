@@ -8,16 +8,10 @@
  *       http://www.apache.org/licenses/LICENSE-2.0
  */
 
-package org.jgrades.rest.admin.accounts.mass;
+package org.jgrades.rest.api.admin.general;
 
-import lombok.Getter;
-import lombok.Setter;
-import org.jgrades.admin.api.model.StudentMassCreatingSettings;
+import org.jgrades.data.api.entities.Classroom;
+import org.jgrades.rest.api.common.RestCrudPagingService;
 
-@Getter
-@Setter
-public class MassCreatorDTO {
-    private String studentCsvData;
-
-    private StudentMassCreatingSettings settings;
+public interface IClassroomService extends RestCrudPagingService<Classroom, Long> {
 }

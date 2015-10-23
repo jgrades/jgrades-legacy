@@ -16,6 +16,7 @@ import org.jgrades.data.api.entities.YearLevel;
 import org.jgrades.logging.JgLogger;
 import org.jgrades.logging.JgLoggerFactory;
 import org.jgrades.monitor.api.aop.CheckSystemDependencies;
+import org.jgrades.rest.api.admin.structures.IYearLevelService;
 import org.jgrades.rest.common.AbstractRestCrudPagingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -25,7 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(value = "/yearlevel", produces = MediaType.APPLICATION_JSON_VALUE)
 @CheckSystemDependencies
-public class YearLevelService extends AbstractRestCrudPagingService<YearLevel, Long, YearLevelMgntService> {
+public class YearLevelService extends AbstractRestCrudPagingService<YearLevel, Long, YearLevelMgntService> implements IYearLevelService {
     private static final JgLogger LOGGER = JgLoggerFactory.getLogger(YearLevelService.class);
 
     @Autowired

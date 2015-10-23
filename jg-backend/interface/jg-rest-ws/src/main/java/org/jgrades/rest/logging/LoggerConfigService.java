@@ -16,10 +16,9 @@ import org.jgrades.logging.JgLoggerFactory;
 import org.jgrades.logging.model.LoggingConfiguration;
 import org.jgrades.logging.service.LoggingService;
 import org.jgrades.monitor.api.aop.CheckSystemDependencies;
+import org.jgrades.rest.api.logging.ILoggerConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,12 +30,13 @@ import org.springframework.web.bind.annotation.RestController;
 @CheckSystemDependencies
 @CheckLicence
 @PreAuthorize("hasRole('ADMINISTRATOR')")
-public class LoggerConfigService {
+public class LoggerConfigService implements ILoggerConfigService {
     private static final JgLogger LOGGER = JgLoggerFactory.getLogger(LoggerConfigService.class);
 
     @Autowired
     private LoggingService loggingService;
 
+    @Override
     @RequestMapping(value = "/configuration/default", method = RequestMethod.GET)
     public LoggingConfiguration getDefaultConfiguration() {
         LoggingConfiguration defaultConfiguration = loggingService.getDefaultConfiguration();
@@ -44,6 +44,7 @@ public class LoggerConfigService {
         return defaultConfiguration;
     }
 
+    @Override
     @RequestMapping(value = "/configuration", method = RequestMethod.GET)
     public LoggingConfiguration getConfiguration() {
         LoggingConfiguration configuration = loggingService.getLoggingConfiguration();
@@ -51,11 +52,11 @@ public class LoggerConfigService {
         return configuration;
     }
 
+    @Override
     @RequestMapping(value = "/configuration", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> setNewConfiguration(@RequestBody LoggingConfiguration configuration) {
+    public void setNewConfiguration(@RequestBody LoggingConfiguration configuration) {
         LOGGER.trace("Set new logging configuration: {}", configuration);
         loggingService.setLoggingConfiguration(configuration);
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

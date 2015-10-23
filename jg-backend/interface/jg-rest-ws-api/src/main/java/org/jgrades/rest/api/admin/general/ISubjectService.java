@@ -8,14 +8,10 @@
  *       http://www.apache.org/licenses/LICENSE-2.0
  */
 
-package org.jgrades.rest.security;
+package org.jgrades.rest.api.admin.general;
 
-import lombok.Getter;
-import lombok.Setter;
+import org.jgrades.data.api.entities.Subject;
+import org.jgrades.rest.api.common.RestCrudPagingService;
 
-@Getter
-@Setter
-public class PasswordDTO {
-    private String password;
-    private Long userId;
+public interface ISubjectService extends RestCrudPagingService<Subject, Long> {
 }

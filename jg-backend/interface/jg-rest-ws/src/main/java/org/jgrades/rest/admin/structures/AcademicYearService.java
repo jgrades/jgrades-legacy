@@ -15,17 +15,19 @@ import org.jgrades.data.api.entities.AcademicYear;
 import org.jgrades.logging.JgLogger;
 import org.jgrades.logging.JgLoggerFactory;
 import org.jgrades.monitor.api.aop.CheckSystemDependencies;
+import org.jgrades.rest.api.admin.structures.IAcademicYearService;
 import org.jgrades.rest.common.AbstractRestCrudPagingService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(value = "/academicyear", produces = MediaType.APPLICATION_JSON_VALUE)
 @CheckSystemDependencies
-public class AcademicYearService extends AbstractRestCrudPagingService<AcademicYear, Long, AcademicYearMgntService> {
+public class AcademicYearService extends AbstractRestCrudPagingService<AcademicYear, Long, AcademicYearMgntService> implements IAcademicYearService {
     private static final JgLogger LOGGER = JgLoggerFactory.getLogger(AcademicYearService.class);
 
     @Autowired
@@ -33,18 +35,18 @@ public class AcademicYearService extends AbstractRestCrudPagingService<AcademicY
         super(crudService);
     }
 
+    @Override
     @RequestMapping(value = "/active", method = RequestMethod.GET)
-    @ResponseBody
     public AcademicYear getActive() {
         getLogger().trace("Getting active academic year");
         return crudService.getActiveAcademicYear();
     }
 
+    @Override
     @RequestMapping(value = "/{id}/active", method = RequestMethod.POST)
-    public ResponseEntity<Object> setActive(@PathVariable Long id) {
+    public void setActive(@PathVariable Long id) {
         getLogger().trace("Setting as active an academic year with id {}", id);
         crudService.setActiveAcademicYear(crudService.getWithId(id));
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @Override

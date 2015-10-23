@@ -13,5 +13,48 @@
 
     <name>jGrades REST Web Services API</name>
 
+    <dependencies>
+        <!-- INTERNAL DEPENDENCIES -->
+        <dependency>
+            <groupId>org.jgrades.app</groupId>
+            <artifactId>jg-lic-api</artifactId>
+            <version>${RELEASE.VERSION}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jgrades.app</groupId>
+            <artifactId>jg-data-api</artifactId>
+            <version>${RELEASE.VERSION}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jgrades.app</groupId>
+            <artifactId>jg-monitor-api</artifactId>
+            <version>${RELEASE.VERSION}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jgrades.app</groupId>
+            <artifactId>jg-admin-api</artifactId>
+            <version>${RELEASE.VERSION}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jgrades.app</groupId>
+            <artifactId>jg-security-api</artifactId>
+            <version>${RELEASE.VERSION}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jgrades.app</groupId>
+            <artifactId>jg-config-api</artifactId>
+            <version>${RELEASE.VERSION}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jgrades.app</groupId>
+            <artifactId>jg-backup-api</artifactId>
+            <version>${RELEASE.VERSION}</version>
+        </dependency>
 
+        <!-- EXTERNAL DEPENDENCIES -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+        </dependency>
+    </dependencies>
 </project>

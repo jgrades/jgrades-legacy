@@ -16,11 +16,10 @@ import org.jgrades.backup.api.model.RestoreSettings;
 import org.jgrades.backup.api.service.BackupManagerService;
 import org.jgrades.logging.JgLogger;
 import org.jgrades.logging.JgLoggerFactory;
+import org.jgrades.rest.api.backup.IBackupService;
 import org.jgrades.rest.common.AbstractRestCrudPagingService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
@@ -28,7 +27,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/backup", produces = MediaType.APPLICATION_JSON_VALUE)
-public class BackupService extends AbstractRestCrudPagingService<Backup, Long, BackupManagerService> {
+public class BackupService extends AbstractRestCrudPagingService<Backup, Long, BackupManagerService> implements IBackupService {
     private static final JgLogger LOGGER = JgLoggerFactory.getLogger(BackupService.class);
 
     @Autowired
@@ -39,42 +38,43 @@ public class BackupService extends AbstractRestCrudPagingService<Backup, Long, B
         super(crudService);
     }
 
+    @Override
     @ApiIgnore
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Object> insertOrUpdate(@RequestBody Backup entity) {
+    public void insertOrUpdate(@RequestBody Backup entity) {
         throw new IllegalStateException("You should PUT method for creating new backup");
     }
 
+    @Override
     @RequestMapping(method = RequestMethod.PUT)
-    public ResponseEntity<Object> makeBackup() {
+    public void makeBackup() {
         LOGGER.debug("Request for new backup");
         backupManagerService.makeNow();
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @Override
     @RequestMapping(value = "/refresh", method = RequestMethod.POST)
-    public ResponseEntity<Object> refresh() {
+    public void refresh() {
         LOGGER.debug("Refreshing backup metadata according to directory content");
         backupManagerService.refreshBackupDirectory();
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @Override
     @RequestMapping(value = "/{id}/restore", method = RequestMethod.POST)
-    public ResponseEntity<Object> restore(@PathVariable Long id, @RequestBody RestoreSettings restoreSettings) {
+    public void restore(@PathVariable Long id, @RequestBody RestoreSettings restoreSettings) {
         LOGGER.debug("Restoring backup with id: {} invoked", id);
         backupManagerService.restore(backupManagerService.getWithId(id), restoreSettings);
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @Override
     @RequestMapping(value = "/{id}/interrupt", method = RequestMethod.POST)
-    public ResponseEntity<Object> interrupt(@PathVariable Long id) {
+    public void interrupt(@PathVariable Long id) {
         LOGGER.debug("Interrupting backup with id: {} invoked", id);
         backupManagerService.interruptMaking(backupManagerService.getWithId(id));
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @Override
     @RequestMapping(value = "/{id}/events", method = RequestMethod.GET)
-    @ResponseBody
     public List<BackupEvent> getEvents(@PathVariable Long id) {
         LOGGER.debug("Getting backup events for backup with id: {} invoked", id);
         return backupManagerService.getEvents(backupManagerService.getWithId(id));

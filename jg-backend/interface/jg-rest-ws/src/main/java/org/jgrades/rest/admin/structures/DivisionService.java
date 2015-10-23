@@ -15,6 +15,7 @@ import org.jgrades.data.api.entities.Division;
 import org.jgrades.logging.JgLogger;
 import org.jgrades.logging.JgLoggerFactory;
 import org.jgrades.monitor.api.aop.CheckSystemDependencies;
+import org.jgrades.rest.api.admin.structures.IDivisionService;
 import org.jgrades.rest.common.AbstractRestCrudPagingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -24,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(value = "/division", produces = MediaType.APPLICATION_JSON_VALUE)
 @CheckSystemDependencies
-public class DivisionService extends AbstractRestCrudPagingService<Division, Long, DivisionMgntService> {
+public class DivisionService extends AbstractRestCrudPagingService<Division, Long, DivisionMgntService> implements IDivisionService {
     private static final JgLogger LOGGER = JgLoggerFactory.getLogger(DivisionService.class);
 
     @Autowired

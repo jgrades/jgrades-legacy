@@ -40,6 +40,7 @@ import java.io.File;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.isEmptyString;
 import static org.hamcrest.core.Is.is;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.*;
@@ -254,7 +255,7 @@ public class LicenceManagerServiceTest {
         // when
         mockMvc.perform(delete("/licence/{uid}", uid))
                 .andExpect(status().isOk())
-                .andExpect(content().string(is("true")));
+                .andExpect(content().string(isEmptyString()));
 
         // then
         verify(licenceManagingServiceMock, times(1)).get(uid);
