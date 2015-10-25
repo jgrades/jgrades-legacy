@@ -16,6 +16,7 @@ import org.jgrades.security.api.entities.PasswordData;
 import org.jgrades.security.api.model.LoginResult;
 import org.jgrades.security.service.LockingManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.security.authentication.CredentialsExpiredException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
@@ -57,5 +58,6 @@ public class RESTAuthenticationFailureHandler extends SimpleUrlAuthenticationFai
         loginResult.setErrorType(exception.getClass().getSimpleName());
         loginResult.setErrorMsg(exception.getMessage());
         response.getWriter().write(jacksonObjectMapper.writeValueAsString(loginResult));
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
     }
 }

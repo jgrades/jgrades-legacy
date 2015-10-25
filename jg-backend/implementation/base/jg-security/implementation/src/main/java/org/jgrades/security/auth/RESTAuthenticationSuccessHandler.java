@@ -18,6 +18,7 @@ import org.jgrades.security.api.model.LoginResult;
 import org.jgrades.security.service.LockingManager;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
@@ -57,6 +58,7 @@ public class RESTAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuc
         user.setLastVisit(DateTime.now());
         response.getWriter().write(jacksonObjectMapper.writeValueAsString(new LoginResult()));
         lockingManager.removeLockIfPossible(user);
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setStatus(HttpServletResponse.SC_OK);
     }
 }
