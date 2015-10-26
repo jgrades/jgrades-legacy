@@ -18,6 +18,9 @@ public class JGBackendException extends RuntimeException {
     private final ErrorMessage errorMessage;
 
     public JGBackendException(ErrorMessage errorMessage) {
+        super("title=" + errorMessage.getTitle() +
+                ", status=" + errorMessage.getStatus() +
+                ", detail=" + errorMessage.getDetail());
         this.errorMessage = errorMessage;
     }
 }
