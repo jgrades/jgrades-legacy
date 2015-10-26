@@ -24,11 +24,6 @@ public class ClassroomServiceClient extends RestCrudPagingServiceClient<Classroo
     @Autowired
     public ClassroomServiceClient(@Value("${rest.backend.base.url}") String backendBaseUrl,
                                   StatefullRestTemplate restTemplate) {
-        super(backendBaseUrl, restTemplate);
-    }
-
-    @Override
-    public String serviceUrl() {
-        return "/classroom";
+        super(backendBaseUrl, "/classroom", restTemplate);
     }
 }

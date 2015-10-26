@@ -30,8 +30,8 @@ public class UserProfileServiceClient extends CoreRestClient implements IUserPro
 
     @Override
     public void setProfileData(UserData userData) {
-        String serviceUrl = "/profile";
+        String serviceUrl = backendBaseUrl + "/profile";
         HttpEntity<UserData> entity = new HttpEntity<>(userData);
-        restTemplate.exchange(backendBaseUrl + serviceUrl, HttpMethod.POST, entity, Void.class);
+        restTemplate.exchange(serviceUrl, HttpMethod.POST, entity, Void.class);
     }
 }

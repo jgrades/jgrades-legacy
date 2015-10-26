@@ -36,17 +36,12 @@ public class UserServiceClient extends RestCrudPagingServiceClient<User, Long> i
     @Autowired
     public UserServiceClient(@Value("${rest.backend.base.url}") String backendBaseUrl,
                              StatefullRestTemplate restTemplate) {
-        super(backendBaseUrl, restTemplate);
-    }
-
-    @Override
-    public String serviceUrl() {
-        return "/user";
+        super(backendBaseUrl, "/user", restTemplate);
     }
 
     @Override
     public List<User> getSearchResults(String phrase, String login, String name, String surname, String email, String roles, Boolean active, DateTime lastVisitFrom, DateTime lastVisitTo) {
-        URI uri = UriComponentsBuilder.fromHttpUrl(backendBaseUrl + serviceUrl())
+        URI uri = UriComponentsBuilder.fromHttpUrl(backendBaseUrl + crudUrl)
                 .queryParam("phrase", phrase).queryParam("login", login).queryParam("name", name)
                 .queryParam("surname", surname).queryParam("email", email).queryParam("roles", roles)
                 .queryParam("active", active)
@@ -61,7 +56,7 @@ public class UserServiceClient extends RestCrudPagingServiceClient<User, Long> i
 
     @Override
     public Page<User> getSearchResultsPage(Integer number, Integer size, String phrase, String login, String name, String surname, String email, String roles, Boolean active, DateTime lastVisitFrom, DateTime lastVisitTo) {
-        URI uri = UriComponentsBuilder.fromHttpUrl(backendBaseUrl + serviceUrl())
+        URI uri = UriComponentsBuilder.fromHttpUrl(backendBaseUrl + crudUrl)
                 .queryParam("page", number).queryParam("limit", size).queryParam("phrase", phrase)
                 .queryParam("login", login).queryParam("name", name).queryParam("surname", surname)
                 .queryParam("email", email).queryParam("roles", roles).queryParam("active", active)
@@ -75,7 +70,7 @@ public class UserServiceClient extends RestCrudPagingServiceClient<User, Long> i
 
     @Override
     public Set<MassAccountCreatorResultRecord> massStudentsCreator(MassCreatorDTO massCreatorDTO) {
-        String serviceUrl = backendBaseUrl + serviceUrl() + "/mass";
+        String serviceUrl = backendBaseUrl + crudUrl + "/mass";
         HttpEntity<MassCreatorDTO> httpEntity = new HttpEntity<>(massCreatorDTO);
         ResponseEntity<Set<MassAccountCreatorResultRecord>> response = restTemplate
                 .exchange(serviceUrl, HttpMethod.POST, httpEntity,

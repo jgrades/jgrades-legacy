@@ -25,17 +25,17 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.net.URI;
 
 @Component
-public abstract class RestCrudPagingServiceClient<T, ID> extends RestCrudServiceClient<T, ID>
-        implements RestCrudPagingService<T, ID> {
+public abstract class RestCrudPagingServiceClient<T, ID> extends RestCrudServiceClient<T, ID> //NOSONAR
+        implements RestCrudPagingService<T, ID> { //NOSONAR
     @Autowired
-    public RestCrudPagingServiceClient(@Value("${rest.backend.base.url}") String backendBaseUrl,
+    public RestCrudPagingServiceClient(@Value("${rest.backend.base.url}") String backendBaseUrl, String crudUrl,
                                        StatefullRestTemplate restTemplate) {
-        super(backendBaseUrl, restTemplate);
+        super(backendBaseUrl, crudUrl, restTemplate);
     }
 
     @Override
     public Page<T> getPage(Integer number, Integer size) {
-        URI uri = UriComponentsBuilder.fromHttpUrl(backendBaseUrl + serviceUrl())
+        URI uri = UriComponentsBuilder.fromHttpUrl(backendBaseUrl + crudUrl)
                 .queryParam("page", number)
                 .queryParam("limit", size)
                 .build().encode().toUri();

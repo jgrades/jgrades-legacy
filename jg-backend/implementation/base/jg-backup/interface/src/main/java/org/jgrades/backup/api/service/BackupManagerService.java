@@ -19,7 +19,7 @@ import java.util.List;
 
 public interface BackupManagerService extends CrudPagingService<Backup, Long> {
     @Deprecated
-    default void saveOrUpdate(Backup backup) {
+    default void saveOrUpdate(Backup backup) { //NOSONAR
         throw new IllegalStateException("You should use makeNow method for creating new backup");
     }
 

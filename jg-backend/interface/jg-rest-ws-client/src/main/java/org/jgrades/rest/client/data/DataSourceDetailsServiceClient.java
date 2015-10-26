@@ -31,23 +31,23 @@ public class DataSourceDetailsServiceClient extends CoreRestClient implements ID
 
     @Override
     public DataSourceDetails getDataSourceDetails() {
-        String serviceUrl = "/datasource";
-        ResponseEntity<DataSourceDetails> response = restTemplate.exchange(backendBaseUrl + serviceUrl,
+        String serviceUrl = backendBaseUrl + "/datasource";
+        ResponseEntity<DataSourceDetails> response = restTemplate.exchange(serviceUrl,
                 HttpMethod.GET, HttpEntity.EMPTY, DataSourceDetails.class);
         return response.getBody();
     }
 
     @Override
     public void setDataSourceDetails(DataSourceDetails details) {
-        String serviceUrl = "/datasource";
+        String serviceUrl = backendBaseUrl + "/datasource";
         HttpEntity<DataSourceDetails> entity = new HttpEntity<>(details);
-        restTemplate.exchange(backendBaseUrl + serviceUrl, HttpMethod.POST, entity, Void.class);
+        restTemplate.exchange(serviceUrl, HttpMethod.POST, entity, Void.class);
     }
 
     @Override
     public boolean testConnection() {
-        String serviceUrl = "/datasource/test";
-        ResponseEntity<Boolean> response = restTemplate.exchange(backendBaseUrl + serviceUrl,
+        String serviceUrl = backendBaseUrl + "/datasource/test";
+        ResponseEntity<Boolean> response = restTemplate.exchange(serviceUrl,
                 HttpMethod.GET, HttpEntity.EMPTY, Boolean.class);
         return response.getBody();
     }

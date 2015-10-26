@@ -36,31 +36,31 @@ public class PasswordServiceClient extends CoreRestClient implements IPasswordSe
 
     @Override
     public void setPassword(PasswordDTO passwordInfo) {
-        String serviceUrl = "/password";
+        String serviceUrl = backendBaseUrl + "/password";
         HttpEntity<PasswordDTO> entity = new HttpEntity<>(passwordInfo);
-        restTemplate.exchange(backendBaseUrl + serviceUrl, HttpMethod.POST, entity, Void.class);
+        restTemplate.exchange(serviceUrl, HttpMethod.POST, entity, Void.class);
     }
 
     @Override
     public PasswordPolicy getForRole(JgRole role) {
-        String serviceUrl = "/password/policy/" + role.name();
-        ResponseEntity<PasswordPolicy> response = restTemplate.exchange(backendBaseUrl + serviceUrl,
+        String serviceUrl = backendBaseUrl + "/password/policy/" + role.name();
+        ResponseEntity<PasswordPolicy> response = restTemplate.exchange(serviceUrl,
                 HttpMethod.GET, HttpEntity.EMPTY, PasswordPolicy.class);
         return response.getBody();
     }
 
     @Override
     public Set<PasswordPolicy> getAll() {
-        String serviceUrl = "/password/policy";
-        ResponseEntity<PasswordPolicy[]> response = restTemplate.exchange(backendBaseUrl + serviceUrl,
+        String serviceUrl = backendBaseUrl + "/password/policy";
+        ResponseEntity<PasswordPolicy[]> response = restTemplate.exchange(serviceUrl,
                 HttpMethod.GET, HttpEntity.EMPTY, PasswordPolicy[].class);
         return Sets.newHashSet(response.getBody());
     }
 
     @Override
     public void setForRole(PasswordPolicy policy) {
-        String serviceUrl = "/password/policy";
+        String serviceUrl = backendBaseUrl + "/password/policy";
         HttpEntity<PasswordPolicy> entity = new HttpEntity<>(policy);
-        restTemplate.exchange(backendBaseUrl + serviceUrl, HttpMethod.POST, entity, Void.class);
+        restTemplate.exchange(serviceUrl, HttpMethod.POST, entity, Void.class);
     }
 }

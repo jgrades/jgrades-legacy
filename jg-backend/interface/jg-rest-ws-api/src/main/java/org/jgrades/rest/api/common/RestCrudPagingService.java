@@ -12,6 +12,6 @@ package org.jgrades.rest.api.common;
 
 import org.springframework.data.domain.Page;
 
-public interface RestCrudPagingService<T, ID> extends RestCrudService<T, ID> {
+public interface RestCrudPagingService<T, ID> extends RestCrudService<T, ID> { //NOSONAR
     Page<T> getPage(Integer number, Integer size);
 }

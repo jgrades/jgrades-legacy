@@ -31,24 +31,24 @@ public class LoggerConfigServiceClient extends CoreRestClient implements ILogger
 
     @Override
     public LoggingConfiguration getDefaultConfiguration() {
-        String serviceUrl = "/logging/configuration/default";
-        ResponseEntity<LoggingConfiguration> response = restTemplate.exchange(backendBaseUrl + serviceUrl,
+        String serviceUrl = backendBaseUrl + "/logging/configuration/default";
+        ResponseEntity<LoggingConfiguration> response = restTemplate.exchange(serviceUrl,
                 HttpMethod.GET, HttpEntity.EMPTY, LoggingConfiguration.class);
         return response.getBody();
     }
 
     @Override
     public LoggingConfiguration getConfiguration() {
-        String serviceUrl = "/logging/configuration";
-        ResponseEntity<LoggingConfiguration> response = restTemplate.exchange(backendBaseUrl + serviceUrl,
+        String serviceUrl = backendBaseUrl + "/logging/configuration";
+        ResponseEntity<LoggingConfiguration> response = restTemplate.exchange(serviceUrl,
                 HttpMethod.GET, HttpEntity.EMPTY, LoggingConfiguration.class);
         return response.getBody();
     }
 
     @Override
     public void setNewConfiguration(LoggingConfiguration configuration) {
-        String serviceUrl = "/logging/configuration";
+        String serviceUrl = backendBaseUrl + "/logging/configuration";
         HttpEntity<LoggingConfiguration> entity = new HttpEntity<>(configuration);
-        restTemplate.exchange(backendBaseUrl + serviceUrl, HttpMethod.POST, entity, Void.class);
+        restTemplate.exchange(serviceUrl, HttpMethod.POST, entity, Void.class);
     }
 }

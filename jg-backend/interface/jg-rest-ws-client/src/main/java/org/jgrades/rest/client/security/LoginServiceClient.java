@@ -34,9 +34,9 @@ public class LoginServiceClient extends CoreRestClient implements ILoginService 
 
     @Override
     public LoginResult logIn(String login, String password) {
-        String loginUrl = "/login";
+        String serviceUrl = backendBaseUrl + "/login";
 
-        URI uri = UriComponentsBuilder.fromHttpUrl(backendBaseUrl + loginUrl)
+        URI uri = UriComponentsBuilder.fromHttpUrl(serviceUrl)
                 .queryParam("username", login)
                 .queryParam("pswd", password)
                 .build().encode().toUri();
@@ -48,8 +48,7 @@ public class LoginServiceClient extends CoreRestClient implements ILoginService 
 
     @Override
     public void logOut() {
-        String logoutUrl = "/logout";
-        restTemplate.exchange(backendBaseUrl + logoutUrl,
-                HttpMethod.POST, HttpEntity.EMPTY, Void.class);
+        String logoutUrl = backendBaseUrl + "/logout";
+        restTemplate.exchange(logoutUrl, HttpMethod.POST, HttpEntity.EMPTY, Void.class);
     }
 }

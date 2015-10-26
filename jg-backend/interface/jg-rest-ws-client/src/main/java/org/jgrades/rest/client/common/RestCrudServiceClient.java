@@ -30,28 +30,28 @@ import java.util.List;
 import static java.util.stream.Collectors.toList;
 
 @Component
-public abstract class RestCrudServiceClient<T, ID> extends CoreRestClient implements RestCrudService<T, ID> {
+public abstract class RestCrudServiceClient<T, ID> extends CoreRestClient //NOSONAR
+        implements RestCrudService<T, ID> { //NOSONAR
+    protected final String crudUrl;
 
     @Autowired
-    public RestCrudServiceClient(@Value("${rest.backend.base.url}") String backendBaseUrl,
+    public RestCrudServiceClient(@Value("${rest.backend.base.url}") String backendBaseUrl, String crudUrl,
                                  StatefullRestTemplate restTemplate) {
         super(backendBaseUrl, restTemplate);
+        this.crudUrl = crudUrl;
     }
-
-    public abstract String serviceUrl();
-
 
     @Override
     public void insertOrUpdate(T entity) {
         HttpEntity<T> httpEntity = new HttpEntity<>(entity);
-        restTemplate.exchange(backendBaseUrl + serviceUrl(), HttpMethod.POST, httpEntity, Void.class);
+        restTemplate.exchange(backendBaseUrl + crudUrl, HttpMethod.POST, httpEntity, Void.class);
     }
 
     @Override
     public void remove(List<ID> ids) {
         MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
         map.putIfAbsent("id", ids.stream().map(e -> e.toString()).collect(toList()));
-        URI uri = UriComponentsBuilder.fromHttpUrl(backendBaseUrl + serviceUrl())
+        URI uri = UriComponentsBuilder.fromHttpUrl(backendBaseUrl + crudUrl)
                 .queryParams(map)
                 .build().encode().toUri();
         restTemplate.exchange(uri, HttpMethod.DELETE, HttpEntity.EMPTY, Void.class);
@@ -59,7 +59,7 @@ public abstract class RestCrudServiceClient<T, ID> extends CoreRestClient implem
 
     @Override
     public T getWithId(ID id) {
-        String serviceUrl = serviceUrl() + "/" + id.toString();
+        String serviceUrl = crudUrl + "/" + id.toString();
         ResponseEntity<T> response = restTemplate.exchange(backendBaseUrl + serviceUrl,
                 HttpMethod.GET, HttpEntity.EMPTY, new ParameterizedTypeReference<T>() {
         });
@@ -70,7 +70,7 @@ public abstract class RestCrudServiceClient<T, ID> extends CoreRestClient implem
     public List<T> getWithIds(List<ID> ids) {
         MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
         map.putIfAbsent("id", ids.stream().map(e -> e.toString()).collect(toList()));
-        URI uri = UriComponentsBuilder.fromHttpUrl(backendBaseUrl + serviceUrl())
+        URI uri = UriComponentsBuilder.fromHttpUrl(backendBaseUrl + crudUrl)
                 .queryParams(map)
                 .build().encode().toUri();
         ResponseEntity<List<T>> response = restTemplate.exchange(uri,

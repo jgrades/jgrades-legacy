@@ -18,8 +18,7 @@ import org.jgrades.rest.api.common.RestCrudPagingService;
 import java.util.List;
 
 public interface IBackupService extends RestCrudPagingService<Backup, Long> {
-    @Deprecated
-    void insertOrUpdate(Backup entity);
+    void insertOrUpdate(Backup entity); //Deprecated
 
     void makeBackup();
 
