@@ -10,32 +10,23 @@
 
 package org.jgrades.rest.client.security;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.jgrades.data.api.entities.User;
 import org.jgrades.data.api.entities.roles.AdministratorDetails;
 import org.jgrades.data.api.entities.roles.RoleDetails;
 import org.jgrades.data.api.model.JgRole;
 import org.jgrades.logging.model.LoggingConfiguration;
 import org.jgrades.rest.api.security.PasswordDTO;
+import org.jgrades.rest.client.BaseTest;
 import org.jgrades.rest.client.admin.accounts.UserServiceClient;
-import org.jgrades.rest.client.context.RestClientContext;
 import org.jgrades.rest.client.logging.LoggerConfigServiceClient;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.util.EnumMap;
 
-
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {RestClientContext.class, ContainerEnvSimulatorConfig.class})
-@WebAppConfiguration
 @Ignore
-public class LoginServiceClientTest {
+public class LoginServiceClientTest extends BaseTest {
     @Autowired
     private PasswordServiceClient passwordServiceClient;
 
@@ -48,10 +39,6 @@ public class LoginServiceClientTest {
     @Autowired
     private LoggerConfigServiceClient loggerConfigServiceClient;
 
-
-    @Autowired
-    private ObjectMapper mapper;
-
     @Test
     public void testName() throws Exception {
         User admin = new User();
@@ -63,17 +50,21 @@ public class LoginServiceClientTest {
         userServiceClient.insertOrUpdate(admin);
 
         PasswordDTO passwordDTO = new PasswordDTO();
-        passwordDTO.setUserId(1L);
+        passwordDTO.setLogin("xyz");
         passwordDTO.setPassword("omc2015");
         passwordServiceClient.setPassword(passwordDTO);
 
         loginServiceClient.logIn("xyz", "omc2015");
         LoggingConfiguration configuration = loggerConfigServiceClient.getConfiguration();
         System.out.println(configuration);
-        configuration.setMaxDays(7);
+        configuration.setMaxDays(2);
         loggerConfigServiceClient.setNewConfiguration(configuration);
         System.out.println("NEW: " + loggerConfigServiceClient.getConfiguration());
         loginServiceClient.logOut();
-        loggerConfigServiceClient.getConfiguration();
+        try {
+            loggerConfigServiceClient.getConfiguration();
+        } catch (Exception e) {
+            System.err.println(e);
+        }
     }
 }

@@ -17,15 +17,18 @@ import org.jgrades.rest.client.StatefullRestTemplate;
 import org.jgrades.rest.client.common.RestCrudPagingServiceClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Set;
 
 @Component
-public class ClassGroupServiceClient extends RestCrudPagingServiceClient<ClassGroup, Long> implements IClassGroupService {
+public class ClassGroupServiceClient extends RestCrudPagingServiceClient<ClassGroup, Long>
+        implements IClassGroupService {
     @Autowired
     public ClassGroupServiceClient(@Value("${rest.backend.base.url}") String backendBaseUrl,
                                    StatefullRestTemplate restTemplate) {
@@ -39,13 +42,21 @@ public class ClassGroupServiceClient extends RestCrudPagingServiceClient<ClassGr
         restTemplate.exchange(serviceUrl, HttpMethod.POST, entity, Void.class);
     }
 
-    @Override//TODO
+    @Override
     public Set<StudentDetails> getStudents(Long id) {
-        return null;
+        String serviceUrl = backendBaseUrl + crudUrl + "/" + id + "/students";
+        ResponseEntity<Set<StudentDetails>> response = restTemplate.exchange(serviceUrl,
+                HttpMethod.GET, HttpEntity.EMPTY, new ParameterizedTypeReference<Set<StudentDetails>>() {
+                });
+        return response.getBody();
     }
 
     @Override
     public List<ClassGroup> getFromActiveSemester() {
-        return null;
+        String serviceUrl = backendBaseUrl + crudUrl + "/active";
+        ResponseEntity<List<ClassGroup>> response = restTemplate.exchange(serviceUrl,
+                HttpMethod.GET, HttpEntity.EMPTY, new ParameterizedTypeReference<List<ClassGroup>>() {
+                });
+        return response.getBody();
     }
 }

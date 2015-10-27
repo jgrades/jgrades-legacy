@@ -22,7 +22,6 @@ import java.time.LocalDateTime;
 @Data
 public class PasswordData implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @OneToOne

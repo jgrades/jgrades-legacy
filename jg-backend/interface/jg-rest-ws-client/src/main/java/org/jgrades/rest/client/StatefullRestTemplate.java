@@ -52,7 +52,9 @@ public class StatefullRestTemplate extends RestTemplate {
         httpHeaders.putAll(httpEntity.getHeaders());
 
         httpHeaders.set("Accept", MediaType.APPLICATION_JSON_VALUE);
-        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+        if (httpHeaders.getContentType() == null) {
+            httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+        }
 
         if (StringUtils.isNotEmpty(cookie)) {
             httpHeaders.add("Cookie", cookie);
