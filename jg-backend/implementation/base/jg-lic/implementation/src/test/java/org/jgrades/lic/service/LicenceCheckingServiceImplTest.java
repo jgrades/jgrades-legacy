@@ -20,7 +20,6 @@ import org.jgrades.lic.api.service.LicenceCheckingService;
 import org.jgrades.lic.dao.LicenceRepository;
 import org.jgrades.lic.entities.LicenceEntity;
 import org.jgrades.lic.entities.ProductEntity;
-import org.joda.time.DateTime;
 import org.junit.After;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +27,7 @@ import org.springframework.beans.factory.annotation.Value;
 
 import java.util.Random;
 
+import static java.time.LocalDateTime.now;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class LicenceCheckingServiceImplTest extends BaseTest {
@@ -168,8 +168,8 @@ public class LicenceCheckingServiceImplTest extends BaseTest {
 
     private Licence getValidLicenceWithStrangeMac() {
         Licence licence = getBaseLicence();
-        licence.getProduct().setValidFrom(DateTime.now().minusMonths(1));
-        licence.getProduct().setValidTo(DateTime.now().plusMonths(1));
+        licence.getProduct().setValidFrom(now().minusMonths(1));
+        licence.getProduct().setValidTo(now().plusMonths(1));
         licence.getProduct().setVersion(currentVersion);
 
         LicenceProperty property = new LicenceProperty();
@@ -182,24 +182,24 @@ public class LicenceCheckingServiceImplTest extends BaseTest {
 
     private Licence getValidLicenceWithAnotherVersion() {
         Licence licence = getBaseLicence();
-        licence.getProduct().setValidFrom(DateTime.now().minusMonths(1));
-        licence.getProduct().setValidTo(DateTime.now().plusMonths(1));
+        licence.getProduct().setValidFrom(now().minusMonths(1));
+        licence.getProduct().setValidTo(now().plusMonths(1));
         licence.getProduct().setVersion("CUSTOM VERSION 1.0");
         return licence;
     }
 
     private Licence getExpiredLicenceWithoutProperties() {
         Licence licence = getBaseLicence();
-        licence.getProduct().setValidFrom(DateTime.now().minusMonths(2));
-        licence.getProduct().setValidTo(DateTime.now().minusMonths(1));
+        licence.getProduct().setValidFrom(now().minusMonths(2));
+        licence.getProduct().setValidTo(now().minusMonths(1));
         licence.getProduct().setVersion(currentVersion);
         return licence;
     }
 
     private Licence getValidLicenceWithoutProperties() {
         Licence licence = getBaseLicence();
-        licence.getProduct().setValidFrom(DateTime.now().minusMonths(1));
-        licence.getProduct().setValidTo(DateTime.now().plusMonths(1));
+        licence.getProduct().setValidFrom(now().minusMonths(1));
+        licence.getProduct().setValidTo(now().plusMonths(1));
         licence.getProduct().setVersion(currentVersion);
         return licence;
     }
@@ -230,11 +230,11 @@ public class LicenceCheckingServiceImplTest extends BaseTest {
         product.setName(productName);
         product.setVersion(version);
         if (valid) {
-            product.setValidFrom(DateTime.now().minusDays(1));
-            product.setValidTo(DateTime.now().plusDays(1));
+            product.setValidFrom(now().minusDays(1));
+            product.setValidTo(now().plusDays(1));
         } else {
-            product.setValidFrom(DateTime.now().minusDays(3));
-            product.setValidTo(DateTime.now().minusDays(1));
+            product.setValidFrom(now().minusDays(3));
+            product.setValidTo(now().minusDays(1));
         }
         licenceEntity.setProduct(product);
         return licenceEntity;

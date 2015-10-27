@@ -8,9 +8,8 @@
  *       http://www.apache.org/licenses/LICENSE-2.0
  */
 
-@XmlJavaTypeAdapters({@XmlJavaTypeAdapter(type = DateTime.class, value = LicenceDateTimeAdapter.class)}) package org.jgrades.lic.api.model;
-
-import org.joda.time.DateTime;
+@XmlJavaTypeAdapters({@XmlJavaTypeAdapter(type = LocalDateTime.class, value = LicenceDateTimeAdapter.class)}) package org.jgrades.lic.api.model;
 
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapters;
+import java.time.LocalDateTime;

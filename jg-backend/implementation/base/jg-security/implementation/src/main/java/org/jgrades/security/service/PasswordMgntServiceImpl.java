@@ -15,13 +15,14 @@ import org.jgrades.data.api.entities.User;
 import org.jgrades.security.api.dao.PasswordDataRepository;
 import org.jgrades.security.api.entities.PasswordData;
 import org.jgrades.security.api.service.PasswordMgntService;
-import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
 
 @Service
 public class PasswordMgntServiceImpl implements PasswordMgntService {
@@ -49,11 +50,11 @@ public class PasswordMgntServiceImpl implements PasswordMgntService {
             pswdData.setId(refreshedUser.getId());
             pswdData.setUser(refreshedUser);
             pswdData.setPassword(encodedPassword);
-            pswdData.setLastChange(DateTime.now());
+            pswdData.setLastChange(LocalDateTime.now());
             passwordDataRepository.save(pswdData);
         } else {
             pswdData.setPassword(encodedPassword);
-            pswdData.setLastChange(DateTime.now());
+            pswdData.setLastChange(LocalDateTime.now());
         }
     }
 

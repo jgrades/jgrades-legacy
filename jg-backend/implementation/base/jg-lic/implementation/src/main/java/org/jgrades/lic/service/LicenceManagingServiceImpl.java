@@ -25,6 +25,7 @@ import org.jgrades.lic.entities.LicenceEntity;
 import org.jgrades.logging.JgLogger;
 import org.jgrades.logging.JgLoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -55,6 +56,7 @@ public class LicenceManagingServiceImpl implements LicenceManagingService {
     private LicenceDecryptionService licenceDecryptionService;
 
     @Autowired
+    @Qualifier("licMapper")
     private Mapper mapper;
 
     @Override

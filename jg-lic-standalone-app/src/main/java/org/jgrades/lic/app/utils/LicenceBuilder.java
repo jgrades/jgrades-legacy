@@ -13,9 +13,10 @@ package org.jgrades.lic.app.utils;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringUtils;
 import org.jgrades.lic.api.model.*;
-import org.joda.time.DateTime;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -83,7 +84,7 @@ public class LicenceBuilder {
 
     public LicenceBuilder withStartOfValid(LocalDate fromDateTime) {
         if (Optional.ofNullable(fromDateTime).isPresent() && !StringUtils.isEmpty(fromDateTime.toString())) {
-            product.setValidFrom(new DateTime(fromDateTime.toString()));
+            product.setValidFrom(LocalDateTime.of(fromDateTime, LocalTime.of(0, 0)));
         }
         return this;
     }
@@ -97,7 +98,7 @@ public class LicenceBuilder {
 
     public LicenceBuilder withEndOfValid(LocalDate toDateTime) {
         if (Optional.ofNullable(toDateTime).isPresent() && !StringUtils.isEmpty(toDateTime.toString())) {
-            product.setValidTo(new DateTime(toDateTime.toString()));
+            product.setValidTo(LocalDateTime.of(toDateTime, LocalTime.of(0, 0)));
         }
         return this;
     }

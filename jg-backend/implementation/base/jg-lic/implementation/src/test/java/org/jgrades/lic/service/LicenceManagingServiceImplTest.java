@@ -21,7 +21,6 @@ import org.jgrades.lic.api.model.LicenceProperty;
 import org.jgrades.lic.api.model.Product;
 import org.jgrades.lic.api.service.LicenceManagingService;
 import org.jgrades.lic.dao.LicenceRepository;
-import org.joda.time.DateTime;
 import org.junit.After;
 import org.junit.Rule;
 import org.junit.Test;
@@ -32,6 +31,7 @@ import org.springframework.core.io.ClassPathResource;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -198,8 +198,8 @@ public class LicenceManagingServiceImplTest extends BaseTest {
         Product product = new Product();
         product.setName("JG-BASE");
         product.setVersion("0.4-DEV-SNAPSHOT");
-        product.setValidFrom(new DateTime(2015, 7, 25, 0, 0, 0));
-        product.setValidTo(new DateTime(2016, 7, 25, 0, 0, 0));
+        product.setValidFrom(LocalDateTime.of(2015, 7, 25, 0, 0, 0));
+        product.setValidTo(LocalDateTime.of(2016, 7, 25, 0, 0, 0));
         licence.setProduct(product);
 
         LicenceProperty property = new LicenceProperty();
@@ -225,8 +225,8 @@ public class LicenceManagingServiceImplTest extends BaseTest {
         Product product = new Product();
         product.setName("JG-BASE");
         product.setVersion("0.4-DEV-SNAPSHOT");
-        product.setValidFrom(new DateTime(2015, 7, 25, 0, 0, 0));
-        product.setValidTo(new DateTime(2016, 7, 25, 0, 0, 0));
+        product.setValidFrom(LocalDateTime.of(2015, 7, 25, 0, 0, 0));
+        product.setValidTo(LocalDateTime.of(2016, 7, 25, 0, 0, 0));
         licence.setProduct(product);
 
         LicenceProperty property = new LicenceProperty();

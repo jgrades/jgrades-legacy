@@ -12,12 +12,10 @@ package org.jgrades.data.api.entities;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.Type;
-import org.jgrades.data.api.utils.CustomType;
-import org.joda.time.LocalTime;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalTime;
 
 @Entity
 @Table(name = "JG_DATA_SCHOOL_DAY_PERIOD")
@@ -28,11 +26,7 @@ public class SchoolDayPeriod implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
-    @Type(type = CustomType.JODA_LOCAL_TIME)
     private LocalTime startTime;
 
-    @Column
-    @Type(type = CustomType.JODA_LOCAL_TIME)
     private LocalTime endTime;
 }

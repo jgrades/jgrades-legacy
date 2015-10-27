@@ -16,6 +16,7 @@ import org.jgrades.data.api.dao.accounts.*;
 import org.jgrades.data.api.entities.roles.RoleDetails;
 import org.jgrades.data.api.model.JgRole;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Component;
 
@@ -25,6 +26,7 @@ import java.util.Map;
 @Component
 public abstract class AbstractUserDetailsRepositories {
     @Autowired
+    @Qualifier("roleDetailsMapper")
     protected Mapper mapper;
 
     @Autowired

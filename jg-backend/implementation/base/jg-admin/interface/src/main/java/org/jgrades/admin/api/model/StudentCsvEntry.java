@@ -16,7 +16,8 @@ import org.jgrades.data.api.entities.User;
 import org.jgrades.data.api.entities.roles.StudentDetails;
 import org.jgrades.data.api.model.JgRole;
 import org.jgrades.data.api.utils.RolesMapBuilder;
-import org.joda.time.LocalDate;
+
+import java.time.LocalDate;
 
 @Getter
 @Setter

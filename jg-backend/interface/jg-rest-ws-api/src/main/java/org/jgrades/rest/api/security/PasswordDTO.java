@@ -17,5 +17,6 @@ import lombok.Setter;
 @Setter
 public class PasswordDTO {
     private String password;
+
     private Long userId;//TODO change id to login
 }

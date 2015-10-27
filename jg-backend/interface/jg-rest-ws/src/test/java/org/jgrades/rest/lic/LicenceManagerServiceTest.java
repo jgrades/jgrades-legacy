@@ -21,7 +21,6 @@ import org.jgrades.lic.api.model.Licence;
 import org.jgrades.lic.api.model.Product;
 import org.jgrades.lic.api.service.LicenceManagingService;
 import org.jgrades.rest.RestContext;
-import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -37,6 +36,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.io.File;
+import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasSize;
@@ -272,8 +272,8 @@ public class LicenceManagerServiceTest {
 
         Product product = new Product();
         product.setName("JG-BASE");
-        product.setValidFrom(DateTime.now());
-        product.setValidTo(DateTime.now().plusMonths(1));
+        product.setValidFrom(LocalDateTime.now());
+        product.setValidTo(LocalDateTime.now().plusMonths(1));
         product.setVersion("0.4");
 
         licence.setCustomer(customer);

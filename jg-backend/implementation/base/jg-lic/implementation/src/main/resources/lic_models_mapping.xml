@@ -7,8 +7,8 @@
     <configuration>
         <custom-converters>
             <converter type="org.jgrades.lic.utils.DateTimeMappingConverter">
-                <class-a>org.joda.time.DateTime</class-a>
-                <class-b>org.joda.time.DateTime</class-b>
+                <class-a>java.time.LocalDateTime</class-a>
+                <class-b>java.time.LocalDateTime</class-b>
             </converter>
         </custom-converters>
     </configuration>

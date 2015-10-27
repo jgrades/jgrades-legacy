@@ -16,7 +16,6 @@ import org.jgrades.rest.api.admin.accounts.IUserService;
 import org.jgrades.rest.api.admin.accounts.MassCreatorDTO;
 import org.jgrades.rest.client.StatefullRestTemplate;
 import org.jgrades.rest.client.common.RestCrudPagingServiceClient;
-import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
@@ -28,6 +27,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -40,7 +40,7 @@ public class UserServiceClient extends RestCrudPagingServiceClient<User, Long> i
     }
 
     @Override
-    public List<User> getSearchResults(String phrase, String login, String name, String surname, String email, String roles, Boolean active, DateTime lastVisitFrom, DateTime lastVisitTo) {
+    public List<User> getSearchResults(String phrase, String login, String name, String surname, String email, String roles, Boolean active, LocalDateTime lastVisitFrom, LocalDateTime lastVisitTo) {
         URI uri = UriComponentsBuilder.fromHttpUrl(backendBaseUrl + crudUrl)
                 .queryParam("phrase", phrase).queryParam("login", login).queryParam("name", name)
                 .queryParam("surname", surname).queryParam("email", email).queryParam("roles", roles)
@@ -55,7 +55,7 @@ public class UserServiceClient extends RestCrudPagingServiceClient<User, Long> i
     }
 
     @Override
-    public Page<User> getSearchResultsPage(Integer number, Integer size, String phrase, String login, String name, String surname, String email, String roles, Boolean active, DateTime lastVisitFrom, DateTime lastVisitTo) {
+    public Page<User> getSearchResultsPage(Integer number, Integer size, String phrase, String login, String name, String surname, String email, String roles, Boolean active, LocalDateTime lastVisitFrom, LocalDateTime lastVisitTo) {
         URI uri = UriComponentsBuilder.fromHttpUrl(backendBaseUrl + crudUrl)
                 .queryParam("page", number).queryParam("limit", size).queryParam("phrase", phrase)
                 .queryParam("login", login).queryParam("name", name).queryParam("surname", surname)

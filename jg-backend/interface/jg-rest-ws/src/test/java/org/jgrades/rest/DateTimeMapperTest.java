@@ -10,12 +10,13 @@
 
 package org.jgrades.rest;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.jgrades.common.CommonContext;
 import org.jgrades.rest.lic.LicMockConfig;
-import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -27,6 +28,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.time.LocalDateTime;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
@@ -35,9 +38,12 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 @WebAppConfiguration
 @RequestMapping(value = "/test", produces = MediaType.APPLICATION_JSON_VALUE)
 public class DateTimeMapperTest {
-    private static final DateTime EXPECTED_DATE_TIME = DateTime.now();
+    private static final LocalDateTime EXPECTED_DATE_TIME = LocalDateTime.now();
 
     private MockMvc mockMvc;
+
+    @Autowired
+    private ObjectMapper jacksonObjectMapper;
 
     @Before
     public void setup() {
@@ -49,7 +55,7 @@ public class DateTimeMapperTest {
     @RequestMapping(method = RequestMethod.GET)
     public
     @ResponseBody
-    DateTime returnDateTime() {
+    LocalDateTime returnDateTime() {
         return EXPECTED_DATE_TIME;
     }
 
@@ -60,7 +66,7 @@ public class DateTimeMapperTest {
         String timestamp = mvcResult.getResponse().getContentAsString();
 
         // then
-        DateTime dateTime = new DateTime(Long.parseLong(timestamp));
+        LocalDateTime dateTime = jacksonObjectMapper.readValue(timestamp, LocalDateTime.class);
         assertThat(dateTime).isEqualTo(EXPECTED_DATE_TIME);
     }
 }

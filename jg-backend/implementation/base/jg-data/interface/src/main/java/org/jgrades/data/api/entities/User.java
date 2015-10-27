@@ -13,15 +13,13 @@ package org.jgrades.data.api.entities;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.Type;
 import org.jgrades.data.api.entities.roles.RoleDetails;
 import org.jgrades.data.api.model.JgRole;
 import org.jgrades.data.api.model.UserSetting;
-import org.jgrades.data.api.utils.CustomType;
-import org.joda.time.DateTime;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.EnumMap;
 
 @Entity
@@ -48,7 +46,5 @@ public class User implements Serializable {
     @JsonDeserialize(keyAs = JgRole.class, contentAs = RoleDetails.class)
     private EnumMap<JgRole, RoleDetails> roles;
 
-    @Column
-    @Type(type = CustomType.JODA_DATE_TIME)
-    private DateTime lastVisit;
+    private LocalDateTime lastVisit;
 }

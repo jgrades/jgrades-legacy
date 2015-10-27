@@ -21,6 +21,7 @@ import org.jgrades.lic.entities.LicenceEntity;
 import org.jgrades.logging.JgLogger;
 import org.jgrades.logging.JgLoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -38,6 +39,7 @@ public class LicenceCheckingServiceImpl implements LicenceCheckingService {
     private LicenceRepository licenceRepository;
 
     @Autowired
+    @Qualifier("licMapper")
     private Mapper mapper;
 
     @Autowired
@@ -58,7 +60,7 @@ public class LicenceCheckingServiceImpl implements LicenceCheckingService {
             LOGGER.debug("Start checking rule of validation: {} for licence with uid {}", rule.getClass().getName(), licence.getUid());
             if (!rule.isValid(licence)) {
                 LOGGER.debug("Licence {} is not pass validation process with rule: {}", licence.getUid(), rule.getClass().getName());
-                return new LicenceValidationResult(false, "Licence is not pass validation process with rule: " + licence.getUid());
+                return new LicenceValidationResult(false, "Licence is not pass validation process with rule: " + rule.getClass().getName());
             }
         }
         LOGGER.debug("Licence with uid {} is valid", licence.getUid());

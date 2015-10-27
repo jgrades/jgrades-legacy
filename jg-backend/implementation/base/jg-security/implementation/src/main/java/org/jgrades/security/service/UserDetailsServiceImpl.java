@@ -23,8 +23,6 @@ import org.jgrades.security.api.dao.PasswordPolicyRepository;
 import org.jgrades.security.api.entities.PasswordData;
 import org.jgrades.security.api.entities.PasswordPolicy;
 import org.jgrades.security.utils.UserDetailsImpl;
-import org.joda.time.DateTime;
-import org.joda.time.Duration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
@@ -35,6 +33,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -108,9 +108,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         Set<JgRole> userRoles = userMgntService.getUserRoles(user);
         int expirationDaysForRole = getExpirationDays(getRoleWithHighestPriority(userRoles));
         if (expirationDaysForRole != 0) {
-            DateTime lastPasswordChangeTime = passwordDataRepository.getPasswordDataWithUser(user.getLogin()).getLastChange();
-            Duration duration = new Duration(lastPasswordChangeTime, DateTime.now());
-            return duration.isShorterThan(Duration.standardDays(expirationDaysForRole));
+            LocalDateTime lastPasswordChangeTime = passwordDataRepository.getPasswordDataWithUser(user.getLogin()).getLastChange();
+            Duration duration = Duration.between(lastPasswordChangeTime, LocalDateTime.now());
+            return duration.minusDays(expirationDaysForRole).isNegative();
         } else {
             return true;
         }

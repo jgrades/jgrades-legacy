@@ -84,9 +84,9 @@ public class LicenceFormController {
         customerPhoneField.setText(licence.getCustomer().getPhone());
         productNameField.setText(licence.getProduct().getName());
         productVersionField.setText(licence.getProduct().getVersion());
-        String validFromString = licence.getProduct().getValidFrom().toString(pattern);
+        String validFromString = licence.getProduct().getValidFrom().format(dateTimeFormatter);
         licValidFromDate.setValue(LocalDate.parse(validFromString, dateTimeFormatter));
-        String validToString = licence.getProduct().getValidTo().toString(pattern);
+        String validToString = licence.getProduct().getValidTo().format(dateTimeFormatter);
         licValidToDate.setValue(LocalDate.parse(validToString, dateTimeFormatter));
         propertiesArea.setText(textAreaParser.getPropertiesText(licence.getProperties()));
         setEditable(false);

@@ -37,8 +37,8 @@ public class OpenLicenceAction implements ApplicationAction {
         System.out.println("Customer phone: " + licence.getCustomer().getPhone()); //NOSONAR
         System.out.println("Product name: " + licence.getProduct().getName()); //NOSONAR
         System.out.println("Product version: " + licence.getProduct().getVersion()); //NOSONAR
-        System.out.println("Licence valid from: " + getLicDateTimeFormatter().print(licence.getProduct().getValidFrom())); //NOSONAR
-        System.out.println("Licence valid to: " + getLicDateTimeFormatter().print(licence.getProduct().getValidTo())); //NOSONAR
+        System.out.println("Licence valid from: " + getLicDateTimeFormatter().format(licence.getProduct().getValidFrom())); //NOSONAR
+        System.out.println("Licence valid to: " + getLicDateTimeFormatter().format(licence.getProduct().getValidTo())); //NOSONAR
         System.out.println("Licence properties:"); //NOSONAR
         for (LicenceProperty property : licence.getProperties()) {
             System.out.println(property.getName() + " => " + property.getValue()); //NOSONAR

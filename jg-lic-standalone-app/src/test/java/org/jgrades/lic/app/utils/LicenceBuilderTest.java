@@ -16,11 +16,12 @@ import org.jgrades.lic.api.model.Customer;
 import org.jgrades.lic.api.model.Licence;
 import org.jgrades.lic.api.model.LicenceProperty;
 import org.jgrades.lic.api.model.Product;
-import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -196,8 +197,8 @@ public class LicenceBuilderTest {
         Product product = new Product();
         product.setName("prodName");
         product.setVersion("prodVersion");
-        product.setValidFrom(DateTime.parse(start.toString()));
-        product.setValidTo(DateTime.parse(stop.toString()));
+        product.setValidFrom(LocalDateTime.of(start, LocalTime.of(0, 0)));
+        product.setValidTo(LocalDateTime.of(stop, LocalTime.of(0, 0)));
         return product;
     }
 

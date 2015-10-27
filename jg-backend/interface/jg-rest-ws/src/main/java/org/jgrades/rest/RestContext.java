@@ -12,7 +12,7 @@ package org.jgrades.rest;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.joda.JodaModule;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import cz.jirutka.spring.exhandler.RestHandlerExceptionResolver;
 import cz.jirutka.spring.exhandler.interpolators.SpelMessageInterpolator;
 import cz.jirutka.spring.exhandler.support.HttpMessageConverterUtils;
@@ -23,7 +23,7 @@ import org.jgrades.logging.service.LoggingService;
 import org.jgrades.logging.service.LoggingServiceImpl;
 import org.springframework.context.annotation.*;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
-import org.springframework.format.datetime.joda.JodaTimeFormatterRegistrar;
+import org.springframework.format.datetime.standard.DateTimeFormatterRegistrar;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -69,7 +69,7 @@ public class RestContext extends WebMvcConfigurationSupport {
     public ObjectMapper jacksonObjectMapper() {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-        objectMapper.registerModule(new JodaModule());
+        objectMapper.registerModule(new JavaTimeModule());
         return objectMapper;
     }
 
@@ -137,10 +137,10 @@ public class RestContext extends WebMvcConfigurationSupport {
     }
 
     @Bean
-    public JodaTimeFormatterRegistrar jodaTimeFormatterRegistrar() {
-        JodaTimeFormatterRegistrar jodaTimeFormatterRegistrar = new JodaTimeFormatterRegistrar();
-        jodaTimeFormatterRegistrar.setUseIsoFormat(true);
-        return jodaTimeFormatterRegistrar;
+    public DateTimeFormatterRegistrar dateTimeFormatterRegistrar() {
+        DateTimeFormatterRegistrar dateTimeFormatterRegistrar = new DateTimeFormatterRegistrar();
+        dateTimeFormatterRegistrar.setUseIsoFormat(true);
+        return dateTimeFormatterRegistrar;
     }
 
 }

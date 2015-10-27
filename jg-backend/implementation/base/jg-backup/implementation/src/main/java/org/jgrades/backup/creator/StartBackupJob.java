@@ -21,8 +21,6 @@ import org.jgrades.backup.api.model.BackupOperation;
 import org.jgrades.backup.api.model.BackupStatus;
 import org.jgrades.logging.JgLogger;
 import org.jgrades.logging.JgLoggerFactory;
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
 import org.quartz.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,6 +28,8 @@ import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @DisallowConcurrentExecution
 public class StartBackupJob implements Job {
@@ -50,8 +50,8 @@ public class StartBackupJob implements Job {
     @Autowired
     private BackupEventRepository backupEventRepository;
 
-    private static String getBackupName(DateTime scheduledDateTime) {
-        return DateTimeFormat.forPattern("yyyy-MM-dd'T'HH_mm_ss").print(scheduledDateTime);
+    private static String getBackupName(LocalDateTime scheduledDateTime) {
+        return DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH_mm_ss").format(scheduledDateTime);
     }
 
     private static void insertBackupToSchedulerContext(JobExecutionContext context, Backup backup)
@@ -70,7 +70,7 @@ public class StartBackupJob implements Job {
     public void execute(JobExecutionContext context) throws JobExecutionException {
         SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
 
-        DateTime scheduledDateTime = DateTime.now();
+        LocalDateTime scheduledDateTime = LocalDateTime.now();
         String backupName = getBackupName(scheduledDateTime);
         File backupInstanceDir = new File(backupDirectory + File.separator + backupName);
 
@@ -82,7 +82,7 @@ public class StartBackupJob implements Job {
         insertBackupToSchedulerContext(context, backup);
     }
 
-    private Backup saveBackupMetadataToDb(DateTime scheduledDateTime, String backupName, File backupInstanceDir) {
+    private Backup saveBackupMetadataToDb(LocalDateTime scheduledDateTime, String backupName, File backupInstanceDir) {
         Backup backup = new Backup();
         backup.setName(backupName);
         backup.setScheduledDateTime(scheduledDateTime);
@@ -97,7 +97,7 @@ public class StartBackupJob implements Job {
         event.setEventType(BackupEventType.ONGOING);
         event.setSeverity(BackupEventSeverity.INFO);
         event.setOperation(BackupOperation.BACKUPING);
-        event.setStartTime(DateTime.now());
+        event.setStartTime(LocalDateTime.now());
         event.setBackup(backup);
         event.setMessage("Creating directory for backup content");
         backupEventRepository.save(event);
@@ -109,7 +109,7 @@ public class StartBackupJob implements Job {
         try {
             FileUtils.forceMkdir(backupInstanceDir);
             event.setEventType(BackupEventType.FINISHED);
-            event.setEndTime(DateTime.now());
+            event.setEndTime(LocalDateTime.now());
             backupEventRepository.save(event);
         } catch (IOException e) {
             LOGGER.error("Cannot create directory for backup: {}", backupInstanceDir, e);
@@ -122,7 +122,7 @@ public class StartBackupJob implements Job {
         backup.setStatus(BackupStatus.DONE_WITH_ERROR);
         event.setSeverity(BackupEventSeverity.ERROR);
         event.setMessage("Cannot create directory for backup");
-        event.setEndTime(DateTime.now());
+        event.setEndTime(LocalDateTime.now());
         backupRepository.save(backup);
         backupEventRepository.save(event);
     }

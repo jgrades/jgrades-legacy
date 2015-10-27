@@ -16,7 +16,6 @@ import org.jgrades.data.api.entities.User;
 import org.jgrades.security.api.dao.PasswordDataRepository;
 import org.jgrades.security.api.model.LoginResult;
 import org.jgrades.security.service.LockingManager;
-import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
@@ -29,6 +28,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 @Component
 public class RESTAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
@@ -55,7 +55,7 @@ public class RESTAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuc
         super.onAuthenticationSuccess(request, response, authentication);
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         User user = userMgntService.getWithLogin(userDetails.getUsername());
-        user.setLastVisit(DateTime.now());
+        user.setLastVisit(LocalDateTime.now());
         response.getWriter().write(jacksonObjectMapper.writeValueAsString(new LoginResult()));
         lockingManager.removeLockIfPossible(user);
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);

@@ -24,7 +24,6 @@ import com.openpojo.validation.rule.impl.SetterMustExistRule;
 import com.openpojo.validation.test.impl.GetterTester;
 import com.openpojo.validation.test.impl.SetterTester;
 import org.junit.Test;
-import org.meanbean.test.BeanTester;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
@@ -70,15 +69,6 @@ public class LicenceEntitiesModelTest {
         // when then
         for (PojoClass pojoClass : entitiesClass) {
             pojoValidator.runValidation(pojoClass);
-        }
-    }
-
-    @Test
-    public void testGettersAndSetters() throws Exception {
-        BeanTester tester = new BeanTester();
-        tester.setIterations(1);
-        for (Class clazz : POJOS) {
-            tester.testBean(clazz);
         }
     }
 }

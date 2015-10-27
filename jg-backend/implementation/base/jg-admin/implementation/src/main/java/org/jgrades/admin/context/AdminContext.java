@@ -30,7 +30,7 @@ public class AdminContext {
         return new PropertySourcesPlaceholderConfigurer();
     }
 
-    @Bean
+    @Bean(name = "roleDetailsMapper")
     Mapper mapper() {
         List<String> mappingFiles = Lists.newArrayList("role_details_mapping.xml");
         return new DozerBeanMapper(mappingFiles);

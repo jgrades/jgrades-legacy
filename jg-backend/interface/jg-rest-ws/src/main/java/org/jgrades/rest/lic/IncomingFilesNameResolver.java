@@ -10,14 +10,13 @@
 
 package org.jgrades.rest.lic;
 
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.io.File;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Component
 public class IncomingFilesNameResolver {
@@ -34,19 +33,19 @@ public class IncomingFilesNameResolver {
     private String signatureExtension;
 
     private DateTimeFormatter formatter;
-    private DateTime dateTime;
+    private LocalDateTime dateTime;
 
     @PostConstruct
     public void init() {
-        formatter = DateTimeFormat.forPattern(fileNamePattern);
-        dateTime = DateTime.now();
+        formatter = DateTimeFormatter.ofPattern(fileNamePattern);
+        dateTime = LocalDateTime.now();
     }
 
     public File getLicenceFile() {
-        return new File(licPath + File.separator + formatter.print(dateTime) + "." + licenceExtension);
+        return new File(licPath + File.separator + formatter.format(dateTime) + "." + licenceExtension);
     }
 
     public File getSignatureFile() {
-        return new File(licPath + File.separator + formatter.print(dateTime) + "." + signatureExtension);
+        return new File(licPath + File.separator + formatter.format(dateTime) + "." + signatureExtension);
     }
 }

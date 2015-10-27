@@ -14,13 +14,13 @@ import com.google.common.collect.Sets;
 import com.univocity.parsers.common.ParsingContext;
 import com.univocity.parsers.common.processor.RowProcessor;
 import org.jgrades.admin.api.model.StudentCsvEntry;
-import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.Set;
 
-import static org.joda.time.format.DateTimeFormat.forPattern;
+import static java.time.format.DateTimeFormatter.ofPattern;
 
 @Component
 public class CsvRowProcessor implements RowProcessor {
@@ -48,7 +48,7 @@ public class CsvRowProcessor implements RowProcessor {
             StudentCsvEntry entry = new StudentCsvEntry();
             entry.setName(studentRow[0]);
             entry.setSurname(studentRow[1]);
-            entry.setDateOfBirth(LocalDate.parse(studentRow[2], forPattern(dateOfBirthFormat)));
+            entry.setDateOfBirth(LocalDate.parse(studentRow[2], ofPattern(dateOfBirthFormat)));
             entry.setNationalIdentificationNumber(studentRow[3]);
             entry.setAddress(studentRow[4]);
 

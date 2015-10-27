@@ -17,5 +17,6 @@ import lombok.Setter;
 @Setter
 public class RestoreSettings {
     boolean useCurrentDataSource;
+
     boolean makeBackupBeforeRestoring;
 }

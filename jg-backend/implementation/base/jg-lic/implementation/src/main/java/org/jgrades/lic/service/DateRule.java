@@ -21,6 +21,8 @@ import org.jgrades.logging.JgLoggerFactory;
 import java.util.List;
 import java.util.Optional;
 
+import static java.time.LocalDateTime.now;
+
 class DateRule implements ValidationRule {
     private static final JgLogger LOGGER = JgLoggerFactory.getLogger(DateRule.class);
     private static final String EXPIRED_DAYS_PROPERTY_NAME = "expiredDays";
@@ -29,8 +31,8 @@ class DateRule implements ValidationRule {
     public boolean isValid(Licence licence) {
         LOGGER.debug("Start checking DateRule for licence with uid {}", licence.getUid());
         Product product = licence.getProduct();
-        boolean startDateIsBeforeNow = product.getValidFrom().isBeforeNow();
-        boolean endDateIsAfterNow = product.getValidTo().isAfterNow();
+        boolean startDateIsBeforeNow = product.getValidFrom().isBefore(now());
+        boolean endDateIsAfterNow = product.getValidTo().isAfter(now());
         LOGGER.debug("Is start date before now for licence with uid {}: {}", licence.getUid(), startDateIsBeforeNow);
         LOGGER.debug("Is end date after now for licence with uid {}: {}", licence.getUid(), endDateIsAfterNow);
         boolean isExpiredDaysModeActive = checkExpiredDaysMode(licence);
@@ -50,7 +52,7 @@ class DateRule implements ValidationRule {
         if (Optional.ofNullable(property).isPresent()) {
             LOGGER.debug("ExpiredDays property found for licence with uid {}", licence.getUid());
             int days = Integer.parseInt(property.getValue());
-            if (licence.getProduct().getValidTo().plusDays(days).isAfterNow()) {
+            if (licence.getProduct().getValidTo().plusDays(days).isAfter(now())) {
                 LOGGER.debug("Licence with uid {} is in expiredDays period ({} extra days)", licence.getUid(), days);
                 return true;
             }

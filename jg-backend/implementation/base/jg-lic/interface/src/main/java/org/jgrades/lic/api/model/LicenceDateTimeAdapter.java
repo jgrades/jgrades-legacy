@@ -10,31 +10,30 @@
 
 package org.jgrades.lic.api.model;
 
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
-public class LicenceDateTimeAdapter extends XmlAdapter<String, DateTime> {
+public class LicenceDateTimeAdapter extends XmlAdapter<String, LocalDateTime> {
     public static final String PATTERN = "yyyy-MM-dd HH:mm:ss";
 
-    private static final DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern(PATTERN);
+    private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(PATTERN);
 
     public static DateTimeFormatter getLicDateTimeFormatter() {
         return dateTimeFormatter;
     }
 
     @Override
-    public DateTime unmarshal(String v) {
+    public LocalDateTime unmarshal(String v) {
         dateTimeFormatter.withLocale(Locale.ENGLISH);
-        return DateTime.parse(v, dateTimeFormatter);
+        return LocalDateTime.parse(v, dateTimeFormatter);
     }
 
     @Override
-    public String marshal(DateTime v) {
+    public String marshal(LocalDateTime v) {
         dateTimeFormatter.withLocale(Locale.ENGLISH);
-        return v.toString(dateTimeFormatter);
+        return v.format(dateTimeFormatter);
     }
 }

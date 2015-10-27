@@ -12,9 +12,9 @@ package org.jgrades.admin.api.accounts;
 
 import org.jgrades.data.api.entities.User;
 import org.jgrades.data.api.model.JgRole;
-import org.joda.time.DateTime;
 import org.springframework.data.jpa.domain.Specification;
 
+import java.time.LocalDateTime;
 import java.util.Set;
 
 public interface UserSpecifications {
@@ -34,5 +34,5 @@ public interface UserSpecifications {
 
     Specification withRoles(Set<JgRole> roles);
 
-    Specification<User> lastVisitBetween(DateTime dateTime1, DateTime dateTime2);
+    Specification<User> lastVisitBetween(LocalDateTime dateTime1, LocalDateTime dateTime2);
 }

@@ -13,11 +13,10 @@ package org.jgrades.lic.entities;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.Type;
-import org.joda.time.DateTime;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "JG_LIC_PRODUCT")
@@ -33,11 +32,7 @@ public class ProductEntity implements Serializable {
 
     private String version;
 
-    @Column
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
-    private DateTime validFrom;
+    private LocalDateTime validFrom;
 
-    @Column
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
-    private DateTime validTo;
+    private LocalDateTime validTo;
 }

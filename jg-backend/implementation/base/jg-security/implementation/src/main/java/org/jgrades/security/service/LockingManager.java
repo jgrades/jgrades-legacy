@@ -17,12 +17,14 @@ import org.jgrades.security.api.dao.PasswordDataRepository;
 import org.jgrades.security.api.dao.PasswordPolicyRepository;
 import org.jgrades.security.api.entities.PasswordData;
 import org.jgrades.security.api.entities.PasswordPolicy;
-import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.Set;
+
+import static java.time.LocalDateTime.now;
 
 @Component
 public class LockingManager {
@@ -44,8 +46,8 @@ public class LockingManager {
     public boolean isLocked(User user) {
         PasswordData passwordData = passwordDataRepository.getPasswordDataWithUser(user.getLogin());
         if (passwordData != null && passwordData.getLockingDateTime() != null) {
-            DateTime endOfLock = passwordData.getLockingDateTime().plusMinutes(lockingMinutes);
-            return endOfLock.isAfterNow();
+            LocalDateTime endOfLock = passwordData.getLockingDateTime().plusMinutes(lockingMinutes);
+            return endOfLock.isAfter(now());
         }
         return false;
     }
@@ -64,7 +66,7 @@ public class LockingManager {
                 maximumNumberOfFailedLogin = defaultMaximumFailedLogins;
             }
             if (maximumNumberOfFailedLogin.equals(passwordData.getFailedLoginAmount())) {
-                passwordData.setLockingDateTime(DateTime.now());
+                passwordData.setLockingDateTime(now());
             }
         }
     }
@@ -73,8 +75,8 @@ public class LockingManager {
         PasswordData passwordData = passwordDataRepository.getPasswordDataWithUser(user.getLogin());
         if (passwordData != null && passwordData.getFailedLoginAmount() > 0) {
             passwordData.setFailedLoginAmount(0);
-            DateTime lockingDateTime = passwordData.getLockingDateTime();
-            if (lockingDateTime != null && lockingDateTime.plusMinutes(lockingMinutes).isBeforeNow()) {
+            LocalDateTime lockingDateTime = passwordData.getLockingDateTime();
+            if (lockingDateTime != null && lockingDateTime.plusMinutes(lockingMinutes).isBefore(now())) {
                 passwordData.setLockingDateTime(null);
             }
         }

@@ -13,15 +13,13 @@ package org.jgrades.backup.api.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.Type;
 import org.jgrades.backup.api.model.BackupEventSeverity;
 import org.jgrades.backup.api.model.BackupEventType;
 import org.jgrades.backup.api.model.BackupOperation;
-import org.jgrades.data.api.utils.CustomType;
-import org.joda.time.DateTime;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "JG_BACKUP_BACKUP_EVENT")
@@ -41,13 +39,9 @@ public class BackupEvent implements Serializable {
     @Enumerated(EnumType.STRING)
     private BackupOperation operation;
 
-    @Column
-    @Type(type = CustomType.JODA_DATE_TIME)
-    private DateTime startTime;
+    private LocalDateTime startTime;
 
-    @Column
-    @Type(type = CustomType.JODA_DATE_TIME)
-    private DateTime endTime;
+    private LocalDateTime endTime;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)

@@ -11,21 +11,22 @@
 package org.jgrades.lic.utils;
 
 import org.dozer.DozerConverter;
-import org.joda.time.DateTime;
 
-public class DateTimeMappingConverter extends DozerConverter<DateTime, DateTime> {
+import java.time.LocalDateTime;
+
+public class DateTimeMappingConverter extends DozerConverter<LocalDateTime, LocalDateTime> {
 
     public DateTimeMappingConverter() {
-        super(DateTime.class, DateTime.class);
+        super(LocalDateTime.class, LocalDateTime.class);
     }
 
     @Override
-    public DateTime convertTo(final DateTime source, final DateTime destination) {
-        return source == null ? null : new DateTime(source);
+    public LocalDateTime convertTo(final LocalDateTime source, LocalDateTime destination) {
+        return source == null ? null : LocalDateTime.from(source);
     }
 
     @Override
-    public DateTime convertFrom(final DateTime source, final DateTime destination) {
-        return source == null ? null : new DateTime(source);
+    public LocalDateTime convertFrom(final LocalDateTime source, LocalDateTime destination) {
+        return source == null ? null : LocalDateTime.from(source);
     }
 }

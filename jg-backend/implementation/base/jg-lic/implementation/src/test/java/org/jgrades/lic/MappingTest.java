@@ -20,17 +20,19 @@ import org.jgrades.lic.entities.CustomerEntity;
 import org.jgrades.lic.entities.LicenceEntity;
 import org.jgrades.lic.entities.LicencePropertyEntity;
 import org.jgrades.lic.entities.ProductEntity;
-import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class MappingTest extends BaseTest {
     @Autowired
+    @Qualifier("licMapper")
     private Mapper mapper;
 
     @Before
@@ -77,8 +79,8 @@ public class MappingTest extends BaseTest {
 
         Product product = new Product();
         product.setName("JG-BASE");
-        product.setValidFrom(new DateTime(2015, 8, 14, 12, 30, 0));
-        product.setValidTo(new DateTime(2015, 9, 14, 12, 30, 0));
+        product.setValidFrom(LocalDateTime.of(2015, 8, 14, 12, 30, 0));
+        product.setValidTo(LocalDateTime.of(2015, 9, 14, 12, 30, 0));
         product.setVersion("0.4");
         licence.setProduct(product);
 
@@ -107,8 +109,8 @@ public class MappingTest extends BaseTest {
 
         ProductEntity productEntity = new ProductEntity();
         productEntity.setName("JG-BASE");
-        productEntity.setValidFrom(new DateTime(2015, 8, 14, 12, 30, 0));
-        productEntity.setValidTo(new DateTime(2015, 9, 14, 12, 30, 0));
+        productEntity.setValidFrom(LocalDateTime.of(2015, 8, 14, 12, 30, 0));
+        productEntity.setValidTo(LocalDateTime.of(2015, 9, 14, 12, 30, 0));
         productEntity.setVersion("0.4");
         licenceEntity.setProduct(productEntity);
 

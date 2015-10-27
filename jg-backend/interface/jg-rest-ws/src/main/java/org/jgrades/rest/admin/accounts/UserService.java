@@ -24,13 +24,13 @@ import org.jgrades.rest.admin.accounts.mass.StudentDataCsvParser;
 import org.jgrades.rest.api.admin.accounts.IUserService;
 import org.jgrades.rest.api.admin.accounts.MassCreatorDTO;
 import org.jgrades.rest.common.AbstractRestCrudPagingService;
-import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -63,8 +63,8 @@ public class UserService extends AbstractRestCrudPagingService<User, Long, UserM
                                        @RequestParam(value = "email", required = false) String email,
                                        @RequestParam(value = "roles", required = false) String roles,
                                        @RequestParam(value = "active", required = false) Boolean active,
-                                       @RequestParam(value = "lastVisitFrom", required = false) DateTime lastVisitFrom,
-                                       @RequestParam(value = "lastVisitTo", required = false) DateTime lastVisitTo) {
+                                       @RequestParam(value = "lastVisitFrom", required = false) LocalDateTime lastVisitFrom,
+                                       @RequestParam(value = "lastVisitTo", required = false) LocalDateTime lastVisitTo) {
         Specification<User> userSpecification = userSpecificationsBuilder
                 .withPhrase(phrase).withLogin(login).withName(name).withSurname(surname).withEmail(email)
                 .withRoles(roles).withActiveState(active).withLastVisitBetween(lastVisitFrom, lastVisitTo)
@@ -83,8 +83,8 @@ public class UserService extends AbstractRestCrudPagingService<User, Long, UserM
                                            @RequestParam(value = "email", required = false) String email,
                                            @RequestParam(value = "roles", required = false) String roles,
                                            @RequestParam(value = "active", required = false) Boolean active,
-                                           @RequestParam(value = "lastVisitFrom", required = false) DateTime lastVisitFrom,
-                                           @RequestParam(value = "lastVisitTo", required = false) DateTime lastVisitTo) {
+                                           @RequestParam(value = "lastVisitFrom", required = false) LocalDateTime lastVisitFrom,
+                                           @RequestParam(value = "lastVisitTo", required = false) LocalDateTime lastVisitTo) {
         PagingInfo pagingInfo = new PagingInfo(number, size == -1 ? paginationLimit : size);
         Specification<User> userSpecification = userSpecificationsBuilder
                 .withPhrase(phrase).withLogin(login).withName(name).withSurname(surname).withEmail(email)

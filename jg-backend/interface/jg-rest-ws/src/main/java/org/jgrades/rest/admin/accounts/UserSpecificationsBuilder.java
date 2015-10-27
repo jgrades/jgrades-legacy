@@ -15,12 +15,12 @@ import org.apache.commons.lang3.StringUtils;
 import org.jgrades.admin.api.accounts.UserSpecifications;
 import org.jgrades.data.api.entities.User;
 import org.jgrades.data.api.model.JgRole;
-import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.domain.Specifications;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Component
@@ -34,12 +34,12 @@ public class UserSpecificationsBuilder {
 
     private Specification<User> result;
 
-    private static DateTime startDateTime(DateTime dateTime) {
-        return dateTime == null ? new DateTime(0) : dateTime;
+    private static LocalDateTime startDateTime(LocalDateTime dateTime) {
+        return dateTime == null ? LocalDateTime.MIN : dateTime;
     }
 
-    private static DateTime endDateTime(DateTime dateTime) {
-        return dateTime == null ? DateTime.now() : dateTime;
+    private static LocalDateTime endDateTime(LocalDateTime dateTime) {
+        return dateTime == null ? LocalDateTime.now() : dateTime;
     }
 
     public UserSpecificationsBuilder withPhrase(String phrase) {
@@ -119,7 +119,7 @@ public class UserSpecificationsBuilder {
         return this;
     }
 
-    public UserSpecificationsBuilder withLastVisitBetween(DateTime dt1, DateTime dt2) {
+    public UserSpecificationsBuilder withLastVisitBetween(LocalDateTime dt1, LocalDateTime dt2) {
         if (dt1 == null && dt2 == null) {
             return this;
         }

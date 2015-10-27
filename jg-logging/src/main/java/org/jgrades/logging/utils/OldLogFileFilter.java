@@ -15,11 +15,11 @@ import org.jgrades.logging.JgLoggerFactory;
 import org.jgrades.logging.dao.LoggingConfigurationDao;
 import org.jgrades.logging.dao.LoggingConfigurationDaoFileImpl;
 import org.jgrades.logging.model.LoggingConfiguration;
-import org.joda.time.LocalDate;
-import org.joda.time.format.DateTimeFormat;
 
 import java.io.File;
 import java.io.FilenameFilter;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -37,7 +37,7 @@ public class OldLogFileFilter implements FilenameFilter {
         try {
             if (m.find()) {
                 String dateFormat = m.group();
-                return LocalDate.parse(dateFormat, DateTimeFormat.forPattern(SIMPLE_YYYY_MM_DD_PATTERN));
+                return LocalDate.parse(dateFormat, DateTimeFormatter.ofPattern(SIMPLE_YYYY_MM_DD_PATTERN));
             }
             throw new IllegalArgumentException(fileName);
         } catch (IllegalArgumentException e) {

@@ -97,7 +97,7 @@ public class LicContext {
         return transactionManager;
     }
 
-    @Bean
+    @Bean(name = "licMapper")
     Mapper mapper() {
         List<String> mappingFiles = Lists.newArrayList("lic_models_mapping.xml");
         return new DozerBeanMapper(mappingFiles);

@@ -238,10 +238,6 @@
             <artifactId>commons-io</artifactId>
         </dependency>
         <dependency>
-            <groupId>joda-time</groupId>
-            <artifactId>joda-time</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.valid4j</groupId>
             <artifactId>valid4j</artifactId>
         </dependency>
@@ -290,11 +286,6 @@
         <dependency>
             <groupId>nl.jqno.equalsverifier</groupId>
             <artifactId>equalsverifier</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.meanbean</groupId>
-            <artifactId>meanbean</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>

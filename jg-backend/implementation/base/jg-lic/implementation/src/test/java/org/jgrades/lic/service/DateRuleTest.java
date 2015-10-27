@@ -14,10 +14,10 @@ import com.google.common.collect.Lists;
 import org.jgrades.lic.api.model.Licence;
 import org.jgrades.lic.api.model.LicenceProperty;
 import org.jgrades.lic.api.model.Product;
-import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -25,13 +25,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class DateRuleTest {
     private DateRule dateRule;
     private Licence licence;
-    private DateTime dateTimeNow;
+    private LocalDateTime dateTimeNow;
 
     @Before
     public void setUp() throws Exception {
         dateRule = new DateRule();
         licence = new Licence();
-        dateTimeNow = DateTime.now();
+        dateTimeNow = LocalDateTime.now();
     }
 
     @Test
@@ -112,7 +112,7 @@ public class DateRuleTest {
         assertThat(isValid).isFalse();
     }
 
-    private Product getProduct(DateTime validFrom, DateTime validTo) {
+    private Product getProduct(LocalDateTime validFrom, LocalDateTime validTo) {
         Product product = new Product();
         product.setName("JG-BASE");
         product.setValidFrom(validFrom);

@@ -12,6 +12,7 @@ package org.jgrades.rest.client.context;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.jgrades.rest.client.JGRestErrorHandler;
 import org.jgrades.rest.client.StatefullRestTemplate;
 import org.springframework.context.annotation.*;
@@ -73,6 +74,7 @@ public class RestClientContext {
     public ObjectMapper jacksonObjectMapper() {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        objectMapper.registerModule(new JavaTimeModule());
         return objectMapper;
     }
 }

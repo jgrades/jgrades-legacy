@@ -14,13 +14,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Lists;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.Type;
 import org.jgrades.backup.api.model.BackupStatus;
-import org.jgrades.data.api.utils.CustomType;
-import org.joda.time.DateTime;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -37,9 +35,7 @@ public class Backup implements Serializable {
     @Enumerated(EnumType.STRING)
     private BackupStatus status;
 
-    @Column
-    @Type(type = CustomType.JODA_DATE_TIME)
-    private DateTime scheduledDateTime;
+    private LocalDateTime scheduledDateTime;
 
     @JsonIgnore
     private String path;

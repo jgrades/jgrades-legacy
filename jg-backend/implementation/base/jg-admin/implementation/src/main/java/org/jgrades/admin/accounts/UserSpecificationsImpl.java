@@ -17,13 +17,13 @@ import org.jgrades.admin.api.exception.SearchEngineException;
 import org.jgrades.data.api.entities.User;
 import org.jgrades.data.api.entities.roles.*;
 import org.jgrades.data.api.model.JgRole;
-import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.domain.Specifications;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.criteria.*;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -108,7 +108,7 @@ public class UserSpecificationsImpl implements UserSpecifications {
     }
 
     @Override
-    public Specification<User> lastVisitBetween(DateTime dateTime1, DateTime dateTime2) {
+    public Specification<User> lastVisitBetween(LocalDateTime dateTime1, LocalDateTime dateTime2) {
         return (root, cq, cb) -> cb.between(root.get("lastVisit"), dateTime1, dateTime2);
     }
 

@@ -16,11 +16,11 @@ import org.jgrades.admin.api.model.PeriodsGeneratorSettings;
 import org.jgrades.data.api.dao.SchoolDayPeriodRepository;
 import org.jgrades.data.api.entities.SchoolDayPeriod;
 import org.jgrades.data.api.service.crud.AbstractMgntService;
-import org.joda.time.LocalTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalTime;
 import java.util.List;
 
 @Service

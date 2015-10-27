@@ -18,6 +18,7 @@ import org.jgrades.lic.entities.LicenceEntity;
 import org.jgrades.logging.JgLogger;
 import org.jgrades.logging.JgLoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +33,7 @@ public class LicenceSchedulerService {
     private LicenceCheckingService checkingService;
 
     @Autowired
+    @Qualifier("licMapper")
     private Mapper mapper;
 
     @Scheduled(cron = "${lic.checker.scheduler.cron}")

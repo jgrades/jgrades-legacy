@@ -14,13 +14,14 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.annotations.Type;
 import org.jgrades.data.api.model.JgRole;
 import org.jgrades.data.api.model.UserSetting;
-import org.jgrades.data.api.utils.CustomType;
-import org.joda.time.LocalDate;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "JG_DATA_STUDENT_DETAILS")
@@ -31,8 +32,6 @@ public class StudentDetails extends RoleDetails {
     @UserSetting
     private String contactPhone;
 
-    @Column
-    @Type(type = CustomType.JODA_LOCAL_DATE)
     private LocalDate dateOfBirth;
 
     private String nationalIdentificationNumber;

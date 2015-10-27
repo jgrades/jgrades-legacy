@@ -21,7 +21,6 @@ import org.jgrades.logging.JgLogger;
 import org.jgrades.logging.JgLoggerFactory;
 import org.jgrades.security.utils.EncryptionProvider;
 import org.jgrades.security.utils.SignatureProvider;
-import org.joda.time.DateTime;
 import org.quartz.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,6 +28,7 @@ import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 @DisallowConcurrentExecution
 public class EncryptArchiveJob implements Job {
@@ -106,7 +106,7 @@ public class EncryptArchiveJob implements Job {
         event.setEventType(BackupEventType.ONGOING);
         event.setSeverity(BackupEventSeverity.INFO);
         event.setOperation(BackupOperation.BACKUPING);
-        event.setStartTime(DateTime.now());
+        event.setStartTime(LocalDateTime.now());
         event.setBackup(backup);
         event.setMessage(message);
         backupEventRepository.save(event);
@@ -115,14 +115,14 @@ public class EncryptArchiveJob implements Job {
 
     private void updateEventType(BackupEvent event, BackupEventType backupEventType) {
         event.setEventType(backupEventType);
-        event.setEndTime(DateTime.now());
+        event.setEndTime(LocalDateTime.now());
         backupEventRepository.save(event);
     }
 
     private void setWarnDetails(BackupEvent event) {
         event.setEventType(BackupEventType.FINISHED);
         event.setSeverity(BackupEventSeverity.WARNING);
-        event.setEndTime(DateTime.now());
+        event.setEndTime(LocalDateTime.now());
         backupEventRepository.save(event);
     }
 }
