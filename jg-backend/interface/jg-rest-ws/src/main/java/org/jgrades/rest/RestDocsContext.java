@@ -20,6 +20,10 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+
 @Configuration
 @EnableSwagger2
 public class RestDocsContext {
@@ -44,6 +48,9 @@ public class RestDocsContext {
                 .paths(PathSelectors.any())
                 .build()
                 .pathMapping("/")
+                .directModelSubstitute(LocalDateTime.class, Long[].class)
+                .directModelSubstitute(LocalDate.class, Long[].class)
+                .directModelSubstitute(LocalTime.class, Long[].class)
                 .enableUrlTemplating(false)
                 .apiInfo(apiInfo());
     }

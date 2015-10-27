@@ -44,8 +44,8 @@ public class PasswordService implements IPasswordService {
     @Override
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public void setPassword(@RequestBody PasswordDTO passwordInfo) {
-        LOGGER.trace("Setting password for user with id {}", passwordInfo.getUserId());
-        passwordMgntService.setPassword(passwordInfo.getPassword(), userRepository.findOne(passwordInfo.getUserId()));
+        LOGGER.trace("Setting password for user with login {}", passwordInfo.getLogin());
+        passwordMgntService.setPassword(passwordInfo.getPassword(), userRepository.findFirstByLogin(passwordInfo.getLogin()));
     }
 
     @Override

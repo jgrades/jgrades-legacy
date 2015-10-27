@@ -18,5 +18,5 @@ import lombok.Setter;
 public class PasswordDTO {
     private String password;
 
-    private Long userId;//TODO change id to login
+    private String login;
 }
