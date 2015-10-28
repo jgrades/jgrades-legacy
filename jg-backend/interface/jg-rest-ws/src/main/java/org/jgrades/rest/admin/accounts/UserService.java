@@ -16,6 +16,7 @@ import org.jgrades.admin.api.accounts.UserMgntService;
 import org.jgrades.admin.api.model.MassAccountCreatorResultRecord;
 import org.jgrades.admin.api.model.StudentCsvEntry;
 import org.jgrades.data.api.entities.User;
+import org.jgrades.lic.api.aop.CheckLicence;
 import org.jgrades.logging.JgLogger;
 import org.jgrades.logging.JgLoggerFactory;
 import org.jgrades.monitor.api.aop.CheckSystemDependencies;
@@ -28,6 +29,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -37,6 +39,7 @@ import java.util.Set;
 @RestController
 @RequestMapping(value = "/user", produces = MediaType.APPLICATION_JSON_VALUE)
 @CheckSystemDependencies
+@CheckLicence
 public class UserService extends AbstractRestCrudPagingService<User, Long, UserMgntService> implements IUserService {
     private static final JgLogger LOGGER = JgLoggerFactory.getLogger(UserService.class);
 
@@ -56,6 +59,7 @@ public class UserService extends AbstractRestCrudPagingService<User, Long, UserM
 
     @Override
     @RequestMapping(value = "/search", method = RequestMethod.GET)
+    @PreAuthorize("hasAnyRole('ADMINISTRATOR','MANAGER','TEACHER')")
     public List<User> getSearchResults(@RequestParam(value = "phrase", required = false) String phrase, //NOSONAR
                                        @RequestParam(value = "login", required = false) String login,
                                        @RequestParam(value = "name", required = false) String name,
@@ -74,6 +78,7 @@ public class UserService extends AbstractRestCrudPagingService<User, Long, UserM
 
     @Override
     @RequestMapping(value = "/search/paging", method = RequestMethod.GET)
+    @PreAuthorize("hasAnyRole('ADMINISTRATOR','MANAGER','TEACHER')")
     public Page<User> getSearchResultsPage(@RequestParam(value = "page", defaultValue = "0") @ApiParam(value = "Page number") Integer number, //NOSONAR
                                            @RequestParam(value = "limit", defaultValue = "-1") @ApiParam(value = "Limit on page") Integer size,
                                            @RequestParam(value = "phrase", required = false) String phrase,
@@ -95,6 +100,7 @@ public class UserService extends AbstractRestCrudPagingService<User, Long, UserM
 
     @Override
     @RequestMapping(value = "/mass", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAnyRole('ADMINISTRATOR','MANAGER')")
     public Set<MassAccountCreatorResultRecord> massStudentsCreator(@RequestBody MassCreatorDTO massCreatorDTO) {
         getLogger().trace("Invoking mass student creator with settings {}", massCreatorDTO.getSettings());
         Set<StudentCsvEntry> studentsData = csvParser.parse(massCreatorDTO.getStudentCsvData());

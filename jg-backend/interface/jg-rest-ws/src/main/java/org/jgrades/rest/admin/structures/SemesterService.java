@@ -12,12 +12,14 @@ package org.jgrades.rest.admin.structures;
 
 import org.jgrades.admin.api.structures.SemesterMgntService;
 import org.jgrades.data.api.entities.Semester;
+import org.jgrades.lic.api.aop.CheckLicence;
 import org.jgrades.logging.JgLogger;
 import org.jgrades.logging.JgLoggerFactory;
 import org.jgrades.monitor.api.aop.CheckSystemDependencies;
 import org.jgrades.rest.common.AbstractRestCrudPagingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(value = "/semester", produces = MediaType.APPLICATION_JSON_VALUE)
 @CheckSystemDependencies
+@CheckLicence
 public class SemesterService extends AbstractRestCrudPagingService<Semester, Long, SemesterMgntService> {
     private static final JgLogger LOGGER = JgLoggerFactory.getLogger(SemesterService.class);
 
@@ -40,12 +43,14 @@ public class SemesterService extends AbstractRestCrudPagingService<Semester, Lon
     }
 
     @RequestMapping(value = "/active", method = RequestMethod.GET)
+    @PreAuthorize("isAuthenticated()")
     public Semester getActive() {
         getLogger().trace("Getting active semester");
         return crudService.getActiveSemester();
     }
 
     @RequestMapping(value = "/{id}/active", method = RequestMethod.POST)
+    @PreAuthorize("hasAnyRole('ADMINISTRATOR','MANAGER')")
     public void setActive(@PathVariable Long id) {
         getLogger().trace("Setting as active a semester with id {}", id);
         crudService.setActiveSemester(crudService.getWithId(id));

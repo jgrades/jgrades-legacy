@@ -13,6 +13,7 @@ package org.jgrades.rest.admin.general;
 import org.jgrades.admin.api.general.PeriodsMgntService;
 import org.jgrades.admin.api.model.PeriodsGeneratorSettings;
 import org.jgrades.data.api.entities.SchoolDayPeriod;
+import org.jgrades.lic.api.aop.CheckLicence;
 import org.jgrades.logging.JgLogger;
 import org.jgrades.logging.JgLoggerFactory;
 import org.jgrades.monitor.api.aop.CheckSystemDependencies;
@@ -20,6 +21,7 @@ import org.jgrades.rest.api.admin.general.IPeriodsService;
 import org.jgrades.rest.common.AbstractRestCrudService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -30,6 +32,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/period", produces = MediaType.APPLICATION_JSON_VALUE)
 @CheckSystemDependencies
+@CheckLicence
 public class PeriodsService extends AbstractRestCrudService<SchoolDayPeriod, Long, PeriodsMgntService> implements IPeriodsService {
     private static final JgLogger LOGGER = JgLoggerFactory.getLogger(PeriodsService.class);
 
@@ -40,6 +43,7 @@ public class PeriodsService extends AbstractRestCrudService<SchoolDayPeriod, Lon
 
     @Override
     @RequestMapping(value = "/generator", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAnyRole('ADMINISTRATOR','MANAGER')")
     public void insertWithGenerator(@RequestBody PeriodsGeneratorSettings generationSettings) {
         getLogger().trace("Saving periods using generator with settings: {}", generationSettings);
         List<SchoolDayPeriod> periods = crudService.generateManyWithGenerator(generationSettings);

@@ -21,6 +21,7 @@ import org.jgrades.monitor.api.aop.CheckSystemDependencies;
 import org.jgrades.rest.api.lic.ILicenceCheckService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -29,6 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(value = "/licence/check", produces = MediaType.APPLICATION_JSON_VALUE)
 @CheckSystemDependencies
+@PreAuthorize("hasRole('ADMINISTRATOR')")
 public class LicenceCheckService implements ILicenceCheckService {
     private static final JgLogger LOGGER = JgLoggerFactory.getLogger(LicenceCheckService.class);
 

@@ -22,6 +22,7 @@ import org.jgrades.logging.JgLogger;
 import org.jgrades.logging.JgLoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -34,6 +35,9 @@ import static org.valid4j.Validation.validate;
 @Service
 public class LicenceCheckingServiceImpl implements LicenceCheckingService {
     private static final JgLogger LOGGER = JgLoggerFactory.getLogger(LicenceCheckingServiceImpl.class);
+
+    @Value("${lic.disabled.mode}")
+    private boolean licensingDisabledMode;
 
     @Autowired
     private LicenceRepository licenceRepository;
@@ -55,6 +59,9 @@ public class LicenceCheckingServiceImpl implements LicenceCheckingService {
     @Override
     public LicenceValidationResult checkValid(Licence licence) {
         LOGGER.debug("Start checking validation of licence {}", licence);
+        if (licensingDisabledMode) {
+            return new LicenceValidationResult();
+        }
         validate(licence, notNullValue(), otherwiseThrowing(LicenceNotFoundException.class));
         for (ValidationRule rule : rules) {
             LOGGER.debug("Start checking rule of validation: {} for licence with uid {}", rule.getClass().getName(), licence.getUid());
@@ -70,6 +77,9 @@ public class LicenceCheckingServiceImpl implements LicenceCheckingService {
     @Override
     public LicenceValidationResult checkValidForProduct(String productName) {
         LOGGER.debug("Start checking licences for product {}", productName);
+        if (licensingDisabledMode) {
+            return new LicenceValidationResult();
+        }
 
         List<LicenceEntity> licences = licenceRepository.findByProductName(productName);
 

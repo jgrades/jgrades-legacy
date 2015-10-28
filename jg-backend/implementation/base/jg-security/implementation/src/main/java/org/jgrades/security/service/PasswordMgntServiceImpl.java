@@ -41,11 +41,10 @@ public class PasswordMgntServiceImpl implements PasswordMgntService {
     @Override
     @Transactional("mainTransactionManager")
     public void setPassword(String password, User user) {
-        PasswordData pswdData = passwordDataRepository.findOne(user.getId());
+        User refreshedUser = userMgntService.getWithLogin(user.getLogin());
+        PasswordData pswdData = passwordDataRepository.findOne(refreshedUser.getId());
         String encodedPassword = passwordEncoder.encode(password);
         if (pswdData == null) {
-            User refreshedUser = userMgntService.getWithId(user.getId());
-
             pswdData = new PasswordData();
             pswdData.setId(refreshedUser.getId());
             pswdData.setUser(refreshedUser);

@@ -12,6 +12,7 @@ package org.jgrades.rest.data;
 
 import org.jgrades.data.api.model.DataSourceDetails;
 import org.jgrades.data.api.service.DataSourceService;
+import org.jgrades.lic.api.aop.CheckLicence;
 import org.jgrades.logging.JgLogger;
 import org.jgrades.logging.JgLoggerFactory;
 import org.jgrades.monitor.api.aop.CheckSystemDependencies;
@@ -21,6 +22,7 @@ import org.jgrades.rest.api.data.IDataSourceDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,6 +33,7 @@ import java.util.Timer;
 @RestController
 @RequestMapping(value = "/datasource", produces = MediaType.APPLICATION_JSON_VALUE)
 @CheckSystemDependencies(ignored = SystemDependency.MAIN_DATA_SOURCE)
+@CheckLicence
 public class DataSourceDetailsService implements IDataSourceDetailsService {
     private static final JgLogger LOGGER = JgLoggerFactory.getLogger(DataSourceDetailsService.class);
 
@@ -45,6 +48,7 @@ public class DataSourceDetailsService implements IDataSourceDetailsService {
 
     @Override
     @RequestMapping(method = RequestMethod.GET)
+    @PreAuthorize("hasRole('ADMINISTRATOR')")
     public DataSourceDetails getDataSourceDetails() {
         LOGGER.trace("Getting data source details");
         return dataSourceService.getDataSourceDetails();
@@ -52,6 +56,7 @@ public class DataSourceDetailsService implements IDataSourceDetailsService {
 
     @Override
     @RequestMapping(method = RequestMethod.POST)
+    @PreAuthorize("hasRole('ADMINISTRATOR')")
     public void setDataSourceDetails(@RequestBody DataSourceDetails details) {
         LOGGER.trace("Setting a data source details: {}", details);
         dataSourceService.setDataSourceDetails(details);

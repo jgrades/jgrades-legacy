@@ -12,6 +12,7 @@ package org.jgrades.rest.admin.general;
 
 import org.jgrades.admin.api.general.ClassroomMgntService;
 import org.jgrades.data.api.entities.Classroom;
+import org.jgrades.lic.api.aop.CheckLicence;
 import org.jgrades.logging.JgLogger;
 import org.jgrades.logging.JgLoggerFactory;
 import org.jgrades.monitor.api.aop.CheckSystemDependencies;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(value = "/classroom", produces = MediaType.APPLICATION_JSON_VALUE)
 @CheckSystemDependencies
+@CheckLicence
 public class ClassroomService extends AbstractRestCrudPagingService<Classroom, Long, ClassroomMgntService> implements IClassroomService {
     private static final JgLogger LOGGER = JgLoggerFactory.getLogger(ClassroomService.class);
 

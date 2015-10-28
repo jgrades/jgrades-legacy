@@ -14,12 +14,14 @@ import org.jgrades.backup.api.entities.Backup;
 import org.jgrades.backup.api.entities.BackupEvent;
 import org.jgrades.backup.api.model.RestoreSettings;
 import org.jgrades.backup.api.service.BackupManagerService;
+import org.jgrades.lic.api.aop.CheckLicence;
 import org.jgrades.logging.JgLogger;
 import org.jgrades.logging.JgLoggerFactory;
 import org.jgrades.rest.api.backup.IBackupService;
 import org.jgrades.rest.common.AbstractRestCrudPagingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
@@ -27,6 +29,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/backup", produces = MediaType.APPLICATION_JSON_VALUE)
+@CheckLicence
+@PreAuthorize("hasRole('ADMINISTRATOR')")
 public class BackupService extends AbstractRestCrudPagingService<Backup, Long, BackupManagerService> implements IBackupService {
     private static final JgLogger LOGGER = JgLoggerFactory.getLogger(BackupService.class);
 

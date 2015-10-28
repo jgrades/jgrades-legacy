@@ -20,6 +20,7 @@ import org.jgrades.monitor.api.aop.CheckSystemDependencies;
 import org.jgrades.rest.api.lic.ILicenceManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -30,6 +31,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/licence", produces = MediaType.APPLICATION_JSON_VALUE)
 @CheckSystemDependencies
+@PreAuthorize("hasRole('ADMINISTRATOR')")
 public class LicenceManagerService implements ILicenceManagerService {
     private static final JgLogger LOGGER = JgLoggerFactory.getLogger(LicenceManagerService.class);
 
