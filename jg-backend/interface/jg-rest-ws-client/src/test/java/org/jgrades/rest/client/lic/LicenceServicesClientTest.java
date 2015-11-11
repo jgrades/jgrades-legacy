@@ -12,6 +12,7 @@ package org.jgrades.rest.client.lic;
 
 import org.apache.commons.io.IOUtils;
 import org.jgrades.rest.client.BaseTest;
+import org.jgrades.rest.client.security.LoginServiceClient;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,9 @@ import java.io.FileInputStream;
 @Ignore
 public class LicenceServicesClientTest extends BaseTest {
     @Autowired
+    private LoginServiceClient loginServiceClient;
+
+    @Autowired
     private LicenceManagerServiceClient licenceManagerServiceClient;
 
     @Autowired
@@ -31,6 +35,8 @@ public class LicenceServicesClientTest extends BaseTest {
 
     @Test
     public void shouldInstall() throws Exception {
+        loginServiceClient.logIn("admin", "admin");
+
         File licenceResource = new File("src/test/resources/0.4-DEV-SNAPSHOT.lic");
         FileInputStream input = new FileInputStream(licenceResource);
         MultipartFile licenceMultipartFile = new MockMultipartFile("licence",

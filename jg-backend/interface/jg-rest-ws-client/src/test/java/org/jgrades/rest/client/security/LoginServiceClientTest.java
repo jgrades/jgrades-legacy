@@ -10,61 +10,55 @@
 
 package org.jgrades.rest.client.security;
 
-import org.jgrades.data.api.entities.User;
-import org.jgrades.data.api.entities.roles.AdministratorDetails;
-import org.jgrades.data.api.entities.roles.RoleDetails;
-import org.jgrades.data.api.model.JgRole;
+import org.apache.commons.lang.math.RandomUtils;
+import org.jgrades.logging.model.JgLogLevel;
 import org.jgrades.logging.model.LoggingConfiguration;
-import org.jgrades.rest.api.security.PasswordDTO;
+import org.jgrades.logging.model.LoggingStrategy;
 import org.jgrades.rest.client.BaseTest;
-import org.jgrades.rest.client.admin.accounts.UserServiceClient;
 import org.jgrades.rest.client.logging.LoggerConfigServiceClient;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.EnumMap;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @Ignore
 public class LoginServiceClientTest extends BaseTest {
     @Autowired
-    private PasswordServiceClient passwordServiceClient;
-
-    @Autowired
-    private UserServiceClient userServiceClient;
-
-    @Autowired
-    private LoginServiceClient loginServiceClient;
-
-    @Autowired
     private LoggerConfigServiceClient loggerConfigServiceClient;
 
     @Test
-    public void testName() throws Exception {
-        User admin = new User();
-        admin.setLogin("xyz");
-        EnumMap<JgRole, RoleDetails> roles = new EnumMap<>(JgRole.class);
-        roles.put(JgRole.ADMINISTRATOR, new AdministratorDetails());
-        admin.setRoles(roles);
-
-        userServiceClient.insertOrUpdate(admin);
-
-        PasswordDTO passwordDTO = new PasswordDTO();
-        passwordDTO.setLogin("xyz");
-        passwordDTO.setPassword("omc2015");
-        passwordServiceClient.setPassword(passwordDTO);
-
-        loginServiceClient.logIn("xyz", "omc2015");
+    public void shouldReturnDefaultConfig() throws Exception {
+        // when
         LoggingConfiguration configuration = loggerConfigServiceClient.getConfiguration();
-        System.out.println(configuration);
-        configuration.setMaxDays(2);
+
+        // then
+        assertThat(configuration).isNotNull();
+    }
+
+    @Test
+    public void shouldReturnCurrentConfig() throws Exception {
+        // when
+        LoggingConfiguration configuration = loggerConfigServiceClient.getConfiguration();
+
+        // then
+        assertThat(configuration).isNotNull();
+    }
+
+    @Test
+    public void shouldSetNewConfiguration() throws Exception {
+        // given
+        LoggingConfiguration configuration = new LoggingConfiguration(
+                LoggingStrategy.LOG_FILE_PER_MODULE_AND_LEVEL,
+                JgLogLevel.DEBUG,
+                "50 MB",
+                RandomUtils.nextInt(50));
+
+        // when
         loggerConfigServiceClient.setNewConfiguration(configuration);
-        System.out.println("NEW: " + loggerConfigServiceClient.getConfiguration());
-        loginServiceClient.logOut();
-        try {
-            loggerConfigServiceClient.getConfiguration();
-        } catch (Exception e) {
-            System.err.println(e);
-        }
+        LoggingConfiguration newConfig = loggerConfigServiceClient.getConfiguration();
+
+        // then
+        assertThat(newConfig).isEqualTo(configuration);
     }
 }

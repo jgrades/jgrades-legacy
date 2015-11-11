@@ -16,7 +16,6 @@ import org.jgrades.data.api.entities.roles.RoleDetails;
 import org.jgrades.data.api.model.JgRole;
 import org.jgrades.rest.api.security.PasswordDTO;
 import org.jgrades.rest.client.BaseTest;
-import org.jgrades.rest.client.security.LoginServiceClient;
 import org.jgrades.rest.client.security.PasswordServiceClient;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -27,9 +26,6 @@ import java.util.EnumMap;
 @Ignore
 public class UserServiceClientTest extends BaseTest {
     @Autowired
-    private LoginServiceClient loginServiceClient;
-
-    @Autowired
     private PasswordServiceClient passwordServiceClient;
 
     @Autowired
@@ -37,19 +33,20 @@ public class UserServiceClientTest extends BaseTest {
 
     @Test
     public void createManager() throws Exception {
-        loginServiceClient.logIn("admin", "admin");
-
+        // given
         User manager = new User();
-        manager.setLogin("manager");
+        manager.setLogin("manager1");
         EnumMap<JgRole, RoleDetails> roles = new EnumMap<>(JgRole.class);
-        roles.put(JgRole.ADMINISTRATOR, new ManagerDetails());
+        roles.put(JgRole.MANAGER, new ManagerDetails());
         manager.setRoles(roles);
-
-        userServiceClient.insertOrUpdate(manager);
+        manager.setName("Manager Test");
 
         PasswordDTO passwordDTO = new PasswordDTO();
-        passwordDTO.setLogin("manager");
+        passwordDTO.setLogin("manager1");
         passwordDTO.setPassword("manager123");
+
+        // when
+        userServiceClient.insertOrUpdate(manager);
         passwordServiceClient.setPassword(passwordDTO);
 
     }
