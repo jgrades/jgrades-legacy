@@ -76,6 +76,14 @@
 
         <!-- DOCUMENTATION UTILS -->
         <springfox.swagger.version>2.2.2</springfox.swagger.version>
+
+        <!-- LIBS FOR FRONT-END -->
+        <vaadin.version>7.5.5</vaadin.version>
+        <vaadin.spring.version>1.0.0</vaadin.spring.version>
+        <vaadin.googleanalytics.tracker.version>2.1.0</vaadin.googleanalytics.tracker.version>
+        <maddon.version>1.15</maddon.version>
+        <slf4j.jdk14.version>1.6.4</slf4j.jdk14.version>
+        <google.gson.version>2.4</google.gson.version>
     </properties>
 
     <repositories>
@@ -83,6 +91,17 @@
             <id>jcenter-snapshots</id>
             <name>jcenter</name>
             <url>https://jcenter.bintray.com/</url>
+        </repository>
+        <repository>
+            <id>vaadin-addons</id>
+            <url>http://maven.vaadin.com/vaadin-addons</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>sonatype vaadin</id>
+            <url>https://oss.sonatype.org/content/repositories/vaadin/</url>
         </repository>
     </repositories>
 
@@ -444,6 +463,49 @@
                 <groupId>io.springfox</groupId>
                 <artifactId>springfox-swagger2</artifactId>
                 <version>${springfox.swagger.version}</version>
+            </dependency>
+
+            <!-- LIBS FOR FRONT-END -->
+            <dependency>
+                <groupId>com.vaadin</groupId>
+                <artifactId>vaadin-server</artifactId>
+                <version>${vaadin.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.vaadin</groupId>
+                <artifactId>vaadin-themes</artifactId>
+                <version>${vaadin.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.vaadin</groupId>
+                <artifactId>vaadin-client-compiler</artifactId>
+                <version>${vaadin.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.vaadin</groupId>
+                <artifactId>vaadin-spring</artifactId>
+                <version>${vaadin.spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.vaadin.addons</groupId>
+                <artifactId>googleanalyticstracker</artifactId>
+                <version>${vaadin.googleanalytics.tracker.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.peimari</groupId>
+                <artifactId>maddon</artifactId>
+                <version>${maddon.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-jdk14</artifactId>
+                <version>${slf4j.jdk14.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.code.gson</groupId>
+                <artifactId>gson</artifactId>
+                <version>${google.gson.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

@@ -16,15 +16,6 @@
 
     <packaging>war</packaging>
 
-
-    <properties>
-        <productionMode>false</productionMode>
-        <vaadin.version>7.5.5</vaadin.version>
-        <vaadin.plugin.version>${vaadin.version}</vaadin.plugin.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    </properties>
-
     <repositories>
         <repository>
             <id>vaadin-addons</id>
@@ -39,155 +30,100 @@
         </repository>
     </repositories>
 
-    <profiles>
-        <profile>
-            <id>production-mode</id>
-            <properties>
-                <productionMode>true</productionMode>
-            </properties>
-            <activation>
-                <property>
-                    <name>productionMode</name>
-                    <value>true</value>
-                </property>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>com.vaadin</groupId>
-                        <artifactId>vaadin-maven-plugin</artifactId>
-                        <version>${vaadin.plugin.version}</version>
-                        <executions>
-                            <execution>
-                                <configuration>
-                                </configuration>
-                                <goals>
-                                    <goal>resources</goal>
-                                    <goal>update-widgetset</goal>
-                                    <goal>compile</goal>
-                                    <goal>compile-theme</goal>
-                                    <goal>update-theme</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
+    <properties>
+        <productionMode>false</productionMode>
+        <vaadin.version>7.5.5</vaadin.version>
+        <vaadin.plugin.version>${vaadin.version}</vaadin.plugin.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    </properties>
 
-                    <plugin>
-                        <groupId>org.eclipse.jetty</groupId>
-                        <artifactId>jetty-maven-plugin</artifactId>
-                        <version>9.2.3.v20140905</version>
-                        <executions>
-                            <!-- start and stop jetty (running our app) when running integration
-                                tests -->
-                            <execution>
-                                <id>start-jetty</id>
-                                <phase>pre-integration-test</phase>
-                                <goals>
-                                    <goal>start</goal>
-                                </goals>
-                                <configuration>
-                                    <httpConnector>
-                                        <port>8090</port>
-                                    </httpConnector>
-                                    <scanIntervalSeconds>0</scanIntervalSeconds>
-                                    <stopKey>STOP</stopKey>
-                                    <stopPort>8866</stopPort>
-                                </configuration>
-                            </execution>
-                            <execution>
-                                <id>stop-jetty</id>
-                                <phase>post-integration-test</phase>
-                                <goals>
-                                    <goal>stop</goal>
-                                </goals>
-                                <configuration>
-                                    <stopKey>STOP</stopKey>
-                                    <stopPort>8866</stopPort>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
+    <!--<profiles>-->
+        <!--<profile>-->
+            <!--<id>production-mode</id>-->
+            <!--<properties>-->
+                <!--<productionMode>true</productionMode>-->
+            <!--</properties>-->
+            <!--<activation>-->
+                <!--<property>-->
+                    <!--<name>productionMode</name>-->
+                    <!--<value>true</value>-->
+                <!--</property>-->
+            <!--</activation>-->
+            <!--<build>-->
+                <!--<plugins>-->
+                    <!--<plugin>-->
+                        <!--<groupId>com.vaadin</groupId>-->
+                        <!--<artifactId>vaadin-maven-plugin</artifactId>-->
+                        <!--<version>${vaadin.plugin.version}</version>-->
+                        <!--<executions>-->
+                            <!--<execution>-->
+                                <!--<configuration>-->
+                                <!--</configuration>-->
+                                <!--<goals>-->
+                                    <!--<goal>resources</goal>-->
+                                    <!--<goal>update-widgetset</goal>-->
+                                    <!--<goal>compile</goal>-->
+                                    <!--<goal>compile-theme</goal>-->
+                                    <!--<goal>update-theme</goal>-->
+                                <!--</goals>-->
+                            <!--</execution>-->
+                        <!--</executions>-->
+                    <!--</plugin>-->
 
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-failsafe-plugin</artifactId>
-                        <version>2.12</version>
-                        <executions>
-                            <execution>
-                                <goals>
-                                    <goal>integration-test</goal>
-                                    <goal>verify</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
+                    <!--<plugin>-->
+                        <!--<groupId>org.eclipse.jetty</groupId>-->
+                        <!--<artifactId>jetty-maven-plugin</artifactId>-->
+                        <!--<version>9.2.3.v20140905</version>-->
+                        <!--<executions>-->
+                            <!--&lt;!&ndash; start and stop jetty (running our app) when running integration-->
+                                <!--tests &ndash;&gt;-->
+                            <!--<execution>-->
+                                <!--<id>start-jetty</id>-->
+                                <!--<phase>pre-integration-test</phase>-->
+                                <!--<goals>-->
+                                    <!--<goal>start</goal>-->
+                                <!--</goals>-->
+                                <!--<configuration>-->
+                                    <!--<httpConnector>-->
+                                        <!--<port>8090</port>-->
+                                    <!--</httpConnector>-->
+                                    <!--<scanIntervalSeconds>0</scanIntervalSeconds>-->
+                                    <!--<stopKey>STOP</stopKey>-->
+                                    <!--<stopPort>8866</stopPort>-->
+                                <!--</configuration>-->
+                            <!--</execution>-->
+                            <!--<execution>-->
+                                <!--<id>stop-jetty</id>-->
+                                <!--<phase>post-integration-test</phase>-->
+                                <!--<goals>-->
+                                    <!--<goal>stop</goal>-->
+                                <!--</goals>-->
+                                <!--<configuration>-->
+                                    <!--<stopKey>STOP</stopKey>-->
+                                    <!--<stopPort>8866</stopPort>-->
+                                <!--</configuration>-->
+                            <!--</execution>-->
+                        <!--</executions>-->
+                    <!--</plugin>-->
 
-    <dependencies>
-        <!-- INTERNAL DEPENDENCIES -->
-        <dependency>
-            <groupId>org.jgrades.app</groupId>
-            <artifactId>jg-rest-ws-client</artifactId>
-            <version>0.4-DEV-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jgrades</groupId>
-            <artifactId>jg-logging</artifactId>
-            <version>${RELEASE.VERSION}</version>
-        </dependency>
-
-        <!-- EXTERNAL DEPENDENCIES -->
-        <dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>vaadin-server</artifactId>
-            <version>${vaadin.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>vaadin-themes</artifactId>
-            <version>${vaadin.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>vaadin-client-compiler</artifactId>
-            <version>${vaadin.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>vaadin-spring</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.vaadin.addons</groupId>
-            <artifactId>googleanalyticstracker</artifactId>
-            <version>2.1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.peimari</groupId>
-            <artifactId>maddon</artifactId>
-            <version>1.15</version>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-jdk14</artifactId>
-            <version>1.6.4</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>18.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-            <version>2.4</version>
-        </dependency>
-
-    </dependencies>
+                    <!--<plugin>-->
+                        <!--<groupId>org.apache.maven.plugins</groupId>-->
+                        <!--<artifactId>maven-failsafe-plugin</artifactId>-->
+                        <!--<version>2.12</version>-->
+                        <!--<executions>-->
+                            <!--<execution>-->
+                                <!--<goals>-->
+                                    <!--<goal>integration-test</goal>-->
+                                    <!--<goal>verify</goal>-->
+                                <!--</goals>-->
+                            <!--</execution>-->
+                        <!--</executions>-->
+                    <!--</plugin>-->
+                <!--</plugins>-->
+            <!--</build>-->
+        <!--</profile>-->
+    <!--</profiles>-->
 
     <build>
         <plugins>
@@ -271,45 +207,59 @@
                 </configuration>
             </plugin>
         </plugins>
-
-        <pluginManagement>
-            <plugins>
-                <!--This plugin's configuration is used to store Eclipse m2e settings
-                    only. It has no influence on the Maven build itself. -->
-                <plugin>
-                    <groupId>org.eclipse.m2e</groupId>
-                    <artifactId>lifecycle-mapping</artifactId>
-                    <version>1.0.0</version>
-                    <configuration>
-                        <lifecycleMappingMetadata>
-                            <pluginExecutions>
-                                <pluginExecution>
-                                    <pluginExecutionFilter>
-                                        <groupId>com.vaadin</groupId>
-                                        <artifactId>
-                                            vaadin-maven-plugin
-                                        </artifactId>
-                                        <versionRange>
-                                            [7.1.0,)
-                                        </versionRange>
-                                        <goals>
-                                            <goal>resources</goal>
-                                            <goal>
-                                                update-widgetset
-                                            </goal>
-                                            <goal>compile-theme</goal>
-                                            <goal>update-theme</goal>
-                                        </goals>
-                                    </pluginExecutionFilter>
-                                    <action>
-                                        <ignore></ignore>
-                                    </action>
-                                </pluginExecution>
-                            </pluginExecutions>
-                        </lifecycleMappingMetadata>
-                    </configuration>
-                </plugin>
-            </plugins>
-        </pluginManagement>
     </build>
+
+    <dependencies>
+        <!-- INTERNAL DEPENDENCIES -->
+        <dependency>
+            <groupId>org.jgrades.app</groupId>
+            <artifactId>jg-rest-ws-client</artifactId>
+            <version>0.4-DEV-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jgrades</groupId>
+            <artifactId>jg-logging</artifactId>
+            <version>${RELEASE.VERSION}</version>
+        </dependency>
+
+        <!-- EXTERNAL DEPENDENCIES -->
+        <dependency>
+            <groupId>com.vaadin</groupId>
+            <artifactId>vaadin-server</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.vaadin</groupId>
+            <artifactId>vaadin-themes</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.vaadin</groupId>
+            <artifactId>vaadin-client-compiler</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.vaadin</groupId>
+            <artifactId>vaadin-spring</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.vaadin.addons</groupId>
+            <artifactId>googleanalyticstracker</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.peimari</groupId>
+            <artifactId>maddon</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-jdk14</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>18.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+        </dependency>
+    </dependencies>
 </project>
