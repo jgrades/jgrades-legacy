@@ -10,10 +10,13 @@
 
 package org.jgrades.rest.api.security;
 
+import org.jgrades.data.api.entities.User;
 import org.jgrades.security.api.model.LoginResult;
 
 public interface ILoginService {
     LoginResult logIn(String login, String password);
+
+    User getLoggedUser();
 
     void logOut();
 }

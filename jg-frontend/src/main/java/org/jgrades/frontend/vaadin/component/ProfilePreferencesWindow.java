@@ -22,7 +22,7 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.themes.ValoTheme;
-import org.jgrades.frontend.vaadin.domain.User;
+import org.jgrades.data.api.entities.User;
 import org.jgrades.frontend.vaadin.event.DashboardEvent.CloseOpenWindowsEvent;
 import org.jgrades.frontend.vaadin.event.DashboardEvent.ProfileUpdatedEvent;
 import org.jgrades.frontend.vaadin.event.DashboardEventBus;

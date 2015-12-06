@@ -68,6 +68,8 @@ public class AdminCreator implements SmartLifecycle {
     private void createAdmin() {
         User admin = new User();
         admin.setLogin(defaultAdminLogin);
+        admin.setName("Name");
+        admin.setSurname("Surname");
 
         EnumMap<JgRole, RoleDetails> roles = new EnumMap<>(JgRole.class);
         roles.put(JgRole.ADMINISTRATOR, new AdministratorDetails());

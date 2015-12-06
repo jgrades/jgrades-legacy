@@ -26,10 +26,10 @@ import com.vaadin.ui.DragAndDropWrapper.DragStartMode;
 import com.vaadin.ui.MenuBar.Command;
 import com.vaadin.ui.MenuBar.MenuItem;
 import com.vaadin.ui.themes.ValoTheme;
+import org.jgrades.data.api.entities.User;
 import org.jgrades.frontend.vaadin.DashboardUI;
 import org.jgrades.frontend.vaadin.component.ProfilePreferencesWindow;
 import org.jgrades.frontend.vaadin.domain.Transaction;
-import org.jgrades.frontend.vaadin.domain.User;
 import org.jgrades.frontend.vaadin.event.DashboardEventBus;
 
 import java.util.Collection;
@@ -90,8 +90,7 @@ public final class DashboardMenu extends CustomComponent {
     }
 
     private User getCurrentUser() {
-        return (User) VaadinSession.getCurrent().getAttribute(
-                User.class.getName());
+        return (User) VaadinSession.getCurrent().getAttribute("jgUser");
     }
 
     private Component buildUserMenu() {
@@ -238,7 +237,7 @@ public final class DashboardMenu extends CustomComponent {
     @Subscribe
     public void updateUserName(final ProfileUpdatedEvent event) {
         User user = getCurrentUser();
-        settingsItem.setText(user.getFirstName() + " " + user.getLastName());
+        settingsItem.setText(user.getName() + " " + user.getSurname());
     }
 
     public final class ValoMenuItemButton extends Button {

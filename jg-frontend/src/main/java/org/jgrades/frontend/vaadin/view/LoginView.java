@@ -17,22 +17,25 @@ import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.themes.ValoTheme;
-import org.jgrades.frontend.vaadin.DashboardUI;
 import org.jgrades.frontend.vaadin.event.DashboardEvent.UserLoginRequestedEvent;
 import org.jgrades.frontend.vaadin.event.DashboardEventBus;
+import org.jgrades.security.api.model.LoginResult;
 
-@SuppressWarnings("serial")
 public class LoginView extends VerticalLayout {
 
     public LoginView() {
+        this(null);
+    }
+
+    public LoginView(LoginResult loginResult) {
         setSizeFull();
 
-        Component loginForm = buildLoginForm();
+        Component loginForm = buildLoginForm(loginResult);
         addComponent(loginForm);
         setComponentAlignment(loginForm, Alignment.MIDDLE_CENTER);
     }
 
-    private Component buildLoginForm() {
+    private Component buildLoginForm(LoginResult loginResult) {
         final VerticalLayout loginPanel = new VerticalLayout();
         loginPanel.setSizeUndefined();
         loginPanel.setSpacing(true);
@@ -41,6 +44,13 @@ public class LoginView extends VerticalLayout {
 
         loginPanel.addComponent(buildLabels());
         loginPanel.addComponent(buildFields());
+        if (loginResult != null && !loginResult.isSuccess()) {
+            Label errorMsg = new Label(loginResult.getErrorType() + ": " + loginResult.getErrorMsg());
+            errorMsg.setSizeUndefined();
+            errorMsg.addStyleName(ValoTheme.LABEL_H3);
+            errorMsg.addStyleName(ValoTheme.LABEL_FAILURE);
+            loginPanel.addComponent(errorMsg);
+        }
         return loginPanel;
     }
 
@@ -68,9 +78,7 @@ public class LoginView extends VerticalLayout {
         signin.addClickListener(new ClickListener() {
             @Override
             public void buttonClick(final ClickEvent event) {
-                System.out.println("AAA " + DashboardUI.getLoginServiceClient());
-                DashboardEventBus.post(new UserLoginRequestedEvent(username
-                        .getValue(), password.getValue()));
+                DashboardEventBus.post(new UserLoginRequestedEvent(username.getValue(), password.getValue()));
             }
         });
         return fields;
