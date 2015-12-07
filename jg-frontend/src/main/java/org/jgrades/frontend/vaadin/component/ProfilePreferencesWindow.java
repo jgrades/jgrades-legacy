@@ -10,11 +10,11 @@
 
 package org.jgrades.frontend.vaadin.component;
 
-import com.vaadin.data.fieldgroup.BeanFieldGroup;
-import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
-import com.vaadin.data.fieldgroup.PropertyId;
 import com.vaadin.event.ShortcutAction.KeyCode;
-import com.vaadin.server.*;
+import com.vaadin.server.FontAwesome;
+import com.vaadin.server.Page;
+import com.vaadin.server.Responsive;
+import com.vaadin.server.ThemeResource;
 import com.vaadin.shared.Position;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
@@ -23,46 +23,36 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.themes.ValoTheme;
 import org.jgrades.data.api.entities.User;
+import org.jgrades.data.api.entities.roles.ParentDetails;
+import org.jgrades.data.api.entities.roles.StudentDetails;
+import org.jgrades.data.api.exception.MissingDataException;
+import org.jgrades.data.api.model.JgRole;
 import org.jgrades.frontend.vaadin.event.DashboardEvent.CloseOpenWindowsEvent;
 import org.jgrades.frontend.vaadin.event.DashboardEvent.ProfileUpdatedEvent;
 import org.jgrades.frontend.vaadin.event.DashboardEventBus;
 
-@SuppressWarnings("serial")
 public class ProfilePreferencesWindow extends Window {
-
     public static final String ID = "profilepreferenceswindow";
 
-    private final BeanFieldGroup<User> fieldGroup;
-    /*
-     * Fields for editing the User object are defined here as class members.
-     * They are later bound to a FieldGroup by calling
-     * fieldGroup.bindMemberFields(this). The Fields' values don't need to be
-     * explicitly set, calling fieldGroup.setItemDataSource(user) synchronizes
-     * the fields with the user object.
-     */
-    @PropertyId("firstName")
-    private TextField firstNameField;
-    @PropertyId("lastName")
-    private TextField lastNameField;
-    @PropertyId("title")
-    private ComboBox titleField;
-    @PropertyId("male")
-    private OptionGroup sexField;
-    @PropertyId("email")
+
+    private User user;
+
+    private TextField loginField;
+    private TextField nameField;
+    private TextField surnameField;
     private TextField emailField;
-    @PropertyId("location")
-    private TextField locationField;
-    @PropertyId("phone")
+    private TextField addressField;
     private TextField phoneField;
-    @PropertyId("newsletterSubscription")
-    private OptionalSelect<Integer> newsletterField;
-    @PropertyId("website")
-    private TextField websiteField;
-    @PropertyId("bio")
-    private TextArea bioField;
+    private TextField nationalIdentificationNumberField;
+    private TextField dateOfBirthField;
+
+    private PasswordField oldPasswordField;
+    private PasswordField newPasswordField;
+    private PasswordField newPasswordAgainField;
 
     private ProfilePreferencesWindow(final User user,
-                                     final boolean preferencesTabOpen) {
+                                     final boolean editPasswordOpen) {
+        this.user = user;
         addStyleName("profile-window");
         setId(ID);
         Responsive.makeResponsive(this);
@@ -87,17 +77,13 @@ public class ProfilePreferencesWindow extends Window {
         content.setExpandRatio(detailsWrapper, 1f);
 
         detailsWrapper.addComponent(buildProfileTab());
-        detailsWrapper.addComponent(buildPreferencesTab());
+        detailsWrapper.addComponent(buildChangePasswordTab());
 
-        if (preferencesTabOpen) {
+        if (editPasswordOpen) {
             detailsWrapper.setSelectedTab(1);
         }
 
         content.addComponent(buildFooter());
-
-        fieldGroup = new BeanFieldGroup<User>(User.class);
-        fieldGroup.bindMemberFields(this);
-        fieldGroup.setItemDataSource(user);
     }
 
     public static void open(final User user, final boolean preferencesTabActive) {
@@ -107,19 +93,29 @@ public class ProfilePreferencesWindow extends Window {
         w.focus();
     }
 
-    private Component buildPreferencesTab() {
+    private Component buildChangePasswordTab() {
         VerticalLayout root = new VerticalLayout();
-        root.setCaption("Preferences");
+        root.setCaption("Change password");
         root.setIcon(FontAwesome.COGS);
         root.setSpacing(true);
         root.setMargin(true);
         root.setSizeFull();
 
-        Label message = new Label("Not implemented in this demo");
-        message.setSizeUndefined();
-        message.addStyleName(ValoTheme.LABEL_LIGHT);
-        root.addComponent(message);
-        root.setComponentAlignment(message, Alignment.MIDDLE_CENTER);
+        FormLayout details = new FormLayout();
+        details.addStyleName(ValoTheme.FORMLAYOUT_LIGHT);
+        root.addComponent(details);
+
+        oldPasswordField = new PasswordField("Old password");
+        oldPasswordField.setRequired(true);
+        details.addComponent(oldPasswordField);
+        newPasswordField = new PasswordField("New password");
+        newPasswordField.setRequired(true);
+        details.addComponent(newPasswordField);
+        newPasswordAgainField = new PasswordField("New password again");
+        newPasswordAgainField.setRequired(true);
+        details.addComponent(newPasswordAgainField);
+
+        root.addComponent(details);
 
         return root;
     }
@@ -144,7 +140,7 @@ public class ProfilePreferencesWindow extends Window {
         Button upload = new Button("Change…", new ClickListener() {
             @Override
             public void buttonClick(ClickEvent event) {
-                Notification.show("Not implemented in this demo");
+                Notification.show("Not implemented yet");
             }
         });
         upload.addStyleName(ValoTheme.BUTTON_TINY);
@@ -157,26 +153,18 @@ public class ProfilePreferencesWindow extends Window {
         root.addComponent(details);
         root.setExpandRatio(details, 1);
 
-        firstNameField = new TextField("First Name");
-        details.addComponent(firstNameField);
-        lastNameField = new TextField("Last Name");
-        details.addComponent(lastNameField);
-
-        titleField = new ComboBox("Title");
-        titleField.setInputPrompt("Please specify");
-        titleField.addItem("Mr.");
-        titleField.addItem("Mrs.");
-        titleField.addItem("Ms.");
-        titleField.setNewItemsAllowed(true);
-        details.addComponent(titleField);
-
-        sexField = new OptionGroup("Sex");
-        sexField.addItem(Boolean.FALSE);
-        sexField.setItemCaption(Boolean.FALSE, "Female");
-        sexField.addItem(Boolean.TRUE);
-        sexField.setItemCaption(Boolean.TRUE, "Male");
-        sexField.addStyleName("horizontal");
-        details.addComponent(sexField);
+        loginField = new TextField("Login");
+        loginField.setEnabled(false);
+        loginField.setValue(user.getLogin());
+        details.addComponent(loginField);
+        nameField = new TextField("Name");
+        nameField.setValue(user.getName());
+        nameField.setEnabled(false);
+        details.addComponent(nameField);
+        surnameField = new TextField("Surname");
+        surnameField.setValue(user.getSurname());
+        surnameField.setEnabled(false);
+        details.addComponent(surnameField);
 
         Label section = new Label("Contact Info");
         section.addStyleName(ValoTheme.LABEL_H4);
@@ -185,44 +173,64 @@ public class ProfilePreferencesWindow extends Window {
 
         emailField = new TextField("Email");
         emailField.setWidth("100%");
-        emailField.setRequired(true);
+        emailField.setValue(user.getEmail());
         emailField.setNullRepresentation("");
         details.addComponent(emailField);
 
-        locationField = new TextField("Location");
-        locationField.setWidth("100%");
-        locationField.setNullRepresentation("");
-        locationField.setComponentError(new UserError(
-                "This address doesn't exist"));
-        details.addComponent(locationField);
+        if (user.getRoles().containsKey(JgRole.STUDENT)) {
+            StudentDetails studentDetails = (StudentDetails) user.getRoles().get(JgRole.STUDENT);
+            addressField = new TextField("Address");
+            addressField.setWidth("100%");
+            addressField.setNullRepresentation("");
+            addressField.setValue(studentDetails.getAddress());
+            details.addComponent(addressField);
 
-        phoneField = new TextField("Phone");
+            phoneField = new TextField("Contact phone");
         phoneField.setWidth("100%");
         phoneField.setNullRepresentation("");
+            phoneField.setValue(studentDetails.getContactPhone());
         details.addComponent(phoneField);
+        } else if (user.getRoles().containsKey(JgRole.PARENT)) {
+            ParentDetails parentDetails = (ParentDetails) user.getRoles().get(JgRole.PARENT);
 
-        newsletterField = new OptionalSelect<Integer>();
-        newsletterField.addOption(0, "Daily");
-        newsletterField.addOption(1, "Weekly");
-        newsletterField.addOption(2, "Monthly");
-        details.addComponent(newsletterField);
+
+            addressField = new TextField("Address");
+            addressField.setWidth("100%");
+            addressField.setNullRepresentation("");
+            addressField.setValue(parentDetails.getAddress());
+            details.addComponent(addressField);
+
+            phoneField = new TextField("Contact phone");
+            phoneField.setWidth("100%");
+            phoneField.setNullRepresentation("");
+            phoneField.setValue(parentDetails.getContactPhone());
+            details.addComponent(phoneField);
+        }
 
         section = new Label("Additional Info");
         section.addStyleName(ValoTheme.LABEL_H4);
         section.addStyleName(ValoTheme.LABEL_COLORED);
         details.addComponent(section);
 
-        websiteField = new TextField("Website");
-        websiteField.setInputPrompt("http://");
-        websiteField.setWidth("100%");
-        websiteField.setNullRepresentation("");
-        details.addComponent(websiteField);
+        if (user.getRoles().containsKey(JgRole.STUDENT)) {
+            StudentDetails studentDetails = (StudentDetails) user.getRoles().get(JgRole.STUDENT);
 
-        bioField = new TextArea("Bio");
-        bioField.setWidth("100%");
-        bioField.setRows(4);
-        bioField.setNullRepresentation("");
-        details.addComponent(bioField);
+            dateOfBirthField = new TextField("Date of birth");
+            dateOfBirthField.setWidth("100%");
+            dateOfBirthField.setNullRepresentation("");
+            if (studentDetails.getDateOfBirth() != null) {
+                dateOfBirthField.setValue(studentDetails.getDateOfBirth().toString());
+            }
+            dateOfBirthField.setEnabled(false);
+            details.addComponent(dateOfBirthField);
+
+            nationalIdentificationNumberField = new TextField("National identification number");
+            nationalIdentificationNumberField.setWidth("100%");
+            nationalIdentificationNumberField.setNullRepresentation("");
+            nationalIdentificationNumberField.setValue(studentDetails.getNationalIdentificationNumber());
+            nationalIdentificationNumberField.setEnabled(false);
+            details.addComponent(nationalIdentificationNumberField);
+        }
 
         return root;
     }
@@ -232,35 +240,57 @@ public class ProfilePreferencesWindow extends Window {
         footer.addStyleName(ValoTheme.WINDOW_BOTTOM_TOOLBAR);
         footer.setWidth(100.0f, Unit.PERCENTAGE);
 
-        Button ok = new Button("OK");
-        ok.addStyleName(ValoTheme.BUTTON_PRIMARY);
-        ok.addClickListener(new ClickListener() {
+        Button save = new Button("Save");
+        save.addStyleName(ValoTheme.BUTTON_PRIMARY);
+        save.addClickListener(new ClickListener() {
             @Override
             public void buttonClick(ClickEvent event) {
                 try {
-                    fieldGroup.commit();
-                    // Updated user should also be persisted to database. But
-                    // not in this demo.
+                    user.setEmail(emailField.getValue());
+                    if (user.getRoles().containsKey(JgRole.STUDENT)) {
+                        StudentDetails studentDetails = (StudentDetails) user.getRoles().get(JgRole.STUDENT);
+                        studentDetails.setAddress(addressField.getValue());
+                        studentDetails.setContactPhone(phoneField.getValue());
+                    } else if (user.getRoles().containsKey(JgRole.PARENT)) {
+                        ParentDetails parentDetails = (ParentDetails) user.getRoles().get(JgRole.PARENT);
+                        parentDetails.setAddress(addressField.getValue());
+                        parentDetails.setContactPhone(phoneField.getValue());
+                    }
 
-                    Notification success = new Notification(
-                            "Profile updated successfully");
+                    String newPassword = getNewPassword();
+
+                    DashboardEventBus.post(new ProfileUpdatedEvent(user, newPassword));
+
+                    Notification success = new Notification("Profile updated successfully");
                     success.setDelayMsec(2000);
                     success.setStyleName("bar success small");
                     success.setPosition(Position.BOTTOM_CENTER);
                     success.show(Page.getCurrent());
 
-                    DashboardEventBus.post(new ProfileUpdatedEvent());
-                    close();
-                } catch (CommitException e) {
-                    Notification.show("Error while updating profile",
-                            Type.ERROR_MESSAGE);
-                }
 
+                    close();
+                } catch (Exception ex) {
+                    Notification.show(ex.getMessage(), Type.ERROR_MESSAGE);
+                }
+            }
+
+            private String getNewPassword() throws MissingDataException {
+                if (!oldPasswordField.isEmpty() || !newPasswordField.isEmpty()
+                        || !newPasswordAgainField.isEmpty()) {
+                    if (oldPasswordField.isEmpty() || newPasswordField.isEmpty() || newPasswordAgainField.isEmpty()) {
+                        throw new MissingDataException("You must fill all fields");
+                    }
+                    if (!newPasswordField.getValue().equals(newPasswordAgainField.getValue())) {
+                        throw new MissingDataException("New password not match");
+                    }
+                    return newPasswordField.getValue();
+                }
+                return null;
             }
         });
-        ok.focus();
-        footer.addComponent(ok);
-        footer.setComponentAlignment(ok, Alignment.TOP_RIGHT);
+        save.focus();
+        footer.addComponent(save);
+        footer.setComponentAlignment(save, Alignment.TOP_RIGHT);
         return footer;
     }
 }

@@ -11,4 +11,11 @@
 package org.jgrades.data.api.exception;
 
 public class MissingDataException extends RuntimeException {
+    public MissingDataException() {
+        super();
+    }
+
+    public MissingDataException(String s) {
+        super(s);
+    }
 }

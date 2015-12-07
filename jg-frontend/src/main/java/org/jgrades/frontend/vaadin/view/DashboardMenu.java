@@ -106,7 +106,7 @@ public final class DashboardMenu extends CustomComponent {
                 ProfilePreferencesWindow.open(user, false);
             }
         });
-        settingsItem.addItem("Preferences", new Command() {
+        settingsItem.addItem("Change Password", new Command() {
             @Override
             public void menuSelected(final MenuItem selectedItem) {
                 ProfilePreferencesWindow.open(user, true);

@@ -23,12 +23,10 @@ import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.ValoTheme;
+import org.jgrades.config.api.model.UserData;
 import org.jgrades.frontend.vaadin.data.DataProvider;
 import org.jgrades.frontend.vaadin.data.dummy.DummyDataProvider;
-import org.jgrades.frontend.vaadin.event.DashboardEvent.BrowserResizeEvent;
-import org.jgrades.frontend.vaadin.event.DashboardEvent.CloseOpenWindowsEvent;
-import org.jgrades.frontend.vaadin.event.DashboardEvent.UserLoggedOutEvent;
-import org.jgrades.frontend.vaadin.event.DashboardEvent.UserLoginRequestedEvent;
+import org.jgrades.frontend.vaadin.event.DashboardEvent.*;
 import org.jgrades.frontend.vaadin.event.DashboardEventBus;
 import org.jgrades.frontend.vaadin.view.LoginView;
 import org.jgrades.frontend.vaadin.view.MainView;
@@ -129,5 +127,15 @@ public final class DashboardUI extends UI {
         for (Window window : getWindows()) {
             window.close();
         }
+    }
+
+    @Subscribe
+    public void updateProfile(final ProfileUpdatedEvent profileUpdatedEvent) {
+        UserData userData = new UserData();
+        userData.setUser(profileUpdatedEvent.getUser());
+        userData.setPassword(profileUpdatedEvent.getPassword());
+        userProfileServiceClient.setProfileData(userData);
+        VaadinSession.getCurrent().setAttribute("jgUser", loginServiceClient.getLoggedUser());
+        updateContent();
     }
 }

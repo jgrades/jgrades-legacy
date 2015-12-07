@@ -24,6 +24,8 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
@@ -31,12 +33,48 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
+import static java.util.stream.Collectors.toList;
+
 @Component
 public class UserServiceClient extends RestCrudPagingServiceClient<User, Long> implements IUserService {
     @Autowired
     public UserServiceClient(@Value("${rest.backend.base.url}") String backendBaseUrl,
                              StatefullRestTemplate restTemplate) {
         super(backendBaseUrl, "/user", restTemplate);
+    }
+
+    @Override
+    public User getWithId(Long id) {
+        String serviceUrl = crudUrl + "/" + id.toString();
+        ResponseEntity<User> response = restTemplate.exchange(backendBaseUrl + serviceUrl,
+                HttpMethod.GET, HttpEntity.EMPTY, new ParameterizedTypeReference<User>() {
+                });
+        return response.getBody();
+    }
+
+    @Override
+    public List<User> getWithIds(List<Long> ids) {
+        MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
+        map.putIfAbsent("id", ids.stream().map(e -> e.toString()).collect(toList()));
+        URI uri = UriComponentsBuilder.fromHttpUrl(backendBaseUrl + crudUrl)
+                .queryParams(map)
+                .build().encode().toUri();
+        ResponseEntity<List<User>> response = restTemplate.exchange(uri,
+                HttpMethod.GET, HttpEntity.EMPTY, new ParameterizedTypeReference<List<User>>() {
+                });
+        return response.getBody();
+    }
+
+    @Override
+    public Page<User> getPage(Integer number, Integer size) {
+        URI uri = UriComponentsBuilder.fromHttpUrl(backendBaseUrl + crudUrl)
+                .queryParam("page", number)
+                .queryParam("limit", size)
+                .build().encode().toUri();
+        ResponseEntity<Page<User>> response = restTemplate.exchange(uri,
+                HttpMethod.GET, HttpEntity.EMPTY, new ParameterizedTypeReference<Page<User>>() {
+                });
+        return response.getBody();
     }
 
     @Override

@@ -10,6 +10,7 @@
 
 package org.jgrades.frontend.vaadin.event;
 
+import org.jgrades.data.api.entities.User;
 import org.jgrades.frontend.vaadin.domain.Transaction;
 import org.jgrades.frontend.vaadin.view.DashboardViewType;
 
@@ -92,6 +93,21 @@ public abstract class DashboardEvent {
     }
 
     public static class ProfileUpdatedEvent {
+        private final User user;
+        private final String password;
+
+        public ProfileUpdatedEvent(User user, String password) {
+            this.user = user;
+            this.password = password;
+        }
+
+        public User getUser() {
+            return user;
+        }
+
+        public String getPassword() {
+            return password;
+        }
     }
 
 }
