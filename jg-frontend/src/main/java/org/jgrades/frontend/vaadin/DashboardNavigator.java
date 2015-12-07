@@ -23,12 +23,11 @@ import org.jgrades.frontend.vaadin.event.DashboardEventBus;
 import org.jgrades.frontend.vaadin.view.DashboardViewType;
 import org.vaadin.googleanalytics.tracking.GoogleAnalyticsTracker;
 
-@SuppressWarnings("serial")
 public class DashboardNavigator extends Navigator {
 
     // Provide a Google Analytics tracker id here
     private static final String TRACKER_ID = null;// "UA-658457-6";
-    private static final DashboardViewType ERROR_VIEW = DashboardViewType.DASHBOARD;
+    private static final DashboardViewType ERROR_VIEW = DashboardViewType.INFORMATION;
     private GoogleAnalyticsTracker tracker;
     private ViewProvider errorViewProvider;
 
@@ -110,9 +109,9 @@ public class DashboardNavigator extends Navigator {
                 }
             };
 
-            if (viewType == ERROR_VIEW) {
-                errorViewProvider = viewProvider;
-            }
+//            if (viewType == ERROR_VIEW) {
+//                errorViewProvider = viewProvider;
+//            }
 
             addProvider(viewProvider);
         }

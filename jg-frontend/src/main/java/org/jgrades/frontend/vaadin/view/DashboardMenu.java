@@ -11,28 +11,20 @@
 package org.jgrades.frontend.vaadin.view;
 
 import com.google.common.eventbus.Subscribe;
-import com.vaadin.event.dd.DragAndDropEvent;
-import com.vaadin.event.dd.DropHandler;
-import com.vaadin.event.dd.acceptcriteria.AcceptCriterion;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.shared.ui.label.ContentMode;
-import com.vaadin.ui.AbstractSelect.AcceptItem;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.DragAndDropWrapper.DragStartMode;
 import com.vaadin.ui.MenuBar.Command;
 import com.vaadin.ui.MenuBar.MenuItem;
 import com.vaadin.ui.themes.ValoTheme;
 import org.jgrades.data.api.entities.User;
-import org.jgrades.frontend.vaadin.DashboardUI;
+import org.jgrades.data.api.model.JgRole;
 import org.jgrades.frontend.vaadin.component.ProfilePreferencesWindow;
-import org.jgrades.frontend.vaadin.domain.Transaction;
 import org.jgrades.frontend.vaadin.event.DashboardEventBus;
-
-import java.util.Collection;
 
 import static org.jgrades.frontend.vaadin.event.DashboardEvent.*;
 
@@ -144,50 +136,65 @@ public final class DashboardMenu extends CustomComponent {
         CssLayout menuItemsLayout = new CssLayout();
         menuItemsLayout.addStyleName("valo-menuitems");
 
+        User currentUser = getCurrentUser();
         for (final DashboardViewType view : DashboardViewType.values()) {
             Component menuItemComponent = new ValoMenuItemButton(view);
 
-            if (view == DashboardViewType.REPORTS) {
-                // Add drop target to reports button
-                DragAndDropWrapper reports = new DragAndDropWrapper(
-                        menuItemComponent);
-                reports.setSizeUndefined();
-                reports.setDragStartMode(DragStartMode.NONE);
-                reports.setDropHandler(new DropHandler() {
-
-                    @Override
-                    public void drop(final DragAndDropEvent event) {
-                        UI.getCurrent()
-                                .getNavigator()
-                                .navigateTo(
-                                        DashboardViewType.REPORTS.getViewName());
-                        Table table = (Table) event.getTransferable()
-                                .getSourceComponent();
-                        DashboardEventBus.post(new TransactionReportEvent(
-                                (Collection<Transaction>) table.getValue()));
-                    }
-
-                    @Override
-                    public AcceptCriterion getAcceptCriterion() {
-                        return AcceptItem.ALL;
-                    }
-
-                });
-                menuItemComponent = reports;
+            if (view == DashboardViewType.STRUCTURE_MANAGEMENT ||
+                    view == DashboardViewType.USER_MANAGEMENT) {
+                if (!currentUser.getRoles().containsKey(JgRole.ADMINISTRATOR)
+                        && !currentUser.getRoles().containsKey(JgRole.MANAGER)) {
+                    continue;
+                }
             }
 
-            if (view == DashboardViewType.DASHBOARD) {
-                notificationsBadge = new Label();
-                notificationsBadge.setId(NOTIFICATIONS_BADGE_ID);
-                menuItemComponent = buildBadgeWrapper(menuItemComponent,
-                        notificationsBadge);
+            if (view == DashboardViewType.ADMINISTRATION) {
+                if (!currentUser.getRoles().containsKey(JgRole.ADMINISTRATOR)) {
+                    continue;
+                }
             }
-            if (view == DashboardViewType.REPORTS) {
-                reportsBadge = new Label();
-                reportsBadge.setId(REPORTS_BADGE_ID);
-                menuItemComponent = buildBadgeWrapper(menuItemComponent,
-                        reportsBadge);
-            }
+
+//            if (view == DashboardViewType.REPORTS) {
+//                // Add drop target to reports button
+//                DragAndDropWrapper reports = new DragAndDropWrapper(
+//                        menuItemComponent);
+//                reports.setSizeUndefined();
+//                reports.setDragStartMode(DragStartMode.NONE);
+//                reports.setDropHandler(new DropHandler() {
+//
+//                    @Override
+//                    public void drop(final DragAndDropEvent event) {
+//                        UI.getCurrent()
+//                                .getNavigator()
+//                                .navigateTo(
+//                                        DashboardViewType.REPORTS.getViewName());
+//                        Table table = (Table) event.getTransferable()
+//                                .getSourceComponent();
+//                        DashboardEventBus.post(new TransactionReportEvent(
+//                                (Collection<Transaction>) table.getValue()));
+//                    }
+//
+//                    @Override
+//                    public AcceptCriterion getAcceptCriterion() {
+//                        return AcceptItem.ALL;
+//                    }
+//
+//                });
+//                menuItemComponent = reports;
+//            }
+
+//            if (view == DashboardViewType.DASHBOARD) {
+//                notificationsBadge = new Label();
+//                notificationsBadge.setId(NOTIFICATIONS_BADGE_ID);
+//                menuItemComponent = buildBadgeWrapper(menuItemComponent,
+//                        notificationsBadge);
+//            }
+//            if (view == DashboardViewType.REPORTS) {
+//                reportsBadge = new Label();
+//                reportsBadge.setId(REPORTS_BADGE_ID);
+//                menuItemComponent = buildBadgeWrapper(menuItemComponent,
+//                        reportsBadge);
+//            }
 
             menuItemsLayout.addComponent(menuItemComponent);
         }
@@ -222,10 +229,10 @@ public final class DashboardMenu extends CustomComponent {
     @Subscribe
     public void updateNotificationsCount(
             final NotificationsCountUpdatedEvent event) {
-        int unreadNotificationsCount = DashboardUI.getDataProvider()
-                .getUnreadNotificationsCount();
-        notificationsBadge.setValue(String.valueOf(unreadNotificationsCount));
-        notificationsBadge.setVisible(unreadNotificationsCount > 0);
+//        int unreadNotificationsCount = DashboardUI.getDataProvider()
+//                .getUnreadNotificationsCount();
+//        notificationsBadge.setValue(String.valueOf(unreadNotificationsCount));
+//        notificationsBadge.setVisible(unreadNotificationsCount > 0);
     }
 
     @Subscribe

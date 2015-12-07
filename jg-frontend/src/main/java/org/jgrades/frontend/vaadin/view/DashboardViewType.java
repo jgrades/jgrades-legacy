@@ -13,18 +13,24 @@ package org.jgrades.frontend.vaadin.view;
 import com.vaadin.navigator.View;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Resource;
-import org.jgrades.frontend.vaadin.view.dashboard.DashboardView;
-import org.jgrades.frontend.vaadin.view.reports.ReportsView;
-import org.jgrades.frontend.vaadin.view.schedule.ScheduleView;
-import org.jgrades.frontend.vaadin.view.transactions.TransactionsView;
-
-//import com.vaadin.demo.dashboard.view.sales.SalesView;
+import org.jgrades.frontend.vaadin.view.information.InformationView;
+import org.jgrades.frontend.vaadin.view.lessons.LessonsView;
+import org.jgrades.frontend.vaadin.view.management.administration.AdministrationView;
+import org.jgrades.frontend.vaadin.view.management.structure.StructureManagementView;
+import org.jgrades.frontend.vaadin.view.management.user.UserManagementView;
 
 public enum DashboardViewType {
-    DASHBOARD("dashboard", DashboardView.class, FontAwesome.HOME, true), TRANSACTIONS(
-            "transactions", TransactionsView.class, FontAwesome.TABLE, false), REPORTS(
-            "reports", ReportsView.class, FontAwesome.FILE_TEXT_O, true), SCHEDULE(
-            "schedule", ScheduleView.class, FontAwesome.CALENDAR_O, false);
+    //    DASHBOARD("dashboard", DashboardView.class, FontAwesome.HOME, true),
+//    TRANSACTIONS("transactions", TransactionsView.class, FontAwesome.TABLE, false),
+//    REPORTS("reports", ReportsView.class, FontAwesome.FILE_TEXT_O, true),
+//    SCHEDULE("schedule", ScheduleView.class, FontAwesome.CALENDAR_O, false),
+    //------------------------------------------------------------------------
+    INFORMATION("information", InformationView.class, FontAwesome.HOME, false),
+    LESSONS("lessons", LessonsView.class, FontAwesome.CALENDAR_O, false),
+    USER_MANAGEMENT("user Managment", UserManagementView.class, FontAwesome.DEDENT, false),
+    STRUCTURE_MANAGEMENT("structure Managment", StructureManagementView.class, FontAwesome.FOLDER_OPEN_O, false),
+    ADMINISTRATION("administration", AdministrationView.class, FontAwesome.LAPTOP, false);
+
 
     private final String viewName;
     private final Class<? extends View> viewClass;

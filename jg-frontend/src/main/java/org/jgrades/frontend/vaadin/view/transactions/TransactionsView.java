@@ -38,9 +38,7 @@ import org.jgrades.frontend.vaadin.DashboardUI;
 import org.jgrades.frontend.vaadin.component.MovieDetailsWindow;
 import org.jgrades.frontend.vaadin.domain.Transaction;
 import org.jgrades.frontend.vaadin.event.DashboardEvent.BrowserResizeEvent;
-import org.jgrades.frontend.vaadin.event.DashboardEvent.TransactionReportEvent;
 import org.jgrades.frontend.vaadin.event.DashboardEventBus;
-import org.jgrades.frontend.vaadin.view.DashboardViewType;
 import org.vaadin.maddon.FilterableListContainer;
 
 import java.text.DateFormat;
@@ -273,10 +271,10 @@ public final class TransactionsView extends VerticalLayout implements View {
     }
 
     void createNewReportFromSelection() {
-        UI.getCurrent().getNavigator()
-                .navigateTo(DashboardViewType.REPORTS.getViewName());
-        DashboardEventBus.post(new TransactionReportEvent(
-                (Collection<Transaction>) table.getValue()));
+//        UI.getCurrent().getNavigator()
+//                .navigateTo(DashboardViewType.REPORTS.getViewName());
+//        DashboardEventBus.post(new TransactionReportEvent(
+//                (Collection<Transaction>) table.getValue()));
     }
 
     @Override

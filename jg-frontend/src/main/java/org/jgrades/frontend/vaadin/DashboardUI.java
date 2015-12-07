@@ -41,15 +41,9 @@ import java.util.Locale;
 @Theme("dashboard")
 @Widgetset("org.jgrades.frontend.vaadin.DashboardWidgetSet")
 @Title("jGrades")
-@SuppressWarnings("serial")
 public final class DashboardUI extends UI {
     public static final String URL = "http://localhost:8080/jg-rest/";
-    /*
-     * This field stores an access to the dummy backend layer. In real
-     * applications you most likely gain access to your beans trough lookup or
-     * injection; and not in the UI but somewhere closer to where they're
-     * actually accessed.
-     */
+
     private final DataProvider dataProvider = new DummyDataProvider();
     private final DashboardEventBus dashboardEventbus = new DashboardEventBus();
     private StatefullRestTemplate restTemplate = new StatefullRestTemplate();

@@ -13,7 +13,6 @@ package org.jgrades.frontend.vaadin;
 import com.vaadin.server.*;
 import org.jsoup.nodes.Element;
 
-@SuppressWarnings("serial")
 public class DashboardSessionInitListener implements SessionInitListener {
 
     @Override
