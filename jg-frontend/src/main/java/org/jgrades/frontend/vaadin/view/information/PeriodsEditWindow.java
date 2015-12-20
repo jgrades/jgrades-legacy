@@ -14,17 +14,20 @@ import com.vaadin.event.ShortcutAction;
 import com.vaadin.server.Responsive;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
-import org.jgrades.data.api.entities.Classroom;
+import org.jgrades.data.api.entities.SchoolDayPeriod;
 import org.jgrades.frontend.vaadin.event.DashboardEventBus;
 import org.jgrades.frontend.vaadin.view.DashboardViewType;
-import org.jgrades.rest.client.admin.general.ClassroomServiceClient;
+import org.jgrades.rest.client.admin.general.PeriodsServiceClient;
 
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 
-public class ClassroomEditWindow extends Window {
-    public static final String ID = "ClassroomEditWindow";
+public class PeriodsEditWindow extends Window {
+    public static final String ID = "PeriodsEditWindow";
 
-    public ClassroomEditWindow(final ClassroomServiceClient classroomServiceClient, final Classroom classroom, boolean editable) {
+
+    public PeriodsEditWindow(final PeriodsServiceClient periodsServiceClient, final SchoolDayPeriod period, boolean editable) {
         addStyleName("profile-window");
         setId(ID);
 
@@ -42,27 +45,27 @@ public class ClassroomEditWindow extends Window {
 
         FormLayout form = new FormLayout();
         form.setMargin(new MarginInfo(true));
-        final TextField nameField = new TextField("Name");
-        if (classroom != null) {
-            nameField.setValue(classroom.getName());
+        final TextField fromField = new TextField("From");
+        if (period != null && period.getStartTime() != null) {
+            fromField.setValue(period.getStartTime().format(DateTimeFormatter.ISO_LOCAL_TIME));
         }
-        nameField.setEnabled(editable);
-        form.addComponent(nameField);
+        fromField.setEnabled(editable);
+        form.addComponent(fromField);
 
-        final TextField buildingField = new TextField("Building");
-        if (classroom != null) {
-            buildingField.setValue(classroom.getBuilding());
+        final TextField toField = new TextField("To");
+        if (period != null && period.getEndTime() != null) {
+            toField.setValue(period.getEndTime().format(DateTimeFormatter.ISO_LOCAL_TIME));
         }
-        buildingField.setEnabled(editable);
-        form.addComponent(buildingField);
+        toField.setEnabled(editable);
+        form.addComponent(toField);
 
         Button saveButton = new Button("Save", new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                if (classroom != null) {
-                    classroom.setName(nameField.getValue());
-                    classroom.setBuilding(buildingField.getValue());
-                    classroomServiceClient.insertOrUpdate(classroom);
+                if (period != null) {
+                    period.setStartTime(LocalTime.parse(fromField.getValue(), DateTimeFormatter.ISO_LOCAL_TIME));
+                    period.setEndTime(LocalTime.parse(toField.getValue(), DateTimeFormatter.ISO_LOCAL_TIME));
+                    periodsServiceClient.insertOrUpdate(period);
                     Notification.show("Updated!");
                     close();
                     UI.getCurrent().getNavigator()
@@ -74,18 +77,21 @@ public class ClassroomEditWindow extends Window {
         Button removeButton = new Button("Remove", new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                classroomServiceClient.remove(Arrays.asList(classroom.getId()));
+                periodsServiceClient.remove(Arrays.asList(period.getId()));
                 Notification.show("Removed!");
                 close();
                 UI.getCurrent().getNavigator()
-                        .navigateTo(DashboardViewType.CLASSROOM_HOME.getViewName());
+                        .navigateTo(DashboardViewType.SCHOOLDAYS_AND_PERIODS_HOME.getViewName());
             }
         });
         saveButton.setVisible(editable);
         removeButton.setVisible(editable);
         form.addComponent(saveButton);
         form.addComponent(removeButton);
-
+        form.setSizeUndefined();
         setContent(form);
+
+        setSizeUndefined();
+
     }
 }
