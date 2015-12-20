@@ -49,7 +49,7 @@ public abstract class BaseTest {
     }
 
     public void loginAsAdmin() {
-        loginServiceClient.logIn("admin", "admin");
+        loginServiceClient.logIn("admin", "admin1");
     }
 
     public void logout() {

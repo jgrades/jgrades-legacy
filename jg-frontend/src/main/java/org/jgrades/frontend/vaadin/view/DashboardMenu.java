@@ -137,7 +137,7 @@ public final class DashboardMenu extends CustomComponent {
         menuItemsLayout.addStyleName("valo-menuitems");
 
         User currentUser = getCurrentUser();
-        for (final DashboardViewType view : DashboardViewType.values()) {
+        for (final DashboardViewType view : getMenuTypes()) {
             Component menuItemComponent = new ValoMenuItemButton(view);
 
             if (view == DashboardViewType.STRUCTURE_MANAGEMENT ||
@@ -245,6 +245,17 @@ public final class DashboardMenu extends CustomComponent {
     public void updateUserName(final ProfileUpdatedEvent event) {
         User user = getCurrentUser();
         settingsItem.setText(user.getName() + " " + user.getSurname());
+    }
+
+    public DashboardViewType[] getMenuTypes() {
+        DashboardViewType[] views = new DashboardViewType[]{
+                DashboardViewType.INFORMATION,
+                DashboardViewType.LESSONS,
+                DashboardViewType.USER_MANAGEMENT,
+                DashboardViewType.STRUCTURE_MANAGEMENT,
+                DashboardViewType.ADMINISTRATION
+        };
+        return views;
     }
 
     public final class ValoMenuItemButton extends Button {
