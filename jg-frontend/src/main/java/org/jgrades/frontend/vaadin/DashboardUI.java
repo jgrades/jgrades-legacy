@@ -32,6 +32,7 @@ import org.jgrades.frontend.vaadin.view.LoginView;
 import org.jgrades.frontend.vaadin.view.MainView;
 import org.jgrades.rest.client.StatefullRestTemplate;
 import org.jgrades.rest.client.admin.accounts.UserServiceClient;
+import org.jgrades.rest.client.admin.general.SchoolServiceClient;
 import org.jgrades.rest.client.config.UserProfileServiceClient;
 import org.jgrades.rest.client.security.LoginServiceClient;
 import org.jgrades.security.api.model.LoginResult;
@@ -47,9 +48,11 @@ public final class DashboardUI extends UI {
     private final DataProvider dataProvider = new DummyDataProvider();
     private final DashboardEventBus dashboardEventbus = new DashboardEventBus();
     private StatefullRestTemplate restTemplate = new StatefullRestTemplate();
+
     private LoginServiceClient loginServiceClient = new LoginServiceClient(URL, restTemplate);
     private UserProfileServiceClient userProfileServiceClient = new UserProfileServiceClient(URL, restTemplate);
     private UserServiceClient userServiceClient = new UserServiceClient(URL, restTemplate);
+    private SchoolServiceClient schoolServiceClient = new SchoolServiceClient(URL, restTemplate);
 
     /**
      * @return An instance for accessing the (dummy) services layer.
@@ -131,5 +134,9 @@ public final class DashboardUI extends UI {
         userProfileServiceClient.setProfileData(userData);
         VaadinSession.getCurrent().setAttribute("jgUser", loginServiceClient.getLoggedUser());
         updateContent();
+    }
+
+    public SchoolServiceClient getSchoolServiceClient() {
+        return schoolServiceClient;
     }
 }

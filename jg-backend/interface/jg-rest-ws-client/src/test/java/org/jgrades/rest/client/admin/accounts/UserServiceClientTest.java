@@ -11,6 +11,7 @@
 package org.jgrades.rest.client.admin.accounts;
 
 import org.jgrades.config.api.model.UserData;
+import org.jgrades.data.api.entities.School;
 import org.jgrades.data.api.entities.User;
 import org.jgrades.data.api.entities.YearLevel;
 import org.jgrades.data.api.entities.roles.ManagerDetails;
@@ -18,6 +19,7 @@ import org.jgrades.data.api.entities.roles.RoleDetails;
 import org.jgrades.data.api.model.JgRole;
 import org.jgrades.rest.api.security.PasswordDTO;
 import org.jgrades.rest.client.BaseTest;
+import org.jgrades.rest.client.admin.general.SchoolServiceClient;
 import org.jgrades.rest.client.admin.structures.YearLevelServiceClient;
 import org.jgrades.rest.client.config.UserProfileServiceClient;
 import org.jgrades.rest.client.security.PasswordServiceClient;
@@ -40,6 +42,9 @@ public class UserServiceClientTest extends BaseTest {
     @Autowired
     private YearLevelServiceClient yearLevelServiceClient;
 
+    @Autowired
+    private SchoolServiceClient schoolServiceClient;
+
     @Test
     public void test2() throws Exception {
 //        YearLevel yearLevel = new YearLevel();
@@ -47,6 +52,12 @@ public class UserServiceClientTest extends BaseTest {
 //        yearLevelServiceClient.insertOrUpdate(yearLevel);
 
         YearLevel withId = yearLevelServiceClient.getWithId(1L);
+
+    }
+
+    @Test
+    public void testschoo() throws Exception {
+        School generalData = schoolServiceClient.getGeneralData();
 
     }
 
