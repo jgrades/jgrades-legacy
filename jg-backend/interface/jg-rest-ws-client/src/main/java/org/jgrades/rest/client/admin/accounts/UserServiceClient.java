@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -66,13 +67,23 @@ public class UserServiceClient extends RestCrudPagingServiceClient<User, Long> i
     }
 
     @Override
+    public List<User> getAll() {
+        URI uri = UriComponentsBuilder.fromHttpUrl(backendBaseUrl + crudUrl)
+                .build().encode().toUri();
+        ResponseEntity<List<User>> response = restTemplate.exchange(uri,
+                HttpMethod.GET, HttpEntity.EMPTY, new ParameterizedTypeReference<List<User>>() {
+                });
+        return response.getBody();
+    }
+
+    @Override
     public Page<User> getPage(Integer number, Integer size) {
         URI uri = UriComponentsBuilder.fromHttpUrl(backendBaseUrl + crudUrl)
                 .queryParam("page", number)
                 .queryParam("limit", size)
                 .build().encode().toUri();
-        ResponseEntity<Page<User>> response = restTemplate.exchange(uri,
-                HttpMethod.GET, HttpEntity.EMPTY, new ParameterizedTypeReference<Page<User>>() {
+        ResponseEntity<PageImpl<User>> response = restTemplate.exchange(uri,
+                HttpMethod.GET, HttpEntity.EMPTY, new ParameterizedTypeReference<PageImpl<User>>() {
                 });
         return response.getBody();
     }
@@ -100,8 +111,8 @@ public class UserServiceClient extends RestCrudPagingServiceClient<User, Long> i
                 .queryParam("email", email).queryParam("roles", roles).queryParam("active", active)
                 .queryParam("lastVisitFrom", lastVisitFrom).queryParam("lastVisitTo", lastVisitTo)
                 .build().encode().toUri();
-        ResponseEntity<Page<User>> response = restTemplate.exchange(uri,
-                HttpMethod.GET, HttpEntity.EMPTY, new ParameterizedTypeReference<Page<User>>() {
+        ResponseEntity<PageImpl<User>> response = restTemplate.exchange(uri,
+                HttpMethod.GET, HttpEntity.EMPTY, new ParameterizedTypeReference<PageImpl<User>>() {
         });
         return response.getBody();
     }

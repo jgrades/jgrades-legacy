@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -63,13 +64,23 @@ public class SubjectServiceClient extends RestCrudPagingServiceClient<Subject, L
     }
 
     @Override
+    public List<Subject> getAll() {
+        URI uri = UriComponentsBuilder.fromHttpUrl(backendBaseUrl + crudUrl)
+                .build().encode().toUri();
+        ResponseEntity<List<Subject>> response = restTemplate.exchange(uri,
+                HttpMethod.GET, HttpEntity.EMPTY, new ParameterizedTypeReference<List<Subject>>() {
+                });
+        return response.getBody();
+    }
+
+    @Override
     public Page<Subject> getPage(Integer number, Integer size) {
         URI uri = UriComponentsBuilder.fromHttpUrl(backendBaseUrl + crudUrl)
                 .queryParam("page", number)
                 .queryParam("limit", size)
                 .build().encode().toUri();
-        ResponseEntity<Page<Subject>> response = restTemplate.exchange(uri,
-                HttpMethod.GET, HttpEntity.EMPTY, new ParameterizedTypeReference<Page<Subject>>() {
+        ResponseEntity<PageImpl<Subject>> response = restTemplate.exchange(uri,
+                HttpMethod.GET, HttpEntity.EMPTY, new ParameterizedTypeReference<PageImpl<Subject>>() {
                 });
         return response.getBody();
     }

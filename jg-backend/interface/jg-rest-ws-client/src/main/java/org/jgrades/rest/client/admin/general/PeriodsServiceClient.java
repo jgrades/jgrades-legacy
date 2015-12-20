@@ -62,6 +62,16 @@ public class PeriodsServiceClient extends RestCrudServiceClient<SchoolDayPeriod,
     }
 
     @Override
+    public List<SchoolDayPeriod> getAll() {
+        URI uri = UriComponentsBuilder.fromHttpUrl(backendBaseUrl + crudUrl)
+                .build().encode().toUri();
+        ResponseEntity<List<SchoolDayPeriod>> response = restTemplate.exchange(uri,
+                HttpMethod.GET, HttpEntity.EMPTY, new ParameterizedTypeReference<List<SchoolDayPeriod>>() {
+                });
+        return response.getBody();
+    }
+
+    @Override
     public void insertWithGenerator(PeriodsGeneratorSettings generationSettings) {
         String serviceUrl = backendBaseUrl + crudUrl + "/generator";
         HttpEntity<PeriodsGeneratorSettings> entity = new HttpEntity<>(generationSettings);

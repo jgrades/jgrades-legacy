@@ -20,4 +20,6 @@ public interface RestCrudService<T, ID> {
     T getWithId(ID id);
 
     List<T> getWithIds(List<ID> ids);
+
+    List<T> getAll();
 }

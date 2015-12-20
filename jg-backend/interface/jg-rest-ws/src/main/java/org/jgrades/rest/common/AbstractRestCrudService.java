@@ -62,5 +62,10 @@ public abstract class AbstractRestCrudService<T, ID, S extends CrudService<T, ID
         return ids == null ? crudService.getAll() : crudService.getWithIds(ids);
     }
 
+    @Override
+    public List<T> getAll() {
+        return crudService.getAll();
+    }
+
     protected abstract JgLogger getLogger();
 }

@@ -33,6 +33,7 @@ import org.jgrades.frontend.vaadin.view.MainView;
 import org.jgrades.rest.client.StatefullRestTemplate;
 import org.jgrades.rest.client.admin.accounts.UserServiceClient;
 import org.jgrades.rest.client.admin.general.SchoolServiceClient;
+import org.jgrades.rest.client.admin.general.SubjectServiceClient;
 import org.jgrades.rest.client.config.UserProfileServiceClient;
 import org.jgrades.rest.client.security.LoginServiceClient;
 import org.jgrades.security.api.model.LoginResult;
@@ -53,6 +54,7 @@ public final class DashboardUI extends UI {
     private UserProfileServiceClient userProfileServiceClient = new UserProfileServiceClient(URL, restTemplate);
     private UserServiceClient userServiceClient = new UserServiceClient(URL, restTemplate);
     private SchoolServiceClient schoolServiceClient = new SchoolServiceClient(URL, restTemplate);
+    private SubjectServiceClient subjectServiceClient = new SubjectServiceClient(URL, restTemplate);
 
     /**
      * @return An instance for accessing the (dummy) services layer.
@@ -138,5 +140,9 @@ public final class DashboardUI extends UI {
 
     public SchoolServiceClient getSchoolServiceClient() {
         return schoolServiceClient;
+    }
+
+    public SubjectServiceClient getSubjectServiceClient() {
+        return subjectServiceClient;
     }
 }

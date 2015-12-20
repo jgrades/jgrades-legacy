@@ -63,6 +63,16 @@ public class YearLevelServiceClient extends RestCrudPagingServiceClient<YearLeve
     }
 
     @Override
+    public List<YearLevel> getAll() {
+        URI uri = UriComponentsBuilder.fromHttpUrl(backendBaseUrl + crudUrl)
+                .build().encode().toUri();
+        ResponseEntity<List<YearLevel>> response = restTemplate.exchange(uri,
+                HttpMethod.GET, HttpEntity.EMPTY, new ParameterizedTypeReference<List<YearLevel>>() {
+                });
+        return response.getBody();
+    }
+
+    @Override
     public Page<YearLevel> getPage(Integer number, Integer size) {
         URI uri = UriComponentsBuilder.fromHttpUrl(backendBaseUrl + crudUrl)
                 .queryParam("page", number)

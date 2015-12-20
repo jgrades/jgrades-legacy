@@ -65,6 +65,16 @@ public class ClassGroupServiceClient extends RestCrudPagingServiceClient<ClassGr
     }
 
     @Override
+    public List<ClassGroup> getAll() {
+        URI uri = UriComponentsBuilder.fromHttpUrl(backendBaseUrl + crudUrl)
+                .build().encode().toUri();
+        ResponseEntity<List<ClassGroup>> response = restTemplate.exchange(uri,
+                HttpMethod.GET, HttpEntity.EMPTY, new ParameterizedTypeReference<List<ClassGroup>>() {
+                });
+        return response.getBody();
+    }
+
+    @Override
     public Page<ClassGroup> getPage(Integer number, Integer size) {
         URI uri = UriComponentsBuilder.fromHttpUrl(backendBaseUrl + crudUrl)
                 .queryParam("page", number)

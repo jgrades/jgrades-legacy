@@ -63,6 +63,16 @@ public class DivisionServiceClient extends RestCrudPagingServiceClient<Division,
     }
 
     @Override
+    public List<Division> getAll() {
+        URI uri = UriComponentsBuilder.fromHttpUrl(backendBaseUrl + crudUrl)
+                .build().encode().toUri();
+        ResponseEntity<List<Division>> response = restTemplate.exchange(uri,
+                HttpMethod.GET, HttpEntity.EMPTY, new ParameterizedTypeReference<List<Division>>() {
+                });
+        return response.getBody();
+    }
+
+    @Override
     public Page<Division> getPage(Integer number, Integer size) {
         URI uri = UriComponentsBuilder.fromHttpUrl(backendBaseUrl + crudUrl)
                 .queryParam("page", number)

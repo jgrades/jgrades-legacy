@@ -11,7 +11,7 @@
 package org.jgrades.rest.client.admin.accounts;
 
 import org.jgrades.config.api.model.UserData;
-import org.jgrades.data.api.entities.School;
+import org.jgrades.data.api.entities.Subject;
 import org.jgrades.data.api.entities.User;
 import org.jgrades.data.api.entities.YearLevel;
 import org.jgrades.data.api.entities.roles.ManagerDetails;
@@ -20,6 +20,7 @@ import org.jgrades.data.api.model.JgRole;
 import org.jgrades.rest.api.security.PasswordDTO;
 import org.jgrades.rest.client.BaseTest;
 import org.jgrades.rest.client.admin.general.SchoolServiceClient;
+import org.jgrades.rest.client.admin.general.SubjectServiceClient;
 import org.jgrades.rest.client.admin.structures.YearLevelServiceClient;
 import org.jgrades.rest.client.config.UserProfileServiceClient;
 import org.jgrades.rest.client.security.PasswordServiceClient;
@@ -27,6 +28,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.EnumMap;
+import java.util.List;
 
 //@Ignore
 public class UserServiceClientTest extends BaseTest {
@@ -45,6 +47,10 @@ public class UserServiceClientTest extends BaseTest {
     @Autowired
     private SchoolServiceClient schoolServiceClient;
 
+    @Autowired
+    private SubjectServiceClient subjectServiceClient;
+
+
     @Test
     public void test2() throws Exception {
 //        YearLevel yearLevel = new YearLevel();
@@ -57,7 +63,7 @@ public class UserServiceClientTest extends BaseTest {
 
     @Test
     public void testschoo() throws Exception {
-        School generalData = schoolServiceClient.getGeneralData();
+        List<Subject> page = subjectServiceClient.getAll();
 
     }
 

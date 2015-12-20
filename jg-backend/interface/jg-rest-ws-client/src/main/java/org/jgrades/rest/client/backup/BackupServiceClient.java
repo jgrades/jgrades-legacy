@@ -65,6 +65,16 @@ public class BackupServiceClient extends RestCrudPagingServiceClient<Backup, Lon
     }
 
     @Override
+    public List<Backup> getAll() {
+        URI uri = UriComponentsBuilder.fromHttpUrl(backendBaseUrl + crudUrl)
+                .build().encode().toUri();
+        ResponseEntity<List<Backup>> response = restTemplate.exchange(uri,
+                HttpMethod.GET, HttpEntity.EMPTY, new ParameterizedTypeReference<List<Backup>>() {
+                });
+        return response.getBody();
+    }
+
+    @Override
     public Page<Backup> getPage(Integer number, Integer size) {
         URI uri = UriComponentsBuilder.fromHttpUrl(backendBaseUrl + crudUrl)
                 .queryParam("page", number)

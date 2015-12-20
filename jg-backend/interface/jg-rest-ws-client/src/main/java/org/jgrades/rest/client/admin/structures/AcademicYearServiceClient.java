@@ -61,6 +61,16 @@ public class AcademicYearServiceClient extends RestCrudPagingServiceClient<Acade
     }
 
     @Override
+    public List<AcademicYear> getAll() {
+        URI uri = UriComponentsBuilder.fromHttpUrl(backendBaseUrl + crudUrl)
+                .build().encode().toUri();
+        ResponseEntity<List<AcademicYear>> response = restTemplate.exchange(uri,
+                HttpMethod.GET, HttpEntity.EMPTY, new ParameterizedTypeReference<List<AcademicYear>>() {
+                });
+        return response.getBody();
+    }
+
+    @Override
     public Page<AcademicYear> getPage(Integer number, Integer size) {
         URI uri = UriComponentsBuilder.fromHttpUrl(backendBaseUrl + crudUrl)
                 .queryParam("page", number)

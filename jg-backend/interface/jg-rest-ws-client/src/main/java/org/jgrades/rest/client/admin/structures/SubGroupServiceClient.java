@@ -63,6 +63,16 @@ public class SubGroupServiceClient extends RestCrudPagingServiceClient<SubGroup,
     }
 
     @Override
+    public List<SubGroup> getAll() {
+        URI uri = UriComponentsBuilder.fromHttpUrl(backendBaseUrl + crudUrl)
+                .build().encode().toUri();
+        ResponseEntity<List<SubGroup>> response = restTemplate.exchange(uri,
+                HttpMethod.GET, HttpEntity.EMPTY, new ParameterizedTypeReference<List<SubGroup>>() {
+                });
+        return response.getBody();
+    }
+
+    @Override
     public Page<SubGroup> getPage(Integer number, Integer size) {
         URI uri = UriComponentsBuilder.fromHttpUrl(backendBaseUrl + crudUrl)
                 .queryParam("page", number)

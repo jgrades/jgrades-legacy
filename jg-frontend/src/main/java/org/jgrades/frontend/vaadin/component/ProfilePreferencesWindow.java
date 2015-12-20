@@ -60,7 +60,7 @@ public class ProfilePreferencesWindow extends Window {
         setModal(true);
         setCloseShortcut(KeyCode.ESCAPE, null);
         setResizable(false);
-        setClosable(false);
+        setClosable(true);
         setHeight(90.0f, Unit.PERCENTAGE);
 
         VerticalLayout content = new VerticalLayout();

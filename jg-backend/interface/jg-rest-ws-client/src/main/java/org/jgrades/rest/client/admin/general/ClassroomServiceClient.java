@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -63,13 +64,23 @@ public class ClassroomServiceClient extends RestCrudPagingServiceClient<Classroo
     }
 
     @Override
+    public List<Classroom> getAll() {
+        URI uri = UriComponentsBuilder.fromHttpUrl(backendBaseUrl + crudUrl)
+                .build().encode().toUri();
+        ResponseEntity<List<Classroom>> response = restTemplate.exchange(uri,
+                HttpMethod.GET, HttpEntity.EMPTY, new ParameterizedTypeReference<List<Classroom>>() {
+                });
+        return response.getBody();
+    }
+
+    @Override
     public Page<Classroom> getPage(Integer number, Integer size) {
         URI uri = UriComponentsBuilder.fromHttpUrl(backendBaseUrl + crudUrl)
                 .queryParam("page", number)
                 .queryParam("limit", size)
                 .build().encode().toUri();
-        ResponseEntity<Page<Classroom>> response = restTemplate.exchange(uri,
-                HttpMethod.GET, HttpEntity.EMPTY, new ParameterizedTypeReference<Page<Classroom>>() {
+        ResponseEntity<PageImpl<Classroom>> response = restTemplate.exchange(uri,
+                HttpMethod.GET, HttpEntity.EMPTY, new ParameterizedTypeReference<PageImpl<Classroom>>() {
                 });
         return response.getBody();
     }
