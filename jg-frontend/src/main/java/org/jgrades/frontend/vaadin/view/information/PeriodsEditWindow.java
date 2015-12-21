@@ -69,7 +69,7 @@ public class PeriodsEditWindow extends Window {
                     Notification.show("Updated!");
                     close();
                     UI.getCurrent().getNavigator()
-                            .navigateTo(DashboardViewType.CLASSROOM_HOME.getViewName());
+                            .navigateTo(DashboardViewType.SCHOOLDAYS_AND_PERIODS_HOME.getViewName());
                 }
             }
         });

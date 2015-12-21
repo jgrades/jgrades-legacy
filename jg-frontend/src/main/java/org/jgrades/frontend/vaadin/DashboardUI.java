@@ -34,6 +34,7 @@ import org.jgrades.rest.client.StatefullRestTemplate;
 import org.jgrades.rest.client.admin.accounts.UserServiceClient;
 import org.jgrades.rest.client.admin.general.*;
 import org.jgrades.rest.client.config.UserProfileServiceClient;
+import org.jgrades.rest.client.logging.LoggerConfigServiceClient;
 import org.jgrades.rest.client.security.LoginServiceClient;
 import org.jgrades.security.api.model.LoginResult;
 
@@ -57,6 +58,7 @@ public final class DashboardUI extends UI {
     private ClassroomServiceClient classroomServiceClient = new ClassroomServiceClient(URL, restTemplate);
     private PeriodsServiceClient periodsServiceClient = new PeriodsServiceClient(URL, restTemplate);
     private WorkingDaysServiceClient workingDaysServiceClient = new WorkingDaysServiceClient(URL, restTemplate);
+    private LoggerConfigServiceClient loggerConfigServiceClient = new LoggerConfigServiceClient(URL, restTemplate);
 
     /**
      * @return An instance for accessing the (dummy) services layer.
@@ -158,5 +160,9 @@ public final class DashboardUI extends UI {
 
     public WorkingDaysServiceClient getWorkingDaysServiceClient() {
         return workingDaysServiceClient;
+    }
+
+    public LoggerConfigServiceClient getLoggerConfigServiceClient() {
+        return loggerConfigServiceClient;
     }
 }
