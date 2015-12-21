@@ -33,6 +33,7 @@ import org.jgrades.frontend.vaadin.view.MainView;
 import org.jgrades.rest.client.StatefullRestTemplate;
 import org.jgrades.rest.client.admin.accounts.UserServiceClient;
 import org.jgrades.rest.client.admin.general.*;
+import org.jgrades.rest.client.backup.BackupServiceClient;
 import org.jgrades.rest.client.config.UserProfileServiceClient;
 import org.jgrades.rest.client.data.DataSourceDetailsServiceClient;
 import org.jgrades.rest.client.logging.LoggerConfigServiceClient;
@@ -61,6 +62,7 @@ public final class DashboardUI extends UI {
     private WorkingDaysServiceClient workingDaysServiceClient = new WorkingDaysServiceClient(URL, restTemplate);
     private LoggerConfigServiceClient loggerConfigServiceClient = new LoggerConfigServiceClient(URL, restTemplate);
     private DataSourceDetailsServiceClient dataSourceDetailsServiceClient = new DataSourceDetailsServiceClient(URL, restTemplate);
+    private BackupServiceClient backupServiceClient = new BackupServiceClient(URL, restTemplate);
 
     /**
      * @return An instance for accessing the (dummy) services layer.
@@ -170,5 +172,9 @@ public final class DashboardUI extends UI {
 
     public DataSourceDetailsServiceClient getDataSourceDetailsServiceClient() {
         return dataSourceDetailsServiceClient;
+    }
+
+    public BackupServiceClient getBackupServiceClient() {
+        return backupServiceClient;
     }
 }
