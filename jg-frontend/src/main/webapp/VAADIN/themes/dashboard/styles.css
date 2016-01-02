@@ -7402,7 +7402,6 @@ div.v-layout.v-horizontal.v-widget {
 .dashboard .v-link {
 	cursor: pointer;
 	color: #197de1;
-	font-size: larger;
 	text-decoration: underline;
 	font-weight: inherit;
 	-webkit-transition: color 140ms;

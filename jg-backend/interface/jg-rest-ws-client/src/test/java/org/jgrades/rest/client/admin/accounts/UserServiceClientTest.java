@@ -24,13 +24,14 @@ import org.jgrades.rest.client.admin.general.SubjectServiceClient;
 import org.jgrades.rest.client.admin.structures.YearLevelServiceClient;
 import org.jgrades.rest.client.config.UserProfileServiceClient;
 import org.jgrades.rest.client.security.PasswordServiceClient;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.EnumMap;
 import java.util.List;
 
-//@Ignore
+@Ignore
 public class UserServiceClientTest extends BaseTest {
     @Autowired
     private PasswordServiceClient passwordServiceClient;
