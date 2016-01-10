@@ -56,7 +56,6 @@ public final class DashboardUI extends UI {
 
     private LoginServiceClient loginServiceClient = new LoginServiceClient(URL, restTemplate);
     private UserProfileServiceClient userProfileServiceClient = new UserProfileServiceClient(URL, restTemplate);
-    private UserServiceClient userServiceClient = new UserServiceClient(URL, restTemplate);
     private SchoolServiceClient schoolServiceClient = new SchoolServiceClient(URL, restTemplate);
     private SubjectServiceClient subjectServiceClient = new SubjectServiceClient(URL, restTemplate);
     private ClassroomServiceClient classroomServiceClient = new ClassroomServiceClient(URL, restTemplate);
@@ -67,6 +66,7 @@ public final class DashboardUI extends UI {
     private BackupServiceClient backupServiceClient = new BackupServiceClient(URL, restTemplate);
     private AcademicYearServiceClient academicYearServiceClient = new AcademicYearServiceClient(URL, restTemplate);
     private YearLevelServiceClient yearLevelServiceClient = new YearLevelServiceClient(URL, restTemplate);
+    private UserServiceClient userServiceClient = new UserServiceClient(URL, restTemplate);
 
     /**
      * @return An instance for accessing the (dummy) services layer.
@@ -189,4 +189,13 @@ public final class DashboardUI extends UI {
     public YearLevelServiceClient getYearLevelServiceClient() {
         return yearLevelServiceClient;
     }
+
+    public UserServiceClient getUserServiceClient() {
+        return userServiceClient;
+    }
+
+    public UserProfileServiceClient getUserProfileServiceClient() {
+        return userProfileServiceClient;
+    }
+
 }
