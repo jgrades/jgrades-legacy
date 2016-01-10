@@ -3,9 +3,9 @@
  *
  * This file is part of jGrades Application Project.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * You may obtain a copy of the License at
- *       http://www.apache.org/licenses/LICENSE-2.0
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  You may obtain a copy of the License at
+ *        http://www.apache.org/licenses/LICENSE-2.0
  */
 
 package org.jgrades.frontend.vaadin;
@@ -33,6 +33,8 @@ import org.jgrades.frontend.vaadin.view.MainView;
 import org.jgrades.rest.client.StatefullRestTemplate;
 import org.jgrades.rest.client.admin.accounts.UserServiceClient;
 import org.jgrades.rest.client.admin.general.*;
+import org.jgrades.rest.client.admin.structures.AcademicYearServiceClient;
+import org.jgrades.rest.client.admin.structures.YearLevelServiceClient;
 import org.jgrades.rest.client.backup.BackupServiceClient;
 import org.jgrades.rest.client.config.UserProfileServiceClient;
 import org.jgrades.rest.client.data.DataSourceDetailsServiceClient;
@@ -63,6 +65,8 @@ public final class DashboardUI extends UI {
     private LoggerConfigServiceClient loggerConfigServiceClient = new LoggerConfigServiceClient(URL, restTemplate);
     private DataSourceDetailsServiceClient dataSourceDetailsServiceClient = new DataSourceDetailsServiceClient(URL, restTemplate);
     private BackupServiceClient backupServiceClient = new BackupServiceClient(URL, restTemplate);
+    private AcademicYearServiceClient academicYearServiceClient = new AcademicYearServiceClient(URL, restTemplate);
+    private YearLevelServiceClient yearLevelServiceClient = new YearLevelServiceClient(URL, restTemplate);
 
     /**
      * @return An instance for accessing the (dummy) services layer.
@@ -176,5 +180,13 @@ public final class DashboardUI extends UI {
 
     public BackupServiceClient getBackupServiceClient() {
         return backupServiceClient;
+    }
+
+    public AcademicYearServiceClient getAcademicYearServiceClient() {
+        return academicYearServiceClient;
+    }
+
+    public YearLevelServiceClient getYearLevelServiceClient() {
+        return yearLevelServiceClient;
     }
 }
