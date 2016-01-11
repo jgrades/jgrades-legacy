@@ -14,6 +14,7 @@ import com.vaadin.event.ShortcutAction;
 import com.vaadin.server.Responsive;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
+import org.jgrades.config.api.model.UserData;
 import org.jgrades.data.api.entities.User;
 import org.jgrades.data.api.entities.roles.*;
 import org.jgrades.data.api.model.JgRole;
@@ -27,7 +28,7 @@ import java.util.Arrays;
 public class UserEditWindow extends Window {
     public static final String ID = "AcademicYearEditWindow";
 
-    public UserEditWindow(final UserServiceClient userServiceClient, UserProfileServiceClient userProfileServiceClient, final User user, boolean editable) {
+    public UserEditWindow(final UserServiceClient userServiceClient, final UserProfileServiceClient userProfileServiceClient, final User user, boolean editable) {
         addStyleName("profile-window");
         setId(ID);
 
@@ -52,6 +53,14 @@ public class UserEditWindow extends Window {
         }
         loginField.setEnabled(editable);
         form.addComponent(loginField);
+
+        final PasswordField passwordField = new PasswordField("Password");
+        passwordField.setEnabled(editable);
+        form.addComponent(passwordField);
+
+        final PasswordField passwordConfirmField = new PasswordField("Confirm password");
+        passwordConfirmField.setEnabled(editable);
+        form.addComponent(passwordConfirmField);
 
         final TextField nameField = new TextField("Name");
         if (user != null) {
@@ -169,6 +178,16 @@ public class UserEditWindow extends Window {
                     }
 
                     userServiceClient.insertOrUpdate(user);
+
+                    if (!passwordField.isEmpty() || !passwordConfirmField.isEmpty()) {
+                        if (passwordField.getValue().equals(passwordConfirmField.getValue())) {
+                            UserData userData = new UserData();
+                            userData.setUser(user);
+                            userData.setPassword(passwordField.getValue());
+                            userProfileServiceClient.setProfileData(userData);
+                        }
+                    }
+
                     Notification.show("Updated!");
                     close();
                     UI.getCurrent().getNavigator()

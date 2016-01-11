@@ -3,9 +3,9 @@
  *
  * This file is part of jGrades Application Project.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * You may obtain a copy of the License at
- *       http://www.apache.org/licenses/LICENSE-2.0
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  You may obtain a copy of the License at
+ *        http://www.apache.org/licenses/LICENSE-2.0
  */
 
 package org.jgrades.config.service;
@@ -70,7 +70,7 @@ public class UserPreferencesUpdater implements UserUpdater {
 
     private void updateRoleData(EnumMap<JgRole, RoleDetails> updatedRoles,
                                 EnumMap<JgRole, RoleDetails> persistRoles) throws IllegalAccessException {
-        if (!CollectionUtils.isEqualCollection(updatedRoles.keySet(), persistRoles.keySet())) {
+        if (!persistRoles.containsKey(JgRole.ADMINISTRATOR) && !CollectionUtils.isEqualCollection(updatedRoles.keySet(), persistRoles.keySet())) {
             throw new UserPreferencesException("Roles cannot be modified by user itself");
         }
         Set<Map.Entry<JgRole, RoleDetails>> entries = updatedRoles.entrySet();
