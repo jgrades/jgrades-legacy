@@ -24,10 +24,6 @@ public final class InternalProperties {
             InternalProperties.class.getClassLoader()
                     .getResource("logback-only-console-details.xml").getFile();
     private static Configuration configuration;
-    public static final String LOGS_DIRECTORY = configuration.getString("logging.logs.directory");
-    public static final String CONFIG_FILE = configuration.getString("logging.config.file");
-    public static final String XML_FILE = configuration.getString("logging.xml.file");
-    public static final String CONSOLE_LEVEL = configuration.getString("logging.console.level");
 
     static {
         try {
@@ -36,6 +32,12 @@ public final class InternalProperties {
             //not possible...
         }
     }
+
+    // THESE FOUR STRINGS SHOULD BE HERE, BELOW STATIC BLOCK:
+    public static final String LOGS_DIRECTORY = configuration.getString("logging.logs.directory");
+    public static final String CONFIG_FILE = configuration.getString("logging.config.file");
+    public static final String XML_FILE = configuration.getString("logging.xml.file");
+    public static final String CONSOLE_LEVEL = configuration.getString("logging.console.level");
 
     private InternalProperties() {
     }
