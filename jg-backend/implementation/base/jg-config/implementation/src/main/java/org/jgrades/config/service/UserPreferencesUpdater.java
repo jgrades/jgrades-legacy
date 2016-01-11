@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 the original author or authors.
+ * Copyright (C) 2016 the original author or authors.
  *
  * This file is part of jGrades Application Project.
  *

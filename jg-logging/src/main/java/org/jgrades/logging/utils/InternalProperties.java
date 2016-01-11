@@ -1,11 +1,11 @@
 /*
- * Copyright (C) 2015 the original author or authors.
+ * Copyright (C) 2016 the original author or authors.
  *
  * This file is part of jGrades Application Project.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * You may obtain a copy of the License at
- *       http://www.apache.org/licenses/LICENSE-2.0
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  You may obtain a copy of the License at
+ *        http://www.apache.org/licenses/LICENSE-2.0
  */
 
 package org.jgrades.logging.utils;
@@ -24,6 +24,10 @@ public final class InternalProperties {
             InternalProperties.class.getClassLoader()
                     .getResource("logback-only-console-details.xml").getFile();
     private static Configuration configuration;
+    public static final String LOGS_DIRECTORY = configuration.getString("logging.logs.directory");
+    public static final String CONFIG_FILE = configuration.getString("logging.config.file");
+    public static final String XML_FILE = configuration.getString("logging.xml.file");
+    public static final String CONSOLE_LEVEL = configuration.getString("logging.console.level");
 
     static {
         try {
@@ -32,11 +36,6 @@ public final class InternalProperties {
             //not possible...
         }
     }
-
-    public static final String LOGS_DIRECTORY = configuration.getString("logging.logs.directory");
-    public static final String CONFIG_FILE = configuration.getString("logging.config.file");
-    public static final String XML_FILE = configuration.getString("logging.xml.file");
-    public static final String CONSOLE_LEVEL = configuration.getString("logging.console.level");
 
     private InternalProperties() {
     }
