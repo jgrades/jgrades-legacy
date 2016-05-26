@@ -42,7 +42,7 @@ public class RestDocsContext {
 
     @Bean
     public Docket jGradesRestApi() {
-        return new Docket(DocumentationType.SWAGGER_2)
+        return new Docket(DocumentationType.SWAGGER_12)
                 .select()
                 .apis(RequestHandlerSelectors.any())
                 .paths(PathSelectors.any())

@@ -52,7 +52,7 @@ public class DefaultLoginGenerationStrategy implements LoginGenerationStrategy {
     private String checkAvailabilityIfBusy(String proposeLogin, int counter) {
         if (loginExists(proposeLogin)) {
             String newProposeLogin = stripEnd(proposeLogin, NUMBERS) + Integer.toString(counter);
-            return checkAvailabilityIfBusy(newProposeLogin, ++counter);
+            return checkAvailabilityIfBusy(newProposeLogin, counter+1);
         } else {
             return proposeLogin;
         }

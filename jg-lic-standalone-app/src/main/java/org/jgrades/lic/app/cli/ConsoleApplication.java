@@ -70,7 +70,7 @@ public class ConsoleApplication implements LicenceApplication {
         } catch (NoSuchElementException e) {
             LOGGER.trace(INVALID_OPTION_MESSAGE, e);
             System.out.println(INVALID_OPTION_MESSAGE); //NOSONAR
-            scanner = new Scanner(System.in);
+            scanner = new Scanner(System.in, "UTF-8");
             return chooseAction();
         } catch (IllegalArgumentException e) {
             LOGGER.trace(UNKNOWN_OPTION_MESSAGE, e);

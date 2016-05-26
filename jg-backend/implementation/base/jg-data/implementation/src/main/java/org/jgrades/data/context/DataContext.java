@@ -88,7 +88,8 @@ public class DataContext {
 
     @Bean
     public static PropertySourcesPlaceholderConfigurer propertyConfig() {
-        return new PropertySourcesPlaceholderConfigurer();
+        PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer = new PropertySourcesPlaceholderConfigurer();
+        return propertySourcesPlaceholderConfigurer;
     }
 
     @Bean(destroyMethod = "close", name = "mainDataSource")

@@ -19,21 +19,21 @@ import java.util.Locale;
 public class LicenceDateTimeAdapter extends XmlAdapter<String, LocalDateTime> {
     public static final String PATTERN = "yyyy-MM-dd HH:mm:ss";
 
-    private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(PATTERN);
+    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern(PATTERN);
 
     public static DateTimeFormatter getLicDateTimeFormatter() {
-        return dateTimeFormatter;
+        return DATE_TIME_FORMATTER;
     }
 
     @Override
     public LocalDateTime unmarshal(String v) {
-        dateTimeFormatter.withLocale(Locale.ENGLISH);
-        return LocalDateTime.parse(v, dateTimeFormatter);
+        DATE_TIME_FORMATTER.withLocale(Locale.ENGLISH);
+        return LocalDateTime.parse(v, DATE_TIME_FORMATTER);
     }
 
     @Override
     public String marshal(LocalDateTime v) {
-        dateTimeFormatter.withLocale(Locale.ENGLISH);
-        return v.format(dateTimeFormatter);
+        DATE_TIME_FORMATTER.withLocale(Locale.ENGLISH);
+        return v.format(DATE_TIME_FORMATTER);
     }
 }

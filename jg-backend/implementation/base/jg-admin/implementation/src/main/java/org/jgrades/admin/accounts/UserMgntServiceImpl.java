@@ -49,7 +49,11 @@ public class UserMgntServiceImpl extends AbstractPagingMgntService<User, Long, U
 
     @Override
     public void remove(User user) {
-        remove(getWithId(user.getId()));
+        removeWithId(getWithId(user.getId()));
+    }
+
+    private void removeWithId(User user) {
+        repository.delete(user);
     }
 
     @Override

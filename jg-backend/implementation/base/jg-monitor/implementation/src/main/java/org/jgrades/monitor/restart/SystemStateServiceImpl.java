@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.charset.Charset;
 import java.util.Base64;
 
 @Service
@@ -62,7 +63,7 @@ public class SystemStateServiceImpl implements SystemStateService {
     private void setAuthProperty(URLConnection connection) {
         if (masterScriptUser != null && masterScriptPwd != null) {
             String userPass = masterScriptUser + ":" + masterScriptPwd;
-            String encoded = Base64.getEncoder().encodeToString(userPass.getBytes());
+            String encoded = Base64.getEncoder().encodeToString(userPass.getBytes(Charset.defaultCharset()));
             connection.setRequestProperty("Authorization", "Basic " + encoded);
         }
     }

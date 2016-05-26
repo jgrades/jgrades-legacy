@@ -51,8 +51,8 @@ import java.util.List;
 public class RestContext extends WebMvcConfigurationSupport {
 
     @Bean
-    public static PropertySourcesPlaceholderConfigurer propertyConfig() {
-        return new PropertySourcesPlaceholderConfigurer();
+    public PropertySourcesPlaceholderConfigurer propertyConfig() {
+        return new CustomPropertySourcesPlaceholderConfigurer();
     }
 
     @Override

@@ -16,6 +16,8 @@ import org.jgrades.common.CommonContext;
 import org.jgrades.config.context.ConfigurationContext;
 import org.jgrades.data.context.DataContext;
 import org.jgrades.lic.context.LicContext;
+import org.jgrades.logging.JgLogger;
+import org.jgrades.logging.JgLoggerFactory;
 import org.jgrades.monitor.context.MonitorContext;
 import org.jgrades.security.context.SecurityContext;
 import org.springframework.web.WebApplicationInitializer;
@@ -27,8 +29,11 @@ import org.springframework.web.servlet.DispatcherServlet;
 import javax.servlet.*;
 
 public class WebAppInitializer implements WebApplicationInitializer {
+    private static final JgLogger LOGGER = JgLoggerFactory.getLogger(WebAppInitializer.class);
+
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException {
+        LOGGER.info("******************************Startup jGrades***************************************");
         AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
         rootContext.register(CommonContext.class, MonitorContext.class, LicContext.class, DataContext.class,
                 BackupContext.class, SecurityContext.class, AdminContext.class, ConfigurationContext.class);

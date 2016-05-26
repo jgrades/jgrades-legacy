@@ -24,7 +24,7 @@
         <dozer.mapper.version>5.5.1</dozer.mapper.version>
         <valid4j.version>0.4.0</valid4j.version>
         <quartz.version>2.2.1</quartz.version>
-        <lombok.version>1.16.6</lombok.version>
+        <lombok.version>1.16.8</lombok.version>
 
         <!-- TESTING TOOLS -->
         <junit.version>4.12</junit.version>
